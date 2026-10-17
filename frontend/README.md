@@ -1,4 +1,69 @@
-# SyncScape — Frontend
+About
+SyncScape is a platform for finding student accommodation — it connects house owners listing properties with customers (students) looking for a place to stay, using a matching engine to rank listings against each customer's preferences.
+
+Features
+
+* Users access the platform via token-based login
+* House owners can create listings by submitting:
+   * title
+   * description
+   * price per month
+   * amenities (double bed, study desk, wifi, etc.)
+   * photos
+* Customers fill in a preferences form (budget, distance, lifestyle) and get a ranked feed of matching listings
+
+How it works
+The project is divided into two parts:
+
+1. Backend (separate repo — Django REST API)
+2. Frontend (this repo)
+
+This repository covers only the Frontend. The Frontend needs the Backend running to actually work (login, listings, matches all come from the API).
+
+Pre-requisites
+Before you begin, you'll need the following installed on your machine: [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/) (20.19+ or 22.12+). It's also worth having an editor like [VSCode](https://code.visualstudio.com/).
+
+Running the web application (Frontend)
+
+```
+# Clone this repository
+$ git clone <repo-url>
+
+# Access the project folder in your terminal
+$ cd SyncScape/frontend
+
+# Install the dependencies
+$ npm install
+
+# Run the application in development mode
+$ npm run dev
+
+# The application will open on port 5173 - go to http://localhost:5173
+```
+
+Tech Stack
+The following tools were used in the construction of the project:
+Platform ([React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/), via [Vite](https://vitejs.dev/))
+
+* [React Router Dom](https://github.com/remix-run/react-router)
+* [Axios](https://github.com/axios/axios)
+* [TanStack Query](https://tanstack.com/query/latest)
+* [Zustand](https://github.com/pmndrs/zustand)
+* [Zod](https://zod.dev/)
+* [React Hook Form](https://react-hook-form.com/) + [@hookform/resolvers](https://github.com/react-hook-form/resolvers)
+* [Tailwind CSS v4](https://tailwindcss.com/)
+* [shadcn/ui](https://ui.shadcn.com/)
+* [Sonner](https://sonner.emilkowal.ski/)
+* [Vitest](https://vitest.dev/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+
+See the file [package.json](./package.json) for exact versions.
+
+Utils
+
+* Backend API: Django REST API (separate repo)
+* Editor: [Visual Studio Code](https://code.visualstudio.com/)
+* Icons: [Lucide](https://lucide.dev/) (bundled with shadcn/ui components)
+* Linting: [oxlint](https://oxc.rs/docs/guide/usage/linter.html)# SyncScape — Frontend
 
 React + TypeScript + Vite app.
 
