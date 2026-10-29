@@ -1,0 +1,4 @@
+Model,Precision@5,"ms to rank 1 user vs 20,000"
+LightGBM,99.9,121.69
+"Pair MLP (neural, scores each pair)",99.9,76.75
+Two-Tower (ours),95.8,1.14
