@@ -1,0 +1,92 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+.venv/
+env/
+venv/
+ENV/
+env.bak
+venv.bak
+
+# Package Managers & Notebooks
+.ipynb_checkpoints
+*.ipynb
+poetry.lock
+Pipfile.lock
+
+# ==========================================
+# IDEs, OS & Environment Secrets
+# ==========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Environment variables & secrets
+.env
+.env.*
+
+# ==========================================
+# AI / ML & VLM Specific Ignores
+# ==========================================
+
+# Model weights, checkpoints, and compiled binaries
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+*.onnx
+*.engine
+*.gguf
+*.h5
+VLM-model/
+# Local model directories & Hugging Face caches
+models/
+weights/
+checkpoints/
+cache/
+.cache/
+huggingface/
+hf_cache/
+tests/
+
+# Experiment tracking, logs, and outputs
+wandb/
+mlruns/
+tensorboard/
+runs/
+logs/
+outputs/
+*.log
+experiment.ipynb
+
+# Local datasets
+data/
+datasets/
+*.parquet
+*.jsonl
