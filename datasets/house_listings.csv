@@ -1,0 +1,3001 @@
+listing_id,area,room,rent,available_day,min_lease,housemates
+0,City Centre,shared,584,27,12,2
+1,Wilton,double,577,52,6,5
+2,Ballincollig,double,618,63,12,2
+3,City Centre,shared,677,27,12,4
+4,Douglas,ensuite,748,44,6,4
+5,Model Farm Rd,shared,428,74,9,3
+6,Douglas,single,802,90,9,3
+7,Model Farm Rd,shared,519,0,6,4
+8,Model Farm Rd,double,517,32,12,2
+9,Model Farm Rd,double,608,82,12,1
+10,Douglas,double,528,5,6,2
+11,City Centre,single,698,87,9,2
+12,Douglas,ensuite,791,14,12,1
+13,Douglas,single,487,89,6,4
+14,Bishopstown,ensuite,644,26,9,2
+15,Wilton,single,629,47,9,4
+16,Mahon,ensuite,678,56,12,2
+17,Wilton,double,618,49,9,2
+18,Douglas,shared,378,62,9,4
+19,City Centre,ensuite,722,0,9,4
+20,Wilton,single,811,7,12,4
+21,Togher,ensuite,729,26,9,1
+22,Ballincollig,double,566,36,9,2
+23,Mahon,single,531,60,12,1
+24,Model Farm Rd,shared,401,44,9,2
+25,Glanmire,double,549,88,9,4
+26,Mahon,ensuite,666,20,9,2
+27,Glanmire,double,573,2,6,4
+28,Mahon,double,515,70,12,2
+29,Bishopstown,ensuite,773,47,12,3
+30,Bishopstown,ensuite,745,84,12,3
+31,Mahon,single,826,8,12,1
+32,Douglas,ensuite,768,32,6,5
+33,Model Farm Rd,double,464,80,9,5
+34,City Centre,double,724,2,9,5
+35,Mahon,ensuite,660,0,9,2
+36,Wilton,single,698,39,12,4
+37,Ballincollig,ensuite,583,75,6,4
+38,Model Farm Rd,ensuite,640,12,9,4
+39,Model Farm Rd,double,577,31,9,1
+40,Blackrock,ensuite,846,60,6,5
+41,Blackrock,shared,485,29,9,5
+42,City Centre,single,729,13,12,2
+43,Douglas,shared,432,5,6,4
+44,Mahon,single,526,13,12,5
+45,Glanmire,double,475,28,12,2
+46,Douglas,ensuite,728,12,6,3
+47,City Centre,shared,635,15,9,5
+48,Glanmire,double,570,11,9,2
+49,Model Farm Rd,single,491,11,9,5
+50,Togher,double,579,5,9,3
+51,Togher,double,515,84,12,1
+52,Glanmire,double,479,52,9,1
+53,Bishopstown,double,655,73,9,1
+54,Mahon,ensuite,862,45,9,5
+55,Wilton,single,763,12,12,5
+56,City Centre,ensuite,774,24,6,2
+57,Douglas,single,632,22,6,2
+58,Douglas,double,599,37,9,1
+59,Glanmire,double,627,79,6,1
+60,Bishopstown,double,556,46,12,3
+61,Mahon,double,553,88,6,2
+62,Glanmire,shared,350,0,6,3
+63,City Centre,double,542,87,9,1
+64,Bishopstown,double,673,27,6,2
+65,Mahon,single,782,55,6,2
+66,Ballincollig,ensuite,753,57,6,5
+67,Togher,double,640,57,9,2
+68,Model Farm Rd,shared,482,35,9,3
+69,Model Farm Rd,double,501,2,6,4
+70,Ballincollig,shared,482,68,9,1
+71,Model Farm Rd,single,788,88,6,1
+72,Douglas,single,656,71,9,4
+73,Model Farm Rd,double,700,6,12,2
+74,Togher,double,350,16,6,1
+75,Togher,single,713,30,12,5
+76,Bishopstown,ensuite,807,67,12,1
+77,Ballincollig,ensuite,733,42,12,2
+78,Wilton,single,688,54,9,2
+79,Wilton,double,411,89,12,1
+80,Togher,double,530,79,9,1
+81,Mahon,single,692,41,9,2
+82,Ballincollig,ensuite,893,3,6,1
+83,City Centre,single,693,3,6,3
+84,Wilton,single,607,10,12,2
+85,Glanmire,single,584,56,12,3
+86,City Centre,single,822,19,9,3
+87,Mahon,single,689,64,12,3
+88,Ballincollig,ensuite,712,20,6,5
+89,Wilton,shared,526,36,9,5
+90,Bishopstown,double,608,22,9,5
+91,Model Farm Rd,single,737,40,9,4
+92,City Centre,shared,476,59,6,1
+93,Model Farm Rd,single,620,0,12,3
+94,Douglas,shared,424,44,12,3
+95,Bishopstown,ensuite,668,66,9,5
+96,Wilton,shared,506,48,12,1
+97,Douglas,shared,483,19,9,5
+98,Douglas,ensuite,770,47,12,1
+99,Blackrock,ensuite,758,21,12,4
+100,City Centre,single,612,80,9,1
+101,Mahon,double,532,30,9,5
+102,Model Farm Rd,shared,419,79,9,1
+103,Model Farm Rd,double,487,16,6,1
+104,Ballincollig,single,635,15,9,3
+105,Togher,single,676,71,12,1
+106,Ballincollig,ensuite,929,82,6,5
+107,Glanmire,shared,445,31,12,2
+108,Mahon,double,593,67,12,1
+109,Mahon,ensuite,763,31,6,1
+110,Wilton,shared,350,79,12,3
+111,Wilton,ensuite,787,52,9,2
+112,City Centre,double,655,53,12,2
+113,Blackrock,shared,691,27,6,3
+114,Ballincollig,single,632,59,6,4
+115,Ballincollig,shared,477,20,9,3
+116,Ballincollig,single,646,23,9,2
+117,Blackrock,ensuite,674,69,12,2
+118,Ballincollig,double,662,2,12,1
+119,Glanmire,shared,497,39,9,3
+120,Ballincollig,single,721,28,12,1
+121,Blackrock,double,498,71,12,5
+122,Togher,double,676,35,9,2
+123,Glanmire,single,503,86,12,3
+124,City Centre,ensuite,902,87,12,1
+125,Ballincollig,double,757,26,6,2
+126,Blackrock,double,490,67,9,5
+127,Blackrock,single,619,50,12,2
+128,Wilton,single,688,11,6,5
+129,Glanmire,shared,384,15,12,1
+130,Model Farm Rd,double,420,30,12,1
+131,Douglas,shared,466,27,6,4
+132,Blackrock,double,484,5,9,1
+133,Bishopstown,single,732,78,12,4
+134,Blackrock,shared,387,12,9,5
+135,Mahon,single,799,1,6,2
+136,City Centre,single,669,75,6,3
+137,Mahon,single,631,70,6,5
+138,Togher,single,713,31,12,4
+139,Blackrock,shared,359,81,12,4
+140,Ballincollig,ensuite,780,76,6,4
+141,City Centre,double,767,50,9,5
+142,Blackrock,double,435,7,6,3
+143,Model Farm Rd,single,666,15,12,5
+144,Ballincollig,single,673,69,9,2
+145,Douglas,shared,530,67,9,3
+146,City Centre,double,538,52,6,2
+147,Wilton,double,471,77,12,5
+148,Wilton,single,726,30,9,3
+149,Blackrock,ensuite,806,53,6,1
+150,Ballincollig,single,672,89,12,3
+151,Wilton,shared,511,5,9,1
+152,Blackrock,double,518,63,9,4
+153,Mahon,single,680,66,12,1
+154,Bishopstown,double,626,54,6,1
+155,Douglas,single,595,66,6,3
+156,Mahon,shared,627,77,6,1
+157,Mahon,double,612,87,9,1
+158,Blackrock,double,472,12,6,2
+159,Ballincollig,ensuite,819,45,6,4
+160,Togher,double,462,55,12,1
+161,Glanmire,shared,500,54,12,2
+162,Model Farm Rd,double,664,67,9,3
+163,City Centre,single,666,30,9,5
+164,City Centre,shared,626,24,9,3
+165,Douglas,shared,497,85,12,5
+166,Wilton,shared,553,5,6,2
+167,Blackrock,single,840,6,6,3
+168,Glanmire,single,607,77,6,5
+169,Blackrock,single,602,37,9,5
+170,Wilton,single,599,57,9,5
+171,Wilton,shared,406,76,12,5
+172,Model Farm Rd,shared,443,79,12,4
+173,Ballincollig,shared,480,11,12,3
+174,Wilton,ensuite,814,74,9,5
+175,Douglas,double,644,42,12,1
+176,Ballincollig,single,651,64,9,5
+177,Model Farm Rd,double,690,22,6,1
+178,Wilton,double,566,37,6,4
+179,Mahon,single,904,52,12,1
+180,Togher,shared,496,19,9,1
+181,Glanmire,shared,352,3,12,4
+182,Wilton,double,493,39,12,2
+183,Togher,double,593,41,12,5
+184,Blackrock,double,559,66,6,5
+185,City Centre,ensuite,914,0,9,4
+186,Bishopstown,double,642,88,12,5
+187,Mahon,ensuite,763,3,12,2
+188,Mahon,ensuite,693,69,12,2
+189,Mahon,ensuite,633,11,12,4
+190,Model Farm Rd,shared,409,44,9,1
+191,Douglas,single,737,71,9,4
+192,Bishopstown,double,619,24,12,3
+193,Model Farm Rd,ensuite,647,15,9,2
+194,Ballincollig,shared,465,69,6,2
+195,Model Farm Rd,ensuite,794,65,9,1
+196,City Centre,double,570,61,6,1
+197,City Centre,shared,553,76,9,4
+198,Bishopstown,single,695,14,9,5
+199,Douglas,single,557,10,12,2
+200,Model Farm Rd,ensuite,792,3,6,1
+201,Mahon,single,710,78,12,3
+202,Bishopstown,ensuite,897,80,12,1
+203,Blackrock,single,764,58,9,2
+204,Togher,double,426,74,9,4
+205,Wilton,single,595,47,6,3
+206,Ballincollig,single,696,63,9,4
+207,Model Farm Rd,ensuite,806,50,6,1
+208,Glanmire,double,586,51,9,2
+209,Model Farm Rd,double,906,44,6,5
+210,Bishopstown,shared,541,80,9,4
+211,City Centre,double,752,72,12,5
+212,Bishopstown,ensuite,885,2,9,5
+213,Togher,ensuite,808,8,6,2
+214,Douglas,shared,431,29,6,2
+215,Blackrock,ensuite,848,21,6,3
+216,Mahon,single,590,59,12,1
+217,Glanmire,single,608,26,6,1
+218,Bishopstown,double,556,0,9,1
+219,Douglas,shared,467,30,12,3
+220,Wilton,shared,688,63,12,5
+221,Blackrock,shared,350,15,6,2
+222,Glanmire,single,691,85,12,3
+223,Ballincollig,ensuite,614,75,6,2
+224,Model Farm Rd,ensuite,717,6,6,4
+225,Ballincollig,single,748,12,9,3
+226,Ballincollig,single,655,30,9,2
+227,Ballincollig,single,553,50,9,5
+228,Bishopstown,double,535,59,12,4
+229,Togher,double,611,23,6,1
+230,Wilton,single,614,62,12,5
+231,Wilton,single,699,80,6,3
+232,Togher,shared,444,21,12,5
+233,Blackrock,shared,411,87,12,4
+234,Douglas,shared,652,29,12,2
+235,Bishopstown,double,657,69,12,3
+236,Mahon,single,477,43,6,5
+237,Glanmire,single,646,63,12,5
+238,Togher,shared,380,51,12,1
+239,Glanmire,shared,506,89,6,4
+240,Glanmire,double,468,51,12,2
+241,City Centre,ensuite,839,0,9,5
+242,Wilton,single,725,84,6,2
+243,Douglas,ensuite,847,41,12,2
+244,Bishopstown,shared,381,86,12,3
+245,City Centre,ensuite,819,69,9,1
+246,Ballincollig,shared,407,72,6,1
+247,Togher,double,491,9,12,2
+248,Blackrock,shared,628,58,12,1
+249,Togher,ensuite,786,30,9,5
+250,Model Farm Rd,ensuite,646,69,6,2
+251,Wilton,single,762,42,6,5
+252,Douglas,shared,650,76,12,3
+253,Togher,ensuite,842,82,6,3
+254,Model Farm Rd,ensuite,623,78,12,5
+255,Bishopstown,single,646,36,9,4
+256,Togher,shared,554,4,12,4
+257,Bishopstown,ensuite,736,22,6,5
+258,Mahon,shared,499,49,9,2
+259,Togher,double,619,3,12,4
+260,Ballincollig,shared,366,9,12,1
+261,Glanmire,shared,424,78,12,4
+262,Mahon,double,350,79,12,4
+263,Togher,shared,350,19,6,3
+264,Togher,double,527,63,12,1
+265,Togher,ensuite,637,87,12,1
+266,Mahon,double,716,87,12,2
+267,Blackrock,single,541,89,9,1
+268,Blackrock,shared,430,48,12,5
+269,Blackrock,shared,481,72,6,1
+270,Bishopstown,double,729,35,12,2
+271,Blackrock,ensuite,650,34,9,2
+272,Togher,shared,544,58,12,4
+273,Douglas,double,570,45,12,3
+274,Wilton,double,501,81,6,5
+275,Model Farm Rd,ensuite,801,50,6,2
+276,Togher,single,657,43,9,2
+277,Ballincollig,single,595,87,12,3
+278,Wilton,ensuite,796,61,6,3
+279,Mahon,double,535,73,6,4
+280,Model Farm Rd,double,570,88,6,3
+281,Togher,ensuite,809,13,6,5
+282,Bishopstown,shared,632,47,9,1
+283,Glanmire,ensuite,628,49,12,3
+284,City Centre,ensuite,1041,62,12,3
+285,Ballincollig,double,384,0,6,3
+286,Model Farm Rd,single,636,86,12,5
+287,Bishopstown,single,742,61,12,4
+288,Wilton,single,705,25,12,3
+289,Model Farm Rd,double,503,34,6,1
+290,Blackrock,double,561,50,9,1
+291,Blackrock,ensuite,735,58,6,3
+292,Blackrock,double,526,13,6,2
+293,Blackrock,double,656,53,9,5
+294,Bishopstown,double,632,54,9,3
+295,City Centre,single,677,79,9,2
+296,Bishopstown,ensuite,880,11,6,3
+297,Wilton,shared,507,49,12,5
+298,Bishopstown,shared,563,71,6,5
+299,Wilton,shared,536,0,9,3
+300,Wilton,double,515,65,12,5
+301,Blackrock,shared,419,20,6,3
+302,Togher,shared,507,53,6,3
+303,Model Farm Rd,shared,504,57,12,4
+304,Ballincollig,ensuite,758,21,6,4
+305,Blackrock,ensuite,790,85,9,5
+306,Blackrock,shared,584,46,9,5
+307,Ballincollig,double,506,64,6,3
+308,Model Farm Rd,single,699,10,12,4
+309,Blackrock,single,651,17,6,1
+310,City Centre,double,630,39,9,2
+311,Model Farm Rd,double,658,9,6,2
+312,Bishopstown,ensuite,874,40,6,2
+313,City Centre,ensuite,923,43,9,1
+314,Togher,double,667,81,12,4
+315,Togher,double,551,87,6,3
+316,Ballincollig,ensuite,821,66,12,5
+317,Mahon,shared,432,75,12,4
+318,Wilton,shared,509,88,6,4
+319,Glanmire,shared,418,37,12,4
+320,Wilton,single,688,16,9,5
+321,Wilton,ensuite,843,36,6,1
+322,Togher,double,476,22,12,5
+323,Bishopstown,double,788,24,6,2
+324,Douglas,double,479,82,6,3
+325,Model Farm Rd,single,540,7,9,1
+326,Bishopstown,double,704,53,9,4
+327,Wilton,double,661,70,9,3
+328,City Centre,double,706,60,9,5
+329,Bishopstown,shared,546,22,6,3
+330,Glanmire,shared,428,41,9,3
+331,Togher,ensuite,669,61,6,4
+332,Wilton,single,686,41,6,5
+333,Bishopstown,shared,429,48,12,5
+334,Douglas,single,747,50,6,5
+335,Wilton,shared,466,15,12,4
+336,Wilton,single,605,58,12,2
+337,Douglas,shared,431,27,12,5
+338,Wilton,single,717,41,6,2
+339,Wilton,double,539,52,6,1
+340,Mahon,ensuite,696,84,12,1
+341,Ballincollig,double,581,70,12,2
+342,Douglas,double,592,41,12,3
+343,Douglas,double,524,40,12,3
+344,Ballincollig,shared,407,15,9,4
+345,Glanmire,double,560,20,9,3
+346,Douglas,single,529,73,9,3
+347,Ballincollig,shared,350,78,12,1
+348,Wilton,shared,415,77,12,4
+349,City Centre,double,630,73,6,4
+350,Bishopstown,double,627,7,9,2
+351,Model Farm Rd,shared,582,67,9,1
+352,Douglas,shared,537,90,9,2
+353,Model Farm Rd,double,545,16,6,1
+354,Bishopstown,double,598,46,9,1
+355,Togher,double,459,22,6,1
+356,Ballincollig,shared,448,77,12,4
+357,Togher,shared,414,44,12,2
+358,Blackrock,ensuite,809,23,6,5
+359,Mahon,single,585,5,6,1
+360,Ballincollig,ensuite,806,30,9,1
+361,Model Farm Rd,ensuite,897,14,9,1
+362,Blackrock,double,570,26,12,5
+363,Bishopstown,single,726,19,12,5
+364,Wilton,ensuite,852,84,6,1
+365,Ballincollig,double,523,61,9,5
+366,Douglas,single,680,78,6,1
+367,Model Farm Rd,shared,451,60,6,2
+368,Model Farm Rd,shared,458,11,12,1
+369,Wilton,shared,410,6,12,2
+370,Wilton,single,682,26,6,1
+371,Glanmire,shared,474,59,12,2
+372,City Centre,single,870,77,12,1
+373,Bishopstown,single,776,48,9,1
+374,Wilton,double,783,5,6,5
+375,City Centre,shared,470,17,12,3
+376,Togher,shared,518,31,6,5
+377,Douglas,single,676,37,12,2
+378,Mahon,shared,657,43,6,5
+379,City Centre,double,577,58,12,3
+380,Togher,single,564,19,9,2
+381,Bishopstown,single,636,36,6,5
+382,Mahon,double,378,43,6,5
+383,Blackrock,double,532,19,12,3
+384,Mahon,double,501,2,12,2
+385,Blackrock,ensuite,793,48,6,1
+386,Douglas,ensuite,800,16,12,5
+387,Glanmire,single,798,12,6,4
+388,Bishopstown,double,685,35,6,4
+389,Blackrock,ensuite,728,69,9,4
+390,Ballincollig,double,479,27,6,3
+391,Bishopstown,double,644,3,6,4
+392,City Centre,shared,421,15,9,5
+393,Wilton,shared,644,29,12,4
+394,Ballincollig,single,756,21,12,5
+395,City Centre,shared,497,10,9,4
+396,Model Farm Rd,single,495,52,6,2
+397,Wilton,ensuite,911,67,12,1
+398,Blackrock,ensuite,769,33,6,1
+399,Douglas,ensuite,881,4,6,1
+400,Bishopstown,single,546,78,9,4
+401,Glanmire,shared,376,47,9,3
+402,Model Farm Rd,single,650,47,9,5
+403,Blackrock,ensuite,784,36,9,2
+404,Douglas,ensuite,729,61,6,2
+405,Ballincollig,shared,506,55,6,1
+406,City Centre,single,643,15,12,1
+407,City Centre,double,637,3,12,4
+408,Togher,double,560,12,9,4
+409,Ballincollig,single,696,62,6,4
+410,Togher,single,704,69,6,5
+411,Bishopstown,ensuite,698,57,6,2
+412,Model Farm Rd,single,511,13,9,1
+413,Glanmire,single,744,25,12,1
+414,Mahon,shared,489,13,6,1
+415,Glanmire,double,472,42,6,1
+416,Ballincollig,ensuite,899,67,9,4
+417,Ballincollig,double,570,51,6,1
+418,Douglas,single,766,2,12,4
+419,Wilton,ensuite,796,68,12,3
+420,Glanmire,shared,615,90,9,5
+421,Ballincollig,shared,607,3,6,1
+422,Togher,single,617,42,6,2
+423,Model Farm Rd,shared,537,20,9,3
+424,Mahon,shared,518,55,6,1
+425,Blackrock,single,793,67,6,2
+426,Glanmire,single,543,4,6,3
+427,Mahon,shared,521,54,6,3
+428,Blackrock,single,765,8,6,1
+429,Glanmire,shared,350,85,9,1
+430,Ballincollig,single,543,2,12,3
+431,Model Farm Rd,double,376,69,12,1
+432,Model Farm Rd,ensuite,735,73,6,3
+433,Douglas,single,724,40,6,1
+434,Ballincollig,single,785,75,9,5
+435,Glanmire,shared,436,77,12,4
+436,Douglas,single,806,25,9,5
+437,Glanmire,single,505,53,9,5
+438,Togher,ensuite,596,13,9,4
+439,Bishopstown,double,595,27,9,3
+440,City Centre,shared,574,61,12,3
+441,Douglas,double,567,22,9,4
+442,Wilton,double,403,88,12,5
+443,Model Farm Rd,ensuite,751,74,12,1
+444,Model Farm Rd,shared,350,1,6,3
+445,Wilton,shared,540,84,6,1
+446,Douglas,shared,492,6,12,4
+447,Togher,double,465,13,6,4
+448,City Centre,double,603,84,12,1
+449,Ballincollig,single,554,69,6,2
+450,Blackrock,shared,464,18,6,1
+451,Glanmire,single,715,68,12,5
+452,Ballincollig,single,561,9,12,4
+453,Ballincollig,ensuite,805,68,6,2
+454,Bishopstown,shared,442,45,12,5
+455,Douglas,shared,388,64,9,4
+456,City Centre,double,640,7,6,3
+457,Togher,single,546,53,9,3
+458,Glanmire,single,580,23,6,4
+459,Model Farm Rd,single,542,38,12,4
+460,Bishopstown,single,866,20,12,4
+461,Model Farm Rd,ensuite,763,21,12,4
+462,Togher,double,487,59,12,4
+463,Model Farm Rd,shared,469,85,12,1
+464,Ballincollig,single,639,75,9,2
+465,Bishopstown,ensuite,780,11,12,4
+466,Bishopstown,ensuite,855,54,6,4
+467,Togher,double,618,22,9,3
+468,Togher,double,502,42,12,4
+469,Blackrock,single,618,58,12,4
+470,Wilton,ensuite,765,81,6,5
+471,Mahon,ensuite,562,78,9,4
+472,Togher,double,413,33,12,4
+473,City Centre,ensuite,973,57,12,3
+474,Wilton,single,828,56,6,2
+475,Togher,ensuite,727,13,9,2
+476,Wilton,ensuite,841,74,6,4
+477,Ballincollig,double,588,0,12,5
+478,Douglas,ensuite,1047,68,9,5
+479,Togher,double,650,78,6,4
+480,Wilton,ensuite,778,50,9,2
+481,Togher,shared,354,77,12,1
+482,Mahon,single,515,79,6,1
+483,Ballincollig,single,668,27,6,5
+484,Douglas,ensuite,701,84,12,2
+485,Douglas,shared,350,13,6,2
+486,Glanmire,shared,371,0,9,2
+487,Douglas,single,562,32,9,5
+488,Togher,single,791,51,9,1
+489,Wilton,ensuite,869,35,9,4
+490,Wilton,ensuite,789,15,12,1
+491,Mahon,ensuite,903,83,6,2
+492,Ballincollig,ensuite,766,3,12,4
+493,Mahon,single,582,60,12,4
+494,Bishopstown,double,737,89,9,5
+495,Togher,single,688,69,12,1
+496,Mahon,shared,366,70,6,1
+497,Ballincollig,single,632,56,9,4
+498,Togher,single,561,28,9,5
+499,Wilton,shared,355,80,9,3
+500,Togher,shared,523,78,12,5
+501,Model Farm Rd,double,731,89,12,4
+502,Model Farm Rd,shared,350,39,12,4
+503,Model Farm Rd,ensuite,810,88,6,3
+504,Blackrock,ensuite,721,40,12,1
+505,Bishopstown,single,646,78,6,5
+506,Wilton,single,626,87,9,3
+507,Douglas,shared,382,88,6,3
+508,Bishopstown,single,694,60,6,4
+509,City Centre,double,575,76,12,5
+510,Mahon,double,594,53,9,2
+511,Mahon,double,565,12,12,5
+512,Ballincollig,ensuite,738,47,12,1
+513,Mahon,shared,378,0,6,1
+514,Model Farm Rd,ensuite,708,17,9,5
+515,Model Farm Rd,ensuite,827,22,6,3
+516,Mahon,shared,505,87,9,5
+517,Model Farm Rd,shared,362,55,9,4
+518,City Centre,ensuite,858,55,9,2
+519,City Centre,ensuite,917,40,9,3
+520,Glanmire,shared,350,43,12,1
+521,Model Farm Rd,shared,498,39,9,2
+522,Douglas,single,600,54,6,2
+523,Blackrock,ensuite,831,51,9,2
+524,Wilton,shared,411,43,12,3
+525,City Centre,single,577,50,12,3
+526,Model Farm Rd,ensuite,613,29,6,1
+527,Mahon,double,574,23,6,2
+528,Wilton,ensuite,813,23,9,4
+529,Glanmire,shared,350,39,9,2
+530,Blackrock,single,727,49,6,1
+531,Bishopstown,double,450,35,12,1
+532,Bishopstown,ensuite,794,64,9,5
+533,Togher,shared,350,7,6,5
+534,City Centre,single,681,60,12,5
+535,Mahon,shared,464,63,12,2
+536,Douglas,single,582,22,12,5
+537,Blackrock,shared,435,1,9,4
+538,Wilton,shared,570,33,6,4
+539,Bishopstown,double,548,14,6,1
+540,Douglas,ensuite,845,29,12,4
+541,Blackrock,double,478,55,9,5
+542,Mahon,single,707,59,12,3
+543,Wilton,ensuite,919,33,12,2
+544,Ballincollig,double,350,15,12,5
+545,Douglas,ensuite,698,32,9,3
+546,City Centre,single,791,86,9,3
+547,Ballincollig,ensuite,741,36,12,4
+548,Blackrock,double,613,25,6,1
+549,Wilton,double,535,19,12,4
+550,Ballincollig,shared,457,87,12,1
+551,Glanmire,shared,415,50,6,2
+552,Ballincollig,double,665,62,6,1
+553,Douglas,shared,482,87,6,1
+554,Glanmire,ensuite,770,1,12,5
+555,City Centre,single,702,77,9,2
+556,City Centre,ensuite,806,42,12,2
+557,City Centre,shared,501,77,6,3
+558,Togher,double,585,34,12,2
+559,Blackrock,double,542,39,6,1
+560,Bishopstown,single,716,50,9,4
+561,Togher,ensuite,936,65,6,4
+562,Blackrock,double,658,35,9,3
+563,Blackrock,ensuite,750,33,9,1
+564,Togher,double,658,68,9,1
+565,Glanmire,double,503,57,12,5
+566,Bishopstown,single,506,82,12,3
+567,Douglas,single,569,18,12,4
+568,Togher,ensuite,581,68,12,4
+569,Model Farm Rd,shared,418,75,12,5
+570,Wilton,single,681,39,9,4
+571,Model Farm Rd,double,710,61,6,3
+572,Glanmire,double,569,32,9,2
+573,City Centre,single,720,76,12,4
+574,Ballincollig,double,634,34,6,2
+575,Togher,double,350,75,9,2
+576,Togher,double,571,30,12,1
+577,Wilton,single,749,82,12,5
+578,Glanmire,single,496,50,6,5
+579,Douglas,double,672,66,12,1
+580,Model Farm Rd,double,590,21,6,1
+581,City Centre,single,702,1,6,2
+582,Wilton,single,736,2,6,5
+583,Mahon,shared,664,55,9,1
+584,City Centre,single,756,65,12,5
+585,Togher,shared,462,49,6,1
+586,Togher,single,598,37,6,3
+587,Mahon,single,583,36,6,2
+588,Togher,ensuite,824,40,12,2
+589,Bishopstown,single,612,61,9,4
+590,Togher,double,556,24,9,3
+591,Mahon,ensuite,727,86,6,1
+592,City Centre,double,693,2,9,4
+593,Wilton,single,710,47,9,3
+594,Model Farm Rd,shared,543,56,6,3
+595,City Centre,single,694,55,9,4
+596,Mahon,ensuite,745,11,6,1
+597,Mahon,ensuite,681,38,6,1
+598,Douglas,ensuite,730,0,9,5
+599,Blackrock,single,703,51,12,5
+600,Ballincollig,shared,518,5,12,5
+601,City Centre,ensuite,767,71,6,4
+602,Mahon,double,648,37,12,2
+603,Mahon,shared,582,20,9,5
+604,Glanmire,single,667,67,6,5
+605,Mahon,single,828,60,12,4
+606,Model Farm Rd,single,580,46,6,3
+607,Model Farm Rd,shared,350,23,9,4
+608,Bishopstown,shared,350,48,6,5
+609,Douglas,double,704,2,6,2
+610,Mahon,ensuite,828,58,12,5
+611,Model Farm Rd,double,554,48,6,3
+612,Bishopstown,single,715,73,9,2
+613,Bishopstown,shared,388,46,9,5
+614,Blackrock,single,890,58,9,4
+615,Ballincollig,single,661,85,12,2
+616,Glanmire,ensuite,749,49,12,2
+617,Bishopstown,single,755,69,12,5
+618,Wilton,ensuite,833,11,12,5
+619,Mahon,double,590,55,9,2
+620,Wilton,double,518,77,9,3
+621,Togher,single,682,57,6,3
+622,Blackrock,ensuite,949,16,6,5
+623,Blackrock,ensuite,901,47,9,1
+624,Blackrock,shared,613,64,6,1
+625,Model Farm Rd,double,513,16,9,4
+626,City Centre,single,650,6,6,4
+627,Douglas,ensuite,758,52,9,1
+628,Glanmire,double,545,27,6,3
+629,Glanmire,double,638,64,6,5
+630,Model Farm Rd,ensuite,607,35,6,1
+631,Bishopstown,shared,627,66,12,5
+632,Wilton,double,575,88,9,4
+633,Douglas,single,621,17,9,1
+634,Mahon,ensuite,678,0,9,1
+635,City Centre,ensuite,701,71,12,1
+636,Bishopstown,single,764,73,9,1
+637,Model Farm Rd,double,566,59,6,1
+638,Blackrock,double,463,54,6,1
+639,Blackrock,double,463,56,6,5
+640,Wilton,double,559,5,6,4
+641,Bishopstown,shared,640,75,9,1
+642,City Centre,shared,516,32,12,1
+643,Togher,ensuite,614,71,12,3
+644,Ballincollig,double,537,82,6,5
+645,Togher,shared,415,52,12,5
+646,Model Farm Rd,double,350,52,9,2
+647,Model Farm Rd,ensuite,755,35,9,1
+648,Mahon,single,639,79,12,5
+649,Wilton,shared,542,25,9,5
+650,Bishopstown,double,766,9,6,3
+651,Blackrock,single,771,19,9,5
+652,Model Farm Rd,shared,425,28,12,2
+653,Bishopstown,shared,390,37,6,3
+654,Glanmire,ensuite,971,67,6,3
+655,Wilton,shared,485,67,6,4
+656,Ballincollig,shared,451,4,12,4
+657,Glanmire,double,537,75,12,2
+658,Ballincollig,ensuite,777,69,12,2
+659,Togher,ensuite,737,22,9,2
+660,Mahon,ensuite,718,51,6,5
+661,City Centre,ensuite,800,42,6,4
+662,Glanmire,ensuite,737,90,6,4
+663,Blackrock,shared,421,79,9,3
+664,Bishopstown,ensuite,735,50,6,2
+665,Model Farm Rd,double,569,1,12,1
+666,Togher,ensuite,727,41,6,1
+667,Glanmire,ensuite,875,3,12,5
+668,Bishopstown,double,361,12,6,1
+669,Glanmire,shared,528,12,12,1
+670,Wilton,ensuite,902,37,12,4
+671,Mahon,single,473,87,12,2
+672,Wilton,single,649,51,12,5
+673,Blackrock,double,546,40,9,1
+674,Wilton,single,553,10,12,2
+675,Wilton,shared,409,40,12,3
+676,City Centre,single,640,20,9,1
+677,Bishopstown,ensuite,957,14,9,2
+678,Wilton,ensuite,874,83,12,5
+679,Ballincollig,shared,564,81,12,3
+680,City Centre,shared,604,36,6,4
+681,Bishopstown,shared,388,90,6,2
+682,Glanmire,single,582,45,12,5
+683,Blackrock,single,714,29,12,1
+684,City Centre,single,630,50,9,5
+685,Douglas,ensuite,834,1,6,5
+686,Bishopstown,single,668,35,9,2
+687,City Centre,double,616,54,6,5
+688,Model Farm Rd,ensuite,823,8,6,5
+689,Ballincollig,single,689,28,12,3
+690,Model Farm Rd,double,527,69,9,3
+691,Douglas,ensuite,874,87,12,3
+692,Wilton,single,582,46,9,1
+693,City Centre,single,795,52,9,5
+694,Model Farm Rd,single,703,82,6,4
+695,Model Farm Rd,shared,422,70,6,1
+696,Togher,shared,469,56,9,3
+697,City Centre,double,537,61,12,3
+698,Wilton,double,673,84,6,5
+699,Ballincollig,ensuite,743,74,12,3
+700,Douglas,single,612,0,9,4
+701,Glanmire,shared,524,20,9,3
+702,City Centre,double,586,20,12,3
+703,City Centre,single,613,63,6,4
+704,Blackrock,ensuite,639,16,9,2
+705,Ballincollig,single,704,58,12,3
+706,Wilton,single,564,80,6,5
+707,Wilton,double,747,28,9,3
+708,Bishopstown,single,502,1,12,1
+709,Model Farm Rd,single,802,82,9,1
+710,Blackrock,double,598,0,12,5
+711,Togher,shared,431,65,9,2
+712,City Centre,double,600,14,6,4
+713,Mahon,shared,495,28,6,5
+714,City Centre,ensuite,846,86,9,4
+715,Blackrock,shared,569,41,12,2
+716,Bishopstown,double,610,75,12,5
+717,Mahon,ensuite,783,21,9,1
+718,Douglas,double,537,53,12,2
+719,City Centre,double,644,58,9,3
+720,Togher,double,577,9,9,4
+721,Glanmire,single,476,88,12,2
+722,City Centre,shared,418,14,6,3
+723,Wilton,double,656,70,6,2
+724,Douglas,shared,475,89,6,1
+725,Model Farm Rd,double,543,8,9,5
+726,Bishopstown,shared,491,0,12,3
+727,Model Farm Rd,single,681,55,6,1
+728,Togher,shared,391,27,12,3
+729,Blackrock,single,599,75,9,5
+730,Glanmire,shared,447,21,12,1
+731,Mahon,single,571,90,6,3
+732,Douglas,shared,496,68,12,5
+733,Douglas,single,506,70,9,5
+734,Wilton,shared,572,22,12,3
+735,Blackrock,ensuite,822,6,12,1
+736,Togher,double,573,21,12,4
+737,Wilton,single,768,6,6,5
+738,Douglas,ensuite,919,68,6,2
+739,Wilton,double,681,7,9,1
+740,Ballincollig,ensuite,594,62,9,2
+741,Wilton,single,564,8,9,3
+742,Model Farm Rd,double,503,89,6,2
+743,City Centre,double,652,4,12,2
+744,City Centre,ensuite,896,89,6,2
+745,Wilton,double,524,56,9,3
+746,Wilton,single,696,31,9,2
+747,City Centre,double,582,64,6,4
+748,Blackrock,single,614,52,9,4
+749,Douglas,single,533,87,6,3
+750,Model Farm Rd,double,476,56,9,4
+751,Blackrock,shared,350,74,6,5
+752,Togher,double,462,16,6,1
+753,Wilton,single,774,53,12,1
+754,Glanmire,ensuite,654,48,12,1
+755,Wilton,double,826,15,6,3
+756,Douglas,ensuite,814,8,12,4
+757,Mahon,double,586,19,12,1
+758,Douglas,single,582,53,9,1
+759,Togher,single,703,46,9,5
+760,Blackrock,shared,418,50,9,1
+761,Mahon,double,580,89,9,2
+762,Bishopstown,shared,720,46,9,1
+763,Ballincollig,ensuite,751,32,9,1
+764,Glanmire,shared,533,50,6,3
+765,Model Farm Rd,double,496,28,12,4
+766,Blackrock,single,666,38,12,5
+767,Mahon,double,729,58,6,2
+768,Wilton,shared,423,17,9,1
+769,Bishopstown,ensuite,963,18,9,2
+770,Mahon,double,633,43,12,5
+771,Blackrock,ensuite,729,86,6,1
+772,Togher,single,696,68,12,4
+773,Model Farm Rd,single,737,79,9,2
+774,Douglas,ensuite,825,10,12,5
+775,Model Farm Rd,shared,350,33,6,2
+776,Togher,ensuite,684,30,6,3
+777,Glanmire,double,517,46,12,1
+778,Blackrock,double,573,28,6,3
+779,Douglas,single,715,88,6,1
+780,Bishopstown,ensuite,815,85,12,4
+781,Mahon,single,539,47,12,3
+782,Blackrock,shared,504,49,12,5
+783,Ballincollig,shared,504,42,9,4
+784,Model Farm Rd,ensuite,810,81,9,2
+785,Blackrock,double,677,55,9,5
+786,Glanmire,ensuite,815,50,9,5
+787,Togher,shared,481,8,9,2
+788,Ballincollig,double,553,10,6,3
+789,Ballincollig,ensuite,610,2,12,1
+790,Model Farm Rd,ensuite,798,79,9,5
+791,Bishopstown,ensuite,818,23,9,5
+792,Wilton,ensuite,814,47,12,4
+793,Mahon,ensuite,655,57,6,1
+794,Douglas,single,562,58,9,2
+795,Douglas,ensuite,864,75,6,3
+796,Wilton,shared,476,15,9,1
+797,Ballincollig,double,621,31,6,4
+798,Bishopstown,ensuite,802,40,9,2
+799,City Centre,shared,542,72,9,2
+800,Glanmire,double,624,13,12,1
+801,City Centre,single,693,63,12,3
+802,Wilton,double,598,15,6,3
+803,Togher,shared,398,11,12,3
+804,Blackrock,double,540,26,9,3
+805,Wilton,shared,452,64,9,3
+806,Ballincollig,shared,469,6,6,4
+807,Douglas,double,526,82,12,1
+808,Togher,shared,553,43,12,2
+809,Douglas,shared,379,59,9,2
+810,Model Farm Rd,shared,433,51,12,3
+811,Mahon,double,530,24,9,1
+812,Bishopstown,ensuite,930,7,12,1
+813,Blackrock,double,597,56,12,1
+814,City Centre,ensuite,942,41,12,5
+815,City Centre,single,606,3,6,4
+816,Wilton,double,614,8,9,2
+817,Blackrock,shared,550,84,6,1
+818,Mahon,single,667,77,9,2
+819,Model Farm Rd,single,745,27,9,5
+820,Bishopstown,shared,443,21,6,2
+821,Bishopstown,double,726,48,12,3
+822,Blackrock,double,786,66,9,2
+823,City Centre,double,617,73,12,4
+824,Douglas,ensuite,729,16,12,3
+825,Model Farm Rd,ensuite,890,84,12,2
+826,Douglas,double,712,21,6,4
+827,Douglas,double,522,66,12,5
+828,Wilton,single,642,36,9,4
+829,Douglas,ensuite,744,28,6,2
+830,Mahon,shared,350,11,12,3
+831,City Centre,shared,457,50,6,1
+832,Togher,shared,350,5,12,2
+833,Mahon,shared,390,15,12,2
+834,Douglas,shared,456,4,6,1
+835,Glanmire,single,651,19,9,1
+836,Blackrock,double,719,71,12,5
+837,Wilton,single,590,63,12,4
+838,Ballincollig,ensuite,848,51,9,2
+839,Blackrock,shared,450,33,6,2
+840,Douglas,double,565,88,6,2
+841,Wilton,single,740,81,6,5
+842,Ballincollig,ensuite,658,19,9,5
+843,Model Farm Rd,double,594,85,12,2
+844,Wilton,ensuite,804,51,6,4
+845,Wilton,ensuite,834,27,9,1
+846,Mahon,double,596,81,12,4
+847,Douglas,single,880,82,6,5
+848,City Centre,ensuite,792,50,12,4
+849,Ballincollig,single,602,30,6,4
+850,Blackrock,double,523,71,9,1
+851,Togher,ensuite,700,19,6,1
+852,Douglas,shared,402,22,9,1
+853,Togher,ensuite,857,84,9,2
+854,Model Farm Rd,shared,577,84,9,4
+855,Bishopstown,ensuite,748,35,9,1
+856,Blackrock,ensuite,705,32,12,1
+857,Wilton,single,722,47,6,4
+858,Ballincollig,single,600,9,12,3
+859,Blackrock,shared,526,34,6,5
+860,Bishopstown,shared,508,75,6,5
+861,Blackrock,shared,350,70,9,3
+862,Wilton,single,819,61,6,2
+863,City Centre,ensuite,1011,21,9,2
+864,City Centre,single,684,79,12,4
+865,Bishopstown,double,565,84,6,2
+866,Ballincollig,single,675,25,12,2
+867,Mahon,shared,490,59,12,5
+868,Glanmire,shared,489,4,12,5
+869,Glanmire,double,720,9,6,4
+870,Glanmire,shared,414,29,6,5
+871,Wilton,double,518,56,12,4
+872,City Centre,shared,415,43,12,5
+873,Togher,shared,374,83,12,4
+874,Blackrock,double,577,81,6,5
+875,Ballincollig,double,721,14,12,1
+876,Mahon,ensuite,723,39,6,1
+877,Togher,ensuite,770,23,6,1
+878,Wilton,single,678,20,6,5
+879,Bishopstown,ensuite,906,3,9,4
+880,Mahon,ensuite,997,36,12,4
+881,Ballincollig,shared,402,0,12,1
+882,City Centre,double,605,53,12,4
+883,Mahon,ensuite,863,39,12,4
+884,Glanmire,shared,491,38,12,4
+885,Model Farm Rd,shared,616,39,6,4
+886,Douglas,shared,512,44,9,1
+887,Ballincollig,ensuite,727,4,6,4
+888,Douglas,ensuite,823,40,12,2
+889,Glanmire,double,639,4,12,4
+890,Ballincollig,shared,523,78,6,4
+891,Glanmire,single,675,14,12,5
+892,Blackrock,double,676,72,12,4
+893,Douglas,ensuite,875,26,6,3
+894,Model Farm Rd,shared,574,1,6,3
+895,Blackrock,single,728,20,12,2
+896,Glanmire,shared,414,86,6,4
+897,Ballincollig,double,573,10,9,5
+898,Ballincollig,ensuite,868,78,9,3
+899,Ballincollig,shared,376,84,9,2
+900,Ballincollig,ensuite,793,33,9,2
+901,Ballincollig,ensuite,724,9,9,5
+902,Bishopstown,shared,492,72,12,5
+903,Douglas,double,685,90,9,3
+904,Model Farm Rd,shared,467,36,6,5
+905,Ballincollig,shared,454,33,6,5
+906,Togher,double,427,18,6,1
+907,Model Farm Rd,ensuite,827,64,9,2
+908,Model Farm Rd,shared,508,27,12,5
+909,Togher,ensuite,944,12,6,2
+910,Bishopstown,single,662,73,9,2
+911,City Centre,double,669,14,9,1
+912,Glanmire,ensuite,762,38,12,3
+913,Douglas,ensuite,911,80,12,4
+914,Blackrock,ensuite,771,60,12,2
+915,Wilton,single,705,31,6,1
+916,Ballincollig,ensuite,814,72,9,3
+917,Mahon,single,676,18,12,5
+918,Douglas,single,619,3,6,3
+919,Bishopstown,double,617,14,6,4
+920,Blackrock,shared,566,45,12,5
+921,Mahon,double,477,42,12,3
+922,Glanmire,single,641,71,9,1
+923,Model Farm Rd,double,496,8,9,3
+924,Togher,ensuite,857,24,9,3
+925,Mahon,shared,350,28,6,1
+926,Douglas,ensuite,719,6,6,3
+927,Wilton,double,623,52,6,2
+928,City Centre,double,790,24,9,4
+929,Ballincollig,double,554,33,9,2
+930,Bishopstown,single,640,38,6,4
+931,Model Farm Rd,shared,619,64,12,4
+932,Togher,single,509,4,12,3
+933,Wilton,ensuite,592,48,12,1
+934,Wilton,single,719,82,12,4
+935,Glanmire,ensuite,694,8,9,3
+936,Douglas,single,568,38,6,3
+937,City Centre,double,713,29,12,3
+938,City Centre,double,671,20,12,5
+939,Ballincollig,shared,399,50,9,2
+940,Glanmire,ensuite,624,20,6,2
+941,Wilton,double,668,79,6,1
+942,Wilton,single,738,17,9,4
+943,Model Farm Rd,single,641,27,6,1
+944,Douglas,single,826,28,6,3
+945,Mahon,shared,363,56,6,1
+946,Mahon,shared,350,46,6,4
+947,Mahon,double,507,61,12,5
+948,Blackrock,ensuite,775,31,12,1
+949,Wilton,ensuite,811,82,9,2
+950,City Centre,single,718,22,6,5
+951,Togher,ensuite,781,62,6,2
+952,City Centre,double,537,34,12,2
+953,City Centre,double,779,69,9,4
+954,Bishopstown,single,682,11,9,2
+955,Wilton,double,690,37,6,3
+956,City Centre,shared,570,52,9,5
+957,Glanmire,single,671,60,12,4
+958,Blackrock,ensuite,831,52,6,5
+959,Model Farm Rd,double,600,33,6,4
+960,Blackrock,double,637,68,9,2
+961,Glanmire,double,659,43,12,1
+962,Wilton,double,607,40,12,1
+963,Model Farm Rd,ensuite,823,49,9,5
+964,Ballincollig,ensuite,751,64,12,2
+965,Douglas,shared,589,31,12,2
+966,Glanmire,single,569,23,6,2
+967,Bishopstown,single,852,6,6,5
+968,Glanmire,single,626,30,12,3
+969,Togher,shared,350,78,6,1
+970,Glanmire,single,641,62,9,1
+971,Douglas,double,508,45,6,5
+972,Model Farm Rd,ensuite,835,88,9,2
+973,Model Farm Rd,ensuite,701,14,9,1
+974,Wilton,double,549,18,9,4
+975,Ballincollig,double,389,28,12,4
+976,Wilton,double,549,2,9,3
+977,Wilton,double,371,14,9,2
+978,Mahon,ensuite,627,87,9,5
+979,Mahon,double,638,24,12,1
+980,Togher,double,620,25,9,3
+981,Ballincollig,shared,488,2,9,5
+982,Togher,shared,352,65,12,5
+983,Blackrock,single,665,34,9,1
+984,Wilton,single,679,47,12,4
+985,Togher,ensuite,645,9,12,3
+986,Douglas,shared,595,63,9,5
+987,Wilton,shared,558,54,12,2
+988,Wilton,ensuite,770,53,6,3
+989,Wilton,shared,482,63,9,3
+990,Wilton,double,608,45,12,2
+991,City Centre,shared,356,10,9,3
+992,Togher,single,617,18,12,2
+993,City Centre,ensuite,788,73,12,2
+994,Wilton,ensuite,699,14,6,3
+995,Mahon,double,544,5,6,5
+996,Blackrock,ensuite,941,85,12,5
+997,Mahon,double,627,55,6,4
+998,Wilton,shared,428,22,12,3
+999,Wilton,single,731,55,9,1
+1000,Blackrock,ensuite,905,79,12,1
+1001,Togher,ensuite,833,12,6,2
+1002,Bishopstown,double,605,83,12,1
+1003,City Centre,ensuite,791,73,12,2
+1004,Wilton,single,742,82,6,2
+1005,Wilton,single,715,22,6,3
+1006,Ballincollig,single,730,47,12,2
+1007,Mahon,shared,517,68,9,4
+1008,Ballincollig,single,744,13,12,1
+1009,Togher,ensuite,701,33,12,5
+1010,City Centre,shared,658,39,9,2
+1011,City Centre,single,757,49,6,5
+1012,Togher,shared,626,56,12,5
+1013,Glanmire,double,477,40,12,3
+1014,Mahon,shared,616,36,9,3
+1015,Bishopstown,shared,507,16,6,3
+1016,Wilton,single,621,78,6,4
+1017,Wilton,double,546,9,6,2
+1018,City Centre,ensuite,821,88,6,1
+1019,Ballincollig,double,598,78,9,5
+1020,Douglas,single,707,36,12,4
+1021,Togher,single,588,11,9,5
+1022,Glanmire,double,537,52,12,5
+1023,Model Farm Rd,ensuite,952,73,12,5
+1024,Bishopstown,double,755,65,12,2
+1025,Bishopstown,single,729,7,6,4
+1026,Mahon,shared,463,2,12,2
+1027,City Centre,single,750,0,9,2
+1028,Wilton,ensuite,845,24,12,4
+1029,Douglas,single,567,0,9,1
+1030,Blackrock,double,556,34,6,5
+1031,Douglas,single,509,45,12,2
+1032,Mahon,double,605,84,12,5
+1033,City Centre,single,798,57,9,5
+1034,Mahon,double,526,58,9,2
+1035,Douglas,double,711,71,6,5
+1036,Model Farm Rd,shared,350,86,6,2
+1037,Glanmire,shared,350,10,12,3
+1038,Bishopstown,shared,510,22,9,4
+1039,Bishopstown,double,694,55,12,3
+1040,Bishopstown,single,841,9,6,2
+1041,Togher,double,508,25,6,5
+1042,Wilton,single,777,86,12,5
+1043,Douglas,ensuite,766,23,9,5
+1044,Bishopstown,shared,474,41,12,1
+1045,Mahon,shared,539,63,9,1
+1046,City Centre,shared,598,80,12,3
+1047,Model Farm Rd,double,418,0,12,5
+1048,Togher,single,772,83,9,2
+1049,Bishopstown,double,724,59,12,4
+1050,Mahon,single,603,58,12,1
+1051,Blackrock,shared,505,74,12,2
+1052,Togher,ensuite,794,44,12,4
+1053,Wilton,single,703,19,12,4
+1054,Mahon,ensuite,720,89,9,5
+1055,Mahon,double,509,78,9,5
+1056,Bishopstown,double,597,41,9,2
+1057,Ballincollig,double,665,43,9,2
+1058,Model Farm Rd,ensuite,808,85,9,1
+1059,Glanmire,ensuite,706,17,12,5
+1060,City Centre,shared,609,34,12,4
+1061,Wilton,shared,350,54,12,3
+1062,Bishopstown,shared,593,73,12,4
+1063,Glanmire,single,473,71,6,5
+1064,Model Farm Rd,shared,417,39,12,4
+1065,Ballincollig,ensuite,659,87,12,5
+1066,Ballincollig,shared,350,35,6,5
+1067,Douglas,ensuite,874,14,9,4
+1068,Douglas,ensuite,727,58,12,3
+1069,Douglas,shared,491,74,12,5
+1070,Bishopstown,shared,485,37,12,5
+1071,City Centre,ensuite,892,37,9,1
+1072,Model Farm Rd,double,566,84,12,5
+1073,Mahon,single,544,41,6,1
+1074,City Centre,double,739,51,6,4
+1075,City Centre,shared,495,51,9,5
+1076,Model Farm Rd,single,509,2,12,2
+1077,Ballincollig,ensuite,721,45,12,1
+1078,Douglas,single,795,71,12,5
+1079,Togher,double,626,85,6,3
+1080,Glanmire,ensuite,708,85,12,5
+1081,Douglas,shared,428,33,12,1
+1082,Togher,ensuite,721,53,6,1
+1083,Wilton,shared,666,47,6,1
+1084,City Centre,double,684,5,12,3
+1085,Mahon,shared,498,13,12,5
+1086,Blackrock,double,672,2,9,4
+1087,Ballincollig,single,671,71,9,5
+1088,Douglas,shared,436,69,12,3
+1089,Mahon,shared,442,72,6,5
+1090,Glanmire,single,623,83,6,5
+1091,Glanmire,double,536,53,12,1
+1092,City Centre,single,805,80,6,4
+1093,Blackrock,single,674,6,6,3
+1094,Ballincollig,ensuite,825,32,6,5
+1095,Model Farm Rd,single,642,50,9,3
+1096,Blackrock,shared,477,71,9,3
+1097,Wilton,ensuite,610,4,9,2
+1098,Wilton,single,762,41,9,5
+1099,Model Farm Rd,shared,481,61,6,3
+1100,Mahon,double,659,23,6,1
+1101,Model Farm Rd,single,389,42,6,2
+1102,Ballincollig,shared,637,3,9,4
+1103,Ballincollig,shared,437,49,9,5
+1104,Ballincollig,ensuite,859,47,12,2
+1105,Model Farm Rd,shared,356,41,6,1
+1106,Douglas,double,625,40,6,4
+1107,Bishopstown,double,505,36,9,3
+1108,Douglas,single,603,21,12,5
+1109,City Centre,single,912,31,9,2
+1110,Wilton,single,662,8,12,4
+1111,Douglas,double,589,81,9,4
+1112,Wilton,shared,558,34,12,5
+1113,Douglas,ensuite,814,71,9,3
+1114,Togher,ensuite,763,21,6,5
+1115,Ballincollig,double,592,87,9,2
+1116,Blackrock,single,886,51,6,5
+1117,Blackrock,shared,464,47,12,1
+1118,Glanmire,single,648,7,9,1
+1119,Togher,single,734,46,9,5
+1120,Bishopstown,ensuite,899,57,9,3
+1121,Ballincollig,shared,556,29,9,2
+1122,Blackrock,double,637,38,9,5
+1123,Ballincollig,single,547,59,6,3
+1124,Model Farm Rd,ensuite,907,89,12,4
+1125,Douglas,ensuite,666,37,12,2
+1126,City Centre,ensuite,877,29,9,5
+1127,Togher,single,572,28,6,1
+1128,Togher,double,544,53,6,1
+1129,Douglas,double,599,82,12,5
+1130,Wilton,shared,508,4,12,4
+1131,Togher,double,587,71,6,3
+1132,Wilton,shared,625,69,9,2
+1133,City Centre,ensuite,890,71,9,2
+1134,Blackrock,single,648,40,6,1
+1135,Glanmire,ensuite,826,52,9,2
+1136,Blackrock,double,687,61,12,1
+1137,Bishopstown,single,579,45,9,4
+1138,Douglas,ensuite,823,35,9,4
+1139,Bishopstown,shared,553,56,12,4
+1140,Wilton,shared,453,75,6,3
+1141,Douglas,double,693,50,6,5
+1142,Model Farm Rd,ensuite,746,48,12,4
+1143,Ballincollig,ensuite,771,6,12,5
+1144,Model Farm Rd,single,634,88,6,1
+1145,City Centre,ensuite,851,61,6,5
+1146,City Centre,double,551,87,12,3
+1147,Wilton,single,550,90,6,5
+1148,Model Farm Rd,shared,593,84,12,3
+1149,Ballincollig,double,483,83,9,4
+1150,Ballincollig,ensuite,670,79,12,5
+1151,Glanmire,ensuite,546,56,6,5
+1152,Blackrock,shared,412,42,12,5
+1153,Blackrock,double,460,66,12,1
+1154,Model Farm Rd,single,797,22,6,1
+1155,Glanmire,shared,520,68,12,1
+1156,Wilton,ensuite,728,67,12,2
+1157,Model Farm Rd,shared,652,10,9,1
+1158,Blackrock,ensuite,868,33,9,1
+1159,Ballincollig,double,530,54,9,2
+1160,Togher,shared,350,66,6,1
+1161,Wilton,double,796,81,6,2
+1162,Togher,ensuite,624,55,12,1
+1163,Bishopstown,double,451,78,9,5
+1164,Bishopstown,ensuite,892,43,12,1
+1165,City Centre,double,869,13,9,4
+1166,Model Farm Rd,single,774,47,9,2
+1167,Togher,shared,490,54,12,2
+1168,Douglas,ensuite,823,11,12,3
+1169,Togher,single,716,59,12,1
+1170,Blackrock,double,648,16,12,4
+1171,City Centre,single,765,15,12,2
+1172,Model Farm Rd,single,659,1,6,5
+1173,Wilton,shared,474,39,6,3
+1174,Blackrock,single,602,31,12,4
+1175,City Centre,single,714,88,12,3
+1176,Togher,single,487,64,12,1
+1177,City Centre,ensuite,841,41,6,2
+1178,Ballincollig,double,471,59,6,4
+1179,Bishopstown,ensuite,700,89,12,4
+1180,Douglas,shared,476,51,6,4
+1181,Bishopstown,double,725,88,9,5
+1182,Model Farm Rd,shared,532,72,6,2
+1183,Blackrock,double,438,79,6,1
+1184,Blackrock,ensuite,690,55,6,3
+1185,Ballincollig,shared,534,85,6,1
+1186,Blackrock,shared,381,48,6,5
+1187,Glanmire,double,519,45,9,1
+1188,Bishopstown,shared,539,37,6,4
+1189,Model Farm Rd,single,562,84,6,5
+1190,Douglas,shared,469,62,6,4
+1191,City Centre,double,529,69,12,4
+1192,Mahon,shared,405,0,9,2
+1193,Ballincollig,double,588,66,6,4
+1194,Ballincollig,ensuite,616,8,12,4
+1195,Bishopstown,single,729,13,12,4
+1196,Blackrock,double,578,42,12,3
+1197,Mahon,ensuite,819,5,9,1
+1198,City Centre,double,670,85,12,5
+1199,City Centre,double,772,62,6,1
+1200,Ballincollig,double,571,62,9,2
+1201,Mahon,double,531,65,6,3
+1202,Ballincollig,ensuite,771,58,6,5
+1203,Model Farm Rd,double,608,75,9,2
+1204,City Centre,shared,544,73,6,4
+1205,Glanmire,shared,433,33,12,5
+1206,City Centre,double,586,22,12,5
+1207,Ballincollig,shared,390,34,9,3
+1208,Bishopstown,double,473,42,12,4
+1209,Wilton,shared,637,15,9,3
+1210,Douglas,single,548,82,9,5
+1211,Togher,single,577,13,9,3
+1212,City Centre,double,585,39,6,5
+1213,Togher,single,720,64,9,2
+1214,Togher,shared,413,56,12,3
+1215,Togher,double,662,29,6,4
+1216,Ballincollig,shared,389,57,6,3
+1217,Bishopstown,double,625,1,12,1
+1218,Model Farm Rd,single,574,44,6,5
+1219,Mahon,single,853,23,12,2
+1220,Mahon,double,463,44,9,2
+1221,City Centre,ensuite,877,8,12,2
+1222,Douglas,single,717,78,6,3
+1223,Glanmire,shared,467,17,6,3
+1224,Ballincollig,single,633,2,6,4
+1225,Model Farm Rd,ensuite,748,12,12,2
+1226,Wilton,ensuite,793,47,6,5
+1227,Bishopstown,single,676,79,9,5
+1228,Ballincollig,single,736,81,6,2
+1229,Ballincollig,shared,648,3,12,5
+1230,Glanmire,double,489,49,9,5
+1231,Mahon,double,446,23,6,3
+1232,Bishopstown,shared,482,38,6,2
+1233,Ballincollig,single,882,33,12,2
+1234,Wilton,shared,407,12,6,5
+1235,Model Farm Rd,single,797,4,6,3
+1236,Mahon,shared,610,12,12,4
+1237,Douglas,single,610,60,6,2
+1238,Togher,shared,491,57,12,2
+1239,City Centre,double,796,4,6,5
+1240,Blackrock,double,545,50,9,2
+1241,Bishopstown,ensuite,781,25,9,5
+1242,Model Farm Rd,single,597,1,9,4
+1243,Glanmire,ensuite,648,3,6,1
+1244,Glanmire,double,481,17,9,5
+1245,City Centre,single,629,59,6,5
+1246,Glanmire,single,633,24,6,4
+1247,Wilton,double,520,11,6,2
+1248,Togher,shared,461,72,6,5
+1249,Glanmire,single,489,83,9,4
+1250,Wilton,double,619,15,6,3
+1251,Blackrock,ensuite,855,52,6,4
+1252,Bishopstown,double,420,70,6,4
+1253,City Centre,shared,573,32,9,2
+1254,Mahon,single,770,18,6,3
+1255,Ballincollig,double,451,23,9,2
+1256,Bishopstown,shared,640,1,6,3
+1257,Wilton,double,627,75,9,1
+1258,Wilton,single,616,74,9,3
+1259,Glanmire,shared,424,23,9,5
+1260,City Centre,double,700,86,6,4
+1261,Blackrock,ensuite,786,12,6,2
+1262,Glanmire,shared,478,10,12,4
+1263,Model Farm Rd,ensuite,677,71,6,2
+1264,Ballincollig,ensuite,775,88,9,5
+1265,Togher,ensuite,622,14,9,1
+1266,Wilton,single,669,13,12,1
+1267,Blackrock,single,588,21,9,5
+1268,Mahon,ensuite,703,77,12,4
+1269,Ballincollig,shared,561,71,9,5
+1270,Mahon,double,668,27,9,4
+1271,City Centre,single,794,64,12,3
+1272,Ballincollig,shared,351,33,6,5
+1273,Douglas,shared,431,84,12,1
+1274,Model Farm Rd,single,759,73,6,4
+1275,Ballincollig,double,572,10,9,3
+1276,City Centre,single,948,51,12,5
+1277,Douglas,shared,495,77,12,2
+1278,Douglas,ensuite,787,29,9,5
+1279,Ballincollig,shared,422,34,9,1
+1280,Togher,double,562,15,6,5
+1281,Togher,shared,426,40,9,4
+1282,Wilton,double,653,1,6,1
+1283,Wilton,double,676,62,12,2
+1284,City Centre,ensuite,779,42,6,2
+1285,Douglas,single,540,7,6,1
+1286,Togher,shared,350,31,9,4
+1287,Glanmire,double,585,75,6,5
+1288,City Centre,single,640,66,12,5
+1289,Model Farm Rd,single,456,15,9,1
+1290,Mahon,single,694,2,12,1
+1291,Mahon,double,794,30,6,4
+1292,Douglas,shared,459,74,12,5
+1293,Model Farm Rd,shared,525,79,6,4
+1294,City Centre,ensuite,857,38,12,1
+1295,Togher,shared,431,61,9,4
+1296,Douglas,single,742,6,6,5
+1297,Model Farm Rd,ensuite,733,87,6,2
+1298,Mahon,single,684,12,12,2
+1299,Glanmire,single,658,12,12,1
+1300,Blackrock,single,609,84,12,5
+1301,Blackrock,ensuite,869,42,12,2
+1302,Model Farm Rd,ensuite,744,19,6,2
+1303,Ballincollig,single,581,8,9,2
+1304,Blackrock,double,628,35,9,4
+1305,City Centre,shared,459,41,9,5
+1306,Model Farm Rd,ensuite,762,36,12,3
+1307,Mahon,shared,459,56,6,1
+1308,Bishopstown,single,787,70,6,3
+1309,City Centre,double,692,90,12,1
+1310,Togher,double,547,17,12,2
+1311,Togher,shared,513,76,9,1
+1312,Wilton,shared,605,18,6,5
+1313,Blackrock,single,720,63,9,3
+1314,Wilton,shared,480,29,9,2
+1315,Mahon,ensuite,651,20,6,3
+1316,Glanmire,single,534,1,9,1
+1317,Wilton,single,652,71,6,5
+1318,Blackrock,single,615,70,6,4
+1319,Bishopstown,double,583,80,9,3
+1320,Model Farm Rd,single,655,36,12,4
+1321,Bishopstown,single,737,7,9,5
+1322,Wilton,double,583,7,9,4
+1323,Mahon,single,703,6,6,2
+1324,Togher,double,555,66,6,4
+1325,Bishopstown,single,512,11,12,2
+1326,Douglas,double,485,72,12,4
+1327,Bishopstown,ensuite,787,11,6,1
+1328,Ballincollig,ensuite,651,1,9,4
+1329,Mahon,ensuite,823,28,12,3
+1330,Ballincollig,shared,587,5,9,2
+1331,Wilton,shared,589,53,6,3
+1332,Mahon,single,640,13,12,1
+1333,Blackrock,double,714,0,9,4
+1334,Douglas,ensuite,783,62,6,3
+1335,Douglas,ensuite,739,71,9,1
+1336,Glanmire,shared,374,68,6,2
+1337,Blackrock,single,642,86,6,4
+1338,Wilton,shared,445,57,6,5
+1339,Mahon,shared,475,90,9,3
+1340,Mahon,double,584,16,9,1
+1341,Model Farm Rd,shared,450,52,12,4
+1342,Togher,ensuite,789,79,9,4
+1343,Glanmire,single,737,84,6,5
+1344,City Centre,double,735,46,6,1
+1345,Mahon,single,526,65,9,5
+1346,Model Farm Rd,shared,350,38,6,2
+1347,Douglas,ensuite,854,34,6,3
+1348,City Centre,ensuite,726,53,12,4
+1349,Togher,double,529,14,6,1
+1350,Blackrock,shared,364,32,12,3
+1351,Wilton,ensuite,627,32,12,2
+1352,City Centre,shared,588,84,12,3
+1353,Ballincollig,single,718,15,6,5
+1354,Glanmire,double,488,69,12,1
+1355,Togher,double,350,59,6,1
+1356,Mahon,double,520,39,6,3
+1357,Model Farm Rd,ensuite,795,64,12,2
+1358,Bishopstown,ensuite,666,75,9,5
+1359,City Centre,shared,556,51,9,1
+1360,Blackrock,single,668,12,6,2
+1361,Bishopstown,double,652,47,9,2
+1362,Ballincollig,single,660,23,6,1
+1363,Bishopstown,shared,402,6,9,5
+1364,Togher,shared,547,0,6,4
+1365,Wilton,single,665,82,12,4
+1366,City Centre,single,737,25,6,1
+1367,Douglas,single,576,76,9,5
+1368,Model Farm Rd,single,610,10,6,3
+1369,City Centre,single,660,26,9,4
+1370,Bishopstown,double,584,13,12,4
+1371,Bishopstown,shared,644,83,12,4
+1372,City Centre,single,616,80,9,2
+1373,Blackrock,single,524,64,9,1
+1374,Model Farm Rd,ensuite,892,81,9,5
+1375,Blackrock,ensuite,761,1,12,1
+1376,Bishopstown,double,539,56,9,2
+1377,Blackrock,double,673,90,6,1
+1378,Glanmire,double,485,71,12,4
+1379,Togher,single,804,60,6,4
+1380,Model Farm Rd,single,711,29,9,1
+1381,Mahon,single,616,54,6,5
+1382,Togher,single,834,78,9,2
+1383,Wilton,double,535,86,12,5
+1384,Mahon,ensuite,836,61,9,1
+1385,Togher,double,576,62,9,2
+1386,City Centre,shared,657,53,12,1
+1387,City Centre,double,790,36,12,1
+1388,Togher,ensuite,752,45,9,5
+1389,City Centre,single,672,21,12,3
+1390,Ballincollig,double,601,17,6,4
+1391,Wilton,double,529,15,9,5
+1392,City Centre,shared,721,77,12,4
+1393,Togher,ensuite,762,58,9,4
+1394,Glanmire,single,597,49,9,3
+1395,Bishopstown,shared,506,79,12,1
+1396,Douglas,ensuite,648,89,12,2
+1397,Bishopstown,ensuite,712,7,12,1
+1398,Mahon,ensuite,878,18,9,1
+1399,City Centre,shared,480,1,6,2
+1400,Blackrock,single,575,83,12,3
+1401,Wilton,ensuite,838,27,12,1
+1402,Model Farm Rd,double,666,73,6,3
+1403,Togher,ensuite,814,64,6,2
+1404,City Centre,single,829,38,6,4
+1405,Model Farm Rd,single,581,1,9,2
+1406,City Centre,double,522,12,9,1
+1407,Mahon,shared,595,46,12,5
+1408,Mahon,ensuite,740,51,12,2
+1409,Douglas,ensuite,747,29,9,5
+1410,Bishopstown,single,809,0,9,1
+1411,Bishopstown,ensuite,850,63,9,3
+1412,Wilton,shared,521,64,12,4
+1413,Bishopstown,ensuite,994,60,6,5
+1414,Blackrock,ensuite,722,14,6,5
+1415,Bishopstown,shared,573,63,9,1
+1416,Wilton,double,595,75,9,5
+1417,Glanmire,single,654,43,9,3
+1418,Wilton,shared,617,81,6,5
+1419,Glanmire,double,585,29,12,4
+1420,City Centre,double,698,37,9,4
+1421,Blackrock,ensuite,876,54,9,4
+1422,Wilton,single,647,45,6,4
+1423,Bishopstown,single,614,58,6,1
+1424,Togher,shared,350,15,9,4
+1425,Ballincollig,shared,350,68,12,2
+1426,Glanmire,single,815,27,6,4
+1427,Blackrock,ensuite,680,29,12,1
+1428,Wilton,shared,460,37,6,3
+1429,Togher,ensuite,725,90,9,2
+1430,Mahon,single,687,20,12,2
+1431,Blackrock,ensuite,853,50,12,5
+1432,Mahon,double,647,57,6,5
+1433,Togher,ensuite,697,5,9,4
+1434,Mahon,ensuite,754,17,6,4
+1435,Mahon,double,595,18,9,1
+1436,Douglas,ensuite,747,26,12,5
+1437,Mahon,shared,604,53,12,2
+1438,Blackrock,double,624,27,12,4
+1439,Togher,shared,506,77,6,4
+1440,City Centre,ensuite,909,66,12,4
+1441,Model Farm Rd,double,665,22,6,3
+1442,Blackrock,double,596,33,6,3
+1443,City Centre,double,533,60,6,5
+1444,Mahon,single,695,41,12,4
+1445,Mahon,ensuite,711,1,9,2
+1446,Blackrock,shared,422,57,6,4
+1447,Togher,shared,492,63,12,3
+1448,Blackrock,ensuite,891,20,9,1
+1449,Model Farm Rd,single,651,30,12,3
+1450,Wilton,double,617,61,6,4
+1451,Wilton,shared,633,26,6,1
+1452,Wilton,double,611,82,6,4
+1453,Bishopstown,single,924,9,9,3
+1454,Glanmire,shared,480,77,6,4
+1455,Bishopstown,shared,350,21,6,3
+1456,Wilton,ensuite,857,14,9,3
+1457,Togher,shared,474,73,12,2
+1458,City Centre,ensuite,966,22,6,4
+1459,Model Farm Rd,single,710,26,12,2
+1460,Wilton,single,667,23,12,4
+1461,Model Farm Rd,single,539,12,9,2
+1462,Mahon,ensuite,751,63,6,1
+1463,Mahon,single,583,9,9,4
+1464,City Centre,double,597,10,9,2
+1465,Glanmire,single,682,43,12,1
+1466,City Centre,ensuite,1000,74,6,2
+1467,Wilton,shared,515,58,6,3
+1468,Ballincollig,shared,350,73,6,1
+1469,Glanmire,double,580,72,9,4
+1470,Mahon,double,677,71,6,5
+1471,Douglas,single,605,50,9,3
+1472,City Centre,double,637,44,12,5
+1473,Togher,ensuite,751,13,12,5
+1474,Douglas,double,499,16,9,2
+1475,Glanmire,double,598,69,6,2
+1476,Model Farm Rd,single,639,49,6,3
+1477,City Centre,ensuite,887,72,9,1
+1478,Wilton,shared,400,53,9,4
+1479,Blackrock,double,540,58,6,5
+1480,Ballincollig,ensuite,825,26,12,4
+1481,Ballincollig,ensuite,726,2,9,1
+1482,Togher,shared,595,38,6,4
+1483,Glanmire,ensuite,704,52,6,2
+1484,City Centre,single,760,85,12,1
+1485,Model Farm Rd,double,643,76,6,2
+1486,Wilton,single,552,47,9,2
+1487,Model Farm Rd,single,491,35,9,5
+1488,Model Farm Rd,single,512,74,6,2
+1489,Wilton,ensuite,903,24,6,2
+1490,Wilton,single,630,21,6,3
+1491,Bishopstown,single,920,19,9,3
+1492,Blackrock,single,619,14,12,2
+1493,Blackrock,ensuite,796,42,12,1
+1494,Douglas,shared,598,74,12,5
+1495,Togher,ensuite,930,88,6,5
+1496,Douglas,double,755,24,6,3
+1497,Douglas,shared,568,20,12,4
+1498,Wilton,single,772,68,6,3
+1499,Model Farm Rd,double,613,15,6,3
+1500,Ballincollig,single,720,20,12,1
+1501,Glanmire,ensuite,690,76,9,3
+1502,Model Farm Rd,double,486,7,6,2
+1503,Douglas,shared,459,51,6,1
+1504,Glanmire,shared,414,39,12,3
+1505,Ballincollig,double,519,8,6,4
+1506,Wilton,ensuite,852,82,6,5
+1507,Douglas,shared,545,43,12,1
+1508,Model Farm Rd,double,567,23,9,4
+1509,Bishopstown,double,732,12,9,3
+1510,Douglas,shared,357,16,9,3
+1511,Glanmire,ensuite,722,19,12,5
+1512,Mahon,ensuite,705,49,6,2
+1513,City Centre,shared,372,15,9,2
+1514,City Centre,single,732,73,12,2
+1515,Togher,ensuite,739,40,6,3
+1516,City Centre,double,786,21,12,1
+1517,Bishopstown,ensuite,856,88,6,3
+1518,Blackrock,single,577,40,6,3
+1519,Douglas,double,736,12,12,1
+1520,Ballincollig,double,669,85,6,5
+1521,Glanmire,shared,482,75,9,2
+1522,Ballincollig,shared,429,77,6,3
+1523,Ballincollig,double,473,19,6,5
+1524,Togher,double,516,90,9,3
+1525,Togher,single,737,75,6,1
+1526,Ballincollig,shared,619,63,6,4
+1527,Glanmire,shared,568,73,6,2
+1528,Douglas,double,526,75,12,5
+1529,Mahon,ensuite,669,12,9,5
+1530,City Centre,double,662,43,9,5
+1531,Ballincollig,shared,350,35,6,5
+1532,Blackrock,ensuite,809,67,12,2
+1533,Togher,double,536,41,12,4
+1534,Glanmire,double,498,51,6,1
+1535,Togher,ensuite,606,50,9,2
+1536,Model Farm Rd,double,606,46,9,2
+1537,Blackrock,ensuite,732,10,12,4
+1538,Wilton,double,484,22,6,3
+1539,City Centre,single,481,68,6,3
+1540,Mahon,double,567,38,9,2
+1541,Togher,shared,599,24,12,3
+1542,Wilton,single,829,11,6,2
+1543,Douglas,ensuite,728,11,9,5
+1544,Model Farm Rd,double,505,76,6,1
+1545,Model Farm Rd,shared,492,50,6,4
+1546,City Centre,double,560,52,9,1
+1547,Ballincollig,ensuite,787,6,12,3
+1548,Mahon,double,638,23,6,4
+1549,Ballincollig,single,760,2,12,2
+1550,Model Farm Rd,single,640,6,12,1
+1551,Model Farm Rd,double,541,31,9,2
+1552,Togher,double,470,17,6,3
+1553,Glanmire,single,555,11,12,2
+1554,Mahon,single,639,88,6,4
+1555,City Centre,double,683,59,9,1
+1556,Blackrock,shared,552,35,9,1
+1557,Mahon,single,587,60,9,2
+1558,Mahon,ensuite,904,27,12,5
+1559,Blackrock,single,645,1,12,3
+1560,Douglas,shared,458,22,6,3
+1561,Mahon,single,592,56,9,2
+1562,Douglas,single,441,26,6,4
+1563,Bishopstown,single,769,82,12,3
+1564,Ballincollig,single,716,55,9,2
+1565,Douglas,single,634,49,9,3
+1566,Ballincollig,single,656,25,9,2
+1567,Glanmire,shared,476,84,9,5
+1568,Blackrock,shared,350,53,6,4
+1569,Douglas,ensuite,722,77,9,2
+1570,Model Farm Rd,single,721,35,9,1
+1571,Glanmire,ensuite,627,43,6,5
+1572,Togher,shared,466,2,6,4
+1573,Model Farm Rd,double,437,22,9,2
+1574,City Centre,double,691,36,12,2
+1575,Glanmire,ensuite,736,34,9,1
+1576,Glanmire,double,394,28,9,3
+1577,Mahon,ensuite,874,25,12,4
+1578,Model Farm Rd,ensuite,693,57,12,1
+1579,Wilton,ensuite,717,37,12,3
+1580,Douglas,shared,478,17,9,5
+1581,Model Farm Rd,single,753,35,12,4
+1582,Wilton,double,498,66,9,3
+1583,Bishopstown,single,695,0,12,3
+1584,Douglas,ensuite,808,80,9,4
+1585,Ballincollig,double,622,11,9,3
+1586,Douglas,ensuite,785,75,12,1
+1587,City Centre,double,616,61,12,1
+1588,Ballincollig,shared,375,6,9,4
+1589,Mahon,single,667,37,6,4
+1590,Togher,ensuite,653,35,6,4
+1591,City Centre,shared,350,48,6,5
+1592,Glanmire,ensuite,779,53,9,4
+1593,Glanmire,double,621,86,9,2
+1594,Mahon,single,447,47,12,3
+1595,Bishopstown,ensuite,709,66,12,5
+1596,Model Farm Rd,single,705,7,6,4
+1597,Glanmire,double,725,73,6,1
+1598,Togher,ensuite,751,42,6,4
+1599,Togher,shared,374,2,9,2
+1600,Blackrock,shared,453,54,6,3
+1601,City Centre,double,773,90,6,4
+1602,Ballincollig,shared,391,75,12,2
+1603,Douglas,single,588,50,9,4
+1604,Douglas,single,616,51,9,1
+1605,Togher,double,464,23,12,2
+1606,Mahon,shared,471,60,12,3
+1607,Bishopstown,single,836,65,9,5
+1608,Togher,shared,469,42,6,5
+1609,Blackrock,single,647,49,9,2
+1610,Model Farm Rd,shared,423,26,9,2
+1611,Togher,shared,350,51,6,3
+1612,Blackrock,single,749,85,12,3
+1613,Model Farm Rd,double,552,17,6,4
+1614,City Centre,ensuite,833,82,12,4
+1615,Bishopstown,shared,777,87,12,4
+1616,City Centre,shared,566,50,6,2
+1617,City Centre,single,672,51,6,5
+1618,City Centre,shared,501,24,12,5
+1619,Wilton,single,783,86,12,5
+1620,Wilton,shared,490,15,12,2
+1621,Mahon,ensuite,640,26,6,4
+1622,Bishopstown,shared,572,0,12,4
+1623,Ballincollig,ensuite,699,21,9,5
+1624,Ballincollig,double,728,3,6,5
+1625,Togher,double,647,11,12,2
+1626,Blackrock,ensuite,739,87,12,5
+1627,City Centre,single,855,36,9,5
+1628,Model Farm Rd,shared,456,57,6,4
+1629,Model Farm Rd,double,636,8,12,3
+1630,Togher,shared,483,24,6,3
+1631,Ballincollig,double,483,34,6,5
+1632,Togher,ensuite,692,84,6,1
+1633,Wilton,single,772,59,12,5
+1634,Bishopstown,shared,459,60,12,1
+1635,Mahon,shared,423,82,9,2
+1636,Bishopstown,ensuite,714,82,12,5
+1637,City Centre,single,778,48,12,3
+1638,Model Farm Rd,double,745,83,12,1
+1639,Blackrock,single,573,25,9,1
+1640,Bishopstown,shared,492,6,12,2
+1641,Mahon,ensuite,897,5,9,1
+1642,Douglas,single,652,65,12,5
+1643,City Centre,single,780,58,6,4
+1644,Wilton,double,494,76,9,5
+1645,Wilton,ensuite,828,38,12,3
+1646,City Centre,single,723,58,6,5
+1647,Togher,ensuite,838,72,6,4
+1648,Ballincollig,single,756,9,9,5
+1649,City Centre,shared,773,75,12,1
+1650,Model Farm Rd,shared,502,14,6,4
+1651,Mahon,shared,489,16,6,5
+1652,City Centre,double,667,2,6,5
+1653,Bishopstown,shared,458,7,12,2
+1654,Mahon,double,600,86,9,3
+1655,Ballincollig,double,533,41,12,4
+1656,Wilton,ensuite,805,42,12,4
+1657,City Centre,single,858,22,6,3
+1658,Wilton,ensuite,699,20,12,3
+1659,Douglas,shared,562,76,6,5
+1660,Bishopstown,double,718,28,9,3
+1661,Douglas,single,649,23,12,3
+1662,Model Farm Rd,shared,350,51,12,1
+1663,Douglas,shared,405,83,9,1
+1664,Wilton,ensuite,906,31,9,3
+1665,Wilton,ensuite,787,5,9,3
+1666,Douglas,shared,370,32,12,1
+1667,Togher,shared,394,47,9,1
+1668,Douglas,shared,535,89,9,5
+1669,Togher,double,599,15,9,5
+1670,Glanmire,shared,408,31,12,3
+1671,Ballincollig,shared,416,52,6,2
+1672,Wilton,double,554,54,6,4
+1673,Mahon,shared,376,77,12,5
+1674,Mahon,ensuite,915,74,6,2
+1675,Blackrock,ensuite,750,72,9,2
+1676,Wilton,single,789,32,6,5
+1677,Togher,shared,576,23,6,4
+1678,Model Farm Rd,double,649,1,9,4
+1679,Mahon,single,621,58,12,5
+1680,Mahon,double,606,24,9,4
+1681,Model Farm Rd,double,557,75,12,5
+1682,Togher,double,468,27,9,5
+1683,Glanmire,shared,459,71,12,4
+1684,Glanmire,shared,350,78,6,3
+1685,Mahon,single,766,38,6,2
+1686,Ballincollig,double,518,6,12,3
+1687,Model Farm Rd,double,578,12,9,2
+1688,Model Farm Rd,double,585,76,6,2
+1689,Wilton,shared,456,1,6,1
+1690,Bishopstown,ensuite,852,38,6,4
+1691,Mahon,double,527,78,12,1
+1692,Ballincollig,double,638,4,9,5
+1693,Bishopstown,double,478,38,6,1
+1694,Douglas,shared,471,41,6,5
+1695,Glanmire,double,714,4,12,5
+1696,Togher,shared,350,82,9,4
+1697,Ballincollig,double,499,85,12,2
+1698,Ballincollig,single,696,42,12,2
+1699,City Centre,double,666,29,9,2
+1700,City Centre,shared,571,54,9,5
+1701,Bishopstown,ensuite,844,71,12,4
+1702,Wilton,single,737,83,9,4
+1703,Togher,double,649,0,6,4
+1704,Blackrock,double,616,80,6,4
+1705,Model Farm Rd,shared,428,52,6,5
+1706,Mahon,ensuite,830,61,6,3
+1707,City Centre,ensuite,1020,31,9,4
+1708,Ballincollig,single,638,90,6,3
+1709,Douglas,single,572,84,6,4
+1710,Model Farm Rd,ensuite,859,51,6,1
+1711,City Centre,shared,529,62,9,2
+1712,Wilton,single,484,63,9,1
+1713,Douglas,shared,536,11,12,2
+1714,City Centre,double,601,88,9,5
+1715,Model Farm Rd,single,641,75,6,5
+1716,Glanmire,double,569,26,9,1
+1717,Douglas,ensuite,787,23,9,3
+1718,Ballincollig,shared,513,36,12,5
+1719,City Centre,ensuite,810,63,9,1
+1720,Glanmire,shared,476,16,6,3
+1721,Bishopstown,single,666,88,9,4
+1722,Blackrock,single,736,77,6,4
+1723,City Centre,ensuite,905,11,9,2
+1724,Wilton,ensuite,705,10,9,3
+1725,Mahon,double,667,32,6,5
+1726,Bishopstown,ensuite,751,65,6,3
+1727,Blackrock,single,742,12,9,4
+1728,Ballincollig,ensuite,793,79,9,3
+1729,Douglas,single,825,50,6,4
+1730,Glanmire,single,609,6,9,1
+1731,Model Farm Rd,double,528,1,12,3
+1732,Blackrock,ensuite,778,15,12,3
+1733,City Centre,double,622,77,12,5
+1734,Wilton,double,661,10,12,1
+1735,Douglas,shared,350,50,6,1
+1736,Douglas,ensuite,675,69,12,4
+1737,Ballincollig,single,553,84,9,5
+1738,Togher,single,725,19,9,3
+1739,Wilton,ensuite,943,11,9,3
+1740,Mahon,double,560,26,12,2
+1741,Blackrock,shared,454,16,6,1
+1742,Douglas,shared,466,38,9,1
+1743,Togher,single,744,55,9,1
+1744,Togher,shared,356,5,12,2
+1745,City Centre,single,761,76,12,5
+1746,Bishopstown,ensuite,887,28,6,1
+1747,Douglas,double,615,49,9,1
+1748,Bishopstown,ensuite,817,68,9,5
+1749,Blackrock,single,760,43,6,4
+1750,Douglas,double,350,84,6,1
+1751,Model Farm Rd,shared,511,4,9,4
+1752,Wilton,double,531,2,9,2
+1753,Model Farm Rd,shared,350,86,6,4
+1754,Glanmire,ensuite,786,46,12,3
+1755,Ballincollig,shared,573,89,6,5
+1756,Wilton,double,577,10,9,1
+1757,Ballincollig,shared,535,9,12,5
+1758,Blackrock,double,725,73,9,4
+1759,Glanmire,shared,548,52,6,4
+1760,Wilton,double,737,41,12,5
+1761,Mahon,single,726,46,6,1
+1762,Wilton,shared,486,9,12,5
+1763,Ballincollig,single,505,16,9,4
+1764,Togher,shared,417,0,6,4
+1765,Togher,shared,364,6,9,1
+1766,Mahon,double,765,5,9,4
+1767,Douglas,shared,444,1,9,1
+1768,Wilton,single,691,82,12,4
+1769,Ballincollig,single,699,79,12,5
+1770,Bishopstown,single,693,27,12,1
+1771,Model Farm Rd,single,802,21,6,2
+1772,City Centre,double,593,46,6,1
+1773,Model Farm Rd,ensuite,777,43,6,2
+1774,Glanmire,ensuite,673,72,9,5
+1775,Blackrock,double,461,14,12,2
+1776,Mahon,single,604,6,12,5
+1777,Mahon,single,656,17,9,3
+1778,Glanmire,ensuite,701,84,9,3
+1779,Ballincollig,double,497,5,9,3
+1780,Togher,ensuite,623,88,9,3
+1781,Douglas,single,652,15,12,1
+1782,Togher,single,504,70,12,4
+1783,Blackrock,ensuite,848,67,6,3
+1784,Ballincollig,ensuite,767,50,9,2
+1785,Wilton,ensuite,658,19,6,4
+1786,Model Farm Rd,shared,422,6,9,4
+1787,Mahon,single,592,30,9,1
+1788,Mahon,double,598,39,12,4
+1789,City Centre,shared,660,1,9,4
+1790,Wilton,shared,350,51,6,2
+1791,Douglas,ensuite,780,8,9,5
+1792,Blackrock,single,655,9,9,2
+1793,City Centre,single,800,56,6,1
+1794,Mahon,shared,479,12,9,4
+1795,City Centre,ensuite,782,67,9,5
+1796,City Centre,ensuite,821,16,6,3
+1797,Ballincollig,single,578,26,6,5
+1798,Blackrock,ensuite,876,56,12,3
+1799,City Centre,shared,541,33,12,3
+1800,Douglas,single,831,87,9,4
+1801,Model Farm Rd,single,644,40,12,4
+1802,Bishopstown,single,626,82,12,5
+1803,Togher,shared,350,55,12,3
+1804,Mahon,double,407,54,9,4
+1805,Bishopstown,double,457,24,9,5
+1806,Glanmire,ensuite,764,80,12,5
+1807,Glanmire,shared,475,70,6,3
+1808,Glanmire,single,487,23,6,4
+1809,Glanmire,single,710,69,9,2
+1810,City Centre,single,696,72,6,2
+1811,City Centre,ensuite,863,55,9,2
+1812,Douglas,double,715,18,12,5
+1813,Glanmire,double,620,87,6,2
+1814,Model Farm Rd,shared,425,37,9,1
+1815,Wilton,double,509,41,6,2
+1816,Mahon,shared,350,48,12,5
+1817,Wilton,ensuite,725,21,9,4
+1818,Douglas,double,550,28,12,5
+1819,Blackrock,double,491,5,6,2
+1820,Wilton,single,668,73,6,3
+1821,City Centre,single,746,54,12,2
+1822,Douglas,double,549,66,9,3
+1823,Wilton,double,531,38,9,1
+1824,Model Farm Rd,double,575,77,6,4
+1825,Blackrock,ensuite,819,10,9,3
+1826,Blackrock,double,481,49,6,4
+1827,Blackrock,shared,596,72,12,5
+1828,Model Farm Rd,single,641,25,12,2
+1829,Bishopstown,single,691,0,12,4
+1830,Ballincollig,double,623,27,12,2
+1831,Wilton,shared,500,80,12,2
+1832,Wilton,shared,565,57,9,4
+1833,Douglas,double,595,9,9,5
+1834,City Centre,shared,484,51,9,4
+1835,City Centre,shared,572,0,6,5
+1836,Blackrock,single,567,30,9,1
+1837,Blackrock,ensuite,789,21,12,5
+1838,Ballincollig,double,557,80,9,1
+1839,City Centre,shared,521,90,9,1
+1840,Wilton,shared,468,34,6,4
+1841,Glanmire,ensuite,570,64,6,4
+1842,Glanmire,shared,380,17,9,5
+1843,City Centre,shared,548,20,6,1
+1844,Douglas,shared,474,24,12,3
+1845,Mahon,ensuite,677,52,12,1
+1846,Ballincollig,shared,563,34,9,5
+1847,Glanmire,double,462,13,12,2
+1848,Model Farm Rd,shared,537,73,12,3
+1849,Model Farm Rd,single,688,32,12,5
+1850,Mahon,single,601,75,12,5
+1851,Blackrock,ensuite,939,1,9,5
+1852,Douglas,double,462,53,9,3
+1853,Douglas,double,652,16,12,2
+1854,Model Farm Rd,ensuite,850,48,6,2
+1855,Bishopstown,double,539,70,12,5
+1856,Bishopstown,single,815,42,12,3
+1857,Togher,ensuite,727,29,9,1
+1858,City Centre,single,765,23,12,4
+1859,Mahon,double,593,17,6,5
+1860,Togher,ensuite,737,63,9,2
+1861,Wilton,ensuite,862,50,12,4
+1862,Togher,shared,511,8,12,5
+1863,Togher,double,392,16,6,4
+1864,Togher,shared,557,7,9,5
+1865,Ballincollig,single,500,49,12,1
+1866,Mahon,single,752,25,12,3
+1867,Model Farm Rd,ensuite,861,51,9,4
+1868,Model Farm Rd,ensuite,661,50,6,3
+1869,Togher,shared,403,87,9,5
+1870,Ballincollig,shared,350,24,12,5
+1871,Douglas,single,640,79,9,2
+1872,Douglas,shared,432,15,6,5
+1873,City Centre,double,720,53,6,4
+1874,Mahon,double,687,0,6,4
+1875,Blackrock,ensuite,905,40,12,4
+1876,Togher,shared,389,35,9,4
+1877,Togher,shared,421,41,9,3
+1878,Glanmire,ensuite,588,12,6,3
+1879,Glanmire,shared,357,35,6,1
+1880,City Centre,shared,626,67,9,3
+1881,Togher,shared,585,67,6,3
+1882,City Centre,ensuite,738,9,9,4
+1883,Blackrock,ensuite,726,41,6,2
+1884,Wilton,ensuite,787,38,9,1
+1885,Togher,shared,465,37,6,2
+1886,Douglas,double,497,67,9,5
+1887,Mahon,single,698,65,6,3
+1888,Glanmire,single,587,8,9,1
+1889,Douglas,shared,458,24,6,5
+1890,Ballincollig,ensuite,809,19,6,5
+1891,Mahon,single,660,22,6,3
+1892,City Centre,double,610,3,12,3
+1893,Bishopstown,double,590,34,12,5
+1894,City Centre,shared,532,81,6,5
+1895,Glanmire,shared,396,73,9,2
+1896,Ballincollig,ensuite,736,19,12,3
+1897,Bishopstown,double,743,46,9,5
+1898,Ballincollig,single,700,38,9,1
+1899,Glanmire,double,513,45,9,4
+1900,Ballincollig,single,712,73,9,4
+1901,Douglas,ensuite,739,86,6,3
+1902,Model Farm Rd,single,755,17,12,4
+1903,City Centre,double,683,78,9,3
+1904,Wilton,single,670,29,6,3
+1905,Togher,double,590,42,12,3
+1906,Model Farm Rd,single,508,59,6,3
+1907,Wilton,single,578,29,6,5
+1908,Glanmire,shared,350,60,9,5
+1909,Mahon,shared,472,46,12,3
+1910,Bishopstown,ensuite,955,8,12,4
+1911,Ballincollig,double,760,25,6,5
+1912,Togher,double,607,77,9,5
+1913,Mahon,ensuite,815,13,12,4
+1914,Wilton,double,427,82,6,2
+1915,Mahon,single,611,82,9,5
+1916,Mahon,ensuite,699,21,9,4
+1917,Glanmire,ensuite,684,66,6,1
+1918,Glanmire,double,524,89,6,4
+1919,Mahon,double,527,75,6,1
+1920,Blackrock,single,491,67,6,4
+1921,Togher,double,617,37,6,4
+1922,Blackrock,ensuite,683,72,9,4
+1923,Model Farm Rd,single,671,53,6,2
+1924,Wilton,shared,666,18,6,4
+1925,Bishopstown,shared,407,79,12,5
+1926,City Centre,double,422,21,6,4
+1927,Model Farm Rd,single,624,4,12,4
+1928,Blackrock,ensuite,879,69,12,4
+1929,City Centre,ensuite,1026,59,9,5
+1930,Blackrock,ensuite,669,9,12,4
+1931,Mahon,shared,504,40,9,2
+1932,Model Farm Rd,single,608,69,12,5
+1933,City Centre,shared,530,26,9,5
+1934,Bishopstown,ensuite,1037,74,6,3
+1935,Glanmire,single,494,71,12,3
+1936,Blackrock,shared,492,21,9,5
+1937,Douglas,ensuite,812,70,12,4
+1938,Mahon,double,667,67,6,2
+1939,City Centre,shared,548,51,6,2
+1940,Douglas,shared,487,87,6,2
+1941,Bishopstown,single,654,80,9,1
+1942,Togher,single,664,19,12,5
+1943,Togher,shared,409,83,6,5
+1944,Wilton,single,735,83,9,1
+1945,Mahon,shared,426,76,6,1
+1946,City Centre,shared,573,75,6,2
+1947,Glanmire,double,537,75,12,2
+1948,Mahon,double,671,28,9,5
+1949,Mahon,ensuite,765,77,9,1
+1950,Douglas,ensuite,610,5,9,4
+1951,Blackrock,shared,583,65,12,4
+1952,Togher,double,468,24,9,3
+1953,Glanmire,single,571,62,9,2
+1954,Bishopstown,double,546,84,6,1
+1955,Blackrock,ensuite,903,43,12,1
+1956,Blackrock,shared,350,86,6,3
+1957,Wilton,single,962,67,9,5
+1958,Model Farm Rd,double,655,66,9,3
+1959,Ballincollig,single,670,39,9,5
+1960,Togher,double,545,13,6,3
+1961,Bishopstown,ensuite,825,61,6,1
+1962,Wilton,double,636,82,9,1
+1963,Douglas,shared,518,68,9,1
+1964,Blackrock,shared,520,68,12,1
+1965,City Centre,shared,548,57,12,4
+1966,Togher,single,622,18,6,3
+1967,Ballincollig,ensuite,746,54,12,3
+1968,Ballincollig,shared,432,60,12,3
+1969,City Centre,double,752,54,12,4
+1970,Ballincollig,single,703,8,9,2
+1971,Wilton,ensuite,525,61,6,4
+1972,Togher,double,609,15,9,5
+1973,Glanmire,ensuite,757,57,12,2
+1974,Model Farm Rd,double,558,84,9,2
+1975,Bishopstown,shared,455,71,12,2
+1976,City Centre,double,751,72,6,3
+1977,Togher,ensuite,835,90,12,3
+1978,Wilton,double,520,29,6,3
+1979,Bishopstown,shared,526,47,6,5
+1980,Blackrock,ensuite,692,68,6,5
+1981,Mahon,shared,350,3,9,2
+1982,Ballincollig,ensuite,703,49,9,3
+1983,Mahon,double,647,15,9,5
+1984,Blackrock,ensuite,865,83,6,4
+1985,Ballincollig,single,696,54,6,4
+1986,City Centre,ensuite,915,1,6,2
+1987,Bishopstown,single,736,51,12,5
+1988,Bishopstown,ensuite,742,12,6,3
+1989,Ballincollig,shared,488,49,12,1
+1990,Model Farm Rd,ensuite,832,71,6,4
+1991,Glanmire,ensuite,807,3,12,2
+1992,Model Farm Rd,double,667,68,9,3
+1993,Douglas,double,633,3,6,4
+1994,Blackrock,single,701,73,12,5
+1995,Mahon,double,666,14,12,2
+1996,Mahon,shared,457,57,9,1
+1997,Model Farm Rd,shared,370,53,9,4
+1998,Bishopstown,single,675,17,9,4
+1999,Douglas,ensuite,702,22,6,2
+2000,Wilton,double,529,87,12,2
+2001,Ballincollig,single,636,9,6,4
+2002,Mahon,double,498,53,9,3
+2003,Model Farm Rd,single,622,12,9,4
+2004,Model Farm Rd,single,479,41,6,3
+2005,Ballincollig,shared,469,15,9,3
+2006,City Centre,double,650,27,6,3
+2007,Bishopstown,shared,416,38,9,3
+2008,Mahon,ensuite,829,17,9,1
+2009,Bishopstown,shared,574,31,9,2
+2010,Mahon,double,425,8,12,5
+2011,Blackrock,shared,401,78,12,3
+2012,Blackrock,double,510,81,6,4
+2013,Glanmire,shared,350,33,6,3
+2014,Model Farm Rd,single,724,3,6,5
+2015,Blackrock,single,652,22,12,3
+2016,Blackrock,single,646,26,9,3
+2017,Ballincollig,shared,350,61,6,2
+2018,Togher,double,607,73,6,3
+2019,Glanmire,double,428,29,6,3
+2020,Blackrock,ensuite,785,48,12,1
+2021,Blackrock,shared,494,37,12,2
+2022,Wilton,ensuite,912,11,6,3
+2023,Model Farm Rd,shared,350,67,12,4
+2024,Model Farm Rd,ensuite,488,27,6,2
+2025,City Centre,ensuite,866,1,12,3
+2026,Ballincollig,double,722,56,9,4
+2027,Mahon,single,771,65,6,1
+2028,Togher,ensuite,768,64,6,1
+2029,Bishopstown,shared,445,31,6,3
+2030,Douglas,single,732,41,6,1
+2031,Ballincollig,double,472,55,9,5
+2032,Mahon,double,612,80,6,1
+2033,Glanmire,single,675,70,9,1
+2034,City Centre,shared,635,80,12,3
+2035,Mahon,ensuite,1018,16,9,4
+2036,City Centre,shared,575,82,12,1
+2037,Wilton,shared,434,74,12,2
+2038,Douglas,single,657,47,9,2
+2039,Douglas,single,500,51,6,1
+2040,Wilton,double,527,6,6,5
+2041,Mahon,ensuite,733,82,12,3
+2042,City Centre,ensuite,802,17,6,3
+2043,Bishopstown,single,703,37,6,1
+2044,Mahon,shared,385,61,6,1
+2045,Blackrock,single,770,32,9,5
+2046,Model Farm Rd,double,560,2,6,4
+2047,Mahon,double,569,26,12,5
+2048,Wilton,double,560,17,6,3
+2049,City Centre,single,753,40,6,5
+2050,Wilton,double,664,85,6,1
+2051,Blackrock,shared,391,17,12,1
+2052,Bishopstown,single,630,9,6,2
+2053,Ballincollig,ensuite,732,26,6,5
+2054,Bishopstown,double,478,29,12,2
+2055,Blackrock,double,506,66,9,1
+2056,Douglas,double,527,31,12,5
+2057,Ballincollig,ensuite,838,52,12,3
+2058,Blackrock,double,603,27,9,2
+2059,Togher,shared,457,38,9,5
+2060,Glanmire,shared,506,0,6,3
+2061,Model Farm Rd,shared,437,54,6,3
+2062,Wilton,single,715,74,9,2
+2063,Mahon,shared,450,81,12,4
+2064,Douglas,ensuite,793,84,12,5
+2065,Blackrock,double,527,79,9,2
+2066,Blackrock,shared,350,11,9,2
+2067,Mahon,shared,447,47,9,5
+2068,Bishopstown,ensuite,928,62,9,2
+2069,Blackrock,double,663,81,12,1
+2070,Model Farm Rd,shared,536,53,9,1
+2071,Ballincollig,shared,561,47,6,2
+2072,Mahon,ensuite,777,20,9,4
+2073,Ballincollig,shared,467,55,12,3
+2074,Douglas,ensuite,714,26,12,5
+2075,Mahon,double,541,81,12,5
+2076,Blackrock,double,635,19,9,2
+2077,Mahon,shared,568,75,6,3
+2078,Bishopstown,ensuite,787,60,6,2
+2079,Glanmire,shared,389,25,12,5
+2080,Douglas,ensuite,770,34,6,3
+2081,Mahon,ensuite,824,64,12,4
+2082,Douglas,single,530,52,6,4
+2083,Togher,double,350,37,12,4
+2084,Model Farm Rd,double,510,78,12,5
+2085,Bishopstown,shared,380,12,9,2
+2086,Togher,single,594,12,9,5
+2087,Douglas,shared,446,11,6,2
+2088,City Centre,shared,499,26,9,2
+2089,Mahon,single,790,60,12,2
+2090,City Centre,single,769,35,12,5
+2091,Mahon,shared,487,70,12,1
+2092,Togher,double,605,49,12,3
+2093,Model Farm Rd,double,457,15,6,1
+2094,Ballincollig,shared,543,25,12,3
+2095,Glanmire,shared,423,23,9,3
+2096,Wilton,double,650,49,12,3
+2097,Blackrock,shared,373,26,6,5
+2098,Bishopstown,shared,350,17,12,5
+2099,Model Farm Rd,ensuite,833,1,6,4
+2100,Model Farm Rd,ensuite,793,64,12,1
+2101,Bishopstown,double,518,82,9,4
+2102,Ballincollig,shared,371,11,12,4
+2103,Glanmire,single,731,52,12,5
+2104,Douglas,double,462,42,6,5
+2105,Bishopstown,single,837,13,9,1
+2106,Wilton,ensuite,708,73,6,1
+2107,Mahon,double,627,72,12,3
+2108,Model Farm Rd,single,620,10,6,2
+2109,Douglas,ensuite,824,34,6,4
+2110,Mahon,shared,411,84,6,3
+2111,Togher,single,625,36,6,5
+2112,Togher,ensuite,753,11,12,1
+2113,Bishopstown,shared,399,63,12,2
+2114,City Centre,single,806,32,12,1
+2115,Bishopstown,shared,443,1,9,5
+2116,Model Farm Rd,single,629,3,6,3
+2117,Wilton,single,590,19,12,5
+2118,Mahon,shared,350,15,9,5
+2119,City Centre,single,722,79,12,1
+2120,Douglas,ensuite,987,18,6,2
+2121,Ballincollig,ensuite,830,38,12,3
+2122,Wilton,single,678,26,9,2
+2123,Bishopstown,shared,466,7,12,4
+2124,Model Farm Rd,single,652,62,12,1
+2125,Douglas,shared,509,7,6,3
+2126,Glanmire,single,523,89,6,4
+2127,Bishopstown,double,700,17,12,1
+2128,Model Farm Rd,ensuite,824,2,6,3
+2129,Glanmire,single,694,20,12,5
+2130,Bishopstown,ensuite,839,11,6,2
+2131,Togher,shared,441,80,9,3
+2132,Wilton,shared,540,89,6,5
+2133,Douglas,shared,513,60,12,3
+2134,Glanmire,shared,398,37,9,2
+2135,Model Farm Rd,single,598,30,12,1
+2136,City Centre,shared,549,38,12,1
+2137,Mahon,single,799,73,9,2
+2138,Douglas,double,458,15,9,3
+2139,City Centre,single,607,90,6,1
+2140,Blackrock,double,594,42,6,4
+2141,Model Farm Rd,shared,454,84,6,4
+2142,Bishopstown,shared,505,70,9,3
+2143,Blackrock,double,601,41,6,4
+2144,Ballincollig,single,629,0,6,3
+2145,Ballincollig,shared,584,8,12,4
+2146,Model Farm Rd,ensuite,615,66,12,3
+2147,Mahon,shared,385,77,9,5
+2148,Model Farm Rd,double,550,7,6,3
+2149,Bishopstown,ensuite,652,55,9,3
+2150,Mahon,double,554,46,9,5
+2151,Ballincollig,double,709,23,9,1
+2152,Glanmire,double,541,49,9,2
+2153,Blackrock,shared,490,46,6,3
+2154,Mahon,single,546,60,6,1
+2155,Bishopstown,ensuite,744,83,9,1
+2156,Douglas,single,626,48,12,4
+2157,Wilton,ensuite,761,5,12,5
+2158,Glanmire,single,745,0,6,4
+2159,Mahon,single,710,86,9,1
+2160,Glanmire,double,439,68,6,1
+2161,Glanmire,shared,452,21,6,5
+2162,Bishopstown,single,734,44,12,2
+2163,Wilton,double,692,18,12,2
+2164,Wilton,double,732,71,6,3
+2165,City Centre,ensuite,758,60,9,2
+2166,Togher,double,477,45,12,5
+2167,Model Farm Rd,ensuite,646,4,6,3
+2168,Bishopstown,single,668,70,9,4
+2169,Model Farm Rd,single,691,29,9,1
+2170,Bishopstown,double,688,44,12,1
+2171,Blackrock,double,573,40,9,2
+2172,Wilton,double,561,0,9,3
+2173,Bishopstown,ensuite,813,62,12,1
+2174,Model Farm Rd,shared,374,67,6,1
+2175,Wilton,single,868,9,6,3
+2176,Bishopstown,ensuite,655,42,6,3
+2177,Bishopstown,ensuite,816,16,12,1
+2178,Ballincollig,ensuite,942,60,12,4
+2179,Glanmire,ensuite,740,80,6,5
+2180,City Centre,double,632,10,12,5
+2181,Togher,double,517,2,9,2
+2182,Blackrock,shared,453,71,12,1
+2183,Douglas,shared,583,71,12,1
+2184,Wilton,single,480,28,12,5
+2185,Glanmire,ensuite,878,30,12,4
+2186,Model Farm Rd,single,521,40,9,5
+2187,Blackrock,ensuite,756,63,9,5
+2188,Model Farm Rd,ensuite,721,89,6,5
+2189,Ballincollig,double,612,73,12,1
+2190,Mahon,shared,350,72,12,1
+2191,Ballincollig,ensuite,801,19,12,5
+2192,Togher,shared,622,1,9,1
+2193,City Centre,shared,417,42,9,4
+2194,Douglas,double,587,57,9,3
+2195,Glanmire,single,570,10,9,3
+2196,Wilton,shared,518,53,6,2
+2197,Mahon,single,661,38,12,5
+2198,City Centre,double,592,45,6,1
+2199,Togher,ensuite,793,24,9,4
+2200,Model Farm Rd,double,722,81,12,4
+2201,Ballincollig,ensuite,742,38,9,4
+2202,Wilton,ensuite,854,1,12,3
+2203,Wilton,double,473,18,9,2
+2204,Douglas,ensuite,683,65,6,1
+2205,Ballincollig,single,692,58,12,2
+2206,Ballincollig,single,783,42,9,2
+2207,Mahon,single,692,41,12,3
+2208,Blackrock,shared,441,36,12,1
+2209,Mahon,double,569,63,12,4
+2210,City Centre,double,537,35,6,3
+2211,Glanmire,single,684,30,6,2
+2212,Wilton,ensuite,869,86,12,3
+2213,Blackrock,double,539,28,6,3
+2214,Togher,double,507,67,9,2
+2215,City Centre,ensuite,873,2,6,5
+2216,Mahon,shared,420,23,12,5
+2217,Model Farm Rd,single,644,56,6,1
+2218,Glanmire,ensuite,928,20,12,2
+2219,Wilton,single,657,38,6,4
+2220,Glanmire,double,507,15,9,2
+2221,Model Farm Rd,double,501,51,9,5
+2222,Douglas,shared,526,0,9,2
+2223,Wilton,ensuite,773,4,6,1
+2224,Douglas,double,511,64,6,3
+2225,Togher,ensuite,868,0,6,2
+2226,City Centre,shared,667,12,12,5
+2227,City Centre,single,685,73,6,2
+2228,Douglas,ensuite,602,79,6,4
+2229,Model Farm Rd,shared,540,10,12,1
+2230,City Centre,single,678,82,6,2
+2231,Model Farm Rd,ensuite,831,55,6,4
+2232,Wilton,double,412,43,9,3
+2233,Glanmire,single,710,65,12,3
+2234,Blackrock,ensuite,670,0,12,4
+2235,Model Farm Rd,double,625,29,6,3
+2236,Blackrock,double,581,17,12,2
+2237,Bishopstown,shared,404,83,12,4
+2238,Glanmire,single,593,36,9,4
+2239,Ballincollig,shared,511,36,6,4
+2240,City Centre,single,749,78,9,3
+2241,Douglas,single,712,10,12,4
+2242,Glanmire,shared,607,53,12,4
+2243,Blackrock,single,529,44,6,4
+2244,Mahon,single,805,16,6,5
+2245,Wilton,single,689,89,12,3
+2246,Glanmire,single,549,52,12,1
+2247,Model Farm Rd,single,530,19,6,2
+2248,Bishopstown,single,672,50,9,5
+2249,Glanmire,single,712,49,12,4
+2250,Mahon,double,558,42,6,2
+2251,Wilton,double,726,87,9,1
+2252,Togher,ensuite,619,74,6,1
+2253,Wilton,shared,478,81,12,3
+2254,Togher,ensuite,637,53,6,4
+2255,Bishopstown,single,722,36,6,5
+2256,Ballincollig,double,639,2,6,1
+2257,Douglas,shared,422,43,6,5
+2258,Togher,double,350,31,12,1
+2259,Douglas,double,587,33,9,3
+2260,Model Farm Rd,shared,489,48,12,2
+2261,Wilton,shared,516,68,12,3
+2262,Bishopstown,shared,601,84,12,2
+2263,Glanmire,shared,350,43,12,1
+2264,Blackrock,double,641,67,6,1
+2265,Bishopstown,single,797,35,12,1
+2266,Mahon,ensuite,609,20,12,4
+2267,Mahon,ensuite,798,23,9,4
+2268,Douglas,ensuite,724,8,6,4
+2269,Wilton,ensuite,782,40,9,2
+2270,Douglas,shared,491,46,12,4
+2271,Blackrock,shared,426,78,9,4
+2272,Ballincollig,shared,389,65,9,5
+2273,Mahon,double,573,21,9,5
+2274,Ballincollig,ensuite,662,15,6,3
+2275,Mahon,double,472,40,6,4
+2276,Model Farm Rd,double,621,72,9,3
+2277,Mahon,ensuite,666,14,6,1
+2278,Mahon,double,629,57,9,4
+2279,Wilton,double,631,40,12,1
+2280,Model Farm Rd,shared,350,74,6,3
+2281,Ballincollig,double,499,9,6,5
+2282,Bishopstown,ensuite,907,55,12,3
+2283,City Centre,double,561,18,6,3
+2284,Glanmire,shared,388,70,12,1
+2285,Ballincollig,ensuite,801,63,12,5
+2286,Glanmire,double,610,47,6,5
+2287,Ballincollig,single,627,58,6,2
+2288,Douglas,double,516,11,9,4
+2289,Togher,double,678,31,6,4
+2290,Wilton,single,836,72,12,3
+2291,Blackrock,single,758,50,9,4
+2292,Glanmire,single,637,50,6,4
+2293,Douglas,double,497,66,9,2
+2294,City Centre,single,665,8,6,2
+2295,City Centre,single,787,86,12,3
+2296,Togher,ensuite,787,16,9,3
+2297,Togher,double,676,26,6,4
+2298,Glanmire,shared,488,2,12,2
+2299,Togher,shared,350,63,12,1
+2300,Douglas,shared,554,1,9,3
+2301,Model Farm Rd,ensuite,670,55,12,2
+2302,City Centre,ensuite,815,53,9,5
+2303,City Centre,single,762,24,6,3
+2304,Model Farm Rd,ensuite,939,11,12,2
+2305,Blackrock,single,949,83,6,1
+2306,Bishopstown,ensuite,854,37,9,1
+2307,Glanmire,ensuite,723,67,12,1
+2308,Togher,single,688,27,12,5
+2309,Model Farm Rd,single,729,36,9,1
+2310,City Centre,ensuite,821,7,9,2
+2311,Bishopstown,ensuite,961,51,9,5
+2312,Blackrock,single,690,87,6,3
+2313,Douglas,single,704,35,12,2
+2314,Glanmire,ensuite,799,58,9,3
+2315,Togher,single,677,25,6,5
+2316,City Centre,single,815,51,12,3
+2317,Mahon,ensuite,714,57,6,4
+2318,Glanmire,ensuite,689,4,6,5
+2319,City Centre,double,550,59,12,1
+2320,Mahon,double,609,61,12,1
+2321,Mahon,single,730,13,9,5
+2322,Mahon,shared,501,66,9,1
+2323,Bishopstown,shared,640,49,9,3
+2324,Model Farm Rd,double,559,84,6,2
+2325,Mahon,single,720,60,6,3
+2326,City Centre,ensuite,751,68,6,3
+2327,Douglas,ensuite,735,45,12,5
+2328,Bishopstown,ensuite,862,54,9,4
+2329,Wilton,ensuite,866,31,9,2
+2330,Douglas,double,543,36,6,4
+2331,Mahon,double,563,12,9,4
+2332,Blackrock,single,533,8,12,3
+2333,Togher,ensuite,717,54,9,5
+2334,Glanmire,double,620,0,6,1
+2335,Wilton,ensuite,841,26,6,4
+2336,Wilton,shared,525,49,9,5
+2337,Togher,double,554,32,9,1
+2338,Blackrock,single,670,21,9,2
+2339,Togher,ensuite,690,38,9,1
+2340,Douglas,single,722,69,9,2
+2341,City Centre,shared,577,16,12,1
+2342,Glanmire,double,584,71,12,2
+2343,Glanmire,shared,382,60,9,1
+2344,Bishopstown,ensuite,606,17,9,2
+2345,Glanmire,shared,528,25,6,5
+2346,City Centre,single,696,56,6,2
+2347,Bishopstown,single,612,18,12,3
+2348,Wilton,double,652,37,12,3
+2349,Glanmire,double,504,86,6,3
+2350,Glanmire,shared,525,60,6,5
+2351,Mahon,single,715,86,12,5
+2352,Glanmire,single,691,48,9,5
+2353,Mahon,ensuite,647,51,9,4
+2354,Mahon,ensuite,879,5,12,5
+2355,Mahon,double,593,24,9,3
+2356,City Centre,single,706,78,12,3
+2357,Wilton,double,602,36,6,4
+2358,Blackrock,double,420,58,12,2
+2359,Wilton,double,626,11,12,1
+2360,Ballincollig,double,467,79,12,1
+2361,Glanmire,single,508,46,12,3
+2362,Glanmire,double,402,53,6,1
+2363,Blackrock,shared,570,81,12,1
+2364,Bishopstown,ensuite,743,4,12,1
+2365,City Centre,single,878,50,12,2
+2366,Mahon,single,611,3,12,1
+2367,Wilton,shared,350,44,12,5
+2368,Douglas,ensuite,669,59,9,5
+2369,Glanmire,double,651,28,9,3
+2370,Togher,double,535,45,9,1
+2371,Model Farm Rd,double,510,13,9,5
+2372,Mahon,shared,474,72,6,3
+2373,Mahon,double,615,90,12,4
+2374,Mahon,ensuite,870,86,6,2
+2375,City Centre,double,780,11,9,2
+2376,Mahon,shared,427,46,6,5
+2377,Wilton,ensuite,670,50,12,3
+2378,Ballincollig,double,522,63,12,2
+2379,Ballincollig,single,673,5,6,2
+2380,City Centre,shared,453,85,6,1
+2381,Ballincollig,shared,363,2,9,1
+2382,Model Farm Rd,single,680,71,9,3
+2383,Douglas,double,565,63,6,4
+2384,Douglas,single,662,82,12,2
+2385,Douglas,ensuite,701,53,12,2
+2386,Mahon,double,549,1,6,1
+2387,City Centre,single,656,75,6,5
+2388,Model Farm Rd,double,640,8,12,4
+2389,Togher,single,733,0,9,5
+2390,City Centre,double,483,67,12,2
+2391,Blackrock,ensuite,696,8,9,5
+2392,Model Farm Rd,double,425,79,12,1
+2393,Model Farm Rd,double,501,6,9,2
+2394,Glanmire,shared,422,54,6,2
+2395,Mahon,shared,350,21,12,1
+2396,Togher,single,557,17,6,4
+2397,Togher,single,549,44,12,3
+2398,Glanmire,ensuite,758,58,6,3
+2399,Douglas,single,666,11,6,3
+2400,Togher,double,485,86,12,2
+2401,City Centre,shared,555,63,6,5
+2402,Glanmire,ensuite,690,17,6,5
+2403,Model Farm Rd,single,625,39,6,4
+2404,Model Farm Rd,double,710,60,9,3
+2405,City Centre,single,860,51,9,4
+2406,Glanmire,single,513,65,9,4
+2407,Mahon,double,644,84,12,5
+2408,Douglas,shared,533,30,9,5
+2409,Togher,ensuite,646,3,6,4
+2410,Wilton,shared,553,51,6,5
+2411,Wilton,double,728,54,9,4
+2412,Glanmire,single,528,72,12,2
+2413,Glanmire,shared,350,10,9,3
+2414,Wilton,double,681,70,12,5
+2415,Togher,single,664,59,9,5
+2416,Model Farm Rd,double,609,40,12,5
+2417,Bishopstown,double,630,41,9,5
+2418,Glanmire,shared,465,59,6,4
+2419,Blackrock,shared,350,48,9,1
+2420,Togher,double,644,71,9,5
+2421,City Centre,ensuite,955,3,6,3
+2422,Bishopstown,shared,469,13,9,3
+2423,Glanmire,double,536,73,6,2
+2424,Model Farm Rd,ensuite,622,50,9,1
+2425,Togher,shared,486,10,12,1
+2426,Ballincollig,shared,501,5,6,3
+2427,City Centre,single,734,77,6,3
+2428,Ballincollig,double,661,66,9,5
+2429,Glanmire,ensuite,709,81,9,1
+2430,Douglas,single,710,18,12,2
+2431,City Centre,single,648,13,12,2
+2432,Blackrock,single,667,8,12,5
+2433,Mahon,single,644,63,9,2
+2434,Model Farm Rd,single,670,51,12,5
+2435,Blackrock,double,546,23,6,2
+2436,Douglas,shared,448,77,6,1
+2437,Togher,single,714,49,6,1
+2438,City Centre,shared,500,81,6,1
+2439,Wilton,ensuite,645,22,9,4
+2440,Wilton,ensuite,947,89,12,4
+2441,Blackrock,double,704,60,12,3
+2442,City Centre,ensuite,733,63,12,1
+2443,Ballincollig,ensuite,822,50,12,5
+2444,Blackrock,shared,424,86,9,3
+2445,City Centre,shared,563,69,9,2
+2446,Blackrock,ensuite,806,32,9,2
+2447,Ballincollig,ensuite,738,8,9,4
+2448,Mahon,shared,389,45,12,2
+2449,Ballincollig,double,497,37,12,2
+2450,Blackrock,shared,387,80,6,4
+2451,Glanmire,double,465,55,9,3
+2452,Togher,ensuite,743,30,6,1
+2453,Glanmire,shared,365,46,12,4
+2454,City Centre,ensuite,911,31,6,4
+2455,Model Farm Rd,double,693,84,12,3
+2456,Ballincollig,double,507,55,12,3
+2457,Togher,single,661,45,6,3
+2458,Blackrock,single,714,46,12,1
+2459,Model Farm Rd,double,602,68,9,4
+2460,Glanmire,double,546,1,6,4
+2461,Douglas,ensuite,836,22,12,2
+2462,Model Farm Rd,single,693,89,9,4
+2463,Douglas,shared,350,18,12,3
+2464,Ballincollig,ensuite,838,85,12,1
+2465,Douglas,single,739,8,9,2
+2466,Blackrock,ensuite,711,14,9,1
+2467,Wilton,single,683,38,9,1
+2468,Wilton,single,741,39,6,3
+2469,Douglas,single,641,17,9,5
+2470,Ballincollig,double,656,28,9,5
+2471,Blackrock,double,792,10,12,1
+2472,Bishopstown,double,529,30,12,3
+2473,Model Farm Rd,single,525,35,6,4
+2474,Blackrock,double,607,58,9,2
+2475,Togher,shared,504,86,9,2
+2476,Blackrock,single,649,88,6,5
+2477,Blackrock,shared,600,28,12,2
+2478,Togher,ensuite,629,44,9,3
+2479,Bishopstown,ensuite,862,80,9,1
+2480,Model Farm Rd,single,595,74,6,3
+2481,Bishopstown,single,844,61,12,3
+2482,Blackrock,ensuite,959,40,12,2
+2483,Glanmire,single,561,53,6,4
+2484,Wilton,single,630,53,9,2
+2485,Douglas,shared,537,32,9,1
+2486,Wilton,single,645,85,9,4
+2487,Blackrock,shared,465,21,9,3
+2488,Bishopstown,double,602,54,6,5
+2489,Ballincollig,single,477,65,12,4
+2490,Mahon,double,568,1,12,5
+2491,City Centre,shared,477,73,6,1
+2492,Model Farm Rd,shared,405,30,6,2
+2493,Model Farm Rd,ensuite,889,9,9,4
+2494,City Centre,ensuite,736,42,6,3
+2495,Model Farm Rd,double,633,16,12,4
+2496,Glanmire,double,514,86,6,2
+2497,Douglas,ensuite,744,29,12,5
+2498,Togher,single,711,39,12,3
+2499,Bishopstown,ensuite,830,83,6,1
+2500,Wilton,ensuite,841,77,6,4
+2501,Ballincollig,ensuite,847,5,12,2
+2502,Togher,double,520,30,6,2
+2503,Ballincollig,double,504,60,9,3
+2504,Glanmire,shared,350,59,6,5
+2505,Model Farm Rd,single,575,14,12,3
+2506,Ballincollig,single,915,36,12,3
+2507,Douglas,single,772,66,12,2
+2508,Ballincollig,double,438,55,12,3
+2509,Douglas,single,540,4,12,2
+2510,Model Farm Rd,shared,493,61,6,1
+2511,Blackrock,single,719,52,6,5
+2512,Bishopstown,shared,539,77,6,4
+2513,Blackrock,single,647,57,6,2
+2514,Togher,single,628,54,6,5
+2515,Bishopstown,single,719,64,9,2
+2516,Model Farm Rd,double,567,20,6,5
+2517,Togher,double,350,50,12,1
+2518,Blackrock,shared,449,27,12,4
+2519,Mahon,shared,383,14,6,3
+2520,Wilton,shared,495,62,6,4
+2521,Ballincollig,ensuite,1028,76,12,5
+2522,Bishopstown,ensuite,833,25,6,3
+2523,Ballincollig,ensuite,731,6,6,2
+2524,City Centre,double,732,82,9,5
+2525,Douglas,shared,503,71,12,1
+2526,Douglas,ensuite,807,81,9,1
+2527,Wilton,ensuite,844,64,9,4
+2528,Mahon,single,845,30,12,1
+2529,Ballincollig,single,548,77,12,2
+2530,Ballincollig,shared,492,87,12,4
+2531,Blackrock,ensuite,696,80,6,5
+2532,Wilton,double,639,54,12,5
+2533,Bishopstown,single,607,9,6,5
+2534,Wilton,shared,442,22,6,1
+2535,Blackrock,single,643,31,6,3
+2536,Mahon,single,747,12,12,3
+2537,Wilton,double,672,0,6,2
+2538,Togher,double,437,46,6,2
+2539,City Centre,double,654,87,12,1
+2540,Mahon,single,596,81,9,2
+2541,Mahon,single,546,30,12,5
+2542,Bishopstown,shared,470,31,12,4
+2543,Model Farm Rd,single,622,59,12,5
+2544,Model Farm Rd,ensuite,978,82,9,4
+2545,Glanmire,double,578,5,6,1
+2546,Blackrock,double,456,10,9,1
+2547,City Centre,shared,489,1,9,1
+2548,Mahon,double,661,34,12,3
+2549,City Centre,ensuite,1037,13,6,2
+2550,Glanmire,single,487,67,9,1
+2551,Bishopstown,single,520,79,9,3
+2552,Blackrock,ensuite,948,46,9,5
+2553,Glanmire,double,575,78,9,3
+2554,Blackrock,shared,391,14,12,2
+2555,Glanmire,shared,478,63,6,2
+2556,Glanmire,shared,350,87,6,5
+2557,Togher,shared,440,18,9,2
+2558,Model Farm Rd,ensuite,789,51,6,2
+2559,Mahon,shared,543,56,12,2
+2560,City Centre,ensuite,758,46,9,2
+2561,Glanmire,single,637,25,12,5
+2562,Glanmire,ensuite,656,5,6,2
+2563,Douglas,ensuite,792,85,9,1
+2564,Ballincollig,ensuite,679,50,9,2
+2565,Glanmire,shared,393,26,12,2
+2566,City Centre,ensuite,760,87,6,1
+2567,Glanmire,shared,488,12,12,3
+2568,Wilton,single,757,47,6,3
+2569,Togher,double,528,14,12,4
+2570,Togher,shared,443,26,9,3
+2571,Glanmire,single,499,32,9,3
+2572,Mahon,shared,433,75,12,4
+2573,City Centre,double,645,48,12,5
+2574,Douglas,single,895,3,9,5
+2575,Douglas,shared,359,87,12,2
+2576,Mahon,double,701,88,6,3
+2577,Model Farm Rd,double,649,18,12,5
+2578,Bishopstown,double,625,61,6,4
+2579,Blackrock,double,738,35,6,1
+2580,Ballincollig,single,683,48,12,2
+2581,Model Farm Rd,single,685,10,12,4
+2582,Wilton,double,585,65,6,3
+2583,Glanmire,single,740,66,6,1
+2584,Bishopstown,single,788,57,12,5
+2585,Mahon,single,603,61,9,4
+2586,Togher,ensuite,631,73,9,3
+2587,Model Farm Rd,shared,431,79,12,1
+2588,Blackrock,double,507,17,6,4
+2589,Bishopstown,single,684,35,12,4
+2590,Blackrock,shared,581,45,12,1
+2591,Togher,single,598,1,9,1
+2592,Glanmire,double,536,80,12,3
+2593,Mahon,double,575,12,9,2
+2594,Bishopstown,double,676,76,9,3
+2595,Blackrock,shared,350,22,12,4
+2596,Bishopstown,shared,435,76,9,5
+2597,Mahon,double,589,62,12,5
+2598,Bishopstown,single,798,73,6,5
+2599,Model Farm Rd,single,605,50,12,2
+2600,City Centre,single,571,26,12,1
+2601,Glanmire,single,685,54,9,3
+2602,Douglas,double,512,14,9,2
+2603,Douglas,shared,352,15,6,1
+2604,Glanmire,ensuite,683,34,12,1
+2605,City Centre,ensuite,833,88,12,1
+2606,Douglas,shared,405,86,6,5
+2607,Blackrock,ensuite,581,47,12,3
+2608,Togher,double,630,43,12,4
+2609,Douglas,single,774,19,9,3
+2610,Douglas,double,628,18,9,3
+2611,Bishopstown,shared,387,34,6,5
+2612,Wilton,ensuite,771,71,6,3
+2613,Glanmire,shared,429,22,6,2
+2614,Douglas,shared,513,4,6,5
+2615,Mahon,double,630,73,12,3
+2616,Blackrock,ensuite,713,12,6,5
+2617,Ballincollig,ensuite,767,29,6,3
+2618,Mahon,double,611,6,12,2
+2619,City Centre,shared,671,76,9,5
+2620,Blackrock,single,733,83,12,4
+2621,Ballincollig,ensuite,831,74,12,4
+2622,Wilton,ensuite,797,4,12,5
+2623,Model Farm Rd,double,686,89,6,4
+2624,Glanmire,double,576,42,12,1
+2625,Mahon,shared,382,65,6,1
+2626,Douglas,double,696,79,9,2
+2627,Mahon,shared,522,3,9,2
+2628,Bishopstown,shared,450,84,6,3
+2629,City Centre,double,606,39,6,2
+2630,Wilton,ensuite,816,12,12,5
+2631,Togher,double,591,7,9,2
+2632,Wilton,double,607,55,9,3
+2633,City Centre,single,768,69,6,3
+2634,Ballincollig,ensuite,912,21,9,5
+2635,Ballincollig,double,656,85,12,1
+2636,Wilton,ensuite,807,31,9,1
+2637,Model Farm Rd,ensuite,844,56,9,3
+2638,Bishopstown,single,597,85,12,5
+2639,Mahon,single,695,43,9,3
+2640,City Centre,ensuite,1012,13,9,4
+2641,Blackrock,double,560,79,12,5
+2642,Bishopstown,double,523,59,6,3
+2643,Ballincollig,double,501,38,9,1
+2644,Model Farm Rd,single,551,65,6,4
+2645,Bishopstown,single,619,3,12,2
+2646,Blackrock,shared,436,40,12,3
+2647,Wilton,double,463,4,12,2
+2648,Douglas,shared,461,48,12,4
+2649,Mahon,shared,541,76,6,2
+2650,Model Farm Rd,ensuite,678,29,6,5
+2651,Mahon,single,796,72,9,1
+2652,Bishopstown,double,645,77,12,1
+2653,Model Farm Rd,double,652,39,6,3
+2654,Wilton,ensuite,730,0,9,4
+2655,Wilton,double,666,34,9,2
+2656,Douglas,ensuite,671,86,12,5
+2657,Model Farm Rd,double,640,30,9,2
+2658,Glanmire,ensuite,755,13,12,5
+2659,Mahon,shared,509,78,9,1
+2660,Togher,shared,350,46,9,2
+2661,Ballincollig,double,479,71,6,4
+2662,Model Farm Rd,double,613,70,9,3
+2663,City Centre,shared,454,34,6,3
+2664,City Centre,ensuite,891,20,12,5
+2665,Model Farm Rd,ensuite,636,77,9,4
+2666,City Centre,double,726,72,9,5
+2667,Mahon,ensuite,659,41,6,3
+2668,Model Farm Rd,single,699,60,9,3
+2669,City Centre,ensuite,906,58,6,5
+2670,Togher,double,487,0,6,5
+2671,Model Farm Rd,ensuite,812,35,6,5
+2672,Togher,shared,463,27,9,3
+2673,Model Farm Rd,shared,401,85,9,5
+2674,Mahon,shared,369,57,12,5
+2675,Model Farm Rd,ensuite,583,58,6,4
+2676,Bishopstown,shared,521,89,12,1
+2677,Mahon,single,519,10,9,5
+2678,Glanmire,single,638,10,6,2
+2679,Togher,ensuite,726,57,6,3
+2680,Mahon,shared,521,45,9,4
+2681,Blackrock,single,642,83,9,1
+2682,Togher,shared,410,2,12,1
+2683,Mahon,shared,525,84,9,3
+2684,Model Farm Rd,double,590,26,9,2
+2685,Blackrock,shared,498,73,12,3
+2686,City Centre,ensuite,892,41,6,3
+2687,Mahon,shared,350,90,12,2
+2688,Glanmire,ensuite,808,39,6,2
+2689,Ballincollig,double,615,71,9,1
+2690,Glanmire,double,448,42,9,1
+2691,Ballincollig,single,628,16,9,1
+2692,Douglas,ensuite,766,90,9,4
+2693,Wilton,shared,467,38,12,1
+2694,Mahon,double,600,66,12,3
+2695,Model Farm Rd,double,688,52,12,1
+2696,Mahon,double,667,41,12,3
+2697,Douglas,single,541,10,6,1
+2698,Wilton,shared,535,70,12,4
+2699,Model Farm Rd,ensuite,879,10,12,2
+2700,City Centre,ensuite,884,82,12,3
+2701,Wilton,shared,578,58,9,5
+2702,Mahon,shared,641,6,6,4
+2703,Blackrock,shared,562,18,6,2
+2704,Mahon,double,592,32,9,3
+2705,Douglas,ensuite,864,51,12,5
+2706,Mahon,double,583,29,6,5
+2707,Bishopstown,double,602,25,6,3
+2708,Glanmire,shared,398,11,9,1
+2709,Glanmire,double,680,15,9,3
+2710,Ballincollig,ensuite,686,59,9,4
+2711,Wilton,shared,617,17,9,2
+2712,Mahon,shared,504,68,9,1
+2713,Togher,shared,350,63,9,4
+2714,Blackrock,ensuite,813,87,9,2
+2715,Ballincollig,ensuite,570,17,12,3
+2716,Douglas,shared,516,58,9,1
+2717,Douglas,shared,539,49,9,4
+2718,Togher,shared,386,36,6,3
+2719,Wilton,single,691,61,9,4
+2720,Blackrock,single,845,39,12,4
+2721,Blackrock,double,534,38,6,1
+2722,Blackrock,shared,374,26,12,2
+2723,City Centre,single,873,4,12,1
+2724,Model Farm Rd,ensuite,936,4,9,3
+2725,Mahon,ensuite,770,64,6,2
+2726,Ballincollig,ensuite,851,43,6,5
+2727,Blackrock,shared,590,46,6,3
+2728,Wilton,double,523,86,6,4
+2729,Mahon,single,616,80,12,1
+2730,City Centre,ensuite,960,59,6,5
+2731,Bishopstown,single,841,7,12,2
+2732,Ballincollig,ensuite,810,53,6,1
+2733,Model Farm Rd,shared,370,40,6,1
+2734,Togher,single,818,87,9,5
+2735,Douglas,shared,412,35,9,4
+2736,Bishopstown,ensuite,769,39,9,4
+2737,Mahon,single,690,65,12,4
+2738,Togher,shared,579,85,6,3
+2739,Glanmire,shared,506,51,12,4
+2740,Togher,double,587,90,12,1
+2741,Blackrock,double,621,47,9,3
+2742,Model Farm Rd,ensuite,763,2,12,5
+2743,Bishopstown,ensuite,850,21,12,2
+2744,Douglas,single,432,23,12,2
+2745,Glanmire,shared,403,36,6,3
+2746,Ballincollig,shared,471,87,6,5
+2747,Togher,shared,350,22,6,1
+2748,Ballincollig,single,684,45,6,2
+2749,Bishopstown,shared,471,48,6,3
+2750,Glanmire,ensuite,897,57,6,2
+2751,Togher,single,781,32,9,5
+2752,Blackrock,double,538,33,9,3
+2753,Ballincollig,double,546,0,6,3
+2754,Model Farm Rd,ensuite,753,36,6,1
+2755,Wilton,double,549,64,9,2
+2756,Blackrock,single,687,68,12,4
+2757,Mahon,ensuite,701,63,9,3
+2758,Bishopstown,double,498,11,6,3
+2759,Bishopstown,double,656,1,6,3
+2760,Togher,ensuite,806,25,9,4
+2761,Blackrock,single,597,44,6,5
+2762,Togher,ensuite,830,81,6,1
+2763,Glanmire,ensuite,683,43,12,5
+2764,City Centre,ensuite,872,90,12,1
+2765,Wilton,shared,553,42,9,5
+2766,Bishopstown,shared,486,58,9,5
+2767,Wilton,double,630,68,6,1
+2768,Model Farm Rd,double,513,39,12,5
+2769,Bishopstown,single,672,7,6,5
+2770,Bishopstown,ensuite,781,49,6,3
+2771,Wilton,double,522,39,6,1
+2772,Model Farm Rd,ensuite,744,73,9,2
+2773,City Centre,single,600,22,6,5
+2774,Blackrock,double,535,60,6,3
+2775,Bishopstown,single,664,37,12,4
+2776,Bishopstown,double,576,31,6,3
+2777,Blackrock,ensuite,758,25,6,1
+2778,Blackrock,double,574,4,6,1
+2779,Ballincollig,ensuite,803,1,9,4
+2780,Togher,single,718,85,12,1
+2781,City Centre,shared,481,46,12,5
+2782,Ballincollig,ensuite,651,40,9,4
+2783,Mahon,double,476,39,9,3
+2784,Bishopstown,double,556,76,12,1
+2785,Wilton,shared,448,78,12,3
+2786,Blackrock,double,510,7,9,3
+2787,Bishopstown,single,573,2,9,1
+2788,Mahon,shared,418,88,12,1
+2789,City Centre,single,756,89,12,5
+2790,Wilton,double,643,85,9,2
+2791,Bishopstown,shared,439,68,6,4
+2792,Togher,double,512,19,12,1
+2793,Glanmire,ensuite,656,81,9,2
+2794,Mahon,shared,457,18,6,5
+2795,Douglas,ensuite,693,63,12,1
+2796,City Centre,single,791,44,12,2
+2797,Wilton,ensuite,629,63,6,2
+2798,Togher,shared,407,6,12,2
+2799,Wilton,double,617,3,6,4
+2800,Ballincollig,ensuite,776,78,9,2
+2801,Ballincollig,double,802,71,9,1
+2802,Wilton,ensuite,821,11,9,3
+2803,Wilton,single,589,42,12,5
+2804,City Centre,double,641,80,12,4
+2805,City Centre,shared,380,5,9,5
+2806,City Centre,double,642,23,9,1
+2807,Mahon,ensuite,695,38,9,3
+2808,Glanmire,shared,512,88,12,3
+2809,City Centre,single,690,32,6,5
+2810,Model Farm Rd,ensuite,749,55,9,3
+2811,Douglas,single,602,12,9,3
+2812,Blackrock,shared,626,17,6,5
+2813,Togher,shared,411,67,12,5
+2814,Glanmire,shared,594,44,9,5
+2815,Model Farm Rd,double,633,9,6,4
+2816,City Centre,shared,583,82,6,2
+2817,Model Farm Rd,single,683,11,6,2
+2818,Togher,shared,475,1,9,4
+2819,Model Farm Rd,ensuite,586,85,9,1
+2820,Model Farm Rd,single,624,27,12,1
+2821,Douglas,ensuite,846,15,12,3
+2822,Togher,ensuite,745,31,12,2
+2823,Model Farm Rd,ensuite,633,39,6,5
+2824,Bishopstown,ensuite,795,58,12,1
+2825,Blackrock,double,733,39,9,2
+2826,Togher,double,662,75,9,1
+2827,Mahon,shared,454,27,12,1
+2828,Model Farm Rd,ensuite,845,28,6,4
+2829,Glanmire,single,597,71,9,5
+2830,Togher,shared,350,80,12,4
+2831,Blackrock,shared,386,88,12,2
+2832,Model Farm Rd,double,700,47,12,5
+2833,Wilton,double,565,67,6,5
+2834,City Centre,single,718,67,6,2
+2835,Douglas,ensuite,743,26,6,4
+2836,Togher,ensuite,921,54,12,3
+2837,Mahon,shared,606,52,12,4
+2838,Togher,single,839,78,9,3
+2839,Blackrock,double,565,61,9,3
+2840,Model Farm Rd,ensuite,786,73,9,3
+2841,Wilton,single,543,29,9,2
+2842,Bishopstown,shared,622,41,9,3
+2843,Model Farm Rd,double,454,64,12,5
+2844,Glanmire,ensuite,759,68,12,4
+2845,Ballincollig,single,551,87,6,3
+2846,Togher,shared,387,87,6,4
+2847,Glanmire,ensuite,664,15,12,1
+2848,Model Farm Rd,shared,395,54,9,3
+2849,Douglas,ensuite,721,78,9,3
+2850,Blackrock,single,620,45,12,4
+2851,Ballincollig,single,725,78,9,4
+2852,Togher,shared,350,30,12,1
+2853,City Centre,double,669,44,12,5
+2854,Wilton,single,789,14,9,2
+2855,City Centre,single,693,41,12,4
+2856,Wilton,double,525,35,6,2
+2857,Togher,ensuite,729,69,12,2
+2858,Ballincollig,double,666,61,9,4
+2859,Togher,single,657,72,12,5
+2860,Ballincollig,shared,402,83,12,1
+2861,Bishopstown,single,733,35,6,2
+2862,Douglas,ensuite,670,70,6,1
+2863,Blackrock,double,641,56,12,2
+2864,Blackrock,shared,506,51,12,4
+2865,Bishopstown,ensuite,772,41,9,3
+2866,Mahon,single,584,44,6,5
+2867,Wilton,shared,400,5,12,4
+2868,Glanmire,ensuite,788,51,12,2
+2869,Glanmire,double,650,6,12,3
+2870,Douglas,shared,402,89,9,5
+2871,Model Farm Rd,single,691,13,12,2
+2872,Togher,ensuite,562,52,9,2
+2873,Togher,ensuite,697,5,6,1
+2874,Blackrock,ensuite,777,83,12,2
+2875,Togher,double,468,2,12,4
+2876,Glanmire,ensuite,655,40,12,2
+2877,Bishopstown,double,539,49,6,4
+2878,Ballincollig,double,586,77,9,4
+2879,Glanmire,ensuite,723,36,12,4
+2880,City Centre,shared,350,71,12,1
+2881,Glanmire,ensuite,549,10,12,5
+2882,Model Farm Rd,single,595,77,12,1
+2883,Glanmire,shared,471,47,9,1
+2884,Wilton,ensuite,542,38,6,3
+2885,Model Farm Rd,double,515,43,6,1
+2886,Mahon,ensuite,722,79,12,2
+2887,Togher,double,674,66,12,3
+2888,Model Farm Rd,shared,415,34,9,4
+2889,Mahon,ensuite,804,48,9,5
+2890,City Centre,shared,552,2,9,3
+2891,Ballincollig,ensuite,568,83,12,2
+2892,Ballincollig,double,629,55,12,4
+2893,Glanmire,single,649,43,9,5
+2894,Wilton,double,635,0,12,3
+2895,Model Farm Rd,single,1003,62,9,2
+2896,Ballincollig,single,462,44,6,3
+2897,Model Farm Rd,shared,605,59,6,1
+2898,City Centre,single,714,15,9,3
+2899,Glanmire,shared,455,29,9,5
+2900,Ballincollig,double,555,84,6,3
+2901,Togher,shared,401,17,6,3
+2902,Blackrock,shared,418,64,9,4
+2903,Ballincollig,single,679,28,9,3
+2904,Glanmire,ensuite,603,12,9,5
+2905,Blackrock,ensuite,847,59,6,5
+2906,Blackrock,double,542,30,6,5
+2907,Blackrock,ensuite,678,44,12,1
+2908,Model Farm Rd,ensuite,719,62,12,5
+2909,Ballincollig,shared,563,46,12,1
+2910,Mahon,shared,411,5,6,5
+2911,Ballincollig,single,682,24,9,2
+2912,Douglas,double,504,83,12,3
+2913,Glanmire,single,698,38,6,4
+2914,Bishopstown,ensuite,861,51,12,4
+2915,Bishopstown,ensuite,966,63,12,5
+2916,Glanmire,double,524,37,6,5
+2917,Blackrock,ensuite,840,73,9,1
+2918,Togher,double,558,63,9,3
+2919,Mahon,single,776,15,9,1
+2920,Douglas,shared,395,12,6,1
+2921,Glanmire,ensuite,807,78,12,1
+2922,City Centre,single,722,56,12,1
+2923,Mahon,shared,454,73,12,3
+2924,Model Farm Rd,single,658,62,12,4
+2925,Model Farm Rd,double,582,67,9,3
+2926,Bishopstown,shared,479,90,6,1
+2927,Blackrock,double,599,85,12,5
+2928,Mahon,shared,602,51,12,2
+2929,Blackrock,double,668,54,9,2
+2930,Blackrock,ensuite,858,90,12,5
+2931,Mahon,single,619,62,6,4
+2932,Wilton,double,509,68,12,2
+2933,Ballincollig,single,735,27,6,3
+2934,Bishopstown,double,678,78,6,1
+2935,Ballincollig,double,692,6,12,4
+2936,Ballincollig,double,505,63,12,3
+2937,Model Farm Rd,double,539,55,9,2
+2938,Blackrock,shared,350,72,9,4
+2939,Bishopstown,ensuite,764,66,6,2
+2940,City Centre,single,829,58,12,2
+2941,Blackrock,shared,428,46,12,2
+2942,Mahon,single,717,65,6,3
+2943,Wilton,shared,462,30,12,4
+2944,Model Farm Rd,ensuite,789,90,6,2
+2945,Togher,shared,350,54,12,1
+2946,Bishopstown,double,607,86,6,2
+2947,Wilton,single,410,33,12,2
+2948,Blackrock,double,563,48,6,1
+2949,Model Farm Rd,shared,350,82,12,5
+2950,Wilton,ensuite,898,79,9,4
+2951,Blackrock,shared,539,33,12,3
+2952,Mahon,ensuite,812,89,6,2
+2953,Blackrock,ensuite,916,35,9,1
+2954,Bishopstown,single,604,88,12,3
+2955,Bishopstown,double,757,48,9,2
+2956,Togher,single,723,87,9,2
+2957,City Centre,double,628,70,12,5
+2958,Bishopstown,double,702,56,12,4
+2959,Togher,ensuite,650,12,12,3
+2960,Glanmire,single,555,33,9,2
+2961,Wilton,single,625,9,9,5
+2962,Douglas,double,522,31,9,3
+2963,City Centre,single,644,14,6,4
+2964,Wilton,double,700,49,6,2
+2965,City Centre,shared,516,50,9,4
+2966,Glanmire,single,661,73,6,4
+2967,Glanmire,shared,378,13,12,2
+2968,Glanmire,shared,350,18,12,5
+2969,Blackrock,single,694,61,9,4
+2970,Bishopstown,shared,350,23,6,4
+2971,Wilton,single,673,36,12,5
+2972,Togher,shared,350,71,6,3
+2973,Bishopstown,shared,668,73,6,1
+2974,Douglas,double,652,49,9,3
+2975,Mahon,ensuite,779,78,9,4
+2976,Ballincollig,single,763,75,12,1
+2977,Mahon,single,583,41,12,2
+2978,Model Farm Rd,single,698,49,9,5
+2979,City Centre,shared,557,82,6,2
+2980,Ballincollig,double,583,43,12,1
+2981,Model Farm Rd,shared,564,87,6,1
+2982,Togher,single,705,47,12,5
+2983,Bishopstown,double,625,50,12,2
+2984,Model Farm Rd,shared,350,59,6,4
+2985,Ballincollig,double,473,15,9,2
+2986,Bishopstown,double,588,81,9,2
+2987,Blackrock,double,588,51,6,2
+2988,Wilton,single,578,54,12,1
+2989,Togher,shared,657,46,9,5
+2990,City Centre,double,786,77,6,2
+2991,Blackrock,double,634,64,9,2
+2992,Model Farm Rd,single,656,0,9,3
+2993,Glanmire,double,520,41,6,4
+2994,Ballincollig,ensuite,674,32,9,5
+2995,Douglas,ensuite,776,15,6,2
+2996,Bishopstown,ensuite,823,6,6,2
+2997,Togher,double,438,24,6,5
+2998,Blackrock,ensuite,810,65,12,5
+2999,Glanmire,single,616,28,9,5

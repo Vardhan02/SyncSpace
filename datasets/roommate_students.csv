@@ -1,0 +1,1001 @@
+student_id,college,budget_min,budget_max,sleep_schedule,social_habit,noise_tolerance,cleanliness,prompt_text
+0,UCC,507,677,early bird,social/party,low,2,"Love weekend drinks, music, cooking together, and having friends over."
+1,UCC,829,1037,early bird,social/party,low,1,Always up for a night out on Oliver Plunkett Street and house parties.
+2,UCC,708,951,early bird,homebody,high,5,I study for hospital rounds until 10 PM and keep things calm.
+3,MTU,679,780,early bird,homebody,high,4,Homebody who loves baking and a good book on a rainy Cork night.
+4,UCC,529,715,early bird,balanced,low,4,Social at weekends but strict quiet study hours on weekdays.
+5,MTU,626,737,night owl,balanced,moderate,5,Social at weekends but strict quiet study hours on weekdays.
+6,MTU,490,682,night owl,balanced,low,1,Social at weekends but strict quiet study hours on weekdays.
+7,MTU,566,686,early bird,social/party,low,4,"Big on gigs, society events and late-night chats in the kitchen."
+8,MTU,775,916,moderate,balanced,moderate,2,"Gym in the morning, coffee with friends, chill evenings."
+9,UCC,799,942,night owl,social/party,high,2,Always up for a night out on Oliver Plunkett Street and house parties.
+10,MTU,644,886,early bird,balanced,high,3,Social at weekends but strict quiet study hours on weekdays.
+11,MTU,466,668,moderate,homebody,low,2,Homebody who loves baking and a good book on a rainy Cork night.
+12,MTU,785,986,night owl,homebody,moderate,2,Homebody who loves baking and a good book on a rainy Cork night.
+13,MTU,576,825,moderate,homebody,high,4,Homebody who loves baking and a good book on a rainy Cork night.
+14,MTU,520,643,early bird,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+15,UCC,666,864,moderate,social/party,high,4,"Big on gigs, society events and late-night chats in the kitchen."
+16,UCC,455,692,moderate,social/party,high,3,"Love weekend drinks, music, cooking together, and having friends over."
+17,UCC,672,888,early bird,balanced,high,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+18,MTU,504,733,night owl,social/party,low,2,"Big on gigs, society events and late-night chats in the kitchen."
+19,UCC,726,908,moderate,homebody,low,1,Homebody who loves baking and a good book on a rainy Cork night.
+20,UCC,572,733,night owl,balanced,low,1,"Balanced: some nights out, some nights in."
+21,UCC,839,971,night owl,homebody,moderate,5,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+22,MTU,720,874,night owl,balanced,high,2,"Gym in the morning, coffee with friends, chill evenings."
+23,MTU,793,1005,night owl,balanced,moderate,1,"Happy to cook together and watch a film, but I need sleep before lectures."
+24,MTU,482,587,night owl,homebody,high,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+25,UCC,486,644,early bird,homebody,low,3,"I prefer quiet study evenings, tea, and early nights."
+26,MTU,571,795,early bird,social/party,high,2,"Sociable and loud-ish, my door is always open to friends."
+27,MTU,692,840,early bird,homebody,low,4,Homebody who loves baking and a good book on a rainy Cork night.
+28,MTU,660,773,night owl,balanced,high,1,Social at weekends but strict quiet study hours on weekdays.
+29,MTU,822,949,early bird,balanced,low,2,"Balanced: some nights out, some nights in."
+30,UCC,666,837,moderate,homebody,low,1,I study for hospital rounds until 10 PM and keep things calm.
+31,UCC,500,738,early bird,social/party,low,2,Always up for a night out on Oliver Plunkett Street and house parties.
+32,MTU,698,852,moderate,balanced,low,2,"Balanced: some nights out, some nights in."
+33,MTU,649,865,moderate,homebody,moderate,5,I study for hospital rounds until 10 PM and keep things calm.
+34,MTU,547,702,early bird,homebody,high,5,"I prefer quiet study evenings, tea, and early nights."
+35,UCC,610,722,night owl,social/party,moderate,5,Always up for a night out on Oliver Plunkett Street and house parties.
+36,UCC,710,857,early bird,homebody,high,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+37,UCC,511,759,night owl,balanced,low,5,Social at weekends but strict quiet study hours on weekdays.
+38,MTU,786,952,early bird,balanced,high,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+39,UCC,652,828,moderate,balanced,moderate,1,Social at weekends but strict quiet study hours on weekdays.
+40,UCC,768,886,night owl,balanced,low,5,"Gym in the morning, coffee with friends, chill evenings."
+41,UCC,628,790,moderate,homebody,moderate,2,I study for hospital rounds until 10 PM and keep things calm.
+42,MTU,810,1045,early bird,social/party,high,5,"Big on gigs, society events and late-night chats in the kitchen."
+43,UCC,503,670,early bird,social/party,low,5,Always up for a night out on Oliver Plunkett Street and house parties.
+44,UCC,594,781,early bird,balanced,high,3,"Balanced: some nights out, some nights in."
+45,UCC,476,684,moderate,balanced,low,1,"Gym in the morning, coffee with friends, chill evenings."
+46,MTU,776,917,night owl,homebody,moderate,5,I study for hospital rounds until 10 PM and keep things calm.
+47,UCC,454,573,night owl,social/party,low,5,"Love weekend drinks, music, cooking together, and having friends over."
+48,UCC,748,958,early bird,balanced,low,3,"Gym in the morning, coffee with friends, chill evenings."
+49,UCC,633,796,night owl,homebody,low,3,I study for hospital rounds until 10 PM and keep things calm.
+50,UCC,833,993,early bird,social/party,low,4,"Love weekend drinks, music, cooking together, and having friends over."
+51,MTU,827,1032,night owl,homebody,high,2,Homebody who loves baking and a good book on a rainy Cork night.
+52,UCC,809,1006,early bird,homebody,moderate,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+53,MTU,629,787,early bird,balanced,low,2,"Balanced: some nights out, some nights in."
+54,UCC,592,763,moderate,balanced,high,5,"Balanced: some nights out, some nights in."
+55,MTU,724,831,early bird,social/party,moderate,2,"Big on gigs, society events and late-night chats in the kitchen."
+56,MTU,505,693,night owl,homebody,moderate,4,"I prefer quiet study evenings, tea, and early nights."
+57,UCC,745,910,early bird,balanced,high,4,Social at weekends but strict quiet study hours on weekdays.
+58,UCC,725,918,moderate,social/party,low,3,"Big on gigs, society events and late-night chats in the kitchen."
+59,MTU,513,742,moderate,social/party,high,4,"Big on gigs, society events and late-night chats in the kitchen."
+60,MTU,806,1047,early bird,balanced,low,4,"Balanced: some nights out, some nights in."
+61,UCC,833,1078,moderate,social/party,moderate,5,"Love weekend drinks, music, cooking together, and having friends over."
+62,UCC,596,806,night owl,balanced,high,3,"Balanced: some nights out, some nights in."
+63,UCC,676,906,moderate,balanced,high,2,Social at weekends but strict quiet study hours on weekdays.
+64,MTU,713,836,early bird,balanced,high,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+65,UCC,525,636,early bird,homebody,moderate,5,"I prefer quiet study evenings, tea, and early nights."
+66,UCC,662,860,moderate,balanced,moderate,2,"Happy to cook together and watch a film, but I need sleep before lectures."
+67,UCC,802,929,moderate,social/party,low,2,"Sociable and loud-ish, my door is always open to friends."
+68,UCC,735,866,moderate,homebody,low,4,Homebody who loves baking and a good book on a rainy Cork night.
+69,MTU,763,1003,moderate,balanced,low,4,"Balanced: some nights out, some nights in."
+70,UCC,834,1004,night owl,balanced,moderate,2,"Gym in the morning, coffee with friends, chill evenings."
+71,MTU,489,649,moderate,balanced,moderate,3,Social at weekends but strict quiet study hours on weekdays.
+72,UCC,527,725,night owl,homebody,low,2,"I prefer quiet study evenings, tea, and early nights."
+73,MTU,658,896,moderate,balanced,moderate,1,"Happy to cook together and watch a film, but I need sleep before lectures."
+74,UCC,649,896,moderate,balanced,moderate,1,"Gym in the morning, coffee with friends, chill evenings."
+75,MTU,835,1042,night owl,balanced,high,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+76,MTU,562,773,moderate,balanced,low,4,"Gym in the morning, coffee with friends, chill evenings."
+77,MTU,797,939,moderate,social/party,low,5,"Love weekend drinks, music, cooking together, and having friends over."
+78,UCC,753,874,night owl,balanced,moderate,2,"Balanced: some nights out, some nights in."
+79,MTU,475,672,moderate,homebody,low,4,Homebody who loves baking and a good book on a rainy Cork night.
+80,MTU,839,1010,moderate,balanced,moderate,1,"Balanced: some nights out, some nights in."
+81,UCC,833,1022,early bird,homebody,high,1,"I prefer quiet study evenings, tea, and early nights."
+82,UCC,576,681,night owl,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+83,UCC,792,1036,early bird,balanced,moderate,3,"Gym in the morning, coffee with friends, chill evenings."
+84,UCC,760,901,moderate,homebody,low,5,"I prefer quiet study evenings, tea, and early nights."
+85,MTU,744,945,night owl,balanced,low,1,"Happy to cook together and watch a film, but I need sleep before lectures."
+86,MTU,806,936,night owl,homebody,low,3,I study for hospital rounds until 10 PM and keep things calm.
+87,UCC,639,868,night owl,social/party,moderate,1,"Sociable and loud-ish, my door is always open to friends."
+88,MTU,504,696,night owl,balanced,moderate,2,"Balanced: some nights out, some nights in."
+89,MTU,825,1062,moderate,homebody,moderate,4,Homebody who loves baking and a good book on a rainy Cork night.
+90,UCC,575,746,moderate,balanced,low,4,"Balanced: some nights out, some nights in."
+91,MTU,464,647,early bird,balanced,moderate,2,"Gym in the morning, coffee with friends, chill evenings."
+92,MTU,624,794,night owl,balanced,low,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+93,MTU,573,798,night owl,homebody,low,4,I study for hospital rounds until 10 PM and keep things calm.
+94,UCC,458,633,early bird,balanced,moderate,2,"Gym in the morning, coffee with friends, chill evenings."
+95,MTU,747,968,night owl,social/party,high,3,"Sociable and loud-ish, my door is always open to friends."
+96,MTU,731,921,night owl,social/party,moderate,3,"Big on gigs, society events and late-night chats in the kitchen."
+97,UCC,568,717,moderate,balanced,low,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+98,MTU,560,730,night owl,homebody,high,5,Homebody who loves baking and a good book on a rainy Cork night.
+99,MTU,549,707,moderate,homebody,low,3,"I prefer quiet study evenings, tea, and early nights."
+100,UCC,723,893,early bird,social/party,low,5,"Big on gigs, society events and late-night chats in the kitchen."
+101,MTU,514,640,early bird,social/party,high,3,"Sociable and loud-ish, my door is always open to friends."
+102,MTU,675,822,early bird,balanced,moderate,4,Social at weekends but strict quiet study hours on weekdays.
+103,MTU,655,773,night owl,homebody,high,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+104,MTU,738,859,early bird,homebody,low,5,I study for hospital rounds until 10 PM and keep things calm.
+105,UCC,755,988,moderate,social/party,moderate,4,"Big on gigs, society events and late-night chats in the kitchen."
+106,MTU,669,914,night owl,social/party,low,5,"Love weekend drinks, music, cooking together, and having friends over."
+107,UCC,770,937,night owl,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+108,UCC,732,872,early bird,homebody,moderate,4,I study for hospital rounds until 10 PM and keep things calm.
+109,UCC,466,639,night owl,balanced,moderate,4,Social at weekends but strict quiet study hours on weekdays.
+110,MTU,569,819,night owl,social/party,low,4,"Love weekend drinks, music, cooking together, and having friends over."
+111,UCC,565,733,early bird,social/party,low,1,Always up for a night out on Oliver Plunkett Street and house parties.
+112,MTU,754,966,early bird,balanced,moderate,3,"Balanced: some nights out, some nights in."
+113,MTU,706,918,early bird,balanced,high,1,"Balanced: some nights out, some nights in."
+114,MTU,615,721,early bird,social/party,low,5,"Love weekend drinks, music, cooking together, and having friends over."
+115,UCC,587,731,moderate,social/party,high,4,"Big on gigs, society events and late-night chats in the kitchen."
+116,MTU,749,974,early bird,homebody,moderate,3,I study for hospital rounds until 10 PM and keep things calm.
+117,UCC,614,755,moderate,balanced,moderate,4,"Gym in the morning, coffee with friends, chill evenings."
+118,UCC,655,871,early bird,social/party,moderate,3,"Big on gigs, society events and late-night chats in the kitchen."
+119,MTU,845,1076,early bird,homebody,high,5,I study for hospital rounds until 10 PM and keep things calm.
+120,UCC,477,709,moderate,balanced,high,4,"Balanced: some nights out, some nights in."
+121,MTU,554,794,early bird,homebody,moderate,4,I study for hospital rounds until 10 PM and keep things calm.
+122,UCC,464,604,moderate,homebody,high,1,I study for hospital rounds until 10 PM and keep things calm.
+123,UCC,565,783,early bird,homebody,high,2,I study for hospital rounds until 10 PM and keep things calm.
+124,MTU,599,805,moderate,social/party,moderate,2,"Sociable and loud-ish, my door is always open to friends."
+125,MTU,524,672,night owl,social/party,high,2,"Love weekend drinks, music, cooking together, and having friends over."
+126,MTU,845,1032,night owl,balanced,moderate,1,"Gym in the morning, coffee with friends, chill evenings."
+127,MTU,602,740,moderate,social/party,high,4,"Big on gigs, society events and late-night chats in the kitchen."
+128,MTU,732,948,moderate,balanced,low,2,"Balanced: some nights out, some nights in."
+129,MTU,847,958,moderate,homebody,high,4,I study for hospital rounds until 10 PM and keep things calm.
+130,UCC,789,1015,early bird,balanced,low,5,"Gym in the morning, coffee with friends, chill evenings."
+131,UCC,675,909,moderate,homebody,low,2,I study for hospital rounds until 10 PM and keep things calm.
+132,UCC,529,749,moderate,social/party,moderate,5,"Sociable and loud-ish, my door is always open to friends."
+133,MTU,491,727,moderate,social/party,moderate,4,"Love weekend drinks, music, cooking together, and having friends over."
+134,UCC,485,658,early bird,social/party,high,1,"Sociable and loud-ish, my door is always open to friends."
+135,UCC,839,1052,early bird,homebody,high,3,"I prefer quiet study evenings, tea, and early nights."
+136,UCC,616,791,moderate,homebody,moderate,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+137,MTU,721,965,night owl,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+138,MTU,762,923,moderate,homebody,high,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+139,MTU,776,993,moderate,balanced,high,1,"Balanced: some nights out, some nights in."
+140,UCC,796,914,moderate,balanced,moderate,5,"Gym in the morning, coffee with friends, chill evenings."
+141,MTU,667,883,moderate,social/party,low,4,"Sociable and loud-ish, my door is always open to friends."
+142,MTU,571,817,moderate,homebody,high,3,Homebody who loves baking and a good book on a rainy Cork night.
+143,MTU,787,957,early bird,homebody,high,1,I study for hospital rounds until 10 PM and keep things calm.
+144,UCC,847,1037,early bird,balanced,high,2,"Gym in the morning, coffee with friends, chill evenings."
+145,UCC,836,960,night owl,social/party,high,1,"Big on gigs, society events and late-night chats in the kitchen."
+146,MTU,467,600,early bird,balanced,moderate,3,"Balanced: some nights out, some nights in."
+147,UCC,552,790,moderate,homebody,high,5,Homebody who loves baking and a good book on a rainy Cork night.
+148,MTU,581,756,night owl,homebody,moderate,1,I study for hospital rounds until 10 PM and keep things calm.
+149,UCC,522,723,night owl,homebody,moderate,1,I study for hospital rounds until 10 PM and keep things calm.
+150,UCC,585,801,moderate,homebody,high,3,I study for hospital rounds until 10 PM and keep things calm.
+151,UCC,640,799,moderate,social/party,low,5,"Big on gigs, society events and late-night chats in the kitchen."
+152,UCC,563,781,night owl,social/party,moderate,4,"Love weekend drinks, music, cooking together, and having friends over."
+153,UCC,473,650,moderate,homebody,low,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+154,MTU,519,735,moderate,social/party,high,5,"Sociable and loud-ish, my door is always open to friends."
+155,UCC,830,1036,night owl,social/party,low,4,"Sociable and loud-ish, my door is always open to friends."
+156,MTU,466,621,moderate,balanced,moderate,2,"Gym in the morning, coffee with friends, chill evenings."
+157,MTU,801,1040,night owl,homebody,moderate,1,I study for hospital rounds until 10 PM and keep things calm.
+158,UCC,547,763,early bird,balanced,high,2,Social at weekends but strict quiet study hours on weekdays.
+159,UCC,620,752,night owl,homebody,low,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+160,UCC,560,744,early bird,social/party,high,1,"Big on gigs, society events and late-night chats in the kitchen."
+161,MTU,516,660,early bird,homebody,high,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+162,UCC,633,883,moderate,homebody,low,2,Homebody who loves baking and a good book on a rainy Cork night.
+163,MTU,514,748,early bird,homebody,high,1,I study for hospital rounds until 10 PM and keep things calm.
+164,MTU,848,1079,night owl,balanced,low,4,"Happy to cook together and watch a film, but I need sleep before lectures."
+165,MTU,472,689,night owl,social/party,low,1,"Sociable and loud-ish, my door is always open to friends."
+166,UCC,668,893,night owl,balanced,moderate,1,Social at weekends but strict quiet study hours on weekdays.
+167,UCC,761,877,early bird,balanced,moderate,5,"Gym in the morning, coffee with friends, chill evenings."
+168,MTU,755,971,night owl,balanced,high,4,Social at weekends but strict quiet study hours on weekdays.
+169,UCC,508,718,moderate,social/party,low,4,"Big on gigs, society events and late-night chats in the kitchen."
+170,MTU,654,778,moderate,balanced,moderate,3,"Gym in the morning, coffee with friends, chill evenings."
+171,MTU,528,645,early bird,balanced,low,1,"Balanced: some nights out, some nights in."
+172,MTU,831,964,night owl,homebody,low,5,Homebody who loves baking and a good book on a rainy Cork night.
+173,MTU,512,702,night owl,social/party,moderate,1,"Big on gigs, society events and late-night chats in the kitchen."
+174,MTU,609,735,night owl,social/party,high,2,Always up for a night out on Oliver Plunkett Street and house parties.
+175,UCC,696,823,moderate,social/party,high,3,"Love weekend drinks, music, cooking together, and having friends over."
+176,UCC,743,952,night owl,balanced,high,5,Social at weekends but strict quiet study hours on weekdays.
+177,MTU,786,893,early bird,social/party,moderate,3,"Big on gigs, society events and late-night chats in the kitchen."
+178,UCC,453,589,night owl,balanced,high,4,Social at weekends but strict quiet study hours on weekdays.
+179,UCC,829,952,night owl,homebody,high,2,I study for hospital rounds until 10 PM and keep things calm.
+180,MTU,682,822,moderate,balanced,moderate,3,Social at weekends but strict quiet study hours on weekdays.
+181,UCC,529,641,night owl,homebody,low,3,I study for hospital rounds until 10 PM and keep things calm.
+182,MTU,667,880,moderate,social/party,moderate,2,"Love weekend drinks, music, cooking together, and having friends over."
+183,UCC,670,842,night owl,balanced,high,5,"Balanced: some nights out, some nights in."
+184,MTU,791,902,early bird,social/party,moderate,5,"Love weekend drinks, music, cooking together, and having friends over."
+185,MTU,554,708,early bird,homebody,moderate,3,Homebody who loves baking and a good book on a rainy Cork night.
+186,MTU,453,663,early bird,homebody,low,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+187,MTU,736,854,moderate,social/party,high,1,"Sociable and loud-ish, my door is always open to friends."
+188,UCC,685,865,night owl,homebody,moderate,5,I study for hospital rounds until 10 PM and keep things calm.
+189,MTU,777,951,early bird,social/party,moderate,1,"Big on gigs, society events and late-night chats in the kitchen."
+190,MTU,766,958,early bird,homebody,moderate,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+191,MTU,751,985,early bird,balanced,moderate,3,"Gym in the morning, coffee with friends, chill evenings."
+192,UCC,620,739,night owl,homebody,high,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+193,UCC,629,789,early bird,balanced,low,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+194,UCC,758,877,early bird,homebody,high,4,I study for hospital rounds until 10 PM and keep things calm.
+195,MTU,839,1083,night owl,social/party,high,5,"Big on gigs, society events and late-night chats in the kitchen."
+196,UCC,611,823,early bird,social/party,moderate,4,"Big on gigs, society events and late-night chats in the kitchen."
+197,UCC,752,942,night owl,balanced,low,3,"Balanced: some nights out, some nights in."
+198,UCC,469,663,moderate,balanced,low,1,"Balanced: some nights out, some nights in."
+199,UCC,747,962,night owl,balanced,high,2,"Gym in the morning, coffee with friends, chill evenings."
+200,UCC,693,808,moderate,social/party,low,3,"Love weekend drinks, music, cooking together, and having friends over."
+201,UCC,780,890,early bird,social/party,high,4,"Sociable and loud-ish, my door is always open to friends."
+202,UCC,717,910,moderate,social/party,moderate,4,"Sociable and loud-ish, my door is always open to friends."
+203,UCC,797,982,early bird,balanced,moderate,1,"Balanced: some nights out, some nights in."
+204,UCC,579,764,early bird,balanced,high,2,"Gym in the morning, coffee with friends, chill evenings."
+205,MTU,785,918,night owl,balanced,high,1,"Gym in the morning, coffee with friends, chill evenings."
+206,MTU,642,774,night owl,social/party,high,5,"Love weekend drinks, music, cooking together, and having friends over."
+207,MTU,793,1023,moderate,social/party,low,3,"Big on gigs, society events and late-night chats in the kitchen."
+208,MTU,559,783,early bird,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+209,UCC,601,830,night owl,homebody,high,5,"I prefer quiet study evenings, tea, and early nights."
+210,UCC,622,818,early bird,social/party,low,2,Always up for a night out on Oliver Plunkett Street and house parties.
+211,UCC,674,879,moderate,social/party,high,2,"Sociable and loud-ish, my door is always open to friends."
+212,MTU,595,754,night owl,social/party,low,3,"Sociable and loud-ish, my door is always open to friends."
+213,MTU,638,856,moderate,homebody,moderate,5,I study for hospital rounds until 10 PM and keep things calm.
+214,UCC,552,716,early bird,homebody,high,4,Homebody who loves baking and a good book on a rainy Cork night.
+215,UCC,502,674,early bird,social/party,low,3,"Sociable and loud-ish, my door is always open to friends."
+216,MTU,525,648,early bird,social/party,moderate,3,"Love weekend drinks, music, cooking together, and having friends over."
+217,MTU,477,705,moderate,balanced,low,4,Social at weekends but strict quiet study hours on weekdays.
+218,UCC,564,745,early bird,balanced,high,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+219,MTU,469,689,night owl,homebody,low,4,I study for hospital rounds until 10 PM and keep things calm.
+220,UCC,452,556,moderate,social/party,low,2,"Sociable and loud-ish, my door is always open to friends."
+221,MTU,847,1007,moderate,homebody,low,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+222,MTU,777,893,early bird,balanced,moderate,5,Social at weekends but strict quiet study hours on weekdays.
+223,UCC,713,849,moderate,social/party,moderate,1,"Big on gigs, society events and late-night chats in the kitchen."
+224,MTU,742,889,night owl,homebody,high,1,Homebody who loves baking and a good book on a rainy Cork night.
+225,UCC,719,918,moderate,homebody,low,4,Homebody who loves baking and a good book on a rainy Cork night.
+226,UCC,832,1023,early bird,balanced,moderate,2,Social at weekends but strict quiet study hours on weekdays.
+227,MTU,826,960,early bird,social/party,moderate,5,"Big on gigs, society events and late-night chats in the kitchen."
+228,MTU,539,761,night owl,social/party,low,2,"Love weekend drinks, music, cooking together, and having friends over."
+229,MTU,847,956,moderate,social/party,low,1,Always up for a night out on Oliver Plunkett Street and house parties.
+230,MTU,611,842,moderate,homebody,high,4,Homebody who loves baking and a good book on a rainy Cork night.
+231,UCC,835,1008,moderate,homebody,low,3,Homebody who loves baking and a good book on a rainy Cork night.
+232,MTU,638,840,night owl,homebody,moderate,4,Homebody who loves baking and a good book on a rainy Cork night.
+233,MTU,704,898,night owl,homebody,moderate,1,I study for hospital rounds until 10 PM and keep things calm.
+234,UCC,670,909,moderate,homebody,moderate,1,"I prefer quiet study evenings, tea, and early nights."
+235,MTU,788,966,moderate,balanced,high,4,"Happy to cook together and watch a film, but I need sleep before lectures."
+236,MTU,677,891,early bird,social/party,high,3,"Sociable and loud-ish, my door is always open to friends."
+237,UCC,777,896,night owl,balanced,high,4,"Gym in the morning, coffee with friends, chill evenings."
+238,UCC,833,940,early bird,social/party,high,4,"Love weekend drinks, music, cooking together, and having friends over."
+239,UCC,484,677,moderate,homebody,moderate,5,"I prefer quiet study evenings, tea, and early nights."
+240,MTU,528,722,moderate,social/party,moderate,1,Always up for a night out on Oliver Plunkett Street and house parties.
+241,MTU,637,817,night owl,social/party,moderate,2,"Love weekend drinks, music, cooking together, and having friends over."
+242,UCC,826,1053,night owl,homebody,moderate,5,"I prefer quiet study evenings, tea, and early nights."
+243,MTU,846,1060,early bird,balanced,high,3,"Balanced: some nights out, some nights in."
+244,UCC,512,630,moderate,homebody,low,4,"I prefer quiet study evenings, tea, and early nights."
+245,MTU,613,729,night owl,social/party,high,3,"Big on gigs, society events and late-night chats in the kitchen."
+246,UCC,814,1006,night owl,homebody,low,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+247,MTU,571,677,moderate,homebody,high,5,Homebody who loves baking and a good book on a rainy Cork night.
+248,UCC,732,854,early bird,balanced,moderate,4,"Balanced: some nights out, some nights in."
+249,MTU,660,907,early bird,social/party,low,3,"Love weekend drinks, music, cooking together, and having friends over."
+250,MTU,688,820,night owl,balanced,high,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+251,UCC,671,802,night owl,homebody,low,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+252,UCC,615,803,night owl,homebody,moderate,1,Homebody who loves baking and a good book on a rainy Cork night.
+253,MTU,775,907,night owl,homebody,moderate,5,"I prefer quiet study evenings, tea, and early nights."
+254,UCC,778,1026,early bird,social/party,low,5,"Big on gigs, society events and late-night chats in the kitchen."
+255,UCC,471,591,early bird,social/party,high,5,"Big on gigs, society events and late-night chats in the kitchen."
+256,MTU,557,664,moderate,social/party,high,5,"Big on gigs, society events and late-night chats in the kitchen."
+257,MTU,604,766,night owl,social/party,moderate,3,"Sociable and loud-ish, my door is always open to friends."
+258,UCC,802,942,moderate,homebody,moderate,4,I study for hospital rounds until 10 PM and keep things calm.
+259,UCC,624,804,night owl,homebody,moderate,3,I study for hospital rounds until 10 PM and keep things calm.
+260,MTU,839,1070,night owl,homebody,low,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+261,MTU,512,727,early bird,balanced,low,1,Social at weekends but strict quiet study hours on weekdays.
+262,MTU,646,809,early bird,balanced,moderate,5,"Gym in the morning, coffee with friends, chill evenings."
+263,UCC,840,1067,night owl,homebody,moderate,4,Homebody who loves baking and a good book on a rainy Cork night.
+264,UCC,461,661,night owl,balanced,moderate,2,"Happy to cook together and watch a film, but I need sleep before lectures."
+265,UCC,630,742,moderate,social/party,moderate,5,"Sociable and loud-ish, my door is always open to friends."
+266,UCC,724,851,moderate,balanced,low,3,"Gym in the morning, coffee with friends, chill evenings."
+267,UCC,637,839,early bird,balanced,high,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+268,MTU,733,851,moderate,balanced,high,4,"Gym in the morning, coffee with friends, chill evenings."
+269,UCC,798,930,early bird,social/party,moderate,3,"Big on gigs, society events and late-night chats in the kitchen."
+270,UCC,637,787,night owl,social/party,high,4,"Love weekend drinks, music, cooking together, and having friends over."
+271,UCC,469,654,moderate,homebody,high,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+272,UCC,713,896,night owl,social/party,moderate,2,"Sociable and loud-ish, my door is always open to friends."
+273,MTU,828,1014,night owl,social/party,high,5,"Sociable and loud-ish, my door is always open to friends."
+274,MTU,738,959,early bird,social/party,moderate,3,"Love weekend drinks, music, cooking together, and having friends over."
+275,MTU,748,854,night owl,balanced,moderate,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+276,MTU,476,619,night owl,social/party,high,5,"Sociable and loud-ish, my door is always open to friends."
+277,UCC,798,906,night owl,homebody,high,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+278,MTU,675,882,early bird,homebody,moderate,2,I study for hospital rounds until 10 PM and keep things calm.
+279,MTU,846,961,night owl,social/party,low,5,Always up for a night out on Oliver Plunkett Street and house parties.
+280,MTU,616,850,moderate,social/party,moderate,2,"Sociable and loud-ish, my door is always open to friends."
+281,MTU,625,792,night owl,social/party,moderate,2,Always up for a night out on Oliver Plunkett Street and house parties.
+282,MTU,735,892,moderate,balanced,moderate,2,"Balanced: some nights out, some nights in."
+283,MTU,695,938,night owl,balanced,moderate,3,Social at weekends but strict quiet study hours on weekdays.
+284,MTU,796,997,moderate,social/party,low,3,"Love weekend drinks, music, cooking together, and having friends over."
+285,UCC,815,1003,moderate,balanced,high,3,"Balanced: some nights out, some nights in."
+286,MTU,553,796,night owl,homebody,moderate,2,"I prefer quiet study evenings, tea, and early nights."
+287,UCC,829,991,early bird,social/party,high,5,Always up for a night out on Oliver Plunkett Street and house parties.
+288,UCC,569,694,moderate,social/party,moderate,4,"Love weekend drinks, music, cooking together, and having friends over."
+289,UCC,844,945,night owl,social/party,low,4,"Sociable and loud-ish, my door is always open to friends."
+290,UCC,783,956,moderate,balanced,moderate,1,Social at weekends but strict quiet study hours on weekdays.
+291,UCC,743,979,night owl,social/party,high,1,Always up for a night out on Oliver Plunkett Street and house parties.
+292,UCC,540,741,moderate,balanced,low,3,Social at weekends but strict quiet study hours on weekdays.
+293,UCC,602,787,moderate,homebody,moderate,5,I study for hospital rounds until 10 PM and keep things calm.
+294,MTU,708,877,early bird,homebody,low,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+295,MTU,684,831,early bird,social/party,high,3,"Big on gigs, society events and late-night chats in the kitchen."
+296,UCC,795,939,night owl,social/party,high,4,"Sociable and loud-ish, my door is always open to friends."
+297,UCC,617,819,night owl,social/party,low,2,Always up for a night out on Oliver Plunkett Street and house parties.
+298,UCC,615,716,moderate,balanced,moderate,2,"Balanced: some nights out, some nights in."
+299,MTU,618,867,night owl,balanced,high,1,"Gym in the morning, coffee with friends, chill evenings."
+300,UCC,634,749,night owl,social/party,low,4,"Big on gigs, society events and late-night chats in the kitchen."
+301,MTU,657,787,night owl,homebody,moderate,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+302,MTU,518,657,moderate,homebody,high,5,Homebody who loves baking and a good book on a rainy Cork night.
+303,MTU,809,1046,night owl,balanced,low,2,Social at weekends but strict quiet study hours on weekdays.
+304,MTU,678,797,night owl,social/party,low,1,Always up for a night out on Oliver Plunkett Street and house parties.
+305,UCC,724,866,moderate,social/party,high,4,"Love weekend drinks, music, cooking together, and having friends over."
+306,MTU,555,678,night owl,social/party,moderate,1,"Sociable and loud-ish, my door is always open to friends."
+307,MTU,712,928,night owl,homebody,low,5,I study for hospital rounds until 10 PM and keep things calm.
+308,UCC,607,808,moderate,social/party,low,2,"Love weekend drinks, music, cooking together, and having friends over."
+309,MTU,666,782,night owl,homebody,low,1,I study for hospital rounds until 10 PM and keep things calm.
+310,MTU,596,742,early bird,homebody,high,4,Homebody who loves baking and a good book on a rainy Cork night.
+311,MTU,679,875,early bird,balanced,high,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+312,UCC,628,773,night owl,social/party,moderate,5,Always up for a night out on Oliver Plunkett Street and house parties.
+313,UCC,564,669,moderate,social/party,moderate,5,"Sociable and loud-ish, my door is always open to friends."
+314,UCC,644,807,moderate,social/party,moderate,2,"Big on gigs, society events and late-night chats in the kitchen."
+315,UCC,821,929,night owl,homebody,moderate,5,"I prefer quiet study evenings, tea, and early nights."
+316,UCC,555,680,night owl,homebody,low,4,"I prefer quiet study evenings, tea, and early nights."
+317,UCC,829,1031,moderate,homebody,low,5,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+318,MTU,521,680,night owl,homebody,high,3,Homebody who loves baking and a good book on a rainy Cork night.
+319,UCC,604,837,early bird,homebody,moderate,3,Homebody who loves baking and a good book on a rainy Cork night.
+320,UCC,735,944,night owl,homebody,moderate,1,Homebody who loves baking and a good book on a rainy Cork night.
+321,MTU,793,1027,moderate,social/party,high,4,"Sociable and loud-ish, my door is always open to friends."
+322,MTU,603,750,night owl,homebody,moderate,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+323,UCC,812,1030,early bird,balanced,high,4,"Balanced: some nights out, some nights in."
+324,UCC,721,920,early bird,social/party,moderate,2,"Big on gigs, society events and late-night chats in the kitchen."
+325,MTU,490,684,early bird,social/party,high,2,"Love weekend drinks, music, cooking together, and having friends over."
+326,UCC,643,761,early bird,balanced,high,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+327,MTU,556,733,early bird,balanced,low,2,Social at weekends but strict quiet study hours on weekdays.
+328,MTU,836,998,night owl,social/party,high,2,"Sociable and loud-ish, my door is always open to friends."
+329,MTU,732,904,moderate,homebody,moderate,5,Homebody who loves baking and a good book on a rainy Cork night.
+330,MTU,583,814,moderate,balanced,moderate,1,"Balanced: some nights out, some nights in."
+331,MTU,554,734,moderate,balanced,low,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+332,UCC,524,690,night owl,social/party,high,5,"Sociable and loud-ish, my door is always open to friends."
+333,UCC,528,712,early bird,balanced,moderate,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+334,MTU,731,896,moderate,balanced,high,4,"Balanced: some nights out, some nights in."
+335,MTU,825,968,early bird,homebody,high,5,I study for hospital rounds until 10 PM and keep things calm.
+336,UCC,727,961,early bird,homebody,low,1,"I prefer quiet study evenings, tea, and early nights."
+337,UCC,520,637,night owl,balanced,low,1,"Happy to cook together and watch a film, but I need sleep before lectures."
+338,MTU,683,798,night owl,social/party,high,5,"Sociable and loud-ish, my door is always open to friends."
+339,UCC,699,800,night owl,social/party,high,4,"Love weekend drinks, music, cooking together, and having friends over."
+340,MTU,721,958,moderate,homebody,low,5,I study for hospital rounds until 10 PM and keep things calm.
+341,UCC,504,738,early bird,homebody,low,2,Homebody who loves baking and a good book on a rainy Cork night.
+342,MTU,586,706,moderate,balanced,moderate,4,"Happy to cook together and watch a film, but I need sleep before lectures."
+343,MTU,565,685,night owl,social/party,high,1,"Love weekend drinks, music, cooking together, and having friends over."
+344,MTU,644,885,moderate,balanced,low,1,"Happy to cook together and watch a film, but I need sleep before lectures."
+345,MTU,705,889,night owl,homebody,low,5,"I prefer quiet study evenings, tea, and early nights."
+346,MTU,558,727,early bird,homebody,low,3,"I prefer quiet study evenings, tea, and early nights."
+347,UCC,611,764,night owl,homebody,low,4,"I prefer quiet study evenings, tea, and early nights."
+348,UCC,533,778,moderate,balanced,high,5,"Gym in the morning, coffee with friends, chill evenings."
+349,UCC,836,956,night owl,balanced,high,3,Social at weekends but strict quiet study hours on weekdays.
+350,UCC,673,792,moderate,homebody,high,5,I study for hospital rounds until 10 PM and keep things calm.
+351,MTU,465,680,moderate,balanced,low,3,"Balanced: some nights out, some nights in."
+352,MTU,545,666,night owl,balanced,moderate,2,Social at weekends but strict quiet study hours on weekdays.
+353,UCC,587,784,night owl,homebody,high,2,I study for hospital rounds until 10 PM and keep things calm.
+354,UCC,634,757,early bird,balanced,moderate,4,"Gym in the morning, coffee with friends, chill evenings."
+355,UCC,502,624,early bird,balanced,moderate,4,"Balanced: some nights out, some nights in."
+356,UCC,463,653,night owl,homebody,low,5,Homebody who loves baking and a good book on a rainy Cork night.
+357,MTU,456,661,moderate,balanced,low,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+358,UCC,716,913,early bird,social/party,low,3,"Big on gigs, society events and late-night chats in the kitchen."
+359,UCC,702,818,early bird,balanced,moderate,3,"Balanced: some nights out, some nights in."
+360,UCC,697,889,moderate,balanced,low,4,"Happy to cook together and watch a film, but I need sleep before lectures."
+361,UCC,504,681,early bird,balanced,moderate,3,"Balanced: some nights out, some nights in."
+362,MTU,675,885,night owl,balanced,high,2,"Gym in the morning, coffee with friends, chill evenings."
+363,UCC,758,980,moderate,balanced,low,4,"Gym in the morning, coffee with friends, chill evenings."
+364,MTU,826,1073,early bird,balanced,moderate,4,"Gym in the morning, coffee with friends, chill evenings."
+365,UCC,636,880,early bird,balanced,high,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+366,UCC,843,1061,night owl,social/party,low,4,"Big on gigs, society events and late-night chats in the kitchen."
+367,MTU,485,712,early bird,social/party,high,3,Always up for a night out on Oliver Plunkett Street and house parties.
+368,UCC,787,995,moderate,balanced,low,4,"Balanced: some nights out, some nights in."
+369,MTU,655,894,early bird,social/party,moderate,5,"Love weekend drinks, music, cooking together, and having friends over."
+370,UCC,843,1033,early bird,homebody,high,5,"I prefer quiet study evenings, tea, and early nights."
+371,MTU,780,964,moderate,social/party,low,1,"Love weekend drinks, music, cooking together, and having friends over."
+372,UCC,563,777,moderate,balanced,moderate,4,"Happy to cook together and watch a film, but I need sleep before lectures."
+373,MTU,462,588,moderate,balanced,moderate,1,Social at weekends but strict quiet study hours on weekdays.
+374,MTU,522,701,moderate,social/party,moderate,2,"Sociable and loud-ish, my door is always open to friends."
+375,UCC,693,905,night owl,balanced,high,4,"Gym in the morning, coffee with friends, chill evenings."
+376,UCC,603,732,early bird,homebody,moderate,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+377,UCC,574,815,early bird,social/party,moderate,5,"Sociable and loud-ish, my door is always open to friends."
+378,MTU,568,715,early bird,balanced,high,4,"Balanced: some nights out, some nights in."
+379,UCC,827,1042,night owl,homebody,moderate,4,"I prefer quiet study evenings, tea, and early nights."
+380,UCC,559,730,night owl,social/party,low,5,"Love weekend drinks, music, cooking together, and having friends over."
+381,MTU,545,728,early bird,social/party,moderate,1,"Big on gigs, society events and late-night chats in the kitchen."
+382,MTU,700,899,night owl,social/party,moderate,5,"Love weekend drinks, music, cooking together, and having friends over."
+383,MTU,630,774,night owl,balanced,high,3,Social at weekends but strict quiet study hours on weekdays.
+384,MTU,518,648,early bird,social/party,moderate,1,Always up for a night out on Oliver Plunkett Street and house parties.
+385,UCC,805,1035,moderate,balanced,moderate,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+386,MTU,646,793,moderate,social/party,high,5,Always up for a night out on Oliver Plunkett Street and house parties.
+387,MTU,535,708,early bird,social/party,low,3,"Sociable and loud-ish, my door is always open to friends."
+388,MTU,477,579,moderate,social/party,low,2,"Sociable and loud-ish, my door is always open to friends."
+389,MTU,708,912,night owl,social/party,moderate,4,"Sociable and loud-ish, my door is always open to friends."
+390,UCC,535,779,early bird,balanced,low,3,Social at weekends but strict quiet study hours on weekdays.
+391,MTU,565,708,moderate,balanced,high,4,Social at weekends but strict quiet study hours on weekdays.
+392,MTU,508,747,moderate,social/party,high,1,"Sociable and loud-ish, my door is always open to friends."
+393,MTU,561,687,night owl,social/party,high,2,"Big on gigs, society events and late-night chats in the kitchen."
+394,MTU,680,869,early bird,homebody,moderate,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+395,MTU,827,1036,early bird,homebody,high,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+396,MTU,480,716,moderate,homebody,high,5,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+397,MTU,810,984,night owl,balanced,moderate,5,Social at weekends but strict quiet study hours on weekdays.
+398,MTU,834,949,moderate,homebody,high,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+399,MTU,524,687,night owl,homebody,moderate,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+400,MTU,773,979,moderate,social/party,moderate,1,"Love weekend drinks, music, cooking together, and having friends over."
+401,MTU,713,907,moderate,balanced,moderate,3,Social at weekends but strict quiet study hours on weekdays.
+402,MTU,497,688,early bird,social/party,high,4,Always up for a night out on Oliver Plunkett Street and house parties.
+403,MTU,558,726,moderate,balanced,moderate,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+404,MTU,698,810,early bird,social/party,low,4,"Love weekend drinks, music, cooking together, and having friends over."
+405,MTU,530,746,early bird,homebody,moderate,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+406,UCC,604,774,early bird,social/party,high,3,"Big on gigs, society events and late-night chats in the kitchen."
+407,UCC,640,753,moderate,homebody,high,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+408,UCC,785,909,early bird,balanced,low,4,Social at weekends but strict quiet study hours on weekdays.
+409,UCC,753,985,night owl,homebody,moderate,1,"I prefer quiet study evenings, tea, and early nights."
+410,UCC,625,833,night owl,social/party,low,4,"Love weekend drinks, music, cooking together, and having friends over."
+411,UCC,646,772,early bird,homebody,moderate,3,Homebody who loves baking and a good book on a rainy Cork night.
+412,UCC,645,781,early bird,homebody,high,5,"I prefer quiet study evenings, tea, and early nights."
+413,UCC,782,994,moderate,social/party,high,2,Always up for a night out on Oliver Plunkett Street and house parties.
+414,MTU,765,920,early bird,balanced,low,2,Social at weekends but strict quiet study hours on weekdays.
+415,MTU,823,1012,moderate,social/party,moderate,2,Always up for a night out on Oliver Plunkett Street and house parties.
+416,UCC,780,943,night owl,balanced,high,5,"Gym in the morning, coffee with friends, chill evenings."
+417,MTU,463,615,night owl,social/party,high,5,Always up for a night out on Oliver Plunkett Street and house parties.
+418,MTU,650,763,early bird,social/party,moderate,4,"Love weekend drinks, music, cooking together, and having friends over."
+419,UCC,705,940,early bird,homebody,moderate,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+420,MTU,741,934,night owl,balanced,high,2,"Balanced: some nights out, some nights in."
+421,UCC,458,561,moderate,homebody,low,1,"I prefer quiet study evenings, tea, and early nights."
+422,MTU,709,937,moderate,balanced,moderate,4,Social at weekends but strict quiet study hours on weekdays.
+423,UCC,724,895,early bird,social/party,moderate,1,Always up for a night out on Oliver Plunkett Street and house parties.
+424,MTU,724,924,night owl,homebody,high,1,Homebody who loves baking and a good book on a rainy Cork night.
+425,UCC,673,787,early bird,social/party,low,4,"Love weekend drinks, music, cooking together, and having friends over."
+426,UCC,763,942,night owl,balanced,high,2,Social at weekends but strict quiet study hours on weekdays.
+427,UCC,812,914,early bird,homebody,moderate,3,Homebody who loves baking and a good book on a rainy Cork night.
+428,UCC,640,808,night owl,homebody,low,1,Homebody who loves baking and a good book on a rainy Cork night.
+429,UCC,589,756,night owl,balanced,high,1,"Balanced: some nights out, some nights in."
+430,MTU,711,825,moderate,balanced,high,2,"Gym in the morning, coffee with friends, chill evenings."
+431,UCC,580,826,night owl,homebody,high,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+432,UCC,710,821,early bird,social/party,low,1,"Sociable and loud-ish, my door is always open to friends."
+433,UCC,646,791,early bird,balanced,high,4,"Happy to cook together and watch a film, but I need sleep before lectures."
+434,MTU,577,758,moderate,balanced,low,5,"Gym in the morning, coffee with friends, chill evenings."
+435,UCC,707,852,early bird,homebody,high,1,I study for hospital rounds until 10 PM and keep things calm.
+436,MTU,688,867,moderate,homebody,low,5,I study for hospital rounds until 10 PM and keep things calm.
+437,UCC,638,812,night owl,homebody,moderate,5,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+438,MTU,638,788,night owl,balanced,high,2,"Happy to cook together and watch a film, but I need sleep before lectures."
+439,UCC,659,818,night owl,homebody,moderate,1,Homebody who loves baking and a good book on a rainy Cork night.
+440,MTU,838,1016,early bird,homebody,low,5,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+441,UCC,701,837,night owl,balanced,moderate,1,Social at weekends but strict quiet study hours on weekdays.
+442,MTU,716,911,moderate,homebody,high,1,"I prefer quiet study evenings, tea, and early nights."
+443,MTU,518,637,night owl,social/party,high,1,"Sociable and loud-ish, my door is always open to friends."
+444,UCC,516,690,moderate,social/party,moderate,4,"Big on gigs, society events and late-night chats in the kitchen."
+445,MTU,681,840,early bird,balanced,low,2,Social at weekends but strict quiet study hours on weekdays.
+446,UCC,504,719,moderate,homebody,moderate,4,"I prefer quiet study evenings, tea, and early nights."
+447,UCC,633,848,moderate,social/party,moderate,3,"Love weekend drinks, music, cooking together, and having friends over."
+448,MTU,530,640,early bird,homebody,moderate,2,"I prefer quiet study evenings, tea, and early nights."
+449,MTU,577,778,night owl,social/party,low,3,"Big on gigs, society events and late-night chats in the kitchen."
+450,MTU,465,680,night owl,homebody,high,5,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+451,UCC,686,821,early bird,homebody,low,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+452,MTU,551,746,night owl,homebody,high,1,Homebody who loves baking and a good book on a rainy Cork night.
+453,UCC,461,611,night owl,homebody,moderate,2,"I prefer quiet study evenings, tea, and early nights."
+454,UCC,512,730,early bird,balanced,low,5,"Balanced: some nights out, some nights in."
+455,MTU,652,759,moderate,social/party,high,4,Always up for a night out on Oliver Plunkett Street and house parties.
+456,UCC,559,729,moderate,balanced,moderate,2,Social at weekends but strict quiet study hours on weekdays.
+457,UCC,767,942,moderate,social/party,moderate,5,"Sociable and loud-ish, my door is always open to friends."
+458,MTU,494,692,early bird,homebody,moderate,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+459,UCC,728,925,night owl,social/party,moderate,4,"Sociable and loud-ish, my door is always open to friends."
+460,MTU,739,938,moderate,balanced,low,1,"Gym in the morning, coffee with friends, chill evenings."
+461,UCC,562,733,early bird,social/party,moderate,5,"Big on gigs, society events and late-night chats in the kitchen."
+462,UCC,569,694,early bird,social/party,high,2,"Big on gigs, society events and late-night chats in the kitchen."
+463,UCC,827,983,night owl,social/party,moderate,3,Always up for a night out on Oliver Plunkett Street and house parties.
+464,MTU,571,762,night owl,homebody,low,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+465,MTU,546,784,moderate,social/party,low,4,"Love weekend drinks, music, cooking together, and having friends over."
+466,UCC,478,634,early bird,homebody,high,4,"I prefer quiet study evenings, tea, and early nights."
+467,UCC,764,897,moderate,balanced,high,2,"Gym in the morning, coffee with friends, chill evenings."
+468,UCC,461,711,night owl,homebody,low,1,Homebody who loves baking and a good book on a rainy Cork night.
+469,MTU,641,891,early bird,homebody,moderate,3,Homebody who loves baking and a good book on a rainy Cork night.
+470,MTU,530,754,night owl,homebody,moderate,2,Homebody who loves baking and a good book on a rainy Cork night.
+471,UCC,790,986,moderate,homebody,high,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+472,UCC,823,1069,moderate,homebody,high,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+473,UCC,612,856,early bird,social/party,moderate,2,"Big on gigs, society events and late-night chats in the kitchen."
+474,UCC,489,677,moderate,social/party,low,1,"Big on gigs, society events and late-night chats in the kitchen."
+475,MTU,455,608,early bird,balanced,high,1,"Gym in the morning, coffee with friends, chill evenings."
+476,UCC,505,617,moderate,balanced,moderate,4,"Happy to cook together and watch a film, but I need sleep before lectures."
+477,MTU,702,891,night owl,balanced,moderate,1,"Balanced: some nights out, some nights in."
+478,UCC,783,924,moderate,social/party,low,1,"Big on gigs, society events and late-night chats in the kitchen."
+479,MTU,613,739,early bird,homebody,moderate,2,I study for hospital rounds until 10 PM and keep things calm.
+480,UCC,824,1064,early bird,homebody,moderate,5,I study for hospital rounds until 10 PM and keep things calm.
+481,MTU,465,607,night owl,social/party,moderate,2,"Love weekend drinks, music, cooking together, and having friends over."
+482,UCC,619,767,moderate,homebody,high,5,Homebody who loves baking and a good book on a rainy Cork night.
+483,MTU,594,754,early bird,social/party,low,4,"Sociable and loud-ish, my door is always open to friends."
+484,MTU,477,577,moderate,homebody,low,3,I study for hospital rounds until 10 PM and keep things calm.
+485,UCC,499,651,early bird,homebody,high,3,"I prefer quiet study evenings, tea, and early nights."
+486,MTU,509,710,moderate,balanced,moderate,3,Social at weekends but strict quiet study hours on weekdays.
+487,MTU,728,875,moderate,social/party,moderate,3,Always up for a night out on Oliver Plunkett Street and house parties.
+488,MTU,472,684,moderate,balanced,moderate,2,"Gym in the morning, coffee with friends, chill evenings."
+489,UCC,481,605,early bird,social/party,high,3,"Sociable and loud-ish, my door is always open to friends."
+490,UCC,566,765,night owl,social/party,moderate,5,"Sociable and loud-ish, my door is always open to friends."
+491,MTU,570,746,early bird,social/party,moderate,1,Always up for a night out on Oliver Plunkett Street and house parties.
+492,MTU,837,981,early bird,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+493,UCC,666,877,early bird,homebody,high,2,Homebody who loves baking and a good book on a rainy Cork night.
+494,UCC,822,944,moderate,balanced,high,4,"Gym in the morning, coffee with friends, chill evenings."
+495,MTU,716,819,night owl,balanced,high,5,"Balanced: some nights out, some nights in."
+496,UCC,662,799,night owl,homebody,high,5,"I prefer quiet study evenings, tea, and early nights."
+497,UCC,738,911,night owl,homebody,moderate,4,Homebody who loves baking and a good book on a rainy Cork night.
+498,MTU,785,1031,night owl,balanced,moderate,1,"Happy to cook together and watch a film, but I need sleep before lectures."
+499,UCC,656,858,early bird,balanced,moderate,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+500,MTU,831,999,moderate,homebody,low,3,Homebody who loves baking and a good book on a rainy Cork night.
+501,MTU,593,718,early bird,balanced,low,3,"Balanced: some nights out, some nights in."
+502,MTU,587,709,early bird,balanced,moderate,2,"Balanced: some nights out, some nights in."
+503,MTU,698,812,night owl,social/party,low,1,"Big on gigs, society events and late-night chats in the kitchen."
+504,MTU,709,843,night owl,social/party,high,1,Always up for a night out on Oliver Plunkett Street and house parties.
+505,UCC,552,715,early bird,homebody,moderate,1,Homebody who loves baking and a good book on a rainy Cork night.
+506,MTU,551,745,moderate,social/party,high,4,"Love weekend drinks, music, cooking together, and having friends over."
+507,UCC,465,660,moderate,social/party,high,4,Always up for a night out on Oliver Plunkett Street and house parties.
+508,MTU,750,938,early bird,balanced,moderate,1,"Gym in the morning, coffee with friends, chill evenings."
+509,UCC,647,788,night owl,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+510,MTU,555,759,night owl,social/party,low,1,"Sociable and loud-ish, my door is always open to friends."
+511,UCC,781,883,early bird,homebody,moderate,5,Homebody who loves baking and a good book on a rainy Cork night.
+512,MTU,813,1021,moderate,social/party,moderate,4,"Big on gigs, society events and late-night chats in the kitchen."
+513,MTU,688,921,night owl,homebody,moderate,5,"I prefer quiet study evenings, tea, and early nights."
+514,MTU,711,954,night owl,homebody,high,5,Homebody who loves baking and a good book on a rainy Cork night.
+515,UCC,800,1023,early bird,balanced,moderate,3,"Gym in the morning, coffee with friends, chill evenings."
+516,MTU,583,731,early bird,balanced,high,2,Social at weekends but strict quiet study hours on weekdays.
+517,MTU,656,791,night owl,social/party,low,4,"Big on gigs, society events and late-night chats in the kitchen."
+518,MTU,664,863,night owl,balanced,low,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+519,UCC,821,1057,night owl,balanced,moderate,3,"Gym in the morning, coffee with friends, chill evenings."
+520,UCC,786,961,early bird,homebody,moderate,2,Homebody who loves baking and a good book on a rainy Cork night.
+521,UCC,736,921,night owl,social/party,low,2,"Big on gigs, society events and late-night chats in the kitchen."
+522,MTU,831,1038,moderate,homebody,moderate,3,Homebody who loves baking and a good book on a rainy Cork night.
+523,MTU,510,623,night owl,balanced,high,5,Social at weekends but strict quiet study hours on weekdays.
+524,UCC,549,746,night owl,balanced,moderate,4,Social at weekends but strict quiet study hours on weekdays.
+525,UCC,520,707,moderate,homebody,high,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+526,UCC,816,936,moderate,balanced,moderate,2,"Gym in the morning, coffee with friends, chill evenings."
+527,UCC,479,694,moderate,social/party,low,2,Always up for a night out on Oliver Plunkett Street and house parties.
+528,UCC,840,973,night owl,balanced,moderate,4,"Balanced: some nights out, some nights in."
+529,MTU,694,795,early bird,balanced,high,2,"Gym in the morning, coffee with friends, chill evenings."
+530,UCC,614,718,night owl,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+531,MTU,626,759,early bird,social/party,moderate,5,"Big on gigs, society events and late-night chats in the kitchen."
+532,UCC,483,659,moderate,homebody,moderate,5,Homebody who loves baking and a good book on a rainy Cork night.
+533,UCC,801,988,moderate,balanced,moderate,2,"Happy to cook together and watch a film, but I need sleep before lectures."
+534,UCC,459,616,night owl,balanced,low,2,Social at weekends but strict quiet study hours on weekdays.
+535,UCC,708,839,moderate,social/party,high,1,"Sociable and loud-ish, my door is always open to friends."
+536,UCC,580,692,night owl,social/party,low,1,"Love weekend drinks, music, cooking together, and having friends over."
+537,MTU,509,722,moderate,social/party,low,5,"Big on gigs, society events and late-night chats in the kitchen."
+538,UCC,809,961,night owl,balanced,high,1,"Gym in the morning, coffee with friends, chill evenings."
+539,UCC,788,1021,moderate,balanced,high,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+540,UCC,503,675,early bird,balanced,low,4,"Happy to cook together and watch a film, but I need sleep before lectures."
+541,MTU,552,785,early bird,social/party,moderate,4,"Big on gigs, society events and late-night chats in the kitchen."
+542,MTU,470,623,night owl,homebody,moderate,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+543,UCC,456,584,night owl,homebody,high,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+544,UCC,849,974,moderate,homebody,high,2,I study for hospital rounds until 10 PM and keep things calm.
+545,MTU,585,697,early bird,balanced,low,1,"Gym in the morning, coffee with friends, chill evenings."
+546,MTU,796,1005,night owl,balanced,low,1,Social at weekends but strict quiet study hours on weekdays.
+547,UCC,520,704,moderate,homebody,moderate,5,Homebody who loves baking and a good book on a rainy Cork night.
+548,MTU,497,684,early bird,social/party,low,4,"Sociable and loud-ish, my door is always open to friends."
+549,MTU,589,811,moderate,balanced,high,2,Social at weekends but strict quiet study hours on weekdays.
+550,UCC,806,946,early bird,homebody,moderate,5,I study for hospital rounds until 10 PM and keep things calm.
+551,MTU,797,943,night owl,social/party,moderate,3,"Love weekend drinks, music, cooking together, and having friends over."
+552,UCC,822,1045,moderate,social/party,low,4,"Sociable and loud-ish, my door is always open to friends."
+553,MTU,482,662,early bird,homebody,high,5,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+554,UCC,623,833,night owl,social/party,high,2,"Sociable and loud-ish, my door is always open to friends."
+555,MTU,789,927,night owl,balanced,high,1,Social at weekends but strict quiet study hours on weekdays.
+556,MTU,530,756,early bird,social/party,low,4,"Big on gigs, society events and late-night chats in the kitchen."
+557,MTU,619,731,night owl,homebody,low,5,I study for hospital rounds until 10 PM and keep things calm.
+558,UCC,570,787,moderate,balanced,high,4,Social at weekends but strict quiet study hours on weekdays.
+559,MTU,678,808,moderate,balanced,high,1,Social at weekends but strict quiet study hours on weekdays.
+560,UCC,661,903,night owl,balanced,low,1,"Gym in the morning, coffee with friends, chill evenings."
+561,UCC,737,953,moderate,social/party,moderate,1,Always up for a night out on Oliver Plunkett Street and house parties.
+562,MTU,619,812,night owl,balanced,moderate,1,Social at weekends but strict quiet study hours on weekdays.
+563,UCC,563,750,moderate,social/party,high,3,"Big on gigs, society events and late-night chats in the kitchen."
+564,UCC,504,646,moderate,social/party,low,4,"Love weekend drinks, music, cooking together, and having friends over."
+565,UCC,762,910,early bird,balanced,moderate,2,"Balanced: some nights out, some nights in."
+566,MTU,816,943,moderate,homebody,low,5,"I prefer quiet study evenings, tea, and early nights."
+567,UCC,684,911,early bird,balanced,high,1,"Balanced: some nights out, some nights in."
+568,UCC,697,945,early bird,social/party,high,2,"Love weekend drinks, music, cooking together, and having friends over."
+569,MTU,786,1015,moderate,balanced,moderate,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+570,MTU,653,828,moderate,balanced,low,2,"Balanced: some nights out, some nights in."
+571,MTU,808,1048,moderate,social/party,high,5,Always up for a night out on Oliver Plunkett Street and house parties.
+572,MTU,557,745,night owl,homebody,low,2,Homebody who loves baking and a good book on a rainy Cork night.
+573,MTU,509,752,moderate,social/party,high,5,"Sociable and loud-ish, my door is always open to friends."
+574,MTU,832,1040,early bird,social/party,high,1,"Love weekend drinks, music, cooking together, and having friends over."
+575,UCC,524,638,early bird,balanced,moderate,2,"Gym in the morning, coffee with friends, chill evenings."
+576,UCC,578,693,night owl,social/party,moderate,2,"Love weekend drinks, music, cooking together, and having friends over."
+577,UCC,681,924,early bird,balanced,high,5,"Balanced: some nights out, some nights in."
+578,MTU,711,823,moderate,homebody,moderate,4,Homebody who loves baking and a good book on a rainy Cork night.
+579,UCC,477,641,early bird,social/party,high,4,Always up for a night out on Oliver Plunkett Street and house parties.
+580,MTU,810,1060,night owl,social/party,high,5,Always up for a night out on Oliver Plunkett Street and house parties.
+581,MTU,549,763,early bird,social/party,high,1,Always up for a night out on Oliver Plunkett Street and house parties.
+582,UCC,826,1022,early bird,homebody,moderate,3,Homebody who loves baking and a good book on a rainy Cork night.
+583,MTU,532,633,moderate,homebody,moderate,2,"I prefer quiet study evenings, tea, and early nights."
+584,UCC,615,792,moderate,homebody,high,5,Homebody who loves baking and a good book on a rainy Cork night.
+585,MTU,812,1046,early bird,homebody,low,5,"I prefer quiet study evenings, tea, and early nights."
+586,MTU,531,770,night owl,social/party,moderate,1,"Big on gigs, society events and late-night chats in the kitchen."
+587,MTU,559,743,moderate,homebody,moderate,2,I study for hospital rounds until 10 PM and keep things calm.
+588,UCC,835,964,night owl,social/party,moderate,4,Always up for a night out on Oliver Plunkett Street and house parties.
+589,UCC,764,874,night owl,social/party,moderate,4,"Love weekend drinks, music, cooking together, and having friends over."
+590,MTU,581,687,night owl,balanced,moderate,5,"Balanced: some nights out, some nights in."
+591,MTU,472,621,moderate,balanced,high,1,Social at weekends but strict quiet study hours on weekdays.
+592,UCC,845,961,early bird,homebody,high,2,I study for hospital rounds until 10 PM and keep things calm.
+593,MTU,555,673,night owl,homebody,high,2,"I prefer quiet study evenings, tea, and early nights."
+594,MTU,817,926,early bird,balanced,low,1,"Happy to cook together and watch a film, but I need sleep before lectures."
+595,UCC,735,982,early bird,balanced,moderate,4,"Balanced: some nights out, some nights in."
+596,MTU,772,982,moderate,balanced,low,4,Social at weekends but strict quiet study hours on weekdays.
+597,UCC,453,702,early bird,social/party,high,1,"Big on gigs, society events and late-night chats in the kitchen."
+598,MTU,504,681,night owl,social/party,low,3,"Sociable and loud-ish, my door is always open to friends."
+599,UCC,652,873,early bird,balanced,high,2,"Happy to cook together and watch a film, but I need sleep before lectures."
+600,MTU,650,786,moderate,social/party,high,3,"Love weekend drinks, music, cooking together, and having friends over."
+601,UCC,734,865,early bird,social/party,low,5,"Sociable and loud-ish, my door is always open to friends."
+602,UCC,730,908,early bird,social/party,high,3,Always up for a night out on Oliver Plunkett Street and house parties.
+603,UCC,780,921,early bird,balanced,low,5,"Gym in the morning, coffee with friends, chill evenings."
+604,UCC,508,753,early bird,homebody,high,4,"I prefer quiet study evenings, tea, and early nights."
+605,UCC,793,957,early bird,balanced,low,5,"Balanced: some nights out, some nights in."
+606,UCC,632,792,early bird,balanced,moderate,5,Social at weekends but strict quiet study hours on weekdays.
+607,MTU,612,827,moderate,homebody,high,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+608,MTU,740,920,moderate,social/party,low,1,"Big on gigs, society events and late-night chats in the kitchen."
+609,MTU,563,733,moderate,homebody,low,3,I study for hospital rounds until 10 PM and keep things calm.
+610,MTU,678,856,moderate,balanced,high,1,"Happy to cook together and watch a film, but I need sleep before lectures."
+611,UCC,760,931,early bird,social/party,high,2,"Big on gigs, society events and late-night chats in the kitchen."
+612,UCC,770,889,early bird,social/party,high,1,"Sociable and loud-ish, my door is always open to friends."
+613,UCC,558,799,moderate,social/party,high,5,"Sociable and loud-ish, my door is always open to friends."
+614,UCC,846,1039,moderate,social/party,low,5,"Big on gigs, society events and late-night chats in the kitchen."
+615,UCC,687,888,moderate,homebody,high,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+616,UCC,800,1031,early bird,social/party,moderate,2,Always up for a night out on Oliver Plunkett Street and house parties.
+617,UCC,739,962,moderate,social/party,low,2,"Sociable and loud-ish, my door is always open to friends."
+618,MTU,482,676,early bird,homebody,low,2,Homebody who loves baking and a good book on a rainy Cork night.
+619,MTU,690,801,early bird,balanced,high,3,Social at weekends but strict quiet study hours on weekdays.
+620,MTU,716,883,night owl,social/party,high,5,Always up for a night out on Oliver Plunkett Street and house parties.
+621,MTU,784,977,night owl,balanced,high,1,"Gym in the morning, coffee with friends, chill evenings."
+622,MTU,564,754,moderate,balanced,moderate,4,Social at weekends but strict quiet study hours on weekdays.
+623,MTU,521,663,early bird,social/party,low,5,"Big on gigs, society events and late-night chats in the kitchen."
+624,UCC,526,666,moderate,homebody,high,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+625,UCC,619,842,night owl,balanced,moderate,4,"Happy to cook together and watch a film, but I need sleep before lectures."
+626,MTU,532,637,early bird,social/party,low,2,Always up for a night out on Oliver Plunkett Street and house parties.
+627,UCC,772,1018,early bird,homebody,low,2,Homebody who loves baking and a good book on a rainy Cork night.
+628,MTU,714,958,night owl,homebody,low,3,"I prefer quiet study evenings, tea, and early nights."
+629,MTU,679,902,early bird,homebody,low,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+630,UCC,842,1072,moderate,social/party,low,3,"Sociable and loud-ish, my door is always open to friends."
+631,UCC,752,910,moderate,social/party,moderate,2,"Love weekend drinks, music, cooking together, and having friends over."
+632,MTU,553,691,night owl,homebody,low,2,I study for hospital rounds until 10 PM and keep things calm.
+633,UCC,757,993,night owl,social/party,low,1,"Sociable and loud-ish, my door is always open to friends."
+634,UCC,516,726,night owl,social/party,moderate,3,"Love weekend drinks, music, cooking together, and having friends over."
+635,MTU,721,879,moderate,social/party,moderate,3,"Love weekend drinks, music, cooking together, and having friends over."
+636,MTU,518,740,early bird,balanced,low,3,"Balanced: some nights out, some nights in."
+637,UCC,546,647,night owl,balanced,high,1,Social at weekends but strict quiet study hours on weekdays.
+638,UCC,785,965,moderate,balanced,moderate,1,"Happy to cook together and watch a film, but I need sleep before lectures."
+639,MTU,783,949,night owl,balanced,moderate,5,"Gym in the morning, coffee with friends, chill evenings."
+640,MTU,591,743,moderate,social/party,high,5,"Sociable and loud-ish, my door is always open to friends."
+641,MTU,639,803,moderate,homebody,high,3,I study for hospital rounds until 10 PM and keep things calm.
+642,UCC,520,678,moderate,social/party,high,2,"Love weekend drinks, music, cooking together, and having friends over."
+643,MTU,710,896,night owl,homebody,high,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+644,UCC,775,898,early bird,balanced,moderate,5,"Balanced: some nights out, some nights in."
+645,MTU,482,638,moderate,homebody,low,5,"I prefer quiet study evenings, tea, and early nights."
+646,MTU,646,879,moderate,social/party,high,5,"Love weekend drinks, music, cooking together, and having friends over."
+647,MTU,777,989,early bird,homebody,low,5,Homebody who loves baking and a good book on a rainy Cork night.
+648,UCC,467,610,night owl,homebody,low,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+649,UCC,450,572,moderate,social/party,moderate,3,"Sociable and loud-ish, my door is always open to friends."
+650,UCC,750,982,early bird,balanced,high,1,Social at weekends but strict quiet study hours on weekdays.
+651,MTU,595,783,moderate,social/party,low,5,Always up for a night out on Oliver Plunkett Street and house parties.
+652,UCC,656,822,early bird,balanced,moderate,5,Social at weekends but strict quiet study hours on weekdays.
+653,MTU,487,674,early bird,social/party,high,3,"Big on gigs, society events and late-night chats in the kitchen."
+654,MTU,676,920,moderate,social/party,low,3,"Sociable and loud-ish, my door is always open to friends."
+655,UCC,685,908,early bird,social/party,moderate,1,"Sociable and loud-ish, my door is always open to friends."
+656,UCC,562,742,moderate,social/party,moderate,5,"Love weekend drinks, music, cooking together, and having friends over."
+657,UCC,584,757,early bird,social/party,moderate,3,"Love weekend drinks, music, cooking together, and having friends over."
+658,MTU,541,721,moderate,social/party,low,5,"Big on gigs, society events and late-night chats in the kitchen."
+659,UCC,832,1059,night owl,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+660,UCC,555,706,early bird,balanced,high,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+661,UCC,511,737,night owl,homebody,low,5,"I prefer quiet study evenings, tea, and early nights."
+662,MTU,640,866,night owl,balanced,moderate,4,"Happy to cook together and watch a film, but I need sleep before lectures."
+663,MTU,593,749,night owl,social/party,low,1,"Sociable and loud-ish, my door is always open to friends."
+664,UCC,726,954,moderate,balanced,moderate,2,"Balanced: some nights out, some nights in."
+665,MTU,807,987,night owl,homebody,low,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+666,UCC,747,930,moderate,balanced,high,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+667,UCC,584,752,moderate,social/party,high,3,"Big on gigs, society events and late-night chats in the kitchen."
+668,MTU,705,858,moderate,homebody,high,3,Homebody who loves baking and a good book on a rainy Cork night.
+669,MTU,593,739,night owl,balanced,low,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+670,MTU,819,979,night owl,homebody,moderate,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+671,UCC,828,1049,early bird,homebody,low,4,I study for hospital rounds until 10 PM and keep things calm.
+672,MTU,772,996,moderate,homebody,moderate,5,"I prefer quiet study evenings, tea, and early nights."
+673,UCC,500,615,early bird,balanced,moderate,4,Social at weekends but strict quiet study hours on weekdays.
+674,MTU,831,997,moderate,balanced,moderate,5,"Gym in the morning, coffee with friends, chill evenings."
+675,MTU,460,591,moderate,balanced,high,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+676,UCC,744,916,moderate,social/party,moderate,5,"Sociable and loud-ish, my door is always open to friends."
+677,UCC,678,875,night owl,social/party,moderate,4,Always up for a night out on Oliver Plunkett Street and house parties.
+678,MTU,777,984,night owl,homebody,high,5,I study for hospital rounds until 10 PM and keep things calm.
+679,UCC,490,677,early bird,homebody,moderate,3,Homebody who loves baking and a good book on a rainy Cork night.
+680,MTU,586,755,moderate,social/party,moderate,5,"Sociable and loud-ish, my door is always open to friends."
+681,UCC,535,640,early bird,balanced,high,2,"Gym in the morning, coffee with friends, chill evenings."
+682,UCC,808,961,early bird,social/party,moderate,1,"Love weekend drinks, music, cooking together, and having friends over."
+683,UCC,692,798,moderate,homebody,high,1,"I prefer quiet study evenings, tea, and early nights."
+684,UCC,766,887,night owl,balanced,moderate,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+685,MTU,827,1040,night owl,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+686,MTU,467,650,moderate,homebody,moderate,5,Homebody who loves baking and a good book on a rainy Cork night.
+687,UCC,677,915,early bird,social/party,high,5,"Sociable and loud-ish, my door is always open to friends."
+688,MTU,833,1067,night owl,social/party,high,5,"Big on gigs, society events and late-night chats in the kitchen."
+689,UCC,696,818,moderate,balanced,moderate,3,"Balanced: some nights out, some nights in."
+690,MTU,529,631,early bird,balanced,high,2,"Gym in the morning, coffee with friends, chill evenings."
+691,UCC,690,915,moderate,balanced,moderate,1,"Balanced: some nights out, some nights in."
+692,UCC,755,856,night owl,balanced,moderate,2,"Balanced: some nights out, some nights in."
+693,MTU,673,836,early bird,social/party,high,4,"Sociable and loud-ish, my door is always open to friends."
+694,UCC,584,792,night owl,homebody,low,5,Homebody who loves baking and a good book on a rainy Cork night.
+695,MTU,782,987,early bird,balanced,low,2,"Happy to cook together and watch a film, but I need sleep before lectures."
+696,MTU,506,721,moderate,balanced,high,5,"Balanced: some nights out, some nights in."
+697,UCC,614,752,early bird,homebody,high,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+698,MTU,594,726,night owl,homebody,moderate,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+699,UCC,527,753,early bird,homebody,moderate,4,Homebody who loves baking and a good book on a rainy Cork night.
+700,MTU,640,748,moderate,balanced,low,2,Social at weekends but strict quiet study hours on weekdays.
+701,MTU,847,965,night owl,balanced,moderate,2,"Happy to cook together and watch a film, but I need sleep before lectures."
+702,UCC,645,776,night owl,balanced,low,4,"Balanced: some nights out, some nights in."
+703,UCC,827,977,moderate,homebody,high,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+704,MTU,649,831,early bird,balanced,high,1,Social at weekends but strict quiet study hours on weekdays.
+705,MTU,696,846,moderate,balanced,low,2,Social at weekends but strict quiet study hours on weekdays.
+706,MTU,774,957,early bird,homebody,low,3,"I prefer quiet study evenings, tea, and early nights."
+707,UCC,574,684,night owl,balanced,high,4,"Happy to cook together and watch a film, but I need sleep before lectures."
+708,UCC,844,1007,early bird,balanced,moderate,1,"Gym in the morning, coffee with friends, chill evenings."
+709,UCC,480,671,night owl,social/party,low,5,"Love weekend drinks, music, cooking together, and having friends over."
+710,UCC,699,880,night owl,homebody,high,3,I study for hospital rounds until 10 PM and keep things calm.
+711,UCC,548,744,moderate,social/party,high,2,"Big on gigs, society events and late-night chats in the kitchen."
+712,MTU,698,941,moderate,homebody,high,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+713,MTU,545,727,night owl,social/party,moderate,3,Always up for a night out on Oliver Plunkett Street and house parties.
+714,UCC,721,936,moderate,homebody,moderate,5,Homebody who loves baking and a good book on a rainy Cork night.
+715,MTU,450,597,early bird,balanced,high,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+716,UCC,819,1056,moderate,balanced,low,5,"Balanced: some nights out, some nights in."
+717,MTU,528,710,moderate,social/party,high,3,"Love weekend drinks, music, cooking together, and having friends over."
+718,UCC,717,828,early bird,homebody,low,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+719,UCC,698,823,early bird,homebody,high,4,I study for hospital rounds until 10 PM and keep things calm.
+720,MTU,769,881,moderate,social/party,low,5,"Love weekend drinks, music, cooking together, and having friends over."
+721,MTU,556,676,moderate,homebody,high,1,Homebody who loves baking and a good book on a rainy Cork night.
+722,MTU,830,1024,night owl,social/party,low,5,"Big on gigs, society events and late-night chats in the kitchen."
+723,UCC,470,647,early bird,social/party,low,5,"Love weekend drinks, music, cooking together, and having friends over."
+724,UCC,821,1057,moderate,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+725,UCC,770,1012,night owl,social/party,high,4,"Love weekend drinks, music, cooking together, and having friends over."
+726,MTU,745,962,night owl,social/party,high,4,"Love weekend drinks, music, cooking together, and having friends over."
+727,MTU,542,771,moderate,homebody,high,2,I study for hospital rounds until 10 PM and keep things calm.
+728,MTU,611,806,moderate,balanced,high,4,"Gym in the morning, coffee with friends, chill evenings."
+729,UCC,573,769,night owl,social/party,high,3,"Big on gigs, society events and late-night chats in the kitchen."
+730,MTU,679,779,night owl,balanced,low,3,Social at weekends but strict quiet study hours on weekdays.
+731,MTU,519,620,moderate,social/party,low,2,"Big on gigs, society events and late-night chats in the kitchen."
+732,MTU,845,1086,night owl,homebody,high,5,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+733,MTU,469,660,early bird,homebody,low,3,Homebody who loves baking and a good book on a rainy Cork night.
+734,UCC,577,742,moderate,social/party,low,5,"Sociable and loud-ish, my door is always open to friends."
+735,UCC,561,744,moderate,social/party,low,4,"Love weekend drinks, music, cooking together, and having friends over."
+736,MTU,778,887,night owl,social/party,high,4,"Love weekend drinks, music, cooking together, and having friends over."
+737,MTU,844,1033,moderate,homebody,moderate,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+738,UCC,784,981,early bird,social/party,moderate,5,"Love weekend drinks, music, cooking together, and having friends over."
+739,UCC,726,909,night owl,balanced,high,2,"Happy to cook together and watch a film, but I need sleep before lectures."
+740,MTU,794,1008,night owl,homebody,high,5,"I prefer quiet study evenings, tea, and early nights."
+741,MTU,671,871,early bird,homebody,low,3,"I prefer quiet study evenings, tea, and early nights."
+742,UCC,742,982,moderate,balanced,moderate,1,"Balanced: some nights out, some nights in."
+743,UCC,672,806,moderate,social/party,high,2,"Sociable and loud-ish, my door is always open to friends."
+744,UCC,783,1026,night owl,balanced,high,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+745,MTU,486,696,moderate,homebody,high,5,"I prefer quiet study evenings, tea, and early nights."
+746,MTU,793,1001,moderate,homebody,moderate,2,Homebody who loves baking and a good book on a rainy Cork night.
+747,UCC,754,932,early bird,balanced,moderate,5,"Balanced: some nights out, some nights in."
+748,MTU,524,635,early bird,social/party,low,3,Always up for a night out on Oliver Plunkett Street and house parties.
+749,UCC,493,606,early bird,social/party,high,2,"Big on gigs, society events and late-night chats in the kitchen."
+750,UCC,625,803,moderate,homebody,moderate,1,Homebody who loves baking and a good book on a rainy Cork night.
+751,UCC,828,980,night owl,homebody,high,3,I study for hospital rounds until 10 PM and keep things calm.
+752,UCC,823,927,moderate,social/party,high,5,"Love weekend drinks, music, cooking together, and having friends over."
+753,UCC,537,709,early bird,balanced,high,5,"Gym in the morning, coffee with friends, chill evenings."
+754,UCC,688,805,moderate,homebody,high,3,Homebody who loves baking and a good book on a rainy Cork night.
+755,MTU,459,657,early bird,homebody,moderate,5,"I prefer quiet study evenings, tea, and early nights."
+756,UCC,698,845,early bird,balanced,high,4,Social at weekends but strict quiet study hours on weekdays.
+757,MTU,576,761,moderate,homebody,moderate,2,"I prefer quiet study evenings, tea, and early nights."
+758,MTU,800,990,night owl,balanced,moderate,2,"Gym in the morning, coffee with friends, chill evenings."
+759,MTU,770,969,early bird,homebody,high,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+760,MTU,624,759,early bird,homebody,high,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+761,UCC,573,782,moderate,balanced,high,3,"Balanced: some nights out, some nights in."
+762,UCC,517,652,night owl,social/party,high,2,Always up for a night out on Oliver Plunkett Street and house parties.
+763,UCC,802,1012,early bird,balanced,high,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+764,UCC,484,631,moderate,balanced,low,1,"Gym in the morning, coffee with friends, chill evenings."
+765,MTU,660,873,night owl,balanced,high,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+766,UCC,504,651,early bird,homebody,high,5,Homebody who loves baking and a good book on a rainy Cork night.
+767,UCC,740,899,early bird,social/party,high,1,"Big on gigs, society events and late-night chats in the kitchen."
+768,MTU,802,936,night owl,homebody,high,4,Homebody who loves baking and a good book on a rainy Cork night.
+769,MTU,648,869,early bird,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+770,UCC,659,828,moderate,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+771,MTU,540,765,night owl,homebody,moderate,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+772,UCC,657,854,night owl,balanced,moderate,4,Social at weekends but strict quiet study hours on weekdays.
+773,MTU,505,721,early bird,social/party,low,5,"Sociable and loud-ish, my door is always open to friends."
+774,MTU,470,702,night owl,social/party,low,2,"Big on gigs, society events and late-night chats in the kitchen."
+775,MTU,653,826,moderate,balanced,low,4,"Gym in the morning, coffee with friends, chill evenings."
+776,UCC,477,695,night owl,social/party,moderate,1,"Love weekend drinks, music, cooking together, and having friends over."
+777,UCC,848,1048,moderate,homebody,moderate,4,"I prefer quiet study evenings, tea, and early nights."
+778,UCC,682,898,early bird,homebody,moderate,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+779,UCC,825,948,early bird,social/party,high,4,"Big on gigs, society events and late-night chats in the kitchen."
+780,MTU,718,948,night owl,homebody,low,4,I study for hospital rounds until 10 PM and keep things calm.
+781,UCC,843,1028,night owl,homebody,high,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+782,UCC,541,748,moderate,homebody,moderate,4,Homebody who loves baking and a good book on a rainy Cork night.
+783,UCC,542,675,early bird,social/party,low,5,"Big on gigs, society events and late-night chats in the kitchen."
+784,MTU,684,911,night owl,homebody,low,5,I study for hospital rounds until 10 PM and keep things calm.
+785,MTU,561,777,moderate,homebody,moderate,1,"I prefer quiet study evenings, tea, and early nights."
+786,MTU,730,972,early bird,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+787,MTU,784,893,early bird,homebody,low,5,Homebody who loves baking and a good book on a rainy Cork night.
+788,UCC,494,621,moderate,balanced,low,2,"Gym in the morning, coffee with friends, chill evenings."
+789,UCC,788,1004,night owl,social/party,high,3,"Love weekend drinks, music, cooking together, and having friends over."
+790,MTU,843,1025,moderate,homebody,moderate,1,I study for hospital rounds until 10 PM and keep things calm.
+791,MTU,483,703,early bird,social/party,low,3,"Big on gigs, society events and late-night chats in the kitchen."
+792,UCC,661,814,night owl,social/party,low,1,"Love weekend drinks, music, cooking together, and having friends over."
+793,MTU,820,1029,night owl,balanced,moderate,3,"Gym in the morning, coffee with friends, chill evenings."
+794,MTU,764,997,night owl,homebody,high,4,I study for hospital rounds until 10 PM and keep things calm.
+795,UCC,762,936,early bird,homebody,low,1,"I prefer quiet study evenings, tea, and early nights."
+796,UCC,770,923,night owl,balanced,moderate,4,Social at weekends but strict quiet study hours on weekdays.
+797,UCC,629,731,night owl,balanced,low,3,"Gym in the morning, coffee with friends, chill evenings."
+798,MTU,607,836,night owl,homebody,moderate,1,"I prefer quiet study evenings, tea, and early nights."
+799,MTU,620,821,night owl,social/party,high,5,"Love weekend drinks, music, cooking together, and having friends over."
+800,MTU,549,735,night owl,homebody,moderate,4,"I prefer quiet study evenings, tea, and early nights."
+801,MTU,519,658,night owl,social/party,moderate,5,"Big on gigs, society events and late-night chats in the kitchen."
+802,UCC,661,894,moderate,balanced,high,3,Social at weekends but strict quiet study hours on weekdays.
+803,MTU,745,935,early bird,homebody,low,3,"I prefer quiet study evenings, tea, and early nights."
+804,UCC,642,888,night owl,balanced,moderate,2,Social at weekends but strict quiet study hours on weekdays.
+805,MTU,811,919,moderate,balanced,moderate,1,"Balanced: some nights out, some nights in."
+806,MTU,640,817,early bird,homebody,high,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+807,UCC,641,792,early bird,homebody,moderate,5,"I prefer quiet study evenings, tea, and early nights."
+808,UCC,706,854,moderate,balanced,moderate,5,"Gym in the morning, coffee with friends, chill evenings."
+809,UCC,523,755,night owl,balanced,low,2,Social at weekends but strict quiet study hours on weekdays.
+810,UCC,648,749,moderate,balanced,low,5,Social at weekends but strict quiet study hours on weekdays.
+811,UCC,689,815,night owl,balanced,high,3,Social at weekends but strict quiet study hours on weekdays.
+812,MTU,838,991,moderate,social/party,low,2,"Big on gigs, society events and late-night chats in the kitchen."
+813,MTU,722,934,night owl,balanced,low,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+814,UCC,590,693,night owl,homebody,high,5,"I prefer quiet study evenings, tea, and early nights."
+815,MTU,727,967,moderate,homebody,moderate,2,Homebody who loves baking and a good book on a rainy Cork night.
+816,UCC,575,693,moderate,social/party,high,3,"Sociable and loud-ish, my door is always open to friends."
+817,UCC,516,736,night owl,homebody,low,1,I study for hospital rounds until 10 PM and keep things calm.
+818,MTU,494,694,early bird,homebody,high,5,I study for hospital rounds until 10 PM and keep things calm.
+819,MTU,632,817,early bird,social/party,high,5,"Love weekend drinks, music, cooking together, and having friends over."
+820,UCC,740,863,night owl,balanced,moderate,1,"Balanced: some nights out, some nights in."
+821,MTU,800,1020,early bird,balanced,low,2,"Gym in the morning, coffee with friends, chill evenings."
+822,UCC,650,834,moderate,balanced,moderate,4,Social at weekends but strict quiet study hours on weekdays.
+823,UCC,693,882,moderate,homebody,moderate,2,Homebody who loves baking and a good book on a rainy Cork night.
+824,UCC,759,989,early bird,balanced,moderate,1,"Gym in the morning, coffee with friends, chill evenings."
+825,UCC,782,959,night owl,social/party,moderate,4,"Sociable and loud-ish, my door is always open to friends."
+826,UCC,767,1007,early bird,homebody,moderate,4,"I prefer quiet study evenings, tea, and early nights."
+827,MTU,556,767,night owl,balanced,moderate,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+828,UCC,789,1035,moderate,homebody,low,5,I study for hospital rounds until 10 PM and keep things calm.
+829,UCC,734,947,early bird,balanced,moderate,4,Social at weekends but strict quiet study hours on weekdays.
+830,MTU,505,688,moderate,social/party,high,1,"Love weekend drinks, music, cooking together, and having friends over."
+831,UCC,521,658,night owl,homebody,low,4,Homebody who loves baking and a good book on a rainy Cork night.
+832,MTU,765,915,early bird,balanced,high,3,"Gym in the morning, coffee with friends, chill evenings."
+833,MTU,797,1008,night owl,social/party,moderate,1,"Love weekend drinks, music, cooking together, and having friends over."
+834,MTU,711,843,moderate,social/party,low,3,"Love weekend drinks, music, cooking together, and having friends over."
+835,MTU,810,938,moderate,homebody,low,2,I study for hospital rounds until 10 PM and keep things calm.
+836,MTU,752,933,night owl,social/party,moderate,4,"Sociable and loud-ish, my door is always open to friends."
+837,UCC,729,873,moderate,balanced,low,2,"Balanced: some nights out, some nights in."
+838,UCC,663,836,night owl,balanced,low,2,Social at weekends but strict quiet study hours on weekdays.
+839,UCC,781,917,night owl,homebody,moderate,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+840,MTU,520,736,night owl,homebody,high,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+841,MTU,710,951,moderate,balanced,moderate,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+842,UCC,667,914,moderate,homebody,high,2,Homebody who loves baking and a good book on a rainy Cork night.
+843,MTU,729,837,early bird,balanced,high,4,"Gym in the morning, coffee with friends, chill evenings."
+844,MTU,747,867,early bird,homebody,high,5,Homebody who loves baking and a good book on a rainy Cork night.
+845,UCC,714,947,night owl,balanced,low,2,"Balanced: some nights out, some nights in."
+846,UCC,829,1067,night owl,social/party,moderate,5,"Love weekend drinks, music, cooking together, and having friends over."
+847,UCC,723,943,moderate,balanced,high,4,"Gym in the morning, coffee with friends, chill evenings."
+848,MTU,630,804,early bird,balanced,low,5,"Gym in the morning, coffee with friends, chill evenings."
+849,MTU,738,853,night owl,social/party,moderate,5,Always up for a night out on Oliver Plunkett Street and house parties.
+850,MTU,476,582,moderate,social/party,moderate,1,Always up for a night out on Oliver Plunkett Street and house parties.
+851,MTU,489,653,early bird,social/party,high,3,"Big on gigs, society events and late-night chats in the kitchen."
+852,UCC,457,601,night owl,balanced,high,2,"Balanced: some nights out, some nights in."
+853,MTU,539,699,moderate,balanced,low,5,Social at weekends but strict quiet study hours on weekdays.
+854,UCC,493,632,moderate,balanced,moderate,4,"Happy to cook together and watch a film, but I need sleep before lectures."
+855,UCC,675,828,night owl,social/party,high,3,"Love weekend drinks, music, cooking together, and having friends over."
+856,UCC,585,698,early bird,social/party,moderate,4,"Sociable and loud-ish, my door is always open to friends."
+857,UCC,693,890,night owl,balanced,high,4,"Balanced: some nights out, some nights in."
+858,MTU,524,627,moderate,balanced,moderate,4,"Gym in the morning, coffee with friends, chill evenings."
+859,UCC,799,923,night owl,social/party,high,3,"Sociable and loud-ish, my door is always open to friends."
+860,MTU,783,968,moderate,social/party,moderate,1,"Big on gigs, society events and late-night chats in the kitchen."
+861,MTU,749,967,night owl,social/party,high,2,Always up for a night out on Oliver Plunkett Street and house parties.
+862,UCC,622,802,night owl,social/party,low,1,"Love weekend drinks, music, cooking together, and having friends over."
+863,UCC,660,894,early bird,homebody,high,4,Homebody who loves baking and a good book on a rainy Cork night.
+864,MTU,821,985,early bird,homebody,low,1,"I prefer quiet study evenings, tea, and early nights."
+865,UCC,754,885,night owl,homebody,low,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+866,UCC,786,914,night owl,balanced,low,3,"Gym in the morning, coffee with friends, chill evenings."
+867,UCC,788,1004,moderate,balanced,moderate,3,"Gym in the morning, coffee with friends, chill evenings."
+868,UCC,849,1019,early bird,homebody,moderate,4,Homebody who loves baking and a good book on a rainy Cork night.
+869,MTU,582,727,moderate,homebody,low,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+870,UCC,651,876,early bird,social/party,low,5,"Sociable and loud-ish, my door is always open to friends."
+871,UCC,764,977,night owl,homebody,moderate,1,"I prefer quiet study evenings, tea, and early nights."
+872,MTU,486,700,early bird,homebody,moderate,2,"I prefer quiet study evenings, tea, and early nights."
+873,MTU,790,958,early bird,homebody,high,3,I study for hospital rounds until 10 PM and keep things calm.
+874,MTU,451,673,moderate,social/party,moderate,1,Always up for a night out on Oliver Plunkett Street and house parties.
+875,MTU,646,777,night owl,homebody,high,3,Homebody who loves baking and a good book on a rainy Cork night.
+876,MTU,605,719,night owl,social/party,high,1,"Big on gigs, society events and late-night chats in the kitchen."
+877,UCC,624,841,moderate,social/party,high,2,Always up for a night out on Oliver Plunkett Street and house parties.
+878,MTU,470,618,moderate,social/party,high,4,"Love weekend drinks, music, cooking together, and having friends over."
+879,MTU,802,1026,early bird,social/party,high,4,Always up for a night out on Oliver Plunkett Street and house parties.
+880,UCC,468,574,night owl,homebody,high,2,I study for hospital rounds until 10 PM and keep things calm.
+881,MTU,482,709,night owl,balanced,moderate,1,Social at weekends but strict quiet study hours on weekdays.
+882,MTU,478,588,moderate,balanced,low,2,"Balanced: some nights out, some nights in."
+883,UCC,724,972,early bird,social/party,low,1,Always up for a night out on Oliver Plunkett Street and house parties.
+884,UCC,784,1004,night owl,balanced,low,2,"Happy to cook together and watch a film, but I need sleep before lectures."
+885,UCC,538,716,early bird,homebody,moderate,5,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+886,UCC,482,611,moderate,social/party,high,5,Always up for a night out on Oliver Plunkett Street and house parties.
+887,MTU,553,739,night owl,homebody,high,4,Homebody who loves baking and a good book on a rainy Cork night.
+888,UCC,800,982,early bird,homebody,low,5,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+889,UCC,482,652,early bird,balanced,moderate,2,"Gym in the morning, coffee with friends, chill evenings."
+890,MTU,534,696,night owl,social/party,low,2,"Love weekend drinks, music, cooking together, and having friends over."
+891,MTU,763,903,early bird,social/party,moderate,1,"Love weekend drinks, music, cooking together, and having friends over."
+892,UCC,541,713,moderate,homebody,high,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+893,MTU,523,756,moderate,homebody,moderate,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+894,UCC,804,950,night owl,social/party,moderate,5,"Love weekend drinks, music, cooking together, and having friends over."
+895,MTU,850,1039,moderate,social/party,low,5,Always up for a night out on Oliver Plunkett Street and house parties.
+896,UCC,510,702,night owl,homebody,high,2,I study for hospital rounds until 10 PM and keep things calm.
+897,UCC,787,957,early bird,social/party,low,1,Always up for a night out on Oliver Plunkett Street and house parties.
+898,MTU,692,837,early bird,social/party,high,1,"Love weekend drinks, music, cooking together, and having friends over."
+899,MTU,636,789,moderate,social/party,moderate,3,"Sociable and loud-ish, my door is always open to friends."
+900,UCC,503,740,early bird,homebody,low,1,I study for hospital rounds until 10 PM and keep things calm.
+901,UCC,509,669,night owl,social/party,moderate,5,"Big on gigs, society events and late-night chats in the kitchen."
+902,MTU,551,709,early bird,balanced,moderate,2,Social at weekends but strict quiet study hours on weekdays.
+903,MTU,827,978,moderate,homebody,low,1,I study for hospital rounds until 10 PM and keep things calm.
+904,UCC,698,909,early bird,social/party,low,5,"Sociable and loud-ish, my door is always open to friends."
+905,MTU,648,782,moderate,homebody,high,2,Homebody who loves baking and a good book on a rainy Cork night.
+906,MTU,553,685,early bird,balanced,high,5,Social at weekends but strict quiet study hours on weekdays.
+907,UCC,519,738,moderate,balanced,moderate,2,"Gym in the morning, coffee with friends, chill evenings."
+908,UCC,601,744,night owl,homebody,high,2,"I prefer quiet study evenings, tea, and early nights."
+909,MTU,717,872,night owl,balanced,moderate,4,"Gym in the morning, coffee with friends, chill evenings."
+910,MTU,823,986,early bird,homebody,moderate,4,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+911,UCC,526,732,early bird,social/party,low,4,"Love weekend drinks, music, cooking together, and having friends over."
+912,MTU,721,943,night owl,balanced,low,4,"Balanced: some nights out, some nights in."
+913,UCC,492,696,early bird,homebody,low,3,Homebody who loves baking and a good book on a rainy Cork night.
+914,UCC,781,885,moderate,homebody,high,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+915,UCC,685,901,moderate,social/party,low,4,Always up for a night out on Oliver Plunkett Street and house parties.
+916,MTU,770,870,night owl,balanced,low,4,"Gym in the morning, coffee with friends, chill evenings."
+917,MTU,466,675,moderate,social/party,high,5,Always up for a night out on Oliver Plunkett Street and house parties.
+918,MTU,491,605,night owl,social/party,high,3,"Love weekend drinks, music, cooking together, and having friends over."
+919,MTU,646,865,night owl,homebody,low,3,Homebody who loves baking and a good book on a rainy Cork night.
+920,UCC,781,1024,night owl,homebody,low,2,Homebody who loves baking and a good book on a rainy Cork night.
+921,UCC,726,948,night owl,homebody,high,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+922,MTU,630,858,night owl,balanced,moderate,3,Social at weekends but strict quiet study hours on weekdays.
+923,MTU,640,855,moderate,homebody,high,5,"I prefer quiet study evenings, tea, and early nights."
+924,MTU,813,1028,night owl,balanced,moderate,1,"Happy to cook together and watch a film, but I need sleep before lectures."
+925,UCC,494,694,early bird,balanced,moderate,1,Social at weekends but strict quiet study hours on weekdays.
+926,UCC,591,728,moderate,homebody,low,2,"I prefer quiet study evenings, tea, and early nights."
+927,UCC,663,884,moderate,balanced,moderate,4,Social at weekends but strict quiet study hours on weekdays.
+928,UCC,546,651,early bird,balanced,high,3,"Balanced: some nights out, some nights in."
+929,MTU,625,849,night owl,social/party,high,5,"Sociable and loud-ish, my door is always open to friends."
+930,UCC,605,783,early bird,balanced,moderate,2,"Balanced: some nights out, some nights in."
+931,UCC,597,734,moderate,balanced,moderate,4,"Happy to cook together and watch a film, but I need sleep before lectures."
+932,MTU,532,678,early bird,social/party,high,2,Always up for a night out on Oliver Plunkett Street and house parties.
+933,UCC,509,690,night owl,homebody,low,4,Homebody who loves baking and a good book on a rainy Cork night.
+934,UCC,544,787,night owl,balanced,low,3,"Gym in the morning, coffee with friends, chill evenings."
+935,MTU,640,878,early bird,homebody,high,3,"I prefer quiet study evenings, tea, and early nights."
+936,MTU,657,794,moderate,homebody,moderate,2,"I prefer quiet study evenings, tea, and early nights."
+937,MTU,729,904,moderate,social/party,moderate,5,Always up for a night out on Oliver Plunkett Street and house parties.
+938,MTU,823,1009,night owl,social/party,low,4,"Love weekend drinks, music, cooking together, and having friends over."
+939,UCC,797,975,early bird,homebody,moderate,5,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+940,UCC,632,815,early bird,balanced,high,2,"Happy to cook together and watch a film, but I need sleep before lectures."
+941,UCC,550,671,night owl,balanced,moderate,1,"Balanced: some nights out, some nights in."
+942,MTU,701,931,early bird,homebody,high,3,I study for hospital rounds until 10 PM and keep things calm.
+943,MTU,816,1010,moderate,homebody,moderate,1,Homebody who loves baking and a good book on a rainy Cork night.
+944,MTU,629,843,night owl,balanced,low,2,"Balanced: some nights out, some nights in."
+945,MTU,662,835,early bird,social/party,high,4,"Sociable and loud-ish, my door is always open to friends."
+946,UCC,750,886,early bird,homebody,moderate,4,Homebody who loves baking and a good book on a rainy Cork night.
+947,MTU,752,874,early bird,homebody,moderate,3,I study for hospital rounds until 10 PM and keep things calm.
+948,MTU,734,979,early bird,homebody,low,2,I study for hospital rounds until 10 PM and keep things calm.
+949,MTU,733,843,moderate,balanced,high,3,"Balanced: some nights out, some nights in."
+950,MTU,828,985,early bird,social/party,low,2,"Big on gigs, society events and late-night chats in the kitchen."
+951,MTU,777,908,night owl,balanced,high,3,"Balanced: some nights out, some nights in."
+952,UCC,701,808,early bird,homebody,moderate,4,"I prefer quiet study evenings, tea, and early nights."
+953,MTU,831,1079,moderate,social/party,high,4,"Big on gigs, society events and late-night chats in the kitchen."
+954,MTU,801,931,moderate,social/party,high,5,"Love weekend drinks, music, cooking together, and having friends over."
+955,UCC,533,670,moderate,balanced,moderate,2,"Gym in the morning, coffee with friends, chill evenings."
+956,MTU,477,669,moderate,homebody,high,3,"I prefer quiet study evenings, tea, and early nights."
+957,UCC,599,830,early bird,balanced,high,2,Social at weekends but strict quiet study hours on weekdays.
+958,UCC,835,1074,moderate,social/party,moderate,3,"Big on gigs, society events and late-night chats in the kitchen."
+959,MTU,807,931,night owl,social/party,high,3,Always up for a night out on Oliver Plunkett Street and house parties.
+960,MTU,520,715,moderate,homebody,moderate,3,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+961,UCC,561,789,early bird,homebody,low,5,"I prefer quiet study evenings, tea, and early nights."
+962,UCC,685,814,early bird,balanced,low,4,"Gym in the morning, coffee with friends, chill evenings."
+963,MTU,803,938,moderate,balanced,high,5,"Gym in the morning, coffee with friends, chill evenings."
+964,MTU,813,920,night owl,homebody,low,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+965,UCC,522,700,early bird,social/party,low,2,"Love weekend drinks, music, cooking together, and having friends over."
+966,UCC,803,922,early bird,balanced,moderate,4,Social at weekends but strict quiet study hours on weekdays.
+967,UCC,505,736,night owl,homebody,low,4,"I prefer quiet study evenings, tea, and early nights."
+968,UCC,472,649,night owl,balanced,low,1,Social at weekends but strict quiet study hours on weekdays.
+969,UCC,555,702,night owl,social/party,moderate,1,"Love weekend drinks, music, cooking together, and having friends over."
+970,MTU,832,1080,moderate,homebody,moderate,2,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+971,UCC,741,866,night owl,social/party,low,5,Always up for a night out on Oliver Plunkett Street and house parties.
+972,MTU,548,691,night owl,social/party,low,1,Always up for a night out on Oliver Plunkett Street and house parties.
+973,MTU,812,1005,night owl,social/party,high,2,"Sociable and loud-ish, my door is always open to friends."
+974,UCC,504,694,moderate,social/party,moderate,2,Always up for a night out on Oliver Plunkett Street and house parties.
+975,MTU,507,638,moderate,balanced,low,5,"Happy to cook together and watch a film, but I need sleep before lectures."
+976,MTU,840,1013,night owl,balanced,high,1,Social at weekends but strict quiet study hours on weekdays.
+977,UCC,702,900,moderate,balanced,moderate,5,"Gym in the morning, coffee with friends, chill evenings."
+978,UCC,677,918,moderate,social/party,moderate,4,Always up for a night out on Oliver Plunkett Street and house parties.
+979,MTU,693,838,early bird,homebody,high,4,"I prefer quiet study evenings, tea, and early nights."
+980,UCC,674,804,early bird,balanced,moderate,4,Social at weekends but strict quiet study hours on weekdays.
+981,UCC,536,729,early bird,social/party,moderate,2,"Sociable and loud-ish, my door is always open to friends."
+982,MTU,569,796,moderate,homebody,high,5,Homebody who loves baking and a good book on a rainy Cork night.
+983,MTU,654,875,night owl,social/party,high,4,"Sociable and loud-ish, my door is always open to friends."
+984,UCC,592,808,early bird,social/party,low,3,"Sociable and loud-ish, my door is always open to friends."
+985,UCC,568,675,early bird,balanced,high,1,Social at weekends but strict quiet study hours on weekdays.
+986,UCC,797,942,moderate,balanced,high,3,"Happy to cook together and watch a film, but I need sleep before lectures."
+987,UCC,768,887,night owl,balanced,high,4,"Balanced: some nights out, some nights in."
+988,MTU,600,825,night owl,homebody,moderate,5,Homebody who loves baking and a good book on a rainy Cork night.
+989,UCC,729,837,moderate,social/party,low,4,"Sociable and loud-ish, my door is always open to friends."
+990,MTU,642,859,early bird,balanced,low,2,"Gym in the morning, coffee with friends, chill evenings."
+991,MTU,534,744,early bird,social/party,moderate,4,"Sociable and loud-ish, my door is always open to friends."
+992,MTU,741,982,night owl,homebody,high,5,I study for hospital rounds until 10 PM and keep things calm.
+993,UCC,737,966,early bird,balanced,moderate,3,"Balanced: some nights out, some nights in."
+994,MTU,643,815,moderate,social/party,low,1,"Love weekend drinks, music, cooking together, and having friends over."
+995,MTU,637,886,early bird,homebody,high,3,I study for hospital rounds until 10 PM and keep things calm.
+996,MTU,669,860,moderate,homebody,moderate,1,Library regular. Quiet after 9pm and a tidy kitchen make me happy.
+997,MTU,570,691,night owl,homebody,low,3,"I prefer quiet study evenings, tea, and early nights."
+998,UCC,536,773,moderate,balanced,low,4,"Balanced: some nights out, some nights in."
+999,MTU,713,881,early bird,social/party,high,4,"Love weekend drinks, music, cooking together, and having friends over."
