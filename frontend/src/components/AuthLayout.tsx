@@ -21,10 +21,10 @@ export function AuthLayout({ title, description, children }: AuthLayoutProps) {
           <p className="text-[52px] font-semibold leading-[1.02] tracking-[-2px]">
             Find your people.
             <br />
-            <span className="text-[#888780]">Then your place.</span>
+            <span className="text-[#888780]">& your place.</span>
           </p>
           <p className="max-w-[380px] pt-5 text-[15px] leading-[23px] text-[#b4b2a9]">
-            Match with roommates who live the way you do, then pick a home
+            Match with roommates who live the way you do, and pick a home
             together.
           </p>
         </div>
