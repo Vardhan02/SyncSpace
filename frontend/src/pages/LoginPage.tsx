@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { z } from "zod"
 
@@ -8,6 +8,7 @@ import { AuthLayout } from "@/components/AuthLayout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useAuthStore } from "@/stores/authStore"
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email("Enter a valid email"),
@@ -17,6 +18,8 @@ const loginSchema = z.object({
 type LoginValues = z.infer<typeof loginSchema>
 
 export function LoginPage() {
+  const navigate = useNavigate()
+  const login = useAuthStore((state) => state.login)
   const {
     register,
     handleSubmit,
@@ -29,8 +32,15 @@ export function LoginPage() {
     },
   })
 
-  function onSubmit(_values: LoginValues) {
-    toast.success("Logged in")
+  function onSubmit(values: LoginValues) {
+    const user = login(values.email, values.password)
+    if (!user) {
+      toast.error("That email and password don't match. Try again.")
+      return
+    }
+
+    toast.success(`Welcome back, ${user.name.split(" ")[0]}`)
+    navigate(user.role === "tenant" ? "/houses" : "/landlord", { replace: true })
   }
 
   return (

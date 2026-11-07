@@ -1,0 +1,16 @@
+[
+  {
+    "id": "u-1",
+    "name": "Dhruvil Shiroiya",
+    "email": "tenant@syncscape.test",
+    "password": "password123",
+    "role": "tenant"
+  },
+  {
+    "id": "u-2",
+    "name": "Mary Walsh",
+    "email": "landlord@syncscape.test",
+    "password": "password123",
+    "role": "landlord"
+  }
+]
