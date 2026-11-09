@@ -2,7 +2,7 @@
 
 SyncScape is a roommate matcher. People swipe on potential roommates based on lifestyle and personality, and when two people like each other they become a group. The group then browses house listings together and likes homes as one. Property owners see which groups liked their listing and can accept them.
 
-This folder is the web frontend (React + TypeScript + Vite). The backend lives in the same repository on the backend branches, and the frontend needs it running for login, listings and matches to work for real. Until then, the forms validate input and show a confirmation, but nothing is saved.
+This folder is the web frontend (React + TypeScript + Vite). The backend lives in the same repository on the backend branches. Until it's connected, the frontend runs on mock data in `src/mocks/`.
 
 ## What's built so far
 
@@ -11,8 +11,19 @@ This folder is the web frontend (React + TypeScript + Vite). The backend lives i
 | `/login` (also `/`) | Log in |
 | `/signup` | Create an account (name, email, password) |
 | `/forgot-password` | Request a password reset link |
+| `/houses` | Tenant: ranked grid of Cork listings, like individual houses |
+| `/roommate`, `/matches`, `/profile` | Tenant: placeholders for now |
+| `/landlord` | Landlord: placeholder for now |
 
-Any other URL redirects to `/login`.
+Tenant and landlord pages need you to be logged in; any other URL redirects to `/login`.
+
+## Mock data and demo login
+
+- `src/mocks/users.json` has one demo tenant and one demo landlord. Log in with either email and password from that file.
+- `src/mocks/houses.json` has the house listings shown on `/houses`.
+- Login state and liked houses are kept in the browser's local storage, so they survive a page refresh. Log out from the header to switch accounts.
+
+When the backend is ready, swap the mock imports for real API calls in `src/services/`.
 
 The auth pages are responsive: full-screen form on phones, a centered card on tablets, and a split screen with a brand panel on desktop.
 
