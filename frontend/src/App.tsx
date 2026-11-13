@@ -7,6 +7,7 @@ import { ComingSoonPage } from "@/pages/ComingSoonPage"
 import { ForgotPasswordPage } from "@/pages/ForgotPasswordPage"
 import { HousesPage } from "@/pages/HousesPage"
 import { LoginPage } from "@/pages/LoginPage"
+import { RoomateMatchPage } from "@/pages/RoomateMatchPage"
 import { SignupPage } from "@/pages/SignupPage"
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
         <Route element={<RequireAuth role="tenant" />}>
           <Route element={<TenantLayout />}>
             <Route path="/houses" element={<HousesPage />} />
-            <Route path="/roommate" element={<ComingSoonPage title="Roommate" />} />
+            <Route path="/roommate" element={<RoomateMatchPage />} />
             <Route path="/matches" element={<ComingSoonPage title="Matches" />} />
             <Route path="/profile" element={<ComingSoonPage title="Profile" />} />
           </Route>
