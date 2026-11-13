@@ -32,7 +32,7 @@ export function TenantLayout() {
     <div className="min-h-dvh bg-white">
       <header className="sticky top-0 z-10 border-b border-border bg-white">
         <div className="mx-auto grid max-w-300 grid-cols-[1fr_auto] items-center gap-x-6 px-5 py-3 md:grid-cols-[1fr_auto_1fr] md:px-8">
-          <Link to="/houses" aria-label="syncscape home" className="justify-self-start">
+          <Link to="/houses" aria-label="syncspace home" className="justify-self-start">
             <Logo className="text-foreground" />
           </Link>
 

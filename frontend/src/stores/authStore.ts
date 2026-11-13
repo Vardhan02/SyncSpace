@@ -33,6 +33,6 @@ export const useAuthStore = create<AuthState>()(
       },
       logout: () => set({ user: null }),
     }),
-    { name: "syncscape-auth" }
+    { name: "syncspace-auth" }
   )
 )
