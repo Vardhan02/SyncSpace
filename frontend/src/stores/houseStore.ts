@@ -17,6 +17,6 @@ export const useHouseStore = create<HouseState>()(
             : [...state.likedIds, houseId],
         })),
     }),
-    { name: "syncscape-houses" }
+    { name: "syncspace-houses" }
   )
 )
