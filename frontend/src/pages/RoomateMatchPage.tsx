@@ -26,7 +26,6 @@ import type { Roommate } from "@/types"
 const SWIPE_THRESHOLD = 100 // px needed to trigger dismiss
 const VELOCITY_THRESHOLD = 0.6 // px/ms — fast flick auto-dismisses
 const DISMISS_DISTANCE = 1.5 // multiplier — card flies off-screen
-const SPRING_DURATION = 300 // ms — snap-back animation
 const FLY_DURATION = 350 // ms — fly-out animation
 const MAX_ROTATION = 12 // degrees at full drag
 
@@ -98,7 +97,7 @@ function useSwipe(onDismiss: (dir: "left" | "right") => void): SwipeResult {
   }, [])
 
   const onPointerUp = useCallback(
-    (e: React.PointerEvent) => {
+    (_e: React.PointerEvent) => {
       if (!dragging.current) return
       dragging.current = false
       setIsDragging(false)
