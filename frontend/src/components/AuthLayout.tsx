@@ -26,7 +26,7 @@ export function AuthLayout({ title, description, children }: AuthLayoutProps) {
           </p>
         </div>
 
-        <p className="text-[13px] text-[#888780]">© 2026 SyncScape</p>
+        <p className="text-[13px] text-[#888780]">© 2026 SyncSpace</p>
       </aside>
 
       <main className="flex flex-1 md:items-center md:justify-center md:p-6">

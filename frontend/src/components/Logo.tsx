@@ -24,7 +24,7 @@ export function Logo({ className, markClassName, showWordmark = true }: LogoProp
         />
       </svg>
       {showWordmark ? (
-        <span className="text-[18px] font-semibold tracking-[-0.5px]">syncscape</span>
+        <span className="text-[18px] font-semibold tracking-[-0.5px]">syncspace</span>
       ) : null}
     </span>
   )

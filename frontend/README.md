@@ -1,6 +1,6 @@
-# SyncScape — Frontend
+# SyncSpace — Frontend
 
-SyncScape is a roommate matcher. People swipe on potential roommates based on lifestyle and personality, and when two people like each other they become a group. The group then browses house listings together and likes homes as one. Property owners see which groups liked their listing and can accept them.
+SyncSpace is a roommate matcher. People swipe on potential roommates based on lifestyle and personality, and when two people like each other they become a group. The group then browses house listings together and likes homes as one. Property owners see which groups liked their listing and can accept them.
 
 This folder is the web frontend (React + TypeScript + Vite). The backend lives in the same repository on the backend branches. Until it's connected, the frontend runs on mock data in `src/mocks/`.
 
