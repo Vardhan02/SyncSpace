@@ -20,6 +20,8 @@ export type House = {
   photos: number
   verified: boolean
   amenities: string[]
+  description: string
+  rules: string[]
   likedByMatches: string[]
 }
 

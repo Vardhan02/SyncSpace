@@ -5,13 +5,11 @@ import { toast } from "sonner"
 import { HouseCard } from "@/components/HouseCard"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
-import houses from "@/mocks/houses.json"
+import { getHouses } from "@/services/houseService"
 import { useHouseStore } from "@/stores/houseStore"
 import type { House } from "@/types"
 
-const rankedHouses = (houses as House[]).toSorted(
-  (a, b) => b.matchScore - a.matchScore
-)
+const rankedHouses = getHouses()
 
 export function HousesPage() {
   const [query, setQuery] = useState("")
