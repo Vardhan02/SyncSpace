@@ -25,6 +25,49 @@ export type House = {
   likedByMatches: string[]
 }
 
+export type PromptAnswer = {
+  prompt: string
+  answer: string
+}
+
+export type TenantPreferences = {
+  budgetMin: number
+  budgetMax: number
+  areas: string[]
+  roomTypes: string[]
+  moveIn: string
+  leaseLength: string
+  housemates: string
+  sleepSchedule: string
+  cleanliness: string
+  noiseTolerance: string
+  studyPattern: string
+  socialStyle: string
+  guests: string
+  smoking: string
+  pets: string
+  interests: string[]
+  prompts: PromptAnswer[]
+}
+
+export type ListingDraft = {
+  title: string
+  area: string
+  address: string
+  rent: number
+  roomType: string
+  rooms: number
+  availableFrom: string
+  description: string
+  amenities: string[]
+  petPolicy: string
+  smokingPolicy: string
+  guestPolicy: string
+  quietHours: string
+  otherRules: string
+  photoCount: number
+}
+
 export type Roommate = {
   id: string
   name: string
