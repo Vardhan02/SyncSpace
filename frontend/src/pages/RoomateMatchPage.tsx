@@ -263,29 +263,29 @@ function RoommateCard({
 
         <div
           className={cn(
-            "absolute inset-0 z-20 flex flex-col overflow-y-auto rounded-[20px] bg-white transition-all duration-300 ease-out",
+            "absolute inset-0 z-20 flex flex-col overflow-y-auto rounded-[20px] bg-black/60 backdrop-blur-xl transition-all duration-300 ease-out",
             expanded
               ? "pointer-events-auto translate-y-0 opacity-100"
               : "pointer-events-none translate-y-full opacity-0"
           )}
           onPointerDown={(e) => e.stopPropagation()}
         >
-          <div className="sticky top-0 z-10 flex items-center gap-3 border-b border-border bg-white px-5 py-4 sm:px-6 md:px-8">
-            <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-secondary text-[16px] font-semibold text-foreground">
+          <div className="sticky top-0 z-10 flex items-center gap-3 border-b border-white/15 bg-black/40 px-5 py-4 backdrop-blur-sm sm:px-6 md:px-8">
+            <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white/15 text-[16px] font-semibold text-white">
               {initials}
             </div>
             <div className="min-w-0 flex-1">
-              <h3 className="text-[17px] font-semibold text-foreground">
+              <h3 className="text-[17px] font-semibold text-white">
                 {roommate.name}, {roommate.age}
               </h3>
-              <p className="text-[13px] text-muted-foreground">
+              <p className="text-[13px] text-white/60">
                 {roommate.course} · {roommate.university}
               </p>
             </div>
             <button
               type="button"
               aria-label="Close details"
-              className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+              className="flex size-9 items-center justify-center rounded-full text-white/60 transition-colors hover:bg-white/15 hover:text-white"
               onClick={() => setExpanded(false)}
             >
               <ChevronDown className="size-5" />
@@ -294,16 +294,16 @@ function RoommateCard({
 
           <div className="flex flex-col gap-5 p-5 sm:p-6 md:p-8">
             <div>
-              <p className="text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
+              <p className="text-[11px] font-medium tracking-wide text-white/50 uppercase">
                 About
               </p>
-              <p className="mt-1.5 text-[14px] leading-relaxed text-foreground sm:text-[15px]">
+              <p className="mt-1.5 text-[14px] leading-relaxed text-white sm:text-[15px]">
                 {roommate.bio}
               </p>
             </div>
 
             <div>
-              <p className="text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
+              <p className="text-[11px] font-medium tracking-wide text-white/50 uppercase">
                 Details
               </p>
               <div className="mt-2 grid grid-cols-2 gap-3">
@@ -337,20 +337,20 @@ function RoommateCard({
             </div>
 
             <div>
-              <p className="text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
+              <p className="text-[11px] font-medium tracking-wide text-white/50 uppercase">
                 Interests
               </p>
               <div className="mt-2 flex flex-wrap gap-2">
                 {roommate.interests.map((interest) => (
                   <span
                     key={interest}
-                    className="rounded-full bg-secondary px-3 py-1 text-[12px] font-medium text-foreground sm:text-[13px]"
+                    className="rounded-full bg-white/15 px-3 py-1 text-[12px] font-medium text-white sm:text-[13px]"
                   >
                     {interest}
                   </span>
                 ))}
                 {roommate.pets ? (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-3 py-1 text-[12px] font-medium text-foreground sm:text-[13px]">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-3 py-1 text-[12px] font-medium text-white sm:text-[13px]">
                     <Cat className="size-3" aria-hidden="true" /> Has pets
                   </span>
                 ) : null}
@@ -373,11 +373,11 @@ function Detail({
   value: string
 }) {
   return (
-    <div className="flex items-center gap-2.5 rounded-[12px] border border-border bg-white px-3 py-2.5">
-      <span className="text-muted-foreground">{icon}</span>
+    <div className="flex items-center gap-2.5 rounded-[12px] border border-white/15 bg-white/10 px-3 py-2.5">
+      <span className="text-white/50">{icon}</span>
       <div className="min-w-0">
-        <p className="text-[11px] text-muted-foreground">{label}</p>
-        <p className="truncate text-[13px] font-medium text-foreground">{value}</p>
+        <p className="text-[11px] text-white/50">{label}</p>
+        <p className="truncate text-[13px] font-medium text-white">{value}</p>
       </div>
     </div>
   )
@@ -423,8 +423,8 @@ export function RoomateMatchPage() {
   }, [dismiss])
 
   return (
-    <div className="flex flex-col items-center gap-6">
-      <div className="w-full max-w-md text-center md:max-w-xl md:text-left">
+    <div className="flex h-[calc(100dvh-220px)] max-h-[720px] flex-col items-center gap-4 md:h-[calc(100dvh-165px)] md:max-h-[780px]">
+      <div className="w-full max-w-md shrink-0 text-center md:max-w-xl md:text-left">
         <h1 className="text-[26px] font-semibold tracking-[-0.5px] text-foreground md:text-[30px]">
           Find a roommate
         </h1>
@@ -437,7 +437,7 @@ export function RoomateMatchPage() {
 
       {remaining.length > 0 ? (
         <>
-          <div className="relative mx-auto h-[min(520px,72dvh)] w-full max-w-md select-none md:h-[620px] md:max-w-xl">
+          <div className="relative mx-auto w-full min-w-0 flex-1 max-w-md select-none md:max-w-xl">
             {nextCard ? (
               <RoommateCard roommate={nextCard} isTop={false} />
             ) : null}
@@ -453,7 +453,7 @@ export function RoomateMatchPage() {
             ) : null}
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex shrink-0 items-center gap-6 pb-1">
             <button
               type="button"
               aria-label="Dislike"
@@ -473,7 +473,7 @@ export function RoomateMatchPage() {
           </div>
         </>
       ) : (
-        <div className="flex w-full max-w-md flex-col items-center rounded-[20px] border border-dashed border-border px-6 py-20 text-center md:max-w-xl">
+        <div className="flex w-full max-w-md flex-1 flex-col items-center justify-center rounded-[20px] border border-dashed border-border px-6 text-center md:max-w-xl">
           <User className="size-10 text-muted-foreground" />
           <p className="mt-4 text-[16px] font-semibold text-foreground">
             No more roommates
