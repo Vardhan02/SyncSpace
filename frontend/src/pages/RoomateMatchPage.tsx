@@ -21,11 +21,15 @@ import roommates from "@/mocks/roommates.json"
 import { useRoommateStore } from "@/stores/roommateStore"
 import type { Roommate } from "@/types"
 
-const SWIPE_THRESHOLD = 100
-const VELOCITY_THRESHOLD = 0.6
-const DISMISS_DISTANCE = 1.5
-const FLY_DURATION = 350
-const MAX_ROTATION = 12
+/* ------------------------------------------------------------------ */
+/*  Constants                                                         */
+/* ------------------------------------------------------------------ */
+
+const SWIPE_THRESHOLD = 100 // px needed to trigger dismiss
+const VELOCITY_THRESHOLD = 0.6 // px/ms — fast flick auto-dismisses
+const DISMISS_DISTANCE = 1.5 // multiplier — card flies off-screen
+const FLY_DURATION = 350 // ms — fly-out animation
+const MAX_ROTATION = 12 // degrees at full drag
 
 const rankedRoommates = (roommates as Roommate[]).toSorted(
   (a, b) => b.matchScore - a.matchScore
@@ -79,7 +83,7 @@ function useSwipe(onDismiss: (dir: "left" | "right") => void): SwipeResult {
     startTime.current = Date.now()
     currentOffset.current = 0
     setIsDragging(true)
-    ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
+      ; (e.target as HTMLElement).setPointerCapture(e.pointerId)
   }, [])
 
   const onPointerMove = useCallback((e: React.PointerEvent) => {
@@ -90,7 +94,7 @@ function useSwipe(onDismiss: (dir: "left" | "right") => void): SwipeResult {
   }, [])
 
   const onPointerUp = useCallback(
-    (e: React.PointerEvent) => {
+    (_e: React.PointerEvent) => {
       if (!dragging.current) return
       dragging.current = false
       setIsDragging(false)
