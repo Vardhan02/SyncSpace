@@ -1,6 +1,8 @@
-import { BadgeCheck, Heart, House as HouseIcon, MapPin, Share2 } from "lucide-react"
+import { BadgeCheck, Heart, House as HouseIcon, MapPin } from "lucide-react"
+import { Link } from "react-router-dom"
 
-import { cn } from "@/lib/utils"
+import { HouseActions } from "@/components/HouseActions"
+import { formatDate, formatMatchLikes } from "@/lib/format"
 import type { House } from "@/types"
 
 type HouseCardProps = {
@@ -10,21 +12,17 @@ type HouseCardProps = {
   onShare: () => void
 }
 
-function formatMatches(names: string[]) {
-  if (names.length === 1) return `Liked by ${names[0]} from your matches`
-  return `Liked by ${names[0]} and ${names.length - 1} more of your matches`
-}
-
 export function HouseCard({ house, liked, onToggleLike, onShare }: HouseCardProps) {
   const extraPhotos = house.photos - 3
-  const availableFrom = new Date(house.availableFrom).toLocaleDateString("en-IE", {
-    day: "numeric",
-    month: "short",
-  })
+  const detailPath = `/houses/${house.id}`
 
   return (
     <article className="flex flex-col gap-3">
-      <div className="relative grid h-55 grid-cols-3 grid-rows-2 gap-1.5 overflow-hidden rounded-[16px] lg:h-75">
+      <Link
+        to={detailPath}
+        aria-label={`View ${house.title}`}
+        className="relative grid h-55 grid-cols-3 grid-rows-2 gap-1.5 overflow-hidden rounded-[16px] transition-opacity hover:opacity-90 lg:h-75"
+      >
         <div className="col-span-2 row-span-2 flex items-center justify-center bg-[#e7e5de]">
           <HouseIcon className="size-8 text-[#b4b2a9]" aria-hidden="true" />
         </div>
@@ -36,12 +34,14 @@ export function HouseCard({ house, liked, onToggleLike, onShare }: HouseCardProp
             </span>
           ) : null}
         </div>
-      </div>
+      </Link>
 
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 flex-col">
           <h2 className="flex items-center gap-1.5 text-[16px] font-semibold text-foreground">
-            <span className="truncate">{house.title}</span>
+            <Link to={detailPath} className="truncate hover:underline">
+              {house.title}
+            </Link>
             {house.verified ? (
               <BadgeCheck
                 className="size-4 shrink-0 text-foreground"
@@ -55,40 +55,24 @@ export function HouseCard({ house, liked, onToggleLike, onShare }: HouseCardProp
           </p>
         </div>
 
-        <div className="-mt-1.5 -mr-2 flex shrink-0 items-center">
-          <button
-            type="button"
-            aria-label={liked ? "Unlike house" : "Like house"}
-            aria-pressed={liked}
-            className={cn(
-              "flex size-9 items-center justify-center rounded-full transition-colors hover:bg-secondary",
-              liked ? "text-red-500" : "text-foreground"
-            )}
-            onClick={onToggleLike}
-          >
-            <Heart className={cn("size-5", liked && "fill-current")} aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            aria-label="Share house"
-            className="flex size-9 items-center justify-center rounded-full text-foreground transition-colors hover:bg-secondary"
-            onClick={onShare}
-          >
-            <Share2 className="size-5" aria-hidden="true" />
-          </button>
-        </div>
+        <HouseActions
+          liked={liked}
+          onToggleLike={onToggleLike}
+          onShare={onShare}
+          className="-mt-1.5 -mr-2"
+        />
       </div>
 
       <p className="text-[13px] text-muted-foreground">
         <span className="font-semibold text-foreground">€{house.rent}</span> per month ·{" "}
         {house.roomType} · {house.rooms} {house.rooms === 1 ? "room" : "rooms"} free · from{" "}
-        {availableFrom}
+        {formatDate(house.availableFrom)}
       </p>
 
       {house.likedByMatches.length > 0 ? (
         <p className="flex items-center gap-1.5 text-[13px] text-foreground">
           <Heart className="size-3.5 fill-red-500 text-red-500" aria-hidden="true" />
-          {formatMatches(house.likedByMatches)}
+          {formatMatchLikes(house.likedByMatches)}
         </p>
       ) : null}
     </article>

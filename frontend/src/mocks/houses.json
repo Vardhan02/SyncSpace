@@ -11,8 +11,23 @@
     "matchScore": 94,
     "photos": 7,
     "verified": true,
-    "amenities": ["WiFi", "Washing machine", "Study desk"],
-    "likedByMatches": ["Aanya"]
+    "amenities": [
+      "WiFi",
+      "Washing machine",
+      "Study desk",
+      "Bills included",
+      "Central heating"
+    ],
+    "description": "Three-bed semi-d a five-minute walk from UCC's main gate. Big south-facing living room, a newly fitted kitchen and two double rooms free.",
+    "rules": [
+      "No smoking",
+      "No pets",
+      "Guests welcome on weekends",
+      "Quiet after 11pm"
+    ],
+    "likedByMatches": [
+      "Aanya"
+    ]
   },
   {
     "id": "h-102",
@@ -26,7 +41,20 @@
     "matchScore": 91,
     "photos": 5,
     "verified": true,
-    "amenities": ["WiFi", "En-suite", "Kitchen access"],
+    "amenities": [
+      "WiFi",
+      "En-suite",
+      "Kitchen access",
+      "Lift",
+      "Bike storage"
+    ],
+    "description": "One-bed en-suite in a modern block on the Lee. Shared kitchen and living area with one other tenant, bike shed out the back.",
+    "rules": [
+      "No smoking",
+      "Pets allowed",
+      "Guests welcome",
+      "Quiet after 10pm"
+    ],
     "likedByMatches": []
   },
   {
@@ -41,8 +69,24 @@
     "matchScore": 88,
     "photos": 4,
     "verified": false,
-    "amenities": ["Garden", "Parking", "Washing machine"],
-    "likedByMatches": ["Aanya", "Rohan"]
+    "amenities": [
+      "Garden",
+      "Parking",
+      "Washing machine",
+      "Dryer",
+      "Central heating"
+    ],
+    "description": "Family home in a quiet estate with a long back garden. Three single rooms, a 10-minute bus ride to MTU and close to Wilton shopping centre.",
+    "rules": [
+      "No smoking indoors",
+      "Small pets OK",
+      "Guests on weekends",
+      "Quiet after 11pm"
+    ],
+    "likedByMatches": [
+      "Aanya",
+      "Rohan"
+    ]
   },
   {
     "id": "h-104",
@@ -56,7 +100,19 @@
     "matchScore": 84,
     "photos": 6,
     "verified": true,
-    "amenities": ["WiFi", "Double bed", "Bike storage"],
+    "amenities": [
+      "WiFi",
+      "Double bed",
+      "Bike storage",
+      "Central heating"
+    ],
+    "description": "Bright double room on the second floor above a café, right in the middle of town. Everything is within walking distance.",
+    "rules": [
+      "No smoking",
+      "No pets",
+      "Guests welcome",
+      "No quiet hours"
+    ],
     "likedByMatches": []
   },
   {
@@ -71,8 +127,23 @@
     "matchScore": 81,
     "photos": 8,
     "verified": true,
-    "amenities": ["Parking", "Dishwasher", "Study desk"],
-    "likedByMatches": ["Rohan"]
+    "amenities": [
+      "Parking",
+      "Dishwasher",
+      "Study desk",
+      "Bills included",
+      "Dryer"
+    ],
+    "description": "Two-storey duplex near Douglas village with its own parking space. Two double rooms free in a house of four.",
+    "rules": [
+      "No smoking",
+      "No pets",
+      "Guests welcome",
+      "Quiet after 11pm"
+    ],
+    "likedByMatches": [
+      "Rohan"
+    ]
   },
   {
     "id": "h-106",
@@ -86,7 +157,18 @@
     "matchScore": 77,
     "photos": 3,
     "verified": false,
-    "amenities": ["WiFi", "Kitchen access"],
+    "amenities": [
+      "WiFi",
+      "Kitchen access",
+      "Washing machine"
+    ],
+    "description": "Small terraced house beside the Lough. Single room with a desk, shared kitchen and a sunny yard.",
+    "rules": [
+      "No smoking",
+      "Pets allowed",
+      "Guests on weekends",
+      "Quiet after 10pm"
+    ],
     "likedByMatches": []
   },
   {
@@ -101,7 +183,20 @@
     "matchScore": 73,
     "photos": 5,
     "verified": true,
-    "amenities": ["En-suite", "Balcony", "Washing machine"],
+    "amenities": [
+      "En-suite",
+      "Balcony",
+      "Washing machine",
+      "Lift",
+      "Central heating"
+    ],
+    "description": "Two-bed apartment on Blackrock Road with a balcony looking out toward the harbour. The en-suite room comes furnished.",
+    "rules": [
+      "No smoking",
+      "No pets",
+      "Guests welcome",
+      "Quiet after 11pm"
+    ],
     "likedByMatches": []
   },
   {
@@ -116,7 +211,20 @@
     "matchScore": 69,
     "photos": 4,
     "verified": false,
-    "amenities": ["WiFi", "Study desk", "Bike storage"],
+    "amenities": [
+      "WiFi",
+      "Study desk",
+      "Bike storage",
+      "Dryer",
+      "Central heating"
+    ],
+    "description": "Classic student house in Wilton, four single rooms free from January. Close to the bus stop for UCC and MTU.",
+    "rules": [
+      "Smoking outside only",
+      "No pets",
+      "Guests welcome",
+      "No quiet hours"
+    ],
     "likedByMatches": []
   }
 ]

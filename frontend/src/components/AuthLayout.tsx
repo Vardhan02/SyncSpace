@@ -20,7 +20,7 @@ export function AuthLayout({ title, description, children }: AuthLayoutProps) {
             <br />
             <span className="text-[#888780]">& your place.</span>
           </p>
-          <p className="max-w-95 pt-5 text-[15px] leading-[23px] text-[#b4b2a9]">
+          <p className="max-w-95 pt-5 text-[15px] leading-5.75 text-[#b4b2a9]">
             Match with roommates who live the way you do, and pick a home
             together.
           </p>
@@ -38,7 +38,7 @@ export function AuthLayout({ title, description, children }: AuthLayoutProps) {
               <h1 className="text-[26px] font-semibold tracking-[-0.5px] text-foreground lg:text-[30px]">
                 {title}
               </h1>
-              <p className="pt-1.5 text-[14px] leading-[21px] text-muted-foreground">
+              <p className="pt-1.5 text-[14px] leading-5.25 text-muted-foreground">
                 {description}
               </p>
             </div>

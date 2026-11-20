@@ -5,8 +5,10 @@ import { RequireAuth } from "@/components/RequireAuth"
 import { TenantLayout } from "@/components/TenantLayout"
 import { ComingSoonPage } from "@/pages/ComingSoonPage"
 import { ForgotPasswordPage } from "@/pages/ForgotPasswordPage"
+import { HouseDetailPage } from "@/pages/HouseDetailPage"
 import { HousesPage } from "@/pages/HousesPage"
 import { LoginPage } from "@/pages/LoginPage"
+import { OnboardingPage } from "@/pages/OnboardingPage"
 import { RoomateMatchPage } from "@/pages/RoomateMatchPage"
 import { SignupPage } from "@/pages/SignupPage"
 
@@ -19,9 +21,14 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
+        <Route element={<RequireAuth />}>
+          <Route path="/onboarding" element={<OnboardingPage />} />
+        </Route>
+
         <Route element={<RequireAuth role="tenant" />}>
           <Route element={<TenantLayout />}>
             <Route path="/houses" element={<HousesPage />} />
+            <Route path="/houses/:houseId" element={<HouseDetailPage />} />
             <Route path="/roommate" element={<RoomateMatchPage />} />
             <Route path="/matches" element={<ComingSoonPage title="Matches" />} />
             <Route path="/profile" element={<ComingSoonPage title="Profile" />} />
