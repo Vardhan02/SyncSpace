@@ -8,6 +8,7 @@ import { ForgotPasswordPage } from "@/pages/ForgotPasswordPage"
 import { HouseDetailPage } from "@/pages/HouseDetailPage"
 import { HousesPage } from "@/pages/HousesPage"
 import { LoginPage } from "@/pages/LoginPage"
+import { OnboardingPage } from "@/pages/OnboardingPage"
 import { RoomateMatchPage } from "@/pages/RoomateMatchPage"
 import { SignupPage } from "@/pages/SignupPage"
 
@@ -19,6 +20,10 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
+        <Route element={<RequireAuth />}>
+          <Route path="/onboarding" element={<OnboardingPage />} />
+        </Route>
 
         <Route element={<RequireAuth role="tenant" />}>
           <Route element={<TenantLayout />}>
