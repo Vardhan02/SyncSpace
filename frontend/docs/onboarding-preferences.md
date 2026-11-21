@@ -1,57 +1,72 @@
 # Onboarding preferences
 
 What we ask a user the first time they log in, before they can use the app.
-Tenants and landlords get different forms. This expands Step 3 of `project_flow`.
+Tenants and landlords get different forms. This expands Step 3 of `project_flow`,
+and every field maps to a column in the Supabase schema (shown in the **Column** column).
 
 ## Flow
 
 1. User signs up, then logs in.
 2. If onboarding isn't finished, they're sent to `/onboarding` instead of the dashboard.
-   - Tenant → `/onboarding` (3 steps) → `/houses`
-   - Landlord → `/onboarding` (4 steps) → `/landlord`
+   - Tenant → `/onboarding` (4 steps) → `/houses`
+   - Landlord → `/onboarding` (5 steps) → `/landlord`
 3. Answers are saved as a draft as they go, so closing the tab doesn't lose anything.
-   Landlord photos are the exception: they're only kept in memory until there's a backend to upload to.
-4. Dashboard routes stay locked until every required step is done.
+   Photos are the exception: they're only kept in memory until uploads to Supabase storage are wired up.
+4. Dashboard routes stay locked until every required step is done (`tenants.onboarding_complete` / `profiles.first_login`).
 5. Answers can be edited later from **Profile**.
 
-Every step shows a progress bar (`Step 2 of 3`), a **Back** button and a **Next** button.
+Every step shows a progress bar (`Step 2 of 4`), a **Back** button and a **Next** button.
 **Next** is disabled until the required fields on that step are filled in.
 
 ---
 
-## Tenant (3 steps)
+## Tenant (4 steps)
 
-### Step 1 — Accommodation
+### Step 1 — About you → `tenants`
 
-| Field | Input | Options / rules | Required |
+All required. The columns allow nulls, but the roommate card needs every one of these.
+
+| Field | Input | Column |
+|---|---|---|
+| Profile photo | 1 photo, JPG/PNG, max 5 MB | `photo_url` |
+| Age | Number, 16–100 | `age` |
+| University or college | Text | `university` |
+| Course | Text | `course` |
+| Bio | Textarea, max 300 characters | `bio` |
+
+### Step 2 — Accommodation → `tenant_house_preferences`
+
+| Field | Input | Stored as | Column |
 |---|---|---|---|
-| Budget | Range slider (min–max) + number boxes | €300 – €1,500 per month, steps of €1 | Yes |
-| Preferred areas | Multi-select chips | Bishopstown, Blackrock, College Road, Douglas, Shandon, The Lough, Victoria Cross, Wilton | Yes, at least 1 |
-| Room type | Multi-select chips | Single room, Double room, En-suite | Yes, at least 1 |
-| Move-in date | Date picker | Today or later | Yes |
-| Lease length | Single select | Semester (4–5 months), Academic year (9 months), 12 months, Flexible | Yes |
-| Housemates | Single select | 1, 2, 3, 4+ | Yes |
+| Budget | Range slider + number boxes, €300–€1,500 | numbers | `budget_min`, `budget_max` |
+| Preferred areas | Multi-select chips (Cork areas), at least 1 | text array | `preferred_areas` |
+| Room type | Single select | `single`, `double`, `ensuite` | `room_type` |
+| Move-in date | Date picker, today or later | `YYYY-MM-DD` | `move_in_date` |
+| Lease length | Single select | 3, 5, 9, 12 (months) | `lease_months` |
+| Most housemates | Single select | 1–5 | `max_housemates` |
 
-### Step 2 — Lifestyle
+### Step 3 — Lifestyle → `tenant_lifestyle_preferences`, `tenant_interests`
 
-| Field | Input | Options | Required |
+| Field | Input | Stored as | Column |
 |---|---|---|---|
-| Sleep schedule | Single select | Early bird, Night owl | Yes |
-| Cleanliness | Single select | Very tidy, Tidy, Average | Yes |
-| Noise tolerance | Single select | I need quiet, Some noise is fine, Doesn't bother me | Yes |
-| Work / study pattern | Single select | Mostly on campus, Mostly at home, Mix of both, Night shifts | Yes |
-| Social style | Single select | Homebody, In between, Very social | Yes |
-| Guests | Single select | Rarely, Weekends, Often | Yes |
-| Smoking | Single select | Non-smoker, Smoke outside only, Smoker | Yes |
-| Pets | Single select | No pets, I have a pet, Fine with pets | Yes |
-| Interests | Multi-select chips + "add your own" | Cooking, Hiking, Gym, Reading, Gaming, Music, Coffee, Board games, Sports, Movies | No, max 6 |
+| Sleep schedule | Single select | `early_bird`, `night_owl` | `sleep_schedule` |
+| Noise | Scale 1–5 | 1–5 | `noise_tolerance` |
+| Cleanliness | Single select | `very_tidy`, `tidy`, `relaxed` | `cleanliness` |
+| Work / study | Single select | `on_campus`, `from_home`, `mixed`, `night_shifts` | `work_schedule` |
+| Social style | Single select | `homebody`, `balanced`, `social` | `social_level` |
+| Guests | Single select | `rarely`, `weekends`, `often` | `guest_frequency` |
+| Do you smoke? | Yes / No | boolean | `smoker` |
+| OK living with a smoker? | Yes / No | boolean | `ok_with_smoking` |
+| Do you have a pet? | Yes / No | boolean | `has_pets` |
+| OK living with pets? | Yes / No | boolean | `ok_with_pets` |
+| Interests | Chips + "add your own", at least 1, max 6 | one row each | `tenant_interests.interest` |
 
-### Step 3 — Personality prompts
+### Step 4 — Personality prompts → `tenant_prompt_answers`
 
-Pick **3** prompts from the list below and answer each one (max 150 characters).
-These show up on the tenant's roommate card.
+Pick **3** prompts and answer each one (max 150 characters). Saved as one row per answer:
+`slot` is 1–3 in the order picked, `prompt_id` is the number below. Seed the `prompts` table with these ids.
 
-| # | Prompt |
+| prompt_id | text |
 |---|---|
 | 1 | My ideal Friday night is… |
 | 2 | The one house rule I'd never break… |
@@ -64,66 +79,73 @@ These show up on the tenant's roommate card.
 | 9 | My go-to way to sort out a disagreement… |
 | 10 | Something I'm weirdly good at… |
 
-> The prompts are a suggestion. `project_flow` still has them as TBD, so the team needs to agree on them.
-
 ---
 
-## Landlord (4 steps)
+## Landlord (5 steps)
 
-A landlord needs at least one listing before they can use the dashboard, so their onboarding is creating that first listing.
+A landlord needs at least one listing before they can use the dashboard, so most of their onboarding is creating that first listing.
 
-### Step 1 — Property details
+### Step 1 — About you → `landlords`, `landlord_preferences`
 
-| Field | Input | Options / rules | Required |
+| Field | Input | Stored as | Column |
 |---|---|---|---|
-| Listing title | Text | Max 60 characters, e.g. "Bright double near UCC" | Yes |
-| Area | Single select | Same Cork area list as the tenant form | Yes |
-| Address | Text | — | Yes |
-| Rent | Slider + number box (€/month) | €300 – €3,000, steps of €1 | Yes |
-| Room type | Single select | Single room, Double room, En-suite | Yes |
-| Rooms available | Slider + number box | 1 – 10 | Yes |
-| Available from | Date picker | Today or later | Yes |
-| Description | Textarea | Max 500 characters | Yes |
+| Profile photo | 1 photo, optional | — | `landlords.photo_url` |
+| Who would you like to rent to? | Single select, default Anyone | `any`, `student`, `professional` | `preferred_tenants` |
+| Shortest lease you'll accept | Single select, default No minimum | 1, 3, 5, 9, 12 (months) | `min_lease_months` |
+| Do tenants need references? | Yes / No, default No | boolean | `references_required` |
 
-### Step 2 — Amenities
+### Step 2 — Property details → `houses`
 
-Checkboxes. Each ticked amenity gets checked against the photos by the VLM pipeline later.
+| Field | Input | Column |
+|---|---|---|
+| Listing title | Text, max 60 | `title` |
+| Area | Single select (Cork areas) | `area` |
+| Address | Text | `address` |
+| Rent | Slider + number box, €300–€3,000 | `rent` |
+| Rooms available | Slider + number box, 1–10 | `rooms_available` |
+| Room type | `single`, `double`, `ensuite` | `room_type` |
+| Available from | Date picker | `available_from` |
+| Description | Textarea, max 500 | ⚠️ no column yet, see open questions |
+
+### Step 3 — Amenities → `house_amenities`
+
+Chips, at least 1. Each one is a row linking to the `amenities` table by name; `vlm_verified` is filled in later by the VLM pipeline.
 
 WiFi, Bills included, Central heating, Kitchen access, Washing machine, Dryer, Dishwasher,
 Study desk, Double bed, En-suite, Garden, Balcony, Parking, Bike storage, Lift
 
-At least 1 required.
+### Step 4 — House rules → `house_preferences`
 
-### Step 3 — House rules
-
-| Field | Input | Options | Required |
+| Field | Input | Stored as | Column |
 |---|---|---|---|
-| Pets | Single select | No pets, Small pets OK, Pets allowed | Yes |
-| Smoking | Single select | No smoking, Smoking outside only | Yes |
-| Guests | Single select | No overnight guests, Guests on weekends, Guests welcome | Yes |
-| Quiet hours | Single select | No quiet hours, Quiet after 10pm, Quiet after 11pm | Yes |
-| Other rules | Textarea | Max 300 characters | No |
+| Are pets allowed? | Yes / No | boolean | `pets_allowed` |
+| Is smoking allowed? | Yes / No | boolean | `smoking_allowed` |
+| Guests | Single select | `no_overnight`, `weekends`, `welcome` | `guest_policy` |
+| Quiet hours start | None, 9pm, 10pm, 11pm, Midnight | `HH:MM` or empty | `quiet_hours_start` |
+| Quiet hours end | 7am, 8am, 9am (only if a start is picked) | `HH:MM` | `quiet_hours_end` |
+| Shortest lease for this house | Single select | 1, 3, 5, 9, 12 | `min_lease_months` |
+| Most people living in the house | Slider + number box, 1–12 | number | `max_occupants` |
+| Anything else? | Textarea, optional, max 300 | text | `extra_rules` |
 
-### Step 4 — Photos
+### Step 5 — Photos → `house_photos`
 
-- Upload at least 1 photo, up to 10 (JPG or PNG, max 5 MB each).
-- First photo is the cover photo; the landlord can reorder them.
-- For now the photos are only previewed in the browser. Upload and VLM checks happen once the backend is ready.
+- At least 1, up to 10 (JPG or PNG, max 5 MB each). `position` is the order shown; the first is the cover.
+- For now photos are only previewed in the browser. Upload and VLM checks happen once the backend is ready.
 
 ---
 
 ## How it maps to the code
 
 - Answers live in `stores/preferencesStore.ts` (Zustand + `persist`), keyed by user id, with a `completed` flag.
-- `RequireAuth` checks `completed` and sends the user to `/onboarding` if it's false.
+- Field names in `types/index.ts` (`TenantOnboarding`, `LandlordOnboarding`) are the column names in camelCase, grouped by table.
+- All enum values and option lists are in `lib/onboardingOptions.ts`.
 - Each step is a component plus a Zod schema in `components/onboarding/steps.ts`. **Next** only enables when the schema passes.
-- Tenant answers use the same values as `Roommate` in `types/index.ts` (e.g. `sleepSchedule`, `cleanliness`) so the swipe cards can read them directly.
-- Landlord answers use the same shape as `House`, so a finished listing can be shown with the existing `HouseCard`.
-- When the backend is ready, the store's save calls get swapped for API calls (same idea as `houseService.ts`).
+- When the backend is ready, the store's save calls get swapped for Supabase inserts (same idea as `houseService.ts`).
 
-## Open questions for the team
+## Open questions for the backend team
 
-- Are the 10 prompts above fine, or does someone want to write their own?
-- Should phone-number visibility (from sign-up) be asked again here, or only in Profile?
-- Can tenants skip the prompts step and finish it later, or is it required like the spec says?
-- Do landlords need a phone number on the listing, or does contact go through the app only?
+- **Enum values.** The schema only shows `USER-DEFINED`. The values above (`early_bird`, `ensuite`, `no_overnight`…) are our guess and need checking against the real enums: `room_type`, `sleep_schedule`, `cleanliness`, `work_schedule`, `social_level`, `guest_frequency`, `guest_policy`, `tenant_type`. Fixing one is a single edit in `lib/onboardingOptions.ts`.
+- **House description.** `houses` has no `description` column, but the house detail page shows one. Can we add `description text`?
+- **Two onboarding flags.** `profiles.first_login` and `tenants.onboarding_complete` look like they mean the same thing. Which one decides whether a user sees onboarding? Landlords only have `first_login`.
+- **Phone number.** `profile_contacts.phone` / `phone_visible` are asked at sign-up, not here. OK?
+- **Prompts.** Are the 10 prompts fine, or does someone want to write their own?
