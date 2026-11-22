@@ -1,6 +1,7 @@
 import type { ComponentProps, ReactNode } from "react"
 
 import { Label } from "@/components/ui/label"
+import type { Option } from "@/lib/onboardingOptions"
 import { cn } from "@/lib/utils"
 
 type FieldProps = {
@@ -26,28 +27,34 @@ export function Field({ label, htmlFor, hint, children }: FieldProps) {
 
 type ChoiceProps = {
   label: string
-  options: string[]
   hint?: string
 }
 
-type SingleChoiceProps = ChoiceProps & {
-  value?: string
-  onChange: (value: string) => void
+type SingleChoiceProps<T extends string | number | boolean> = ChoiceProps & {
+  options: Option<T>[]
+  value?: T
+  onChange: (value: T) => void
 }
 
-export function SingleChoice({ label, options, hint, value, onChange }: SingleChoiceProps) {
+export function SingleChoice<T extends string | number | boolean>({
+  label,
+  options,
+  hint,
+  value,
+  onChange,
+}: SingleChoiceProps<T>) {
   return (
     <Field label={label} hint={hint}>
       <div role="radiogroup" aria-label={label} className="flex flex-wrap gap-2">
         {options.map((option) => (
           <Chip
-            key={option}
+            key={String(option.value)}
             role="radio"
-            aria-checked={value === option}
-            selected={value === option}
-            onClick={() => onChange(option)}
+            aria-checked={value === option.value}
+            selected={value === option.value}
+            onClick={() => onChange(option.value)}
           >
-            {option}
+            {option.label}
           </Chip>
         ))}
       </div>
@@ -56,6 +63,7 @@ export function SingleChoice({ label, options, hint, value, onChange }: SingleCh
 }
 
 type MultiChoiceProps = ChoiceProps & {
+  options: string[]
   value?: string[]
   max?: number
   onChange: (value: string[]) => void

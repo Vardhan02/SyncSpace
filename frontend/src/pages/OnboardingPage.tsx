@@ -4,52 +4,59 @@ import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 import { Logo } from "@/components/Logo"
-import { landlordSteps, tenantDefaults, tenantSteps } from "@/components/onboarding/steps"
+import { LogoutButton } from "@/components/LogoutButton"
+import { landlordSteps, tenantSteps } from "@/components/onboarding/steps"
 import type { OnboardingStep } from "@/components/onboarding/types"
 import { Button } from "@/components/ui/button"
+import { landlordDefaults, tenantDefaults } from "@/lib/onboardingOptions"
 import { useAuthStore } from "@/stores/authStore"
-import { listingDefaults } from "@/lib/onboardingOptions"
 import { emptyRecord, usePreferencesStore } from "@/stores/preferencesStore"
 import type { User } from "@/types"
 
 export function OnboardingPage() {
   const navigate = useNavigate()
   const user = useAuthStore((state) => state.user) as User
-  const logout = useAuthStore((state) => state.logout)
   const record = usePreferencesStore((state) => state.records[user.id]) ?? emptyRecord
   const setStep = usePreferencesStore((state) => state.setStep)
   const updateTenant = usePreferencesStore((state) => state.updateTenant)
-  const updateListing = usePreferencesStore((state) => state.updateListing)
+  const updateLandlord = usePreferencesStore((state) => state.updateLandlord)
   const complete = usePreferencesStore((state) => state.complete)
 
   const tenantValues = { ...tenantDefaults, ...record.tenant }
-  const listingValues = { ...listingDefaults, ...record.listing }
+  const landlordValues = { ...landlordDefaults, ...record.landlord }
 
   function finish() {
     // Sliders show defaults before they're touched, so save what was on screen.
     if (user.role === "tenant") updateTenant(user.id, tenantValues)
-    else updateListing(user.id, listingValues)
+    else updateLandlord(user.id, landlordValues)
     complete(user.id)
     toast.success("You're all set")
     navigate(user.role === "tenant" ? "/houses" : "/landlord", { replace: true })
   }
 
-  function handleLogout() {
-    logout()
-    navigate("/login", { replace: true })
+  // Dev only: jump straight to the app without filling anything in.
+  function skip() {
+    complete(user.id)
+    navigate(user.role === "tenant" ? "/houses" : "/landlord", { replace: true })
   }
 
   const header = (
     <header>
       <div className="mx-auto flex max-w-300 items-center justify-between px-5 py-3 md:px-8">
         <Logo className="text-foreground" />
-        <Button
-          variant="ghost"
-          className="h-9 rounded-[10px] px-3 text-[14px] font-medium"
-          onClick={handleLogout}
-        >
-          Log out
-        </Button>
+        <div className="flex items-center gap-1">
+          {/* Only shows with `npm run dev`, never in a production build. */}
+          {import.meta.env.DEV ? (
+            <Button
+              variant="outline"
+              className="h-9 rounded-[10px] border-dashed px-3 text-[14px] font-medium"
+              onClick={skip}
+            >
+              Skip (dev)
+            </Button>
+          ) : null}
+          <LogoutButton />
+        </div>
       </div>
     </header>
   )
@@ -71,8 +78,8 @@ export function OnboardingPage() {
           header={header}
           steps={landlordSteps}
           step={record.step}
-          values={listingValues}
-          onChange={(patch) => updateListing(user.id, patch)}
+          values={landlordValues}
+          onChange={(patch) => updateLandlord(user.id, patch)}
           onStep={(step) => setStep(user.id, step)}
           onFinish={finish}
         />

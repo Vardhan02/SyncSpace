@@ -1,37 +1,72 @@
-import { ImagePlus, X } from "lucide-react"
-import { useEffect } from "react"
-import { toast } from "sonner"
-import { create } from "zustand"
-
 import { DatePicker } from "@/components/onboarding/DatePicker"
+import { PhotoPicker } from "@/components/onboarding/PhotoPicker"
 import { SliderField } from "@/components/onboarding/SliderField"
 import { CharCount, Field, MultiChoice, SingleChoice, Textarea } from "@/components/onboarding/fields"
 import type { StepProps } from "@/components/onboarding/types"
 import { Input } from "@/components/ui/input"
 import {
   AMENITIES,
-  AREAS,
+  AREA_OPTIONS,
   DESCRIPTION_MAX,
   GUEST_POLICIES,
-  MAX_PHOTO_MB,
   MAX_PHOTOS,
-  PET_POLICIES,
-  QUIET_HOURS,
+  MIN_LEASE,
+  OCCUPANTS_MAX,
+  OCCUPANTS_MIN,
+  QUIET_END,
+  QUIET_START,
   RENT_MAX,
   RENT_MIN,
   ROOM_TYPES,
   ROOMS_MAX,
   ROOMS_MIN,
   RULES_MAX,
-  SMOKING_POLICIES,
+  TENANT_TYPES,
   TITLE_MAX,
-  listingDefaults,
+  YES_NO,
+  landlordDefaults,
   today,
 } from "@/lib/onboardingOptions"
-import type { ListingDraft } from "@/types"
+import type { LandlordOnboarding } from "@/types"
 
-type Props = StepProps<ListingDraft>
+type Props = StepProps<LandlordOnboarding>
 
+// Saved to landlords and landlord_preferences.
+export function LandlordProfileStep({ values, onChange }: Props) {
+  return (
+    <>
+      <Field label="Profile photo" hint="Optional. Tenants see it once you accept their application.">
+        <PhotoPicker
+          group="landlord-profile"
+          max={1}
+          round
+          count={values.photoCount}
+          onCountChange={(photoCount) => onChange({ photoCount })}
+        />
+      </Field>
+      <SingleChoice
+        label="Who would you like to rent to?"
+        options={TENANT_TYPES}
+        value={values.preferredTenants}
+        onChange={(preferredTenants) => onChange({ preferredTenants })}
+      />
+      <SingleChoice
+        label="Shortest lease you'll accept"
+        options={MIN_LEASE}
+        value={values.minLeaseMonths}
+        onChange={(minLeaseMonths) => onChange({ minLeaseMonths })}
+      />
+      <SingleChoice
+        label="Do tenants need references?"
+        options={YES_NO}
+        value={values.referencesRequired}
+        onChange={(referencesRequired) => onChange({ referencesRequired })}
+      />
+    </>
+  )
+}
+
+// Saved to houses.
 export function DetailsStep({ values, onChange }: Props) {
   return (
     <>
@@ -48,7 +83,7 @@ export function DetailsStep({ values, onChange }: Props) {
 
       <SingleChoice
         label="Area"
-        options={AREAS}
+        options={AREA_OPTIONS}
         value={values.area}
         onChange={(area) => onChange({ area })}
       />
@@ -67,7 +102,7 @@ export function DetailsStep({ values, onChange }: Props) {
         <SliderField
           min={RENT_MIN}
           max={RENT_MAX}
-          value={[values.rent ?? listingDefaults.rent]}
+          value={[values.rent ?? landlordDefaults.rent]}
           labels={["Rent per month"]}
           prefix="€"
           bigStep={50}
@@ -79,9 +114,9 @@ export function DetailsStep({ values, onChange }: Props) {
         <SliderField
           min={ROOMS_MIN}
           max={ROOMS_MAX}
-          value={[values.rooms ?? listingDefaults.rooms]}
+          value={[values.roomsAvailable ?? landlordDefaults.roomsAvailable]}
           labels={["Rooms available"]}
-          onSave={([rooms]) => onChange({ rooms })}
+          onSave={([roomsAvailable]) => onChange({ roomsAvailable })}
         />
       </Field>
 
@@ -115,6 +150,7 @@ export function DetailsStep({ values, onChange }: Props) {
   )
 }
 
+// Saved to house_amenities.
 export function AmenitiesStep({ values, onChange }: Props) {
   return (
     <MultiChoice
@@ -127,20 +163,23 @@ export function AmenitiesStep({ values, onChange }: Props) {
   )
 }
 
+const NO_QUIET_HOURS = [{ value: "", label: "No quiet hours" }, ...QUIET_START]
+
+// Saved to house_preferences.
 export function RulesStep({ values, onChange }: Props) {
   return (
     <>
       <SingleChoice
-        label="Pets"
-        options={PET_POLICIES}
-        value={values.petPolicy}
-        onChange={(petPolicy) => onChange({ petPolicy })}
+        label="Are pets allowed?"
+        options={YES_NO}
+        value={values.petsAllowed}
+        onChange={(petsAllowed) => onChange({ petsAllowed })}
       />
       <SingleChoice
-        label="Smoking"
-        options={SMOKING_POLICIES}
-        value={values.smokingPolicy}
-        onChange={(smokingPolicy) => onChange({ smokingPolicy })}
+        label="Is smoking allowed?"
+        options={YES_NO}
+        value={values.smokingAllowed}
+        onChange={(smokingAllowed) => onChange({ smokingAllowed })}
       />
       <SingleChoice
         label="Guests"
@@ -149,123 +188,60 @@ export function RulesStep({ values, onChange }: Props) {
         onChange={(guestPolicy) => onChange({ guestPolicy })}
       />
       <SingleChoice
-        label="Quiet hours"
-        options={QUIET_HOURS}
-        value={values.quietHours}
-        onChange={(quietHours) => onChange({ quietHours })}
+        label="Quiet hours start"
+        options={NO_QUIET_HOURS}
+        value={values.quietHoursStart ?? ""}
+        onChange={(quietHoursStart) =>
+          onChange(quietHoursStart ? { quietHoursStart } : { quietHoursStart: "", quietHoursEnd: undefined })
+        }
       />
-      <Field label="Anything else?" htmlFor="otherRules" hint="Optional.">
+      {values.quietHoursStart ? (
+        <SingleChoice
+          label="Quiet hours end"
+          options={QUIET_END}
+          value={values.quietHoursEnd}
+          onChange={(quietHoursEnd) => onChange({ quietHoursEnd })}
+        />
+      ) : null}
+      <SingleChoice
+        label="Shortest lease for this house"
+        options={MIN_LEASE}
+        value={values.houseMinLeaseMonths}
+        onChange={(houseMinLeaseMonths) => onChange({ houseMinLeaseMonths })}
+      />
+      <Field label="Most people living in the house">
+        <SliderField
+          min={OCCUPANTS_MIN}
+          max={OCCUPANTS_MAX}
+          value={[values.maxOccupants ?? landlordDefaults.maxOccupants]}
+          labels={["Most people living in the house"]}
+          onSave={([maxOccupants]) => onChange({ maxOccupants })}
+        />
+      </Field>
+      <Field label="Anything else?" htmlFor="extraRules" hint="Optional.">
         <Textarea
-          id="otherRules"
+          id="extraRules"
           maxLength={RULES_MAX}
           placeholder="Bins go out on Thursday, shared cleaning rota…"
-          value={values.otherRules ?? ""}
-          onChange={(e) => onChange({ otherRules: e.target.value })}
+          value={values.extraRules ?? ""}
+          onChange={(e) => onChange({ extraRules: e.target.value })}
         />
-        <CharCount value={values.otherRules} max={RULES_MAX} />
+        <CharCount value={values.extraRules} max={RULES_MAX} />
       </Field>
     </>
   )
 }
 
-type Photo = { id: string; url: string; name: string }
-
-// Photos only live in memory until there's a backend to upload them to.
-const usePhotos = create<{ photos: Photo[]; setPhotos: (photos: Photo[]) => void }>()((set) => ({
-  photos: [],
-  setPhotos: (photos) => set({ photos }),
-}))
-
+// Saved to house_photos; position is the order shown here.
 export function PhotosStep({ values, onChange }: Props) {
-  const photos = usePhotos((state) => state.photos)
-  const setPhotos = usePhotos((state) => state.setPhotos)
-
-  useEffect(() => {
-    if (values.photoCount !== photos.length) onChange({ photoCount: photos.length })
-  }, [photos.length, values.photoCount, onChange])
-
-  function addFiles(files: FileList | null) {
-    if (!files) return
-    const added: Photo[] = []
-    let skipped = 0
-
-    for (const file of files) {
-      const valid = ["image/jpeg", "image/png"].includes(file.type)
-      const small = file.size <= MAX_PHOTO_MB * 1024 * 1024
-      if (!valid || !small || photos.length + added.length >= MAX_PHOTOS) {
-        skipped++
-        continue
-      }
-      added.push({ id: crypto.randomUUID(), url: URL.createObjectURL(file), name: file.name })
-    }
-
-    if (skipped) {
-      toast.error(`${skipped} photo${skipped > 1 ? "s" : ""} skipped. Use JPG or PNG under ${MAX_PHOTO_MB} MB, max ${MAX_PHOTOS} photos.`)
-    }
-    setPhotos([...photos, ...added])
-  }
-
-  function remove(id: string) {
-    const photo = photos.find((item) => item.id === id)
-    if (photo) URL.revokeObjectURL(photo.url)
-    setPhotos(photos.filter((item) => item.id !== id))
-  }
-
-  function makeCover(id: string) {
-    const photo = photos.find((item) => item.id === id)
-    if (photo) setPhotos([photo, ...photos.filter((item) => item.id !== id)])
-  }
-
   return (
-    <Field
-      label="Photos"
-      hint={`At least 1, up to ${MAX_PHOTOS}. The first photo is the cover.`}
-    >
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-        {photos.map((photo, index) => (
-          <div key={photo.id} className="group relative aspect-4/3 overflow-hidden rounded-[12px] bg-secondary">
-            <img src={photo.url} alt={photo.name} className="size-full object-cover" />
-            {index === 0 ? (
-              <span className="absolute bottom-2 left-2 rounded-full bg-white px-2.5 py-1 text-[12px] font-medium text-foreground">
-                Cover
-              </span>
-            ) : (
-              <button
-                type="button"
-                className="absolute bottom-2 left-2 rounded-full bg-white/90 px-2.5 py-1 text-[12px] font-medium text-foreground hover:bg-white"
-                onClick={() => makeCover(photo.id)}
-              >
-                Make cover
-              </button>
-            )}
-            <button
-              type="button"
-              aria-label={`Remove ${photo.name}`}
-              className="absolute top-2 right-2 flex size-7 items-center justify-center rounded-full bg-white/90 text-foreground hover:bg-white"
-              onClick={() => remove(photo.id)}
-            >
-              <X className="size-4" aria-hidden="true" />
-            </button>
-          </div>
-        ))}
-
-        {photos.length < MAX_PHOTOS ? (
-          <label className="flex aspect-4/3 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-[12px] border border-dashed border-border text-[13px] text-muted-foreground transition-colors hover:bg-secondary">
-            <ImagePlus className="size-6" aria-hidden="true" />
-            Add photos
-            <input
-              type="file"
-              accept="image/jpeg,image/png"
-              multiple
-              className="sr-only"
-              onChange={(e) => {
-                addFiles(e.target.files)
-                e.target.value = ""
-              }}
-            />
-          </label>
-        ) : null}
-      </div>
+    <Field label="Photos" hint={`At least 1, up to ${MAX_PHOTOS}. The first photo is the cover.`}>
+      <PhotoPicker
+        group="house"
+        max={MAX_PHOTOS}
+        count={values.housePhotoCount}
+        onCountChange={(housePhotoCount) => onChange({ housePhotoCount })}
+      />
     </Field>
   )
 }

@@ -9,6 +9,7 @@ export type User = {
 
 export type House = {
   id: string
+  landlordId: string
   title: string
   area: string
   address: string
@@ -25,47 +26,86 @@ export type House = {
   likedByMatches: string[]
 }
 
+// Onboarding answers. Field names are the Supabase column names in camelCase,
+// grouped by the table they're saved to.
+
+// tenant_prompt_answers: the slot is the position in the array (1–3).
 export type PromptAnswer = {
-  prompt: string
+  promptId: number
   answer: string
 }
 
-export type TenantPreferences = {
+export type TenantOnboarding = {
+  // tenants (photo_url gets filled in once photos can be uploaded)
+  age?: number
+  university?: string
+  course?: string
+  bio?: string
+  photoCount: number
+
+  // tenant_house_preferences
   budgetMin: number
   budgetMax: number
-  areas: string[]
-  roomTypes: string[]
-  moveIn: string
-  leaseLength: string
-  housemates: string
+  preferredAreas: string[]
+  roomType: string
+  moveInDate: string
+  leaseMonths: number
+  maxHousemates: number
+
+  // tenant_lifestyle_preferences
   sleepSchedule: string
+  noiseTolerance: number
   cleanliness: string
-  noiseTolerance: string
-  studyPattern: string
-  socialStyle: string
-  guests: string
-  smoking: string
-  pets: string
+  workSchedule: string
+  socialLevel: string
+  guestFrequency: string
+  smoker: boolean
+  okWithSmoking: boolean
+  hasPets: boolean
+  okWithPets: boolean
+
+  // tenant_interests
   interests: string[]
+
+  // tenant_prompt_answers
   prompts: PromptAnswer[]
 }
 
-export type ListingDraft = {
+export type LandlordOnboarding = {
+  // landlords (photo_url gets filled in once photos can be uploaded)
+  photoCount: number
+
+  // landlord_preferences
+  preferredTenants: string
+  minLeaseMonths: number
+  referencesRequired: boolean
+
+  // houses
   title: string
   area: string
   address: string
   rent: number
   roomType: string
-  rooms: number
   availableFrom: string
+  roomsAvailable: number
+  // Not in the schema yet; the house detail page shows it. Ask backend to add houses.description.
   description: string
+
+  // house_amenities
   amenities: string[]
-  petPolicy: string
-  smokingPolicy: string
+
+  // house_preferences
+  petsAllowed: boolean
+  smokingAllowed: boolean
   guestPolicy: string
-  quietHours: string
-  otherRules: string
-  photoCount: number
+  quietHoursStart?: string
+  quietHoursEnd?: string
+  houseMinLeaseMonths: number
+  maxOccupants: number
+  extraRules?: string
+
+  // house_photos
+  housePhotoCount: number
 }
 
 export type Roommate = {
