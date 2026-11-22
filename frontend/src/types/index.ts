@@ -102,3 +102,10 @@ export type Roommate = Pick<
   bio: string
   matchScore: number
 }
+
+export type Match = {
+  id: string
+  roommate: Roommate
+  matchedAt: string
+  unread: boolean
+}

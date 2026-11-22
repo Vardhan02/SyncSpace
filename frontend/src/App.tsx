@@ -9,6 +9,7 @@ import { HouseDetailPage } from "@/pages/HouseDetailPage"
 import { HousesPage } from "@/pages/HousesPage"
 import { LoginPage } from "@/pages/LoginPage"
 import { OnboardingPage } from "@/pages/OnboardingPage"
+import { MatchesPage } from "@/pages/MatchesPage"
 import { RoomateMatchPage } from "@/pages/RoomateMatchPage"
 import { SignupPage } from "@/pages/SignupPage"
 
@@ -30,7 +31,7 @@ function App() {
             <Route path="/houses" element={<HousesPage />} />
             <Route path="/houses/:houseId" element={<HouseDetailPage />} />
             <Route path="/roommate" element={<RoomateMatchPage />} />
-            <Route path="/matches" element={<ComingSoonPage title="Matches" />} />
+            <Route path="/matches" element={<MatchesPage />} />
             <Route path="/profile" element={<ComingSoonPage title="Profile" />} />
           </Route>
         </Route>
