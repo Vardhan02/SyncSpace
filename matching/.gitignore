@@ -2,3 +2,6 @@
 embeddings.npy
 __pycache__/
 .venv/
+.pytest_cache/
+data/
+artifacts/train_log.txt
