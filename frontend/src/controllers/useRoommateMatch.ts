@@ -2,14 +2,18 @@ import { useEffect } from "react"
 import { toast } from "sonner"
 
 import { clamp, SWIPE_THRESHOLD, useSwipe } from "@/controllers/useSwipe"
-import { getRoommates } from "@/services/roommateService"
+import { getRoommates, getSharedTraits } from "@/services/roommateService"
+import { useAuthStore } from "@/stores/authStore"
+import { usePreferencesStore } from "@/stores/preferencesStore"
 import { useRoommateStore } from "@/stores/roommateStore"
+import type { Roommate } from "@/types"
 
 // CONTROLLER for the roommate match page. It sits between the model
 // (roommateService + roommateStore) and the view (RoomateMatchPage):
 //   - reads data from the model and works out which cards to show
 //   - reacts to what the user does (swipe, buttons, arrow keys)
 //   - tells the model to save likes/dislikes
+//   - asks the model what the user has in common with each roommate
 // The page just calls this hook and draws whatever it returns.
 
 export function useRoommateMatch() {
@@ -17,6 +21,11 @@ export function useRoommateMatch() {
   const likedIds = useRoommateStore((s) => s.likedIds)
   const dislikedIds = useRoommateStore((s) => s.dislikedIds)
   const reset = useRoommateStore((s) => s.reset)
+
+  // The signed-in tenant's own onboarding answers, used to work out
+  // what they have in common with each roommate.
+  const userId = useAuthStore((s) => s.user?.id)
+  const myAnswers = usePreferencesStore((s) => (userId ? s.records[userId]?.tenant : undefined))
 
   // Everyone the user hasn't swiped on yet, best match first.
   const remaining = getRoommates().filter(
@@ -51,6 +60,8 @@ export function useRoommateMatch() {
     // 0 → 1 as the top card is dragged towards the swipe line. The view uses
     // it to grow the card underneath into place.
     progress: clamp(Math.abs(swipe.offset.x) / SWIPE_THRESHOLD),
+    // Labels for what the signed-in tenant shares with a roommate, e.g. ["Budget fits", "Early bird"].
+    sharedWith: (roommate: Roommate) => getSharedTraits(myAnswers ?? {}, roommate),
     like: () => dismiss("right"),
     dislike: () => dismiss("left"),
     startOver: reset,

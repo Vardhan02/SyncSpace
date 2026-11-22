@@ -7,8 +7,17 @@ import { useRoommateMatch } from "@/controllers/useRoommateMatch"
 // useRoommateMatch controller; this file only lays out what it returns.
 
 export function RoomateMatchPage() {
-  const { topCard, nextCard, remainingCount, swipe, progress, like, dislike, startOver } =
-    useRoommateMatch()
+  const {
+    topCard,
+    nextCard,
+    remainingCount,
+    swipe,
+    progress,
+    sharedWith,
+    like,
+    dislike,
+    startOver,
+  } = useRoommateMatch()
 
   const { offset, rotation, transition } = swipe
 
@@ -32,14 +41,15 @@ export function RoomateMatchPage() {
       {topCard ? (
         <>
           <div className="flex min-h-0 w-full flex-1 items-center justify-center">
-            {/* Phones: the card takes the height that's left (h-full), and its width follows
-                from its shape (aspect). max-w-full stops it getting wider than the screen.
-                Laptops (lg): fixed width, and only the height shrinks on short screens. */}
-            <div className="relative aspect-[4/5] h-full max-h-[620px] max-w-full touch-none select-none lg:aspect-auto lg:max-h-[575px] lg:w-[min(100%,920px)]">
+            {/* Like Tinder, the card always uses the full width (up to a max), and takes
+                whatever height is left on the screen (h-full), up to a max height.
+                Laptops (lg) get a wider max so the photo + details fit side by side. */}
+            <div className="relative h-full max-h-[620px] w-full max-w-[496px] touch-none select-none lg:max-h-[575px] lg:max-w-[920px]">
               {nextCard && (
                 <RoommateCard
                   key={nextCard.id}
                   roommate={nextCard}
+                  shared={sharedWith(nextCard)}
                   style={{
                     transform: `translateY(${14 * (1 - progress)}px) scale(${0.94 + progress * 0.06})`,
                     transition,
@@ -50,6 +60,7 @@ export function RoomateMatchPage() {
               <RoommateCard
                 key={topCard.id}
                 roommate={topCard}
+                shared={sharedWith(topCard)}
                 swipe={swipe}
                 style={{
                   transform: `translate3d(${offset.x}px, ${offset.y}px, 0) rotate(${rotation}deg)`,

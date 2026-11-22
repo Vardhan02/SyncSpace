@@ -1,10 +1,11 @@
-import { BookOpen, ChevronDown, Info } from "lucide-react"
+import { ChevronDown, GraduationCap, HeartHandshake, Info, MapPin, Wallet } from "lucide-react"
 import { useState } from "react"
-import type { CSSProperties } from "react"
+import type { CSSProperties, ReactNode } from "react"
 
 import { RoommateDetails } from "@/components/roommate/RoommateDetails"
 import { clamp } from "@/controllers/useSwipe"
 import type { SwipeController } from "@/controllers/useSwipe"
+import { formatBudgetRange, formatDate } from "@/lib/format"
 import { cn } from "@/lib/utils"
 import type { Roommate } from "@/types"
 
@@ -27,12 +28,18 @@ const STAMPS = [
   },
 ]
 
+// How many "in common" chips fit on the photo before we show "+N more".
+const PHOTO_CHIPS = 2
+
 export function RoommateCard({
   roommate,
+  shared,
   style,
   swipe,
 }: {
   roommate: Roommate
+  // What this roommate has in common with the signed-in tenant (from the controller).
+  shared: string[]
   style: CSSProperties
   // Only the top card gets a swipe controller; the card underneath doesn't.
   swipe?: SwipeController
@@ -102,11 +109,8 @@ export function RoommateCard({
                 <span className="ml-1.5 font-normal text-muted-foreground">{roommate.age}</span>
               </h2>
               <p className="flex items-center gap-1.5 pt-1 text-[14px] text-muted-foreground">
-                <BookOpen className="size-4 shrink-0" aria-hidden="true" />
-                {roommate.course}
-              </p>
-              <p className="pt-0.5 text-[13px] text-muted-foreground">
-                {roommate.university} · Looking for a room
+                <GraduationCap className="size-4 shrink-0" aria-hidden="true" />
+                {roommate.course} · {roommate.university}
               </p>
             </div>
 
@@ -115,42 +119,59 @@ export function RoommateCard({
             </span>
           </div>
 
-          <RoommateDetails roommate={roommate} />
+          <RoommateDetails roommate={roommate} shared={shared} />
         </div>
 
-        {/* Phone-only name bar over the photo (hidden on laptops, where the right panel shows this). */}
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t lg:hidden from-black/70 via-black/40 to-transparent px-5 pt-16 pb-5 sm:px-6 sm:pb-6 md:px-8 md:pb-7">
-          <div className="flex items-end justify-between gap-3">
-            <div className="min-w-0">
-              <h2 className="text-[24px] font-bold text-white sm:text-[26px] md:text-[28px]">
-                {roommate.name}
-                <span className="ml-1 font-normal opacity-80">{roommate.age}</span>
-              </h2>
+        {/* Phone-only info over the photo, Tinder style: name first, then the
+            most important facts, then what you have in common. Hidden on laptops,
+            where the right-hand panel shows all of this. */}
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t lg:hidden from-black/80 via-black/50 to-transparent px-5 pt-20 pb-5 sm:px-6 sm:pb-6 md:px-8 md:pb-7">
+          {/* Name row: name + age on the left, info button on the right (like Tinder). */}
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="min-w-0 truncate text-[26px] leading-tight font-bold text-white sm:text-[28px] md:text-[30px]">
+              {roommate.name}
+              <span className="ml-1.5 font-normal opacity-90">{roommate.age}</span>
+            </h2>
 
-              <p className="flex items-center gap-1.5 pt-0.5 text-[13px] text-white/80 sm:text-[14px]">
-                <BookOpen className="size-3.5 shrink-0" aria-hidden="true" />
-                {roommate.course}
-              </p>
+            <button
+              type="button"
+              aria-label="More info"
+              className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
+              onClick={() => setExpanded(true)}
+            >
+              <Info className="size-5" />
+            </button>
+          </div>
 
-              <p className="pt-0.5 text-[12px] text-white/60 sm:text-[13px]">
-                {roommate.university} · Looking for a room
-              </p>
-            </div>
+          {/* One fact per line so nothing gets cut off on narrow phones. */}
+          <PhotoLine icon={<GraduationCap className="size-4" />}>
+            {roommate.course} · {roommate.university}
+          </PhotoLine>
+          <PhotoLine icon={<MapPin className="size-4" />}>{roommate.areas.join(" · ")}</PhotoLine>
+          <PhotoLine icon={<Wallet className="size-4" />}>
+            {formatBudgetRange(roommate.budgetMin, roommate.budgetMax)}/mo · from{" "}
+            {formatDate(roommate.moveIn)}
+          </PhotoLine>
 
-            <div className="flex shrink-0 flex-col items-center gap-2">
-              <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-[12px] font-bold text-white backdrop-blur-sm">
-                {roommate.matchScore}%
-              </span>
-
-              <button
-                type="button"
-                aria-label="More info"
-                className="flex size-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
-                onClick={() => setExpanded(true)}
+          {/* Match score first, then the top things you have in common. */}
+          <div className="flex flex-wrap gap-1.5 pt-2.5">
+            <span className="rounded-full bg-emerald-500 px-2.5 py-1 text-[12px] font-bold text-white">
+              {roommate.matchScore}% match
+            </span>
+            {shared.slice(0, PHOTO_CHIPS).map((item) => (
+              <span
+                key={item}
+                className="inline-flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-[12px] font-medium text-white backdrop-blur-sm"
               >
-                <Info className="size-5" />
-              </button>
-            </div>
+                <HeartHandshake className="size-3" aria-hidden="true" />
+                {item}
+              </span>
+            ))}
+            {shared.length > PHOTO_CHIPS && (
+              <span className="rounded-full bg-white/20 px-2.5 py-1 text-[12px] font-medium text-white backdrop-blur-sm">
+                +{shared.length - PHOTO_CHIPS} in common
+              </span>
+            )}
           </div>
         </div>
 
@@ -187,9 +208,21 @@ export function RoommateCard({
             </button>
           </div>
 
-          <RoommateDetails roommate={roommate} />
+          <RoommateDetails roommate={roommate} shared={shared} />
         </div>
       </div>
     </div>
+  )
+}
+
+/** One white icon + text line on the photo. Long text ends in "…" instead of wrapping. */
+function PhotoLine({ icon, children }: { icon: ReactNode; children: ReactNode }) {
+  return (
+    <p className="flex items-center gap-1.5 pt-1 text-[13px] text-white/90 sm:text-[14px]">
+      <span className="shrink-0" aria-hidden="true">
+        {icon}
+      </span>
+      <span className="truncate">{children}</span>
+    </p>
   )
 }

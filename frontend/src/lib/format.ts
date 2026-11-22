@@ -6,3 +6,15 @@ export function formatMatchLikes(names: string[]) {
 export function formatDate(value: string, month: "short" | "long" = "short") {
   return new Date(value).toLocaleDateString("en-IE", { day: "numeric", month })
 }
+
+export function formatBudgetRange(min: number, max: number) {
+  return `€${min}–${max}`
+}
+
+export function formatFullDate(value: string) {
+  return new Date(value).toLocaleDateString("en-IE", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  })
+}
