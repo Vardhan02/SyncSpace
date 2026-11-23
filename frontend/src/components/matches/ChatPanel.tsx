@@ -1,7 +1,9 @@
 import { ArrowLeft, MessageCircle } from "lucide-react"
 
 import { Avatar } from "@/components/matches/MatchList"
+import { SharedHouseCard } from "@/components/matches/SharedHouseCard"
 import { formatFullDate } from "@/lib/format"
+import { cn } from "@/lib/utils"
 import type { Match } from "@/types"
 
 export function ChatPanel({ match, onBack }: { match: Match | null; onBack: () => void }) {
@@ -16,6 +18,7 @@ export function ChatPanel({ match, onBack }: { match: Match | null; onBack: () =
   }
 
   const { roommate } = match
+  const firstName = roommate.name.split(" ")[0]
 
   return (
     <div className="flex h-full min-h-0 flex-col">
@@ -37,14 +40,21 @@ export function ChatPanel({ match, onBack }: { match: Match | null; onBack: () =
         </div>
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col items-center justify-center px-6 text-center">
-        <Avatar roommate={roommate} size="size-20" />
-        <p className="mt-4 text-[16px] font-semibold text-foreground">
-          You matched with {roommate.name.split(" ")[0]}
-        </p>
-        <p className="pt-1 text-[14px] text-muted-foreground">
-          {formatFullDate(match.matchedAt)} · {roommate.matchScore}% match
-        </p>
+      <div
+        className={cn(
+          "flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-4 pt-8 pb-28 md:px-6 md:pb-8",
+          match.sharedHouses.length === 0 && "justify-center"
+        )}
+      >
+        <div className="flex flex-col items-center text-center">
+          <Avatar roommate={roommate} size="size-20" />
+          <p className="mt-4 text-[16px] font-semibold text-foreground">You matched with {firstName}</p>
+          <p className="pt-1 text-[14px] text-muted-foreground">{formatFullDate(match.matchedAt)}</p>
+        </div>
+
+        {match.sharedHouses.map((shared) => (
+          <SharedHouseCard key={shared.house.id} shared={shared} name={firstName} />
+        ))}
       </div>
     </div>
   )

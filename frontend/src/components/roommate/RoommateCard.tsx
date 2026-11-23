@@ -104,10 +104,6 @@ export function RoommateCard({
                 {roommate.course} · {roommate.university}
               </p>
             </div>
-
-            <span className="shrink-0 rounded-full bg-emerald-50 px-3 py-1 text-[13px] font-bold text-emerald-600">
-              {roommate.matchScore}% match
-            </span>
           </div>
 
           <RoommateDetails roommate={roommate} shared={shared} />
@@ -140,9 +136,6 @@ export function RoommateCard({
           </PhotoLine>
 
           <div className="flex flex-wrap gap-1.5 pt-2.5">
-            <span className="rounded-full bg-emerald-500 px-2.5 py-1 text-[12px] font-bold text-white">
-              {roommate.matchScore}% match
-            </span>
             {shared.slice(0, PHOTO_CHIPS).map((item) => (
               <span
                 key={item}

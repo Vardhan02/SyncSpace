@@ -58,7 +58,7 @@ export function MatchList({ matches, selectedId, onOpen }: Props) {
                 <span className="shrink-0 text-[12px] text-muted-foreground">{formatDate(m.matchedAt)}</span>
               </div>
               <p className="truncate text-[13px] text-muted-foreground">
-                {m.roommate.course} · {m.roommate.matchScore}% match
+                {m.roommate.course}
               </p>
             </div>
             {m.unread && <span className="size-2.5 shrink-0 rounded-full bg-emerald-500" />}

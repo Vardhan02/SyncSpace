@@ -96,9 +96,16 @@ export type Roommate = Pick<
   matchScore: number
 }
 
+export type SharedHouse = {
+  house: House
+  fromMe: boolean
+  sentAt: string
+}
+
 export type Match = {
   id: string
   roommate: Roommate
   matchedAt: string
   unread: boolean
+  sharedHouses: SharedHouse[]
 }
