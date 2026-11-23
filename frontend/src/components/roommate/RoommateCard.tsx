@@ -9,10 +9,6 @@ import { formatBudgetRange, formatDate } from "@/lib/format"
 import { cn } from "@/lib/utils"
 import type { Roommate } from "@/types"
 
-// VIEW: draws one roommate card. It gets the roommate (model data) and the
-// swipe controller as props, and only decides how things look. The one bit
-// of state here, `expanded`, is purely visual (is the phone info panel open?).
-
 const STAMPS = [
   {
     label: "Like",
@@ -28,7 +24,6 @@ const STAMPS = [
   },
 ]
 
-// How many "in common" chips fit on the photo before we show "+N more".
 const PHOTO_CHIPS = 2
 
 export function RoommateCard({
@@ -38,10 +33,8 @@ export function RoommateCard({
   swipe,
 }: {
   roommate: Roommate
-  // What this roommate has in common with the signed-in tenant (from the controller).
   shared: string[]
   style: CSSProperties
-  // Only the top card gets a swipe controller; the card underneath doesn't.
   swipe?: SwipeController
 }) {
   const [expanded, setExpanded] = useState(false)
@@ -83,7 +76,6 @@ export function RoommateCard({
           </div>
         ))}
 
-      {/* Phones: one column (photo fills the card). Laptops (lg): a row, photo left + details right. */}
       <div className="relative flex h-full flex-col lg:flex-row">
         <div className="flex min-h-0 flex-1 items-center justify-center bg-[#efede6] lg:w-1/2 lg:flex-none">
           {roommate.photo ? (
@@ -100,7 +92,6 @@ export function RoommateCard({
           )}
         </div>
 
-        {/* Laptop-only right-hand panel. "hidden lg:flex" = invisible on phones, shown from lg up. */}
         <div className="hidden min-h-0 w-1/2 flex-col overflow-y-auto border-l border-border lg:flex">
           <div className="flex items-start justify-between gap-4 border-b border-border px-8 pt-7 pb-5">
             <div className="min-w-0">
@@ -122,11 +113,7 @@ export function RoommateCard({
           <RoommateDetails roommate={roommate} shared={shared} />
         </div>
 
-        {/* Phone-only info over the photo, Tinder style: name first, then the
-            most important facts, then what you have in common. Hidden on laptops,
-            where the right-hand panel shows all of this. */}
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t lg:hidden from-black/80 via-black/50 to-transparent px-5 pt-20 pb-5 sm:px-6 sm:pb-6 md:px-8 md:pb-7">
-          {/* Name row: name + age on the left, info button on the right (like Tinder). */}
           <div className="flex items-center justify-between gap-3">
             <h2 className="min-w-0 truncate text-[26px] leading-tight font-bold text-white sm:text-[28px] md:text-[30px]">
               {roommate.name}
@@ -143,7 +130,6 @@ export function RoommateCard({
             </button>
           </div>
 
-          {/* One fact per line so nothing gets cut off on narrow phones. */}
           <PhotoLine icon={<GraduationCap className="size-4" />}>
             {roommate.course} · {roommate.university}
           </PhotoLine>
@@ -153,7 +139,6 @@ export function RoommateCard({
             {formatDate(roommate.moveIn)}
           </PhotoLine>
 
-          {/* Match score first, then the top things you have in common. */}
           <div className="flex flex-wrap gap-1.5 pt-2.5">
             <span className="rounded-full bg-emerald-500 px-2.5 py-1 text-[12px] font-bold text-white">
               {roommate.matchScore}% match
@@ -215,7 +200,6 @@ export function RoommateCard({
   )
 }
 
-/** One white icon + text line on the photo. Long text ends in "…" instead of wrapping. */
 function PhotoLine({ icon, children }: { icon: ReactNode; children: ReactNode }) {
   return (
     <p className="flex items-center gap-1.5 pt-1 text-[13px] text-white/90 sm:text-[14px]">

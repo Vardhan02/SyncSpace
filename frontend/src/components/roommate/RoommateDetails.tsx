@@ -21,16 +21,7 @@ import { formatBudgetRange, formatFullDate } from "@/lib/format"
 import { cn } from "@/lib/utils"
 import type { Roommate } from "@/types"
 
-// VIEW: the full profile, shown in the phone pop-up and the laptop right-hand
-// panel. Sections run from most to least important for choosing a roommate:
-//   1. Key facts    → dealbreakers (budget, move-in, area, lease)
-//   2. In common    → what matches YOUR onboarding answers
-//   3. Lifestyle    → onboarding step 2 "How do you live?"
-//   4. About + prompts → onboarding step 3 "A bit about you"
-//   5. Interests
-
 export function RoommateDetails({ roommate, shared }: { roommate: Roommate; shared: string[] }) {
-  // Each lifestyle answer with a matching icon. Sleep and smoking pick an icon based on the answer.
   const lifestyle = [
     {
       icon: roommate.sleepSchedule === "Early bird" ? Sun : Moon,
@@ -50,7 +41,6 @@ export function RoommateDetails({ roommate, shared }: { roommate: Roommate; shar
 
   return (
     <div className="flex flex-col gap-6 p-5 sm:p-6 md:p-8">
-      {/* 1. Key facts */}
       <div className="grid grid-cols-2 gap-2.5">
         <Fact icon={<Wallet className="size-4" />} label="Budget" value={`${formatBudgetRange(roommate.budgetMin, roommate.budgetMax)}/mo`} />
         <Fact icon={<CalendarDays className="size-4" />} label="Move in" value={formatFullDate(roommate.moveIn)} />
@@ -58,7 +48,6 @@ export function RoommateDetails({ roommate, shared }: { roommate: Roommate; shar
         <Fact icon={<ScrollText className="size-4" />} label="Lease" value={roommate.leaseLength} />
       </div>
 
-      {/* 2. In common with you (hidden if nothing matches) */}
       {shared.length > 0 && (
         <Section title="In common with you">
           <div className="flex flex-wrap gap-2">
@@ -72,7 +61,6 @@ export function RoommateDetails({ roommate, shared }: { roommate: Roommate; shar
         </Section>
       )}
 
-      {/* 3. Lifestyle */}
       <Section title="Lifestyle">
         <div className="flex flex-wrap gap-2">
           {lifestyle.map(({ icon: Icon, value }) => (
@@ -84,7 +72,6 @@ export function RoommateDetails({ roommate, shared }: { roommate: Roommate; shar
         </div>
       </Section>
 
-      {/* 4. About + prompts */}
       <Section title="About me">
         <p className="text-[14px] leading-relaxed text-foreground sm:text-[15px]">{roommate.bio}</p>
       </Section>
@@ -96,7 +83,6 @@ export function RoommateDetails({ roommate, shared }: { roommate: Roommate; shar
         </div>
       ))}
 
-      {/* 5. Interests (ones you share are highlighted) */}
       <Section title="Interests">
         <div className="flex flex-wrap gap-2">
           {roommate.interests.map((interest) => (
@@ -127,7 +113,6 @@ function Fact({ icon, label, value }: { icon: ReactNode; label: string; value: s
       <span className="text-muted-foreground">{icon}</span>
       <div className="min-w-0">
         <p className="text-[11px] text-muted-foreground">{label}</p>
-        {/* Wraps onto a second line instead of cutting off long values like lease length. */}
         <p className="text-[13px] leading-snug font-medium text-foreground">{value}</p>
       </div>
     </div>

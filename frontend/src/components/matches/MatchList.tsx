@@ -1,10 +1,7 @@
-import { Search } from "lucide-react"
-
 import { formatDate } from "@/lib/format"
 import { cn } from "@/lib/utils"
 import type { Match, Roommate } from "@/types"
 
-// Shows the photo, or initials if the roommate has no photo.
 export function Avatar({ roommate, size }: { roommate: Roommate; size: string }) {
   if (roommate.photo) {
     return (
@@ -37,27 +34,13 @@ export function Avatar({ roommate, size }: { roommate: Roommate; size: string })
 type Props = {
   matches: Match[]
   selectedId?: string
-  search: string
-  onSearch: (value: string) => void
   onOpen: (id: string) => void
 }
 
-export function MatchList({ matches, selectedId, search, onSearch, onOpen }: Props) {
+export function MatchList({ matches, selectedId, onOpen }: Props) {
   return (
     <div className="flex h-full min-h-0 flex-col">
-      <div className="border-b border-border p-4">
-        <label className="flex items-center gap-2 rounded-[12px] border border-border px-3 py-2.5">
-          <Search className="size-4 text-muted-foreground" />
-          <input
-            value={search}
-            onChange={(e) => onSearch(e.target.value)}
-            placeholder="Search matches"
-            className="w-full bg-transparent text-[14px] text-foreground outline-none"
-          />
-        </label>
-      </div>
-
-      <div className="min-h-0 flex-1 overflow-y-auto p-2">
+      <div className="min-h-0 flex-1 overflow-y-auto p-2 pb-28 md:pb-2">
         {matches.map((m) => (
           <button
             key={m.id}

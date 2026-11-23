@@ -68,19 +68,13 @@ export type ListingDraft = {
   photoCount: number
 }
 
-// A roommate profile is the same set of answers every tenant gives during
-// onboarding (TenantPreferences), plus a few profile basics. `Pick` copies
-// just the listed fields from TenantPreferences, so if onboarding changes a
-// field's type, the roommate card has to change with it.
 export type Roommate = Pick<
   TenantPreferences,
-  // Onboarding step 1: "Where do you want to live?"
   | "budgetMin"
   | "budgetMax"
   | "areas"
   | "moveIn"
   | "leaseLength"
-  // Onboarding step 2: "How do you live?"
   | "sleepSchedule"
   | "cleanliness"
   | "noiseTolerance"
@@ -90,7 +84,6 @@ export type Roommate = Pick<
   | "smoking"
   | "pets"
   | "interests"
-  // Onboarding step 3: "A bit about you"
   | "prompts"
 > & {
   id: string

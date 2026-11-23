@@ -3,9 +3,6 @@ import { Heart, RefreshCw, User, X as XIcon } from "lucide-react"
 import { RoommateCard } from "@/components/roommate/RoommateCard"
 import { useRoommateMatch } from "@/controllers/useRoommateMatch"
 
-// VIEW: the roommate match page. All the logic lives in the
-// useRoommateMatch controller; this file only lays out what it returns.
-
 export function RoomateMatchPage() {
   const {
     topCard,
@@ -22,10 +19,6 @@ export function RoomateMatchPage() {
   const { offset, rotation, transition } = swipe
 
   return (
-    // Fit the page exactly in the screen so nothing scrolls. 100dvh is the
-    // visible screen height; we subtract the top bar (~62px) and the space
-    // TenantLayout keeps around the page (24px + 128px for the bottom menu on
-    // phones, 40px + 40px from md up).
     <div className="flex h-[calc(100dvh-213px)] min-h-0 w-full flex-col items-center gap-2 overflow-hidden py-2 md:h-[calc(100dvh-142px)]">
       <div className="w-full shrink-0 text-center">
         <h1 className="text-[22px] font-semibold tracking-[-0.5px] text-foreground sm:text-[26px] md:text-[30px]">
@@ -41,9 +34,6 @@ export function RoomateMatchPage() {
       {topCard ? (
         <>
           <div className="flex min-h-0 w-full flex-1 items-center justify-center">
-            {/* Like Tinder, the card always uses the full width (up to a max), and takes
-                whatever height is left on the screen (h-full), up to a max height.
-                Laptops (lg) get a wider max so the photo + details fit side by side. */}
             <div className="relative h-full max-h-[620px] w-full max-w-[496px] touch-none select-none lg:max-h-[575px] lg:max-w-[920px]">
               {nextCard && (
                 <RoommateCard
