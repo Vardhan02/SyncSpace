@@ -4,8 +4,18 @@ import { formatDate } from "@/lib/format"
 import { cn } from "@/lib/utils"
 import type { Match, Roommate } from "@/types"
 
-// Initials instead of a photo for now.
+// Shows the photo, or initials if the roommate has no photo.
 export function Avatar({ roommate, size }: { roommate: Roommate; size: string }) {
+  if (roommate.photo) {
+    return (
+      <img
+        src={roommate.photo}
+        alt={roommate.name}
+        className={cn("shrink-0 rounded-full bg-secondary object-cover", size)}
+      />
+    )
+  }
+
   const initials = roommate.name
     .split(" ")
     .map((w) => w[0])
