@@ -54,19 +54,22 @@ export function MatchList({ matches, selectedId, onOpen }: Props) {
             <Avatar roommate={m.roommate} size="size-12" />
             <div className="min-w-0 flex-1">
               <div className="flex items-baseline justify-between gap-2">
-                <p className="truncate text-[15px] font-semibold text-foreground">{m.roommate.name}</p>
-                <span className="shrink-0 text-[12px] text-muted-foreground">{formatDate(m.matchedAt)}</span>
+                <p className="truncate text-[15px] font-semibold text-foreground">
+                  {m.roommate.name}
+                </p>
+                <span className="shrink-0 text-[12px] text-muted-foreground">
+                  {formatDate(m.matchedAt)}
+                </span>
               </div>
-              <p className="truncate text-[13px] text-muted-foreground">
-                {m.roommate.course}
-              </p>
+              <p className="truncate text-[13px] text-muted-foreground">{m.roommate.course}</p>
             </div>
-            {m.unread && <span className="size-2.5 shrink-0 rounded-full bg-emerald-500" />}
           </button>
         ))}
 
         {matches.length === 0 && (
-          <p className="px-4 py-8 text-center text-[14px] text-muted-foreground">No matches found</p>
+          <p className="px-4 py-8 text-center text-[14px] text-muted-foreground">
+            No matches found
+          </p>
         )}
       </div>
     </div>

@@ -11,9 +11,11 @@ type ChatPanelProps = {
   onBack: () => void
   isLiked: (houseId: string) => boolean
   onLike: (houseId: string) => void
+  isApplied: (houseId: string) => boolean
+  onApply: (houseId: string) => void
 }
 
-export function ChatPanel({ match, onBack, isLiked, onLike }: ChatPanelProps) {
+export function ChatPanel({ match, onBack, isLiked, onLike, isApplied, onApply }: ChatPanelProps) {
   if (!match) {
     return (
       <div className="flex h-full flex-col items-center justify-center px-6 text-center">
@@ -72,6 +74,8 @@ export function ChatPanel({ match, onBack, isLiked, onLike }: ChatPanelProps) {
             name={firstName}
             liked={isLiked(shared.house.id)}
             onLike={() => onLike(shared.house.id)}
+            applied={isApplied(shared.house.id)}
+            onApply={() => onApply(shared.house.id)}
           />
         ))}
       </div>

@@ -7,6 +7,7 @@ export function useMatches() {
   const [search, setSearch] = useState("")
   const [unreadOnly, setUnreadOnly] = useState(false)
   const [liked, setLiked] = useState<string[]>([])
+  const [applied, setApplied] = useState<string[]>([])
 
   const matches = getMatches()
   const filtered = matches.filter((m) => {
@@ -14,9 +15,11 @@ export function useMatches() {
     return m.roommate.name.toLowerCase().includes(search.trim().toLowerCase())
   })
 
+  const key = (houseId: string) => `${selectedId}-${houseId}`
+
   const toggleLike = (houseId: string) => {
-    const key = `${selectedId}-${houseId}`
-    setLiked((keys) => (keys.includes(key) ? keys.filter((k) => k !== key) : [...keys, key]))
+    const k = key(houseId)
+    setLiked((keys) => (keys.includes(k) ? keys.filter((x) => x !== k) : [...keys, k]))
   }
 
   return {
@@ -29,7 +32,9 @@ export function useMatches() {
     setUnreadOnly,
     openChat: setSelectedId,
     closeChat: () => setSelectedId(null),
-    isLiked: (houseId: string) => liked.includes(`${selectedId}-${houseId}`),
+    isLiked: (houseId: string) => liked.includes(key(houseId)),
     toggleLike,
+    isApplied: (houseId: string) => applied.includes(key(houseId)),
+    apply: (houseId: string) => setApplied((keys) => [...keys, key(houseId)]),
   }
 }

@@ -19,6 +19,8 @@ export function MatchesPage() {
     closeChat,
     isLiked,
     toggleLike,
+    isApplied,
+    apply,
   } = useMatches()
 
   const filters = [
@@ -82,7 +84,14 @@ export function MatchesPage() {
           <MatchList matches={matches} selectedId={selected?.id} onOpen={openChat} />
         </div>
         <div className={cn("min-w-0 flex-1 md:block", !selected && "hidden")}>
-          <ChatPanel match={selected} onBack={closeChat} isLiked={isLiked} onLike={toggleLike} />
+          <ChatPanel
+            match={selected}
+            onBack={closeChat}
+            isLiked={isLiked}
+            onLike={toggleLike}
+            isApplied={isApplied}
+            onApply={apply}
+          />
         </div>
       </div>
     </div>
