@@ -6,13 +6,22 @@ import { formatFullDate } from "@/lib/format"
 import { cn } from "@/lib/utils"
 import type { Match } from "@/types"
 
-export function ChatPanel({ match, onBack }: { match: Match | null; onBack: () => void }) {
+type ChatPanelProps = {
+  match: Match | null
+  onBack: () => void
+  isLiked: (houseId: string) => boolean
+  onLike: (houseId: string) => void
+}
+
+export function ChatPanel({ match, onBack, isLiked, onLike }: ChatPanelProps) {
   if (!match) {
     return (
       <div className="flex h-full flex-col items-center justify-center px-6 text-center">
         <MessageCircle className="size-10 text-muted-foreground" />
         <p className="mt-4 text-[16px] font-semibold text-foreground">No chat selected</p>
-        <p className="pt-1 text-[14px] text-muted-foreground">Pick a match to see your conversation.</p>
+        <p className="pt-1 text-[14px] text-muted-foreground">
+          Pick a match to see your conversation.
+        </p>
       </div>
     )
   }
@@ -48,12 +57,22 @@ export function ChatPanel({ match, onBack }: { match: Match | null; onBack: () =
       >
         <div className="flex flex-col items-center text-center">
           <Avatar roommate={roommate} size="size-20" />
-          <p className="mt-4 text-[16px] font-semibold text-foreground">You matched with {firstName}</p>
-          <p className="pt-1 text-[14px] text-muted-foreground">{formatFullDate(match.matchedAt)}</p>
+          <p className="mt-4 text-[16px] font-semibold text-foreground">
+            You matched with {firstName}
+          </p>
+          <p className="pt-1 text-[14px] text-muted-foreground">
+            {formatFullDate(match.matchedAt)}
+          </p>
         </div>
 
         {match.sharedHouses.map((shared) => (
-          <SharedHouseCard key={shared.house.id} shared={shared} name={firstName} />
+          <SharedHouseCard
+            key={shared.house.id}
+            shared={shared}
+            name={firstName}
+            liked={isLiked(shared.house.id)}
+            onLike={() => onLike(shared.house.id)}
+          />
         ))}
       </div>
     </div>
