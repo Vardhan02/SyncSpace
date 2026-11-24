@@ -1,18 +1,5 @@
--- =====================================================================
--- SyncSpace mock data (Supabase). Runs automatically on
--- `supabase db reset`, or paste into the SQL editor after the migration.
--- LOCAL / DEV PROJECTS ONLY: it creates real login accounts.
---
--- Every account: password "password123".
---   tenant@syncspace.test    demo tenant   (frontend mock u-1)
---   landlord@syncspace.test  demo landlord (frontend mock u-2)
---
--- Readable fixed UUIDs: uid(201) = 00000000-0000-0000-0000-000000000201
---   uid(200)        demo tenant
---   uid(201..208)   roommates r-201..r-208 from frontend/src/mocks
---   uid(301..303)   landlords
---   houses 101..108 = h-101..h-108
--- =====================================================================
+-- dev data only, all passwords are password123
+-- uid(200) is the demo tenant, 201-208 roommates, 301-303 landlords
 
 BEGIN;
 
@@ -20,11 +7,8 @@ CREATE FUNCTION pg_temp.uid(n INT) RETURNS UUID LANGUAGE sql IMMUTABLE AS $$
     SELECT ('00000000-0000-0000-0000-' || lpad(n::TEXT, 12, '0'))::UUID;
 $$;
 
--- ---------------------------------------------------------------------
--- Auth accounts. The on_auth_user_created trigger creates the matching
--- profiles + profile_contacts rows from raw_user_meta_data.
--- Empty-string token columns are required, or GoTrue fails on login.
--- ---------------------------------------------------------------------
+-- profiles + profile_contacts come from the on_auth_user_created trigger.
+-- token columns have to be '' and not null or login breaks
 INSERT INTO auth.users (
     instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
     raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
@@ -60,7 +44,7 @@ SELECT gen_random_uuid(), u.id, u.id::TEXT,
 FROM auth.users u
 WHERE u.email LIKE '%@syncspace.test';
 
--- Everyone in the seed has finished onboarding
+-- everyone here is already past onboarding
 UPDATE public.profiles SET first_login = FALSE
 WHERE id IN (SELECT id FROM auth.users WHERE email LIKE '%@syncspace.test');
 
@@ -68,9 +52,6 @@ UPDATE public.profile_contacts SET phone_visible = TRUE
 WHERE user_id IN (pg_temp.uid(200), pg_temp.uid(201), pg_temp.uid(204), pg_temp.uid(206),
                   pg_temp.uid(208), pg_temp.uid(301), pg_temp.uid(302));
 
--- ---------------------------------------------------------------------
--- Tenants
--- ---------------------------------------------------------------------
 INSERT INTO public.tenants (id, age, university, course, bio, onboarding_complete)
 SELECT pg_temp.uid(n), age, university, course, bio, TRUE
 FROM (VALUES
@@ -85,7 +66,6 @@ FROM (VALUES
     (208, 26, 'UCC', 'HDip Education',          'Mature student, calm and collected. Happy to cook together or do our own thing. Early to bed, early to rise.')
 ) AS v(n, age, university, course, bio);
 
--- Section 1: house preferences
 INSERT INTO public.tenant_house_preferences
     (tenant_id, budget_min, budget_max, preferred_areas, room_type, move_in_date, lease_months, max_housemates)
 SELECT pg_temp.uid(n), bmin, bmax, areas::TEXT[], rt::public.room_type, mi::DATE, lease, mates
@@ -101,7 +81,6 @@ FROM (VALUES
     (208, 600, 710, '{Blackrock,Douglas,The Lough}',             'en_suite', '2027-01-04', 12, 2)
 ) AS v(n, bmin, bmax, areas, rt, mi, lease, mates);
 
--- Section 2: lifestyle preferences
 INSERT INTO public.tenant_lifestyle_preferences
     (tenant_id, sleep_schedule, noise_tolerance, cleanliness, work_schedule, social_level,
      guest_frequency, smoker, ok_with_smoking, has_pets, ok_with_pets)
@@ -135,54 +114,51 @@ FROM (VALUES
     (208, '{GAA,Hiking,Reading,Cooking}')
 ) AS v(n, interests);
 
--- Section 3: personality prompts (placeholder bank until the real 10 are written)
-INSERT INTO public.prompts (prompt_id, text) VALUES
-    ( 1, 'My ideal Sunday at home looks like...'),
-    ( 2, 'The house rule I''d never compromise on is...'),
-    ( 3, 'You''ll know I''m stressed when...'),
-    ( 4, 'The dish I''d cook for the house is...'),
-    ( 5, 'My most controversial take on chores is...'),
-    ( 6, 'A perfect housemate would...'),
-    ( 7, 'On a Friday night you''ll find me...'),
-    ( 8, 'My green flag as a housemate is...'),
-    ( 9, 'Something I''m weirdly particular about...'),
-    (10, 'I''ll win you over with...');
+-- off for now, these are placeholders until the real 10 prompts are decided
+-- INSERT INTO public.prompts (prompt_id, text) VALUES
+--     ( 1, 'My ideal Sunday at home looks like...'),
+--     ( 2, 'The house rule I''d never compromise on is...'),
+--     ( 3, 'You''ll know I''m stressed when...'),
+--     ( 4, 'The dish I''d cook for the house is...'),
+--     ( 5, 'My most controversial take on chores is...'),
+--     ( 6, 'A perfect housemate would...'),
+--     ( 7, 'On a Friday night you''ll find me...'),
+--     ( 8, 'My green flag as a housemate is...'),
+--     ( 9, 'Something I''m weirdly particular about...'),
+--     (10, 'I''ll win you over with...');
 
-INSERT INTO public.tenant_prompt_answers (tenant_id, slot, prompt_id, answer)
-SELECT pg_temp.uid(n), slot, prompt_id, answer
-FROM (VALUES
-    (200, 1, 4,  'Biryani, big pot, enough for everyone.'),
-    (200, 2, 7,  'Five-a-side, then a late-night coding session.'),
-    (200, 3, 8,  'I take the bins out without being asked.'),
-    (201, 1, 1,  'Pancakes, a long walk, and a board game in the evening.'),
-    (201, 2, 2,  'Dishes done the same day.'),
-    (201, 3, 10, 'Weekend brunch.'),
-    (202, 1, 3,  'The guitar comes out (headphones on, promise).'),
-    (202, 2, 4,  'Dal makhani.'),
-    (202, 3, 7,  'Home for a gaming session, or out if it''s someone''s birthday.'),
-    (203, 1, 6,  'Respect quiet mornings and appreciate a good cup of tea.'),
-    (203, 2, 9,  'How tea is made. Bag out before the milk goes in.'),
-    (203, 3, 7,  'At a pub quiz on Oliver Plunkett Street.'),
-    (204, 1, 7,  'On the couch after the gym with a new series.'),
-    (204, 2, 5,  'A clean kitchen matters more than a clean living room.'),
-    (204, 3, 8,  'I always replace the milk I finish.'),
-    (205, 1, 1,  'Sunday roast for whoever is around.'),
-    (205, 2, 3,  'The house gets suspiciously tidy.'),
-    (205, 3, 10, 'Good coffee, freshly ground.'),
-    (206, 1, 2,  'Quiet after 11pm on weeknights.'),
-    (206, 2, 1,  'English Market in the morning, then baking all afternoon.'),
-    (206, 3, 8,  'A shared calendar for bins and bills.'),
-    (207, 1, 10, 'Late-night toasties.'),
-    (207, 2, 6,  'Be up for the odd anime marathon.'),
-    (207, 3, 5,  'A chore rota on the fridge actually works.'),
-    (208, 1, 4,  'Irish stew, the way my mam makes it.'),
-    (208, 2, 6,  'Say hello in the mornings and mind their own business after.'),
-    (208, 3, 1,  'A hike out at Crosshaven and the GAA on the telly.')
-) AS v(n, slot, prompt_id, answer);
+-- INSERT INTO public.tenant_prompt_answers (tenant_id, slot, prompt_id, answer)
+-- SELECT pg_temp.uid(n), slot, prompt_id, answer
+-- FROM (VALUES
+--     (200, 1, 4,  'Biryani, big pot, enough for everyone.'),
+--     (200, 2, 7,  'Five-a-side, then a late-night coding session.'),
+--     (200, 3, 8,  'I take the bins out without being asked.'),
+--     (201, 1, 1,  'Pancakes, a long walk, and a board game in the evening.'),
+--     (201, 2, 2,  'Dishes done the same day.'),
+--     (201, 3, 10, 'Weekend brunch.'),
+--     (202, 1, 3,  'The guitar comes out (headphones on, promise).'),
+--     (202, 2, 4,  'Dal makhani.'),
+--     (202, 3, 7,  'Home for a gaming session, or out if it''s someone''s birthday.'),
+--     (203, 1, 6,  'Respect quiet mornings and appreciate a good cup of tea.'),
+--     (203, 2, 9,  'How tea is made. Bag out before the milk goes in.'),
+--     (203, 3, 7,  'At a pub quiz on Oliver Plunkett Street.'),
+--     (204, 1, 7,  'On the couch after the gym with a new series.'),
+--     (204, 2, 5,  'A clean kitchen matters more than a clean living room.'),
+--     (204, 3, 8,  'I always replace the milk I finish.'),
+--     (205, 1, 1,  'Sunday roast for whoever is around.'),
+--     (205, 2, 3,  'The house gets suspiciously tidy.'),
+--     (205, 3, 10, 'Good coffee, freshly ground.'),
+--     (206, 1, 2,  'Quiet after 11pm on weeknights.'),
+--     (206, 2, 1,  'English Market in the morning, then baking all afternoon.'),
+--     (206, 3, 8,  'A shared calendar for bins and bills.'),
+--     (207, 1, 10, 'Late-night toasties.'),
+--     (207, 2, 6,  'Be up for the odd anime marathon.'),
+--     (207, 3, 5,  'A chore rota on the fridge actually works.'),
+--     (208, 1, 4,  'Irish stew, the way my mam makes it.'),
+--     (208, 2, 6,  'Say hello in the mornings and mind their own business after.'),
+--     (208, 3, 1,  'A hike out at Crosshaven and the GAA on the telly.')
+-- ) AS v(n, slot, prompt_id, answer);
 
--- ---------------------------------------------------------------------
--- Landlords
--- ---------------------------------------------------------------------
 INSERT INTO public.landlords (id) VALUES (pg_temp.uid(301)), (pg_temp.uid(302)), (pg_temp.uid(303));
 
 INSERT INTO public.landlord_preferences (landlord_id, preferred_tenants, min_lease_months, references_required) VALUES
@@ -190,9 +166,6 @@ INSERT INTO public.landlord_preferences (landlord_id, preferred_tenants, min_lea
     (pg_temp.uid(302), 'any',           6,  TRUE),
     (pg_temp.uid(303), 'professionals', 12, TRUE);
 
--- ---------------------------------------------------------------------
--- Houses
--- ---------------------------------------------------------------------
 INSERT INTO public.houses (house_id, landlord_id, title, area, address, rent, room_type, available_from, rooms_available, verified)
 SELECT house_id, pg_temp.uid(ll), title, area, address, rent, rt::public.room_type, af::DATE, rooms, verified
 FROM (VALUES
@@ -206,7 +179,6 @@ FROM (VALUES
     (108, 303, 'Student house in Wilton',              'Wilton',         '9 Wilton Gardens, Cork',      600, 'single',   '2027-01-04', 4, FALSE)
 ) AS v(house_id, ll, title, area, address, rent, rt, af, rooms, verified);
 
--- House rules / preferences
 INSERT INTO public.house_preferences
     (house_id, pets_allowed, smoking_allowed, guest_policy, quiet_hours_start, quiet_hours_end,
      min_lease_months, max_occupants, extra_rules) VALUES
@@ -219,8 +191,7 @@ INSERT INTO public.house_preferences
     (107, FALSE, FALSE, 'rarely',    '22:30', '07:30', 12, 3, 'Professionals preferred. References required.'),
     (108, FALSE, TRUE,  'often',     '00:00', '08:00',  9, 5, 'Smoking in the back garden only.');
 
--- Photo counts match the "photos" field in houses.json.
--- Paths are inside the house-photos storage bucket.
+-- same photo counts as houses.json, paths are inside the house-photos bucket
 INSERT INTO public.house_photos (house_id, url, position)
 SELECT h.house_id, h.house_id || '/' || p || '.jpg', p
 FROM (VALUES (101, 7), (102, 5), (103, 4), (104, 6), (105, 8), (106, 3), (107, 5), (108, 4)) AS h(house_id, n)
@@ -230,7 +201,7 @@ INSERT INTO public.amenities (name) VALUES
     ('WiFi'), ('Washing machine'), ('Study desk'), ('En-suite'), ('Kitchen access'),
     ('Garden'), ('Parking'), ('Double bed'), ('Bike storage'), ('Dishwasher'), ('Balcony');
 
--- vlm_verified: TRUE for verified listings, NULL (not checked yet) otherwise
+-- null vlm_verified = not checked yet
 INSERT INTO public.house_amenities (house_id, amenity_id, vlm_verified)
 SELECT x.house_id, a.amenity_id, CASE WHEN h.verified THEN TRUE END
 FROM (VALUES
@@ -246,28 +217,26 @@ FROM (VALUES
 JOIN public.amenities a ON a.name = x.amenity
 JOIN public.houses h    ON h.house_id = x.house_id;
 
--- ---------------------------------------------------------------------
--- Activity: swipes -> matches (created by the trigger), likes, shares
--- ---------------------------------------------------------------------
+-- the swipes trigger makes the matches from these
 INSERT INTO public.swipes (swiper_id, target_id, direction)
 SELECT pg_temp.uid(s), pg_temp.uid(t), d::public.swipe_direction
 FROM (VALUES
-    -- Demo tenant <-> Aanya and <-> Rohan: mutual => 2 matches
+    -- demo tenant matches with Aanya and Rohan
     (200, 201, 'right'), (201, 200, 'right'),
     (202, 200, 'right'), (200, 202, 'right'),
-    -- Liam <-> Priya: a match not involving the demo tenant
+    -- Liam and Priya
     (204, 206, 'right'), (206, 204, 'right'),
-    -- Pending likes in the demo tenant's Likes tab
+    -- for the demo tenant's likes tab
     (203, 200, 'right'),
     (208, 200, 'right'),
-    -- Pending like on Rohan
+    -- Éabha likes Rohan, no reply yet
     (207, 202, 'right'),
-    -- Skips
+    -- skips
     (200, 205, 'left'),
     (206, 207, 'left')
 ) AS v(s, t, d);
 
--- Matches "likedByMatches" in houses.json (Aanya: 101, 103; Rohan: 103, 105)
+-- lines up with likedByMatches in houses.json (Aanya 101, 103 / Rohan 103, 105)
 INSERT INTO public.house_likes (tenant_id, house_id)
 SELECT pg_temp.uid(n), house_id
 FROM (VALUES
@@ -278,25 +247,22 @@ FROM (VALUES
     (203, 106), (207, 108)
 ) AS v(n, house_id);
 
--- Houses shared in match dialogs. a = smaller UUID of the pair
--- (with these UUIDs, the smaller number).
+-- a is the smaller uuid in the pair, with these ids that's just the smaller number
 INSERT INTO public.match_houses (match_id, house_id, shared_by, a_applied_at, b_applied_at)
 SELECT m.match_id, v.house_id, pg_temp.uid(v.shared_by), v.a_applied::TIMESTAMPTZ, v.b_applied::TIMESTAMPTZ
 FROM (VALUES
-    -- both applied => trigger creates a pending application to Mary Walsh
+    -- both applied, so the trigger sends an application to Mary
     (200, 201, 103, 200, '2026-11-10 18:00+00', '2026-11-11 09:30+00'),
-    -- only Aanya applied so far
+    -- only Aanya applied
     (200, 201, 101, 201, NULL,                  '2026-11-12 12:00+00'),
     -- Rohan shared, nobody applied yet
     (200, 202, 105, 202, NULL,                  NULL),
-    -- Liam & Priya both applied => application to Niamh Byrne
+    -- Liam and Priya, application goes to Niamh
     (204, 206, 107, 206, '2026-11-09 10:00+00', '2026-11-09 11:00+00')
 ) AS v(a, b, house_id, shared_by, a_applied, b_applied)
 JOIN public.matches m ON m.tenant_a_id = pg_temp.uid(v.a) AND m.tenant_b_id = pg_temp.uid(v.b);
 
--- ---------------------------------------------------------------------
--- Recommendations for the demo tenant (scores from the frontend mocks)
--- ---------------------------------------------------------------------
+-- demo tenant only, scores copied from the frontend mocks
 INSERT INTO public.house_recommendations (tenant_id, house_id, score)
 SELECT pg_temp.uid(200), house_id, score
 FROM (VALUES (101, 0.94), (102, 0.91), (103, 0.88), (104, 0.84),
@@ -307,7 +273,7 @@ SELECT pg_temp.uid(200), pg_temp.uid(n), score
 FROM (VALUES (201, 0.96), (202, 0.91), (203, 0.87), (204, 0.83),
              (205, 0.79), (206, 0.74), (207, 0.70), (208, 0.65)) AS v(n, score);
 
--- Move the house id counter past the hand-picked ids
+-- houses went in with fixed ids, so move the sequence past them
 SELECT setval(pg_get_serial_sequence('public.houses', 'house_id'), (SELECT max(house_id) FROM public.houses));
 
 COMMIT;
