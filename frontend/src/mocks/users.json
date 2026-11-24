@@ -4,6 +4,7 @@
     "name": "Dhruvil Shiroiya",
     "email": "tenant@syncspace.test",
     "password": "password123",
+    "phone": "+353 87 000 0001",
     "role": "tenant"
   },
   {
@@ -11,6 +12,7 @@
     "name": "Mary Walsh",
     "email": "landlord@syncspace.test",
     "password": "password123",
+    "phone": "+353 87 000 0002",
     "role": "landlord"
   }
 ]

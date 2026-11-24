@@ -5,7 +5,8 @@ import { ProfileSection } from "@/components/profile/ProfileParts"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
-import { emptyContact, useProfileStore } from "@/stores/profileStore"
+import { isValidPhone } from "@/lib/phone"
+import { contactFor, useProfileStore } from "@/stores/profileStore"
 
 type ContactSectionProps = {
   userId: string
@@ -16,16 +17,21 @@ type ContactSectionProps = {
 
 // Saved to profile_contacts (phone, phone_visible).
 export function ContactSection({ userId, email, description, toggleLabel }: ContactSectionProps) {
-  const contact = useProfileStore((state) => state.contacts[userId]) ?? emptyContact
+  const contact = useProfileStore((state) => contactFor(state.contacts, userId))
   const updateContact = useProfileStore((state) => state.updateContact)
   const [phone, setPhone] = useState(contact.phone)
 
   function savePhone() {
     const cleaned = phone.trim()
     if (cleaned === contact.phone) return
-    // Turning the phone off when it's removed, so we never "show" an empty number.
-    updateContact(userId, { phone: cleaned, phoneVisible: cleaned ? contact.phoneVisible : false })
-    toast.success(cleaned ? "Phone number saved" : "Phone number removed")
+    // A phone number is required, so a bad or empty one goes back to the saved number.
+    if (!isValidPhone(cleaned)) {
+      setPhone(contact.phone)
+      toast.error("Enter a valid phone number")
+      return
+    }
+    updateContact(userId, { phone: cleaned })
+    toast.success("Phone number saved")
   }
 
   return (

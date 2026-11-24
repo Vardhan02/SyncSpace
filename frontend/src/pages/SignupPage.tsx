@@ -9,6 +9,7 @@ import { AuthLayout } from "@/components/AuthLayout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { isValidPhone } from "@/lib/phone"
 import { cn } from "@/lib/utils"
 import { useAuthStore } from "@/stores/authStore"
 import { useProfileStore } from "@/stores/profileStore"
@@ -17,10 +18,7 @@ const signupSchema = z.object({
   role: z.enum(["tenant", "landlord"]),
   name: z.string().trim().min(1, "Name is required"),
   email: z.string().min(1, "Email is required").email("Enter a valid email"),
-  phone: z
-    .string()
-    .trim()
-    .refine((value) => value === "" || /^\+?[\d\s]{7,20}$/.test(value), "Enter a valid phone number"),
+  phone: z.string().trim().min(1, "Phone number is required").refine(isValidPhone, "Enter a valid phone number"),
   password: z.string().min(8, "Use at least 8 characters"),
 })
 
@@ -59,7 +57,7 @@ export function SignupPage() {
       return
     }
 
-    if (values.phone) updateContact(user.id, { phone: values.phone })
+    updateContact(user.id, { phone: values.phone, phoneVisible: false })
     toast.success(`Welcome, ${user.name.split(" ")[0]}! Let's set up your profile.`)
     navigate("/onboarding", { replace: true })
   }
@@ -161,9 +159,7 @@ export function SignupPage() {
           </div>
 
           <div className="flex w-full flex-col">
-            <Label htmlFor="phone">
-              Phone number <span className="font-normal text-muted-foreground">(optional)</span>
-            </Label>
+            <Label htmlFor="phone">Phone number</Label>
             <div className="pt-1.5">
               <Input
                 id="phone"
