@@ -1,13 +1,29 @@
-import { getListings } from "@/services/landlordService"
+import { getAllListings } from "@/services/landlordService"
 import { useAuthStore } from "@/stores/authStore"
 import { useLandlordStore } from "@/stores/landlordStore"
 import { usePreferencesStore } from "@/stores/preferencesStore"
 
-// The signed-in landlord's listings: mock data plus the one from onboarding, minus deleted ones.
-export function useMyListings() {
-  const userId = useAuthStore((state) => state.user?.id) ?? ""
-  const onboarding = usePreferencesStore((state) => state.records[userId]?.landlord)
+// Every listing with the landlords' changes applied: mock houses, onboarding listings
+// and added ones, minus deleted ones. Tenants and landlords both read from this.
+export function useAllListings() {
+  const records = usePreferencesStore((state) => state.records)
+  const added = useLandlordStore((state) => state.added)
+  const edits = useLandlordStore((state) => state.edits)
   const deletedIds = useLandlordStore((state) => state.deletedIds)
 
-  return getListings(userId, onboarding).filter((house) => !deletedIds.includes(house.id))
+  const onboarding = Object.fromEntries(
+    Object.entries(records).map(([userId, record]) => [userId, record.landlord])
+  )
+  return getAllListings({ onboarding, added, edits, deletedIds })
+}
+
+// Just the signed-in landlord's listings.
+export function useMyListings() {
+  const userId = useAuthStore((state) => state.user?.id) ?? ""
+  return useAllListings().filter((house) => house.landlordId === userId)
+}
+
+// What tenants browse: everything, best match first.
+export function useHouses() {
+  return useAllListings().toSorted((a, b) => b.matchScore - a.matchScore)
 }
