@@ -1,6 +1,7 @@
 [
   {
     "id": "h-101",
+    "landlordId": "u-2",
     "title": "Bright 3-bed near UCC",
     "area": "College Road",
     "address": "14 College Road, Cork",
@@ -31,6 +32,7 @@
   },
   {
     "id": "h-102",
+    "landlordId": "u-3",
     "title": "Modern apartment by the river",
     "area": "Victoria Cross",
     "address": "3 Carrigrohane Road, Cork",
@@ -59,6 +61,7 @@
   },
   {
     "id": "h-103",
+    "landlordId": "u-2",
     "title": "Quiet house with garden",
     "area": "Bishopstown",
     "address": "27 Bishopstown Avenue, Cork",
@@ -90,6 +93,7 @@
   },
   {
     "id": "h-104",
+    "landlordId": "u-3",
     "title": "City centre room above café",
     "area": "Shandon",
     "address": "8 John Redmond Street, Cork",
@@ -117,6 +121,7 @@
   },
   {
     "id": "h-105",
+    "landlordId": "u-3",
     "title": "Spacious duplex near Douglas village",
     "area": "Douglas",
     "address": "41 Maryborough Hill, Cork",
@@ -147,6 +152,7 @@
   },
   {
     "id": "h-106",
+    "landlordId": "u-2",
     "title": "Cosy terrace by the Lough",
     "area": "The Lough",
     "address": "5 Lough Road, Cork",
@@ -173,6 +179,7 @@
   },
   {
     "id": "h-107",
+    "landlordId": "u-3",
     "title": "Seaside flat in Blackrock",
     "area": "Blackrock",
     "address": "12 Blackrock Road, Cork",
@@ -201,6 +208,7 @@
   },
   {
     "id": "h-108",
+    "landlordId": "u-3",
     "title": "Student house in Wilton",
     "area": "Wilton",
     "address": "9 Wilton Gardens, Cork",
