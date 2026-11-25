@@ -1,18 +1,19 @@
-import { Heart, Lock } from "lucide-react"
+import { Heart } from "lucide-react"
 import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import { toast } from "sonner"
 
+import { ApplicationStatus } from "@/components/ApplicationStatus"
 import { HouseActions } from "@/components/HouseActions"
 import { HouseOverview } from "@/components/HouseOverview"
 import { Button } from "@/components/ui/button"
+import { useHouses } from "@/hooks/useMyListings"
 import { formatMatchLikes } from "@/lib/format"
-import { getHouse } from "@/services/houseService"
 import { useHouseStore } from "@/stores/houseStore"
 
 export function HouseDetailPage() {
   const { houseId = "" } = useParams()
-  const house = getHouse(houseId)
+  const house = useHouses().find((item) => item.id === houseId)
   const liked = useHouseStore((state) => state.likedIds.includes(houseId))
   const toggleLike = useHouseStore((state) => state.toggleLike)
 
@@ -72,13 +73,7 @@ export function HouseDetailPage() {
             Share with a match
           </Button>
 
-          <div className="mt-5 flex gap-2.5 border-t border-border pt-5">
-            <Lock className="mt-0.5 size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-            <p className="text-[13px] leading-4.75 text-muted-foreground">
-              The landlord's contact details are shared once they confirm your
-              application.
-            </p>
-          </div>
+          <ApplicationStatus house={house} />
         </>
       }
     />

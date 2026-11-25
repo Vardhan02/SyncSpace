@@ -4,7 +4,11 @@ import { Toaster } from "sonner"
 import { LandlordLayout } from "@/components/LandlordLayout"
 import { RequireAuth } from "@/components/RequireAuth"
 import { TenantLayout } from "@/components/TenantLayout"
+import { AccountSettingsPage } from "@/pages/AccountSettingsPage"
+import { ApplicationDetailPage } from "@/pages/ApplicationDetailPage"
+import { ApplicationsPage } from "@/pages/ApplicationsPage"
 import { ComingSoonPage } from "@/pages/ComingSoonPage"
+import { EditListingPage } from "@/pages/EditListingPage"
 import { ForgotPasswordPage } from "@/pages/ForgotPasswordPage"
 import { HouseDetailPage } from "@/pages/HouseDetailPage"
 import { HousesPage } from "@/pages/HousesPage"
@@ -40,6 +44,7 @@ function App() {
             <Route path="/matches" element={<ComingSoonPage title="Matches" />} />
             <Route path="/profile" element={<TenantProfilePage />} />
             <Route path="/profile/edit/:step" element={<ProfileEditPage />} />
+            <Route path="/profile/settings" element={<AccountSettingsPage />} />
           </Route>
         </Route>
 
@@ -47,23 +52,21 @@ function App() {
           <Route element={<LandlordLayout />}>
             <Route path="/landlord" element={<Navigate to="/landlord/listings" replace />} />
             <Route path="/landlord/listings" element={<MyListingsPage />} />
+            <Route path="/landlord/listings/new" element={<EditListingPage />} />
             <Route path="/landlord/listings/:houseId" element={<ListingDetailPage />} />
-            <Route
-              path="/landlord/listings/:houseId/edit"
-              element={<ComingSoonPage title="Edit listing" />}
-            />
-            <Route
-              path="/landlord/applications"
-              element={<ComingSoonPage title="Applications" />}
-            />
+            <Route path="/landlord/listings/:houseId/edit" element={<EditListingPage />} />
+            <Route path="/landlord/applications" element={<ApplicationsPage />} />
+            <Route path="/landlord/applications/:applicationId" element={<ApplicationDetailPage />} />
             <Route path="/landlord/profile" element={<LandlordProfilePage />} />
             <Route path="/landlord/profile/edit/:step" element={<ProfileEditPage />} />
+            <Route path="/landlord/profile/settings" element={<AccountSettingsPage />} />
           </Route>
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      <Toaster position="top-right" />
+      {/* Pushed down so toasts sit below the sticky header instead of over the log out button. */}
+      <Toaster position="top-right" offset={{ top: 76 }} mobileOffset={{ top: 72 }} />
     </>
   )
 }
