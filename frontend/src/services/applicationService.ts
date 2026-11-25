@@ -1,6 +1,6 @@
 import applications from "@/mocks/applications.json"
 import users from "@/mocks/users.json"
-import { CLEANLINESS, SLEEP_SCHEDULES, labelOf } from "@/lib/onboardingOptions"
+import { cardFromOnboarding } from "@/lib/tenantCard"
 import { getRoommate } from "@/services/roommateService"
 import type { Application, Roommate, TenantOnboarding } from "@/types"
 
@@ -30,14 +30,8 @@ export function getApplicant(id: string, onboarding?: Partial<TenantOnboarding>)
     course: onboarding?.course ?? "",
     university: onboarding?.university ?? "",
     bio: onboarding?.bio ?? "",
-    budget: onboarding?.budgetMax ?? 0,
-    moveIn: onboarding?.moveInDate ?? "",
-    sleepSchedule: labelOf(SLEEP_SCHEDULES, onboarding?.sleepSchedule),
-    cleanliness: labelOf(CLEANLINESS, onboarding?.cleanliness),
-    smoking: onboarding?.smoker ?? false,
-    pets: onboarding?.hasPets ?? false,
-    interests: onboarding?.interests ?? [],
     matchScore: 0,
+    ...cardFromOnboarding(onboarding ?? {}),
   }
 }
 

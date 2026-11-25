@@ -43,7 +43,7 @@ export function ApplicantProfile({ tenant }: { tenant: Roommate }) {
       </div>
 
       {tenant.bio ? (
-        <RoommateDetails roommate={tenant} />
+        <RoommateDetails roommate={tenant} shared={[]} />
       ) : (
         <p className="p-6 text-[14px] text-muted-foreground">
           This tenant hasn't finished their profile yet.

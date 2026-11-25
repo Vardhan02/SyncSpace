@@ -7,7 +7,6 @@ import { TenantLayout } from "@/components/TenantLayout"
 import { AccountSettingsPage } from "@/pages/AccountSettingsPage"
 import { ApplicationDetailPage } from "@/pages/ApplicationDetailPage"
 import { ApplicationsPage } from "@/pages/ApplicationsPage"
-import { ComingSoonPage } from "@/pages/ComingSoonPage"
 import { EditListingPage } from "@/pages/EditListingPage"
 import { ForgotPasswordPage } from "@/pages/ForgotPasswordPage"
 import { HouseDetailPage } from "@/pages/HouseDetailPage"
@@ -18,6 +17,7 @@ import { ListingDetailPage } from "@/pages/ListingDetailPage"
 import { LoginPage } from "@/pages/LoginPage"
 import { MyListingsPage } from "@/pages/MyListingsPage"
 import { OnboardingPage } from "@/pages/OnboardingPage"
+import { MatchesPage } from "@/pages/MatchesPage"
 import { ProfileEditPage } from "@/pages/ProfileEditPage"
 import { RoomateMatchPage } from "@/pages/RoomateMatchPage"
 import { SignupPage } from "@/pages/SignupPage"
@@ -41,7 +41,7 @@ function App() {
             <Route path="/houses" element={<HousesPage />} />
             <Route path="/houses/:houseId" element={<HouseDetailPage />} />
             <Route path="/roommate" element={<RoomateMatchPage />} />
-            <Route path="/matches" element={<ComingSoonPage title="Matches" />} />
+            <Route path="/matches" element={<MatchesPage />} />
             <Route path="/profile" element={<TenantProfilePage />} />
             <Route path="/profile/edit/:step" element={<ProfileEditPage />} />
             <Route path="/profile/settings" element={<AccountSettingsPage />} />

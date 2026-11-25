@@ -6,15 +6,44 @@
     "photo": "/people/ana-nichita-BI91NrppE38-unsplash.jpg",
     "course": "MSc Data Science",
     "university": "UCC",
-    "bio": "Early riser who loves cooking big weekend breakfasts. I keep shared spaces tidy and I'm always up for a movie night.",
-    "budget": 750,
+    "matchScore": 96,
+    "budgetMin": 650,
+    "budgetMax": 800,
+    "areas": [
+      "College Road",
+      "Victoria Cross"
+    ],
     "moveIn": "2027-01-04",
+    "leaseLength": "Academic year (9 months)",
     "sleepSchedule": "Early bird",
     "cleanliness": "Very tidy",
-    "smoking": false,
-    "pets": false,
-    "interests": ["Cooking", "Hiking", "Board games", "Reading"],
-    "matchScore": 96
+    "noiseTolerance": "Some noise is fine",
+    "studyPattern": "Mostly on campus",
+    "socialStyle": "In between",
+    "guests": "Weekends",
+    "smoking": "Non-smoker",
+    "pets": "Fine with pets",
+    "interests": [
+      "Cooking",
+      "Hiking",
+      "Board games",
+      "Reading"
+    ],
+    "bio": "Early riser who loves cooking big weekend breakfasts. I keep shared spaces tidy and I'm always up for a movie night.",
+    "prompts": [
+      {
+        "prompt": "You'll find me in the kitchen making…",
+        "answer": "Pancakes for the whole house every Saturday morning."
+      },
+      {
+        "prompt": "The one house rule I'd never break…",
+        "answer": "Dishes done the same day. Always."
+      },
+      {
+        "prompt": "My ideal Friday night is…",
+        "answer": "Takeaway, a board game and a film we argue about."
+      }
+    ]
   },
   {
     "id": "r-202",
@@ -23,15 +52,44 @@
     "photo": "/people/christopher-campbell-rDEOVtE7vOs-unsplash.jpg",
     "course": "PhD Computer Science",
     "university": "UCC",
-    "bio": "Quiet during the week, social on weekends. I play guitar (with headphones!) and make a mean dal.",
-    "budget": 700,
+    "matchScore": 91,
+    "budgetMin": 600,
+    "budgetMax": 750,
+    "areas": [
+      "Bishopstown",
+      "Wilton"
+    ],
     "moveIn": "2026-12-15",
+    "leaseLength": "12 months",
     "sleepSchedule": "Night owl",
     "cleanliness": "Tidy",
-    "smoking": false,
-    "pets": false,
-    "interests": ["Guitar", "Gaming", "Cycling", "Cooking"],
-    "matchScore": 91
+    "noiseTolerance": "I need quiet",
+    "studyPattern": "Mostly at home",
+    "socialStyle": "In between",
+    "guests": "Weekends",
+    "smoking": "Non-smoker",
+    "pets": "No pets",
+    "interests": [
+      "Guitar",
+      "Gaming",
+      "Cycling",
+      "Cooking"
+    ],
+    "bio": "Quiet during the week, social on weekends. I play guitar (with headphones!) and make a mean dal.",
+    "prompts": [
+      {
+        "prompt": "I'm studying / working on…",
+        "answer": "A PhD on making AI models smaller and faster."
+      },
+      {
+        "prompt": "My biggest pet peeve in a shared house…",
+        "answer": "Loud calls in the kitchen at midnight."
+      },
+      {
+        "prompt": "Something I'm weirdly good at…",
+        "answer": "Making dal that converts anyone to lentils."
+      }
+    ]
   },
   {
     "id": "r-203",
@@ -40,15 +98,44 @@
     "photo": "/people/darshan-patel-QJEVpydulGs-unsplash.jpg",
     "course": "BA English & Philosophy",
     "university": "UCC",
-    "bio": "Tea enthusiast and bookworm. I'd love a housemate who's respectful of quiet hours but also up for the odd pub quiz.",
-    "budget": 620,
+    "matchScore": 87,
+    "budgetMin": 550,
+    "budgetMax": 650,
+    "areas": [
+      "Shandon",
+      "The Lough"
+    ],
     "moveIn": "2027-01-11",
+    "leaseLength": "Academic year (9 months)",
     "sleepSchedule": "Early bird",
     "cleanliness": "Very tidy",
-    "smoking": false,
-    "pets": true,
-    "interests": ["Reading", "Writing", "Pub quizzes", "Yoga"],
-    "matchScore": 87
+    "noiseTolerance": "I need quiet",
+    "studyPattern": "Mostly at home",
+    "socialStyle": "Homebody",
+    "guests": "Rarely",
+    "smoking": "Non-smoker",
+    "pets": "I have a pet",
+    "interests": [
+      "Reading",
+      "Writing",
+      "Pub quizzes",
+      "Yoga"
+    ],
+    "bio": "Tea enthusiast and bookworm. I'd love a housemate who's respectful of quiet hours but also up for the odd pub quiz.",
+    "prompts": [
+      {
+        "prompt": "On a lazy Sunday I'm usually…",
+        "answer": "Reading in a window seat with a pot of tea and my cat."
+      },
+      {
+        "prompt": "My go-to way to sort out a disagreement…",
+        "answer": "Talk it out over tea, not in the group chat."
+      },
+      {
+        "prompt": "A small thing that makes my day…",
+        "answer": "Someone else emptying the dishwasher."
+      }
+    ]
   },
   {
     "id": "r-204",
@@ -57,15 +144,44 @@
     "photo": "/people/faizi-sheikh-NqQos13y-Xc-unsplash.jpg",
     "course": "MSc Biotechnology",
     "university": "CIT",
-    "bio": "Gym in the morning, study during the day, Netflix at night. Pretty chill about most things as long as the kitchen stays clean.",
-    "budget": 680,
+    "matchScore": 83,
+    "budgetMin": 600,
+    "budgetMax": 720,
+    "areas": [
+      "Bishopstown",
+      "College Road"
+    ],
     "moveIn": "2027-02-01",
+    "leaseLength": "12 months",
     "sleepSchedule": "Early bird",
     "cleanliness": "Tidy",
-    "smoking": false,
-    "pets": false,
-    "interests": ["Gym", "Running", "Netflix", "Photography"],
-    "matchScore": 83
+    "noiseTolerance": "Some noise is fine",
+    "studyPattern": "Mix of both",
+    "socialStyle": "In between",
+    "guests": "Weekends",
+    "smoking": "Non-smoker",
+    "pets": "Fine with pets",
+    "interests": [
+      "Gym",
+      "Running",
+      "Netflix",
+      "Photography"
+    ],
+    "bio": "Gym in the morning, study during the day, Netflix at night. Pretty chill about most things as long as the kitchen stays clean.",
+    "prompts": [
+      {
+        "prompt": "The best way to win me over is…",
+        "answer": "A clean kitchen and a gym buddy at 7am."
+      },
+      {
+        "prompt": "My ideal Friday night is…",
+        "answer": "Pizza and a Netflix series I've already seen twice."
+      },
+      {
+        "prompt": "Something I'm weirdly good at…",
+        "answer": "Taking photos of people when they're not looking."
+      }
+    ]
   },
   {
     "id": "r-205",
@@ -74,15 +190,44 @@
     "photo": "/people/ian-dooley-d1UPkiFd04A-unsplash.jpg",
     "course": "MArch Architecture",
     "university": "UCC",
-    "bio": "I spend half my life in the studio so the house is always tidy by default. Love a Sunday roast with housemates.",
-    "budget": 730,
+    "matchScore": 79,
+    "budgetMin": 650,
+    "budgetMax": 780,
+    "areas": [
+      "Shandon",
+      "Victoria Cross"
+    ],
     "moveIn": "2027-01-18",
+    "leaseLength": "12 months",
     "sleepSchedule": "Night owl",
     "cleanliness": "Average",
-    "smoking": false,
-    "pets": false,
-    "interests": ["Sketching", "Cooking", "Coffee", "Concerts"],
-    "matchScore": 79
+    "noiseTolerance": "Doesn't bother me",
+    "studyPattern": "Mostly on campus",
+    "socialStyle": "Very social",
+    "guests": "Often",
+    "smoking": "Smoke outside only",
+    "pets": "Fine with pets",
+    "interests": [
+      "Sketching",
+      "Cooking",
+      "Coffee",
+      "Concerts"
+    ],
+    "bio": "I spend half my life in the studio so the house is always tidy by default. Love a Sunday roast with housemates.",
+    "prompts": [
+      {
+        "prompt": "You'll find me in the kitchen making…",
+        "answer": "A Sunday roast for anyone who's around."
+      },
+      {
+        "prompt": "I'm studying / working on…",
+        "answer": "Architecture, so I basically live in the studio."
+      },
+      {
+        "prompt": "My ideal Friday night is…",
+        "answer": "A gig in town, then chips on the way home."
+      }
+    ]
   },
   {
     "id": "r-206",
@@ -91,15 +236,44 @@
     "photo": "/people/michael-dam-mEZ3PoFGs_k-unsplash.jpg",
     "course": "BSc Pharmacy",
     "university": "UCC",
-    "bio": "Organised and easy-going. I'm a morning person who likes the house quiet after 11pm. Big fan of farmers' markets.",
-    "budget": 660,
+    "matchScore": 74,
+    "budgetMin": 600,
+    "budgetMax": 700,
+    "areas": [
+      "Douglas",
+      "Blackrock"
+    ],
     "moveIn": "2027-03-01",
+    "leaseLength": "Academic year (9 months)",
     "sleepSchedule": "Early bird",
     "cleanliness": "Very tidy",
-    "smoking": false,
-    "pets": false,
-    "interests": ["Farmers' markets", "Baking", "Pilates", "Podcasts"],
-    "matchScore": 74
+    "noiseTolerance": "I need quiet",
+    "studyPattern": "Mostly at home",
+    "socialStyle": "Homebody",
+    "guests": "Rarely",
+    "smoking": "Non-smoker",
+    "pets": "No pets",
+    "interests": [
+      "Farmers' markets",
+      "Baking",
+      "Pilates",
+      "Podcasts"
+    ],
+    "bio": "Organised and easy-going. I'm a morning person who likes the house quiet after 11pm. Big fan of farmers' markets.",
+    "prompts": [
+      {
+        "prompt": "The one house rule I'd never break…",
+        "answer": "Quiet after 11pm on weeknights."
+      },
+      {
+        "prompt": "On a lazy Sunday I'm usually…",
+        "answer": "At the farmers' market, then baking whatever I bought."
+      },
+      {
+        "prompt": "A small thing that makes my day…",
+        "answer": "A tidy fridge with everyone's food labelled."
+      }
+    ]
   },
   {
     "id": "r-207",
@@ -108,15 +282,44 @@
     "photo": "/people/seth-doyle-vmBik4xv27s-unsplash.jpg",
     "course": "BSc Computer Science",
     "university": "UCC",
-    "bio": "First year of living away from home. I'm friendly, a decent cook, and I promise to always do my dishes.",
-    "budget": 600,
+    "matchScore": 70,
+    "budgetMin": 500,
+    "budgetMax": 650,
+    "areas": [
+      "College Road",
+      "Bishopstown"
+    ],
     "moveIn": "2027-01-04",
+    "leaseLength": "Semester (4–5 months)",
     "sleepSchedule": "Night owl",
     "cleanliness": "Tidy",
-    "smoking": false,
-    "pets": false,
-    "interests": ["Gaming", "Anime", "Coffee", "Walks"],
-    "matchScore": 70
+    "noiseTolerance": "Some noise is fine",
+    "studyPattern": "Mix of both",
+    "socialStyle": "In between",
+    "guests": "Weekends",
+    "smoking": "Non-smoker",
+    "pets": "Fine with pets",
+    "interests": [
+      "Gaming",
+      "Anime",
+      "Coffee",
+      "Walks"
+    ],
+    "bio": "First year of living away from home. I'm friendly, a decent cook, and I promise to always do my dishes.",
+    "prompts": [
+      {
+        "prompt": "The best way to win me over is…",
+        "answer": "Coffee. Any coffee. I'm not fussy."
+      },
+      {
+        "prompt": "My go-to way to sort out a disagreement…",
+        "answer": "Say it straight, then go for a walk together."
+      },
+      {
+        "prompt": "Something I'm weirdly good at…",
+        "answer": "Speedrunning old video games."
+      }
+    ]
   },
   {
     "id": "r-208",
@@ -125,15 +328,43 @@
     "photo": "/people/ana-nichita-BI91NrppE38-unsplash.jpg",
     "course": "HDip Education",
     "university": "UCC",
-    "bio": "Mature student, calm and collected. Happy to cook together or do our own thing. Early to bed, early to rise.",
-    "budget": 710,
+    "matchScore": 65,
+    "budgetMin": 600,
+    "budgetMax": 750,
+    "areas": [
+      "Douglas",
+      "Wilton"
+    ],
     "moveIn": "2027-01-04",
+    "leaseLength": "12 months",
     "sleepSchedule": "Early bird",
     "cleanliness": "Very tidy",
-    "smoking": false,
-    "pets": true,
-    "interests": ["GAA", "Hiking", "Reading", "Cooking"],
-    "matchScore": 65
+    "noiseTolerance": "Some noise is fine",
+    "studyPattern": "Night shifts",
+    "socialStyle": "Homebody",
+    "guests": "Rarely",
+    "smoking": "Non-smoker",
+    "pets": "I have a pet",
+    "interests": [
+      "GAA",
+      "Hiking",
+      "Reading",
+      "Cooking"
+    ],
+    "bio": "Mature student, calm and collected. Happy to cook together or do our own thing. Early to bed, early to rise.",
+    "prompts": [
+      {
+        "prompt": "The one house rule I'd never break…",
+        "answer": "Leave the place as you'd want to find it."
+      },
+      {
+        "prompt": "On a lazy Sunday I'm usually…",
+        "answer": "Out hiking with the dog, then a GAA match on telly."
+      },
+      {
+        "prompt": "I'm studying / working on…",
+        "answer": "Becoming a secondary school teacher after years in retail."
+      }
+    ]
   }
 ]
-
