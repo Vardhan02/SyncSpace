@@ -10,7 +10,6 @@ import org.springframework.web.client.RestClient;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-// Thin wrapper around the Supabase Auth (GoTrue) REST api
 @Component
 public class SupabaseAuthClient {
 
@@ -59,9 +58,10 @@ public class SupabaseAuthClient {
 				.body(Session.class);
 	}
 
+	// local = only this session, the default would sign the user out everywhere
 	public void logout(String accessToken) {
 		http.post()
-				.uri("/logout")
+				.uri("/logout?scope=local")
 				.header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
 				.retrieve()
 				.toBodilessEntity();
