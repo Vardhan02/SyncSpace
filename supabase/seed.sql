@@ -74,30 +74,30 @@ FROM (VALUES
     (201, 600, 750, '{College Road,Bishopstown}',                'double',   '2027-01-04',  9, 3),
     (202, 550, 700, '{Victoria Cross,Bishopstown,Wilton}',       'single',   '2026-12-15', 12, 4),
     (203, 500, 620, '{The Lough,College Road}',                  'single',   '2027-01-11',  9, 2),
-    (204, 550, 680, '{Douglas,Wilton}',                          'double',   '2027-02-01',  6, 3),
+    (204, 550, 680, '{Douglas,Wilton}',                          'double',   '2027-02-01',  5, 3),
     (205, 600, 730, '{Shandon,City Centre}',                     'double',   '2027-01-18', 12, 2),
-    (206, 550, 660, '{Douglas,Blackrock}',                       'single',   '2027-03-01',  6, 2),
+    (206, 550, 660, '{Douglas,Blackrock}',                       'single',   '2027-03-01',  5, 2),
     (207, 450, 600, '{Wilton,Bishopstown,College Road}',         'single',   '2027-01-04',  9, 4),
-    (208, 600, 710, '{Blackrock,Douglas,The Lough}',             'en_suite', '2027-01-04', 12, 2)
+    (208, 600, 710, '{Blackrock,Douglas,The Lough}',             'ensuite',  '2027-01-04', 12, 2)
 ) AS v(n, bmin, bmax, areas, rt, mi, lease, mates);
 
 INSERT INTO public.tenant_lifestyle_preferences
     (tenant_id, sleep_schedule, noise_tolerance, cleanliness, work_schedule, social_level,
      guest_frequency, smoker, ok_with_smoking, has_pets, ok_with_pets)
 SELECT pg_temp.uid(n), sleep::public.sleep_schedule, noise, clean::public.cleanliness_level,
-       work::public.work_schedule, social::public.social_level, guests::public.frequency,
+       work::public.work_schedule, social::public.social_level, guests::public.guest_frequency,
        smoker, ok_smoke, pets, ok_pets
 FROM (VALUES
-    -- n    sleep         noise clean        work       social      guests       smoker ok_smoke pets   ok_pets
-    (200, 'night_owl',   3,    'tidy',      'mixed',   'balanced', 'sometimes', FALSE, FALSE,   FALSE, TRUE),
-    (201, 'early_bird',  3,    'very_tidy', 'daytime', 'social',   'sometimes', FALSE, FALSE,   FALSE, TRUE),
-    (202, 'night_owl',   2,    'tidy',      'evening', 'balanced', 'rarely',    FALSE, FALSE,   FALSE, FALSE),
-    (203, 'early_bird',  1,    'very_tidy', 'daytime', 'homebody', 'rarely',    FALSE, FALSE,   TRUE,  TRUE),
-    (204, 'early_bird',  3,    'tidy',      'daytime', 'balanced', 'sometimes', FALSE, FALSE,   FALSE, TRUE),
-    (205, 'night_owl',   4,    'average',   'mixed',   'social',   'often',     FALSE, TRUE,    FALSE, TRUE),
-    (206, 'early_bird',  1,    'very_tidy', 'daytime', 'homebody', 'rarely',    FALSE, FALSE,   FALSE, FALSE),
-    (207, 'night_owl',   4,    'tidy',      'remote',  'social',   'often',     FALSE, FALSE,   FALSE, TRUE),
-    (208, 'early_bird',  2,    'very_tidy', 'daytime', 'balanced', 'sometimes', FALSE, FALSE,   TRUE,  TRUE)
+    -- n    sleep         noise clean        work            social      guests      smoker ok_smoke pets   ok_pets
+    (200, 'night_owl',   3,    'tidy',      'mixed',        'balanced', 'weekends', FALSE, FALSE,   FALSE, TRUE),
+    (201, 'early_bird',  3,    'very_tidy', 'on_campus',    'social',   'weekends', FALSE, FALSE,   FALSE, TRUE),
+    (202, 'night_owl',   2,    'tidy',      'night_shifts', 'balanced', 'rarely',   FALSE, FALSE,   FALSE, FALSE),
+    (203, 'early_bird',  1,    'very_tidy', 'on_campus',    'homebody', 'rarely',   FALSE, FALSE,   TRUE,  TRUE),
+    (204, 'early_bird',  3,    'tidy',      'on_campus',    'balanced', 'weekends', FALSE, FALSE,   FALSE, TRUE),
+    (205, 'night_owl',   4,    'tidy',      'mixed',        'social',   'often',    FALSE, TRUE,    FALSE, TRUE),
+    (206, 'early_bird',  1,    'very_tidy', 'on_campus',    'homebody', 'rarely',   FALSE, FALSE,   FALSE, FALSE),
+    (207, 'night_owl',   4,    'tidy',      'from_home',    'social',   'often',    FALSE, FALSE,   FALSE, TRUE),
+    (208, 'early_bird',  2,    'very_tidy', 'on_campus',    'balanced', 'weekends', FALSE, FALSE,   TRUE,  TRUE)
 ) AS v(n, sleep, noise, clean, work, social, guests, smoker, ok_smoke, pets, ok_pets);
 
 INSERT INTO public.tenant_interests (tenant_id, interest)
@@ -162,44 +162,40 @@ FROM (VALUES
 INSERT INTO public.landlords (id) VALUES (pg_temp.uid(301)), (pg_temp.uid(302)), (pg_temp.uid(303));
 
 INSERT INTO public.landlord_preferences (landlord_id, preferred_tenants, min_lease_months, references_required) VALUES
-    (pg_temp.uid(301), 'students',      9,  FALSE),
-    (pg_temp.uid(302), 'any',           6,  TRUE),
-    (pg_temp.uid(303), 'professionals', 12, TRUE);
+    (pg_temp.uid(301), 'student',      9,  FALSE),
+    (pg_temp.uid(302), 'any',          5,  TRUE),
+    (pg_temp.uid(303), 'professional', 12, TRUE);
 
 INSERT INTO public.houses (house_id, landlord_id, title, area, address, rent, room_type, available_from, rooms_available, verified)
 SELECT house_id, pg_temp.uid(ll), title, area, address, rent, rt::public.room_type, af::DATE, rooms, verified
 FROM (VALUES
     (101, 301, 'Bright 3-bed near UCC',                'College Road',   '14 College Road, Cork',       750, 'double',   '2027-01-04', 2, TRUE),
-    (102, 301, 'Modern apartment by the river',        'Victoria Cross', '3 Carrigrohane Road, Cork',   820, 'en_suite', '2026-12-15', 1, TRUE),
+    (102, 301, 'Modern apartment by the river',        'Victoria Cross', '3 Carrigrohane Road, Cork',   820, 'ensuite',  '2026-12-15', 1, TRUE),
     (103, 301, 'Quiet house with garden',              'Bishopstown',    '27 Bishopstown Avenue, Cork', 650, 'single',   '2027-01-11', 3, FALSE),
     (104, 302, 'City centre room above café',          'Shandon',        '8 John Redmond Street, Cork', 700, 'double',   '2026-12-01', 1, TRUE),
     (105, 302, 'Spacious duplex near Douglas village', 'Douglas',        '41 Maryborough Hill, Cork',   690, 'double',   '2027-02-01', 2, TRUE),
     (106, 302, 'Cosy terrace by the Lough',            'The Lough',      '5 Lough Road, Cork',          620, 'single',   '2027-01-18', 1, FALSE),
-    (107, 303, 'Seaside flat in Blackrock',            'Blackrock',      '12 Blackrock Road, Cork',     780, 'en_suite', '2027-03-01', 2, TRUE),
+    (107, 303, 'Seaside flat in Blackrock',            'Blackrock',      '12 Blackrock Road, Cork',     780, 'ensuite',  '2027-03-01', 2, TRUE),
     (108, 303, 'Student house in Wilton',              'Wilton',         '9 Wilton Gardens, Cork',      600, 'single',   '2027-01-04', 4, FALSE)
 ) AS v(house_id, ll, title, area, address, rent, rt, af, rooms, verified);
 
 INSERT INTO public.house_preferences
     (house_id, pets_allowed, smoking_allowed, guest_policy, quiet_hours_start, quiet_hours_end,
      min_lease_months, max_occupants, extra_rules) VALUES
-    (101, FALSE, FALSE, 'sometimes', '23:00', '07:00',  9, 3, 'Bins out Tuesday night.'),
-    (102, FALSE, FALSE, 'rarely',    '22:00', '08:00', 12, 2, 'No parties. Bikes in the bike store only.'),
-    (103, TRUE,  FALSE, 'sometimes', '23:00', '07:00',  9, 4, 'Garden upkeep shared between tenants.'),
-    (104, FALSE, FALSE, 'often',     NULL,    NULL,     6, 2, 'Café below opens at 7am, expect some morning noise.'),
-    (105, FALSE, FALSE, 'sometimes', '23:00', '07:00',  6, 3, NULL),
-    (106, TRUE,  FALSE, 'rarely',    '22:00', '07:00',  9, 2, 'Small pets only (cats, small dogs).'),
-    (107, FALSE, FALSE, 'rarely',    '22:30', '07:30', 12, 3, 'Professionals preferred. References required.'),
-    (108, FALSE, TRUE,  'often',     '00:00', '08:00',  9, 5, 'Smoking in the back garden only.');
+    (101, FALSE, FALSE, 'weekends',     '23:00', '07:00',  9, 3, 'Bins out Tuesday night.'),
+    (102, FALSE, FALSE, 'no_overnight', '22:00', '08:00', 12, 2, 'No parties. Bikes in the bike store only.'),
+    (103, TRUE,  FALSE, 'weekends',     '23:00', '07:00',  9, 4, 'Garden upkeep shared between tenants.'),
+    (104, FALSE, FALSE, 'welcome',      NULL,    NULL,     5, 2, 'Café below opens at 7am, expect some morning noise.'),
+    (105, FALSE, FALSE, 'weekends',     '23:00', '07:00',  5, 3, NULL),
+    (106, TRUE,  FALSE, 'no_overnight', '22:00', '07:00',  9, 2, 'Small pets only (cats, small dogs).'),
+    (107, FALSE, FALSE, 'no_overnight', '22:30', '07:30', 12, 3, 'Professionals preferred. References required.'),
+    (108, FALSE, TRUE,  'welcome',      '00:00', '08:00',  9, 5, 'Smoking in the back garden only.');
 
 -- same photo counts as houses.json, paths are inside the house-photos bucket
 INSERT INTO public.house_photos (house_id, url, position)
 SELECT h.house_id, h.house_id || '/' || p || '.jpg', p
 FROM (VALUES (101, 7), (102, 5), (103, 4), (104, 6), (105, 8), (106, 3), (107, 5), (108, 4)) AS h(house_id, n)
 CROSS JOIN LATERAL generate_series(0, h.n - 1) AS p;
-
-INSERT INTO public.amenities (name) VALUES
-    ('WiFi'), ('Washing machine'), ('Study desk'), ('En-suite'), ('Kitchen access'),
-    ('Garden'), ('Parking'), ('Double bed'), ('Bike storage'), ('Dishwasher'), ('Balcony');
 
 -- null vlm_verified = not checked yet
 INSERT INTO public.house_amenities (house_id, amenity_id, vlm_verified)
