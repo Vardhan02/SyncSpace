@@ -1,4 +1,4 @@
-import { Pencil } from "lucide-react"
+import { Pencil, Settings } from "lucide-react"
 import type { ReactNode } from "react"
 import { Link } from "react-router-dom"
 
@@ -38,6 +38,18 @@ export function EditLink({ to, label = "Edit" }: { to: string; label?: string })
     >
       <Pencil className="size-3.5" aria-hidden="true" />
       {label}
+    </Link>
+  )
+}
+
+export function SettingsLink({ to }: { to: string }) {
+  return (
+    <Link
+      to={to}
+      className="flex shrink-0 items-center gap-1.5 rounded-full border border-border px-3.5 py-2 text-[14px] font-medium text-foreground hover:bg-secondary"
+    >
+      <Settings className="size-4" aria-hidden="true" />
+      Settings
     </Link>
   )
 }

@@ -1,5 +1,5 @@
 import { ContactSection } from "@/components/profile/ContactSection"
-import { Avatar, InfoList, ProfileSection } from "@/components/profile/ProfileParts"
+import { Avatar, InfoList, ProfileSection, SettingsLink } from "@/components/profile/ProfileParts"
 import { MIN_LEASE, TENANT_TYPES, YES_NO, labelOf, landlordDefaults } from "@/lib/onboardingOptions"
 import { useAuthStore } from "@/stores/authStore"
 import { usePreferencesStore } from "@/stores/preferencesStore"
@@ -12,13 +12,16 @@ export function LandlordProfilePage() {
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-6">
-      <div>
-        <h1 className="text-[26px] font-semibold tracking-[-0.5px] text-foreground md:text-[30px]">
-          Your profile
-        </h1>
-        <p className="pt-1 text-[14px] text-muted-foreground">
-          Tenants only see your details after you confirm their application.
-        </p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-[26px] font-semibold tracking-[-0.5px] text-foreground md:text-[30px]">
+            Your profile
+          </h1>
+          <p className="pt-1 text-[14px] text-muted-foreground">
+            Tenants only see your details after you confirm their application.
+          </p>
+        </div>
+        <SettingsLink to="/landlord/profile/settings" />
       </div>
 
       <section className="flex items-center gap-4 rounded-[20px] border border-border p-5 md:p-6">

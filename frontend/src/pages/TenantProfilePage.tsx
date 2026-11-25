@@ -1,5 +1,5 @@
 import { ContactSection } from "@/components/profile/ContactSection"
-import { Avatar, EditLink, InfoList, ProfileSection } from "@/components/profile/ProfileParts"
+import { Avatar, EditLink, InfoList, ProfileSection, SettingsLink } from "@/components/profile/ProfileParts"
 import {
   CLEANLINESS,
   GUEST_FREQUENCY,
@@ -48,13 +48,16 @@ export function TenantProfilePage() {
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-6">
-      <div>
-        <h1 className="text-[26px] font-semibold tracking-[-0.5px] text-foreground md:text-[30px]">
-          Your profile
-        </h1>
-        <p className="pt-1 text-[14px] text-muted-foreground">
-          The card below is what other tenants see when they swipe.
-        </p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-[26px] font-semibold tracking-[-0.5px] text-foreground md:text-[30px]">
+            Your profile
+          </h1>
+          <p className="pt-1 text-[14px] text-muted-foreground">
+            The card below is what other tenants see when they swipe.
+          </p>
+        </div>
+        <SettingsLink to="/profile/settings" />
       </div>
 
       {/* Preview of the roommate card */}
