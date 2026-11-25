@@ -17,6 +17,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @RestController
@@ -26,7 +27,8 @@ public class AuthController {
 	public record SignupRequest(
 			@NotBlank(message = "name is required") String name,
 			@NotBlank(message = "email is required") @Email(message = "invalid email") String email,
-			@NotBlank(message = "phone is required") String phone,
+			@NotBlank(message = "phone is required")
+			@Pattern(regexp = "\\+?[\\d\\s]{7,20}", message = "invalid phone number") String phone,
 			@NotBlank @Size(min = 8, message = "password needs at least 8 characters") String password,
 			@NotNull(message = "pick tenant or landlord") UserRole role,
 			Boolean phoneVisible) {
