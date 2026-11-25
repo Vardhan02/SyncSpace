@@ -125,3 +125,13 @@ export type Roommate = {
   interests: string[]
   matchScore: number
 }
+
+// A pair of matched tenants who both clicked Apply on the same house.
+export type Application = {
+  id: string
+  houseId: string
+  tenantIds: [string, string]
+  submittedAt: string
+}
+
+export type ApplicationDecision = "confirmed" | "ignored"
