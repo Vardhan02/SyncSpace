@@ -1,0 +1,375 @@
+# SyncScape — Product Flow & Feature Specification
+
+---
+
+## Overview
+
+SyncScape is a dual-sided web application serving two user types:
+- **Tenant** — A student/renter looking for a room and/or a compatible roommate.
+- **Landlord** — A property owner listing accommodation.
+
+> [!IMPORTANT]
+> **City-scoped only.** The platform is currently scoped to a Cork. All house listings and tenant-roommate matching happens within Cork; no cross-city features are needed at this stage.
+
+---
+
+## Step 1 — Sign Up (General / Common)
+
+Both user types share the same registration screen.
+
+| Field | Notes |
+|---|---|
+| Full Name | Required |
+| Email | Required; used as display contact by default |
+| Phone Number | Required; user can toggle visibility to matches |
+| Password | Standard |
+| User Type | `Tenant` or `Landlord` (radio/toggle) |
+
+> [!IMPORTANT]
+> Phone number visibility is a **user-controlled toggle** — once toggled on, it is shown alongside the email on the user's match card instead of, or in addition to, the email so that your matches can view it.
+
+After registration → **Log In** screen.
+
+---
+
+## Step 2 — Log In
+
+Standard email + password login. On first login, the user is redirected to **Profile Setup** (Step 3). On subsequent logins, they go directly to the **Dashboard** (Step 4).
+
+---
+
+## Step 3 — Profile / Onboarding Setup
+
+> **All sections below must be completed before the user can access the Dashboard.** Partial completion is saved as draft but does not unlock the dashboard.
+
+### 3A — Landlord Onboarding: Create a Listing
+
+A landlord must have **at least one active listing** to proceed. The creation flow has three sections:
+
+#### Section 1 — Property Details
+*(Fields defined in the onboarding flow file — refer to that file for the full field list)*
+- Property name / title
+- Location / address
+- Rent (monthly)
+- Room type (single, double, en-suite, etc.)
+- Available from (date)
+- Number of available rooms
+
+#### Section 2 — Amenities
+Checklist of offered amenities (e.g., WiFi, Washing Machine, Study Desk, Double Bed, Kitchen Access, etc.)
+
+> [!NOTE]
+> Each checked amenity becomes a verification target for the **VLM Listing Verification** pipeline (AI checks uploaded photos to confirm claims are visually supported).
+
+#### Section 3 — Rules
+- Pet policy
+- Smoking policy
+- Guest policy
+- Quiet hours
+- Any additional rules
+
+#### Photos Upload
+- Minimum 1 photo required; multiple encouraged.
+- Photos are processed by the VLM pipeline in the background to:
+  1. Cross-verify amenities claimed.
+  2. Check photo quality (lighting, clarity).
+- Listing is granted a **"Verified"** badge once VLM passes both checks.
+
+---
+
+### 3B — Tenant Onboarding: Preference Setup
+
+Three sections, all required:
+
+#### Section 1 — House / Accommodation Preferences
+*(Refer to onboarding flow file for full field list)*
+- Budget range (min–max)
+- Preferred location(s) / area
+- Room type preference
+- Move-in date
+- Lease duration preference
+- Number of housemates comfortable with
+
+#### Section 2 — Lifestyle Preferences
+- Sleep schedule (Early bird / Night owl)
+- Noise tolerance
+- Cleanliness level
+- Work/study schedule
+- Social habits (homebody / social)
+- Guest frequency
+- Pet ownership / tolerance
+
+#### Section 3 — Personality Prompts *(New Feature — Not Yet Implemented)*
+- The tenant answers **3 questions** chosen from a **bank of 10 prompts** (Prompt 1 through Prompt 10).
+- These answers are displayed on the tenant's public-facing Roommate card, giving potential matches a personality snapshot.
+
+**Prompt Bank (10 total):**
+
+| # | Prompt |
+|---|---|
+| Prompt 1 | *(TBD)* |
+| Prompt 2 | *(TBD)* |
+| Prompt 3 | *(TBD)* |
+| Prompt 4 | *(TBD)* |
+| Prompt 5 | *(TBD)* |
+| Prompt 6 | *(TBD)* |
+| Prompt 7 | *(TBD)* |
+| Prompt 8 | *(TBD)* |
+| Prompt 9 | *(TBD)* |
+| Prompt 10 | *(TBD)* |
+
+> [!TIP]
+> This section is the main differentiator for the **Roommate matching** feature — surface these answers prominently on the swipe card.
+
+---
+
+## Step 4 — Dashboard
+
+The dashboard has a **top navigation header** with four tabs:
+
+```
+[ Houses ]  [ Roommate ]  [ Matches ]  [ Profile ]
+```
+
+---
+
+### Tab 1 — Houses
+
+A ranked grid of property listings, personalized to the tenant's preferences (Section 1 of onboarding).
+
+**Grid Layout:**
+- Top-left card = highest match score (most compatible listing).
+- Remaining cards sorted by descending match score.
+- Ranking is computed internally by the **Cosine Similarity / Two-Tower matching engine**.
+
+**Each House Card displays:**
+- **Photo section**: Large hero/main photo + small grid of additional photos. Bottom-right corner shows a **`+X` button** (e.g., `+4`) indicating how many more photos exist — clicking expands the full gallery.
+- **Property name**
+- **Location**
+- **Two action buttons:**
+  - ❤️ **Like** — saves/likes the property.
+  - 🔗 **Share** — share with a matched roommate.
+- **Like counter** — shows which people from your **matches list** have also liked this property (only visible within match context).
+
+**House Detail View (on click):**
+Full-page profile for the property containing:
+- Full photo gallery
+- Rent
+- Full amenities list
+- Rules
+- Location map (if implemented)
+- Verified badge (if VLM-approved)
+- Landlord contact (after liking / mutual interest)
+
+---
+
+### Tab 2 — Roommate *(Tinder-style Swipe)*
+
+The core feature. Shows potential roommate profiles ranked by compatibility score (based on matching lifestyle + accommodation preferences).
+
+**Swipe Card contains:**
+- Profile photo
+- Name
+- Age / University (if provided)
+- Budget range
+- Preferred area
+- Lifestyle tags (e.g., "Night owl", "Pet-friendly", "Clean freak")
+- **3 Personality Prompt answers** (from Section 3 of onboarding)
+- Scroll down for full details within the card
+
+**Interaction (Web version):**
+- **← Arrow / Left click** = Swipe Left (skip / not interested)
+- **→ Arrow / Right click** = Swipe Right (interested / want to room together)
+
+**Matching logic:**
+- A **Match** is created only when **both** tenants swipe right on each other (mutual swipe).
+- If User A swipes right on User B but User B has not swiped yet, User A's profile appears in User B's **Likes tab**. User B can click into User A's profile from the Likes tab and then swipe to accept or decline — creating a match if they swipe right.
+- Swiping left = skipped for now (profile not surfaced again by default).
+
+---
+
+---
+
+### Tab 3 — Matches
+
+Two sub-sections:
+
+#### Matches
+- Shows all **mutual matches** (both parties swiped right on each other).
+- Each match is displayed as a **card** containing:
+  - Profile photo
+  - Name
+  - Email (shown by default)
+  - Phone number *(only if the matched user toggled this on)*
+- Clicking a match card → opens the **Match Entity Dialog** (see below).
+
+#### The Match Entity (Dialog/Overlay)
+When you click on a match card, an overlay/dialog opens. This is the shared space between the two matched tenants. It contains:
+- **Your matched person's profile info** — photo, name, contact details.
+- **Shared Houses list** — all houses either party has shared with the other (see House Sharing below).
+
+For each shared house in the dialog:
+- The **receiver** of the shared house sees two action buttons:
+  - ❤️ **Like** — marks the house as liked on their end.
+  - ✅ **Apply** — signals they are willing to apply to rent this house with the matched person.
+- The **sender** can see whether the other person has applied.
+- **Both parties must click Apply** for the joint application to be submitted to the landlord.
+
+> [!IMPORTANT]
+> A joint application (pair application) is only submitted to the landlord once **both matched tenants have clicked Apply** on the same house. This confirms mutual intent to rent together.
+
+#### House Sharing Flow
+1. Tenant A is on the **Houses tab** and clicks the 🔗 **Share** button on a house card.
+2. A picker shows their list of matches. Tenant A selects a match.
+3. That house is added to the **Match Entity Dialog** between Tenant A and the selected match.
+4. Tenant B (the match) sees the shared house in their Match Entity Dialog and can Like or Apply.
+
+> [!NOTE]
+> Sharing is **restricted to existing matches only** — you cannot share a house with someone who is not yet a mutual match.
+
+#### Likes Sub-section
+- Shows profiles of people who have **swiped right on you** but you haven't responded to yet.
+- Each card shows:
+  - Profile photo
+  - Name only *(contact info hidden until mutual match)*
+- Clicking a Likes card → opens their full **Roommate swipe-card profile** so you can swipe right (match) or left (skip).
+
+> [!NOTE]
+> Contact info is withheld in Likes to incentivize the swipe action and protect privacy before a mutual match is formed.
+
+---
+
+### Tab 4 — Profile
+
+- View your own profile as others see it.
+- Edit all onboarding sections (house preferences, lifestyle, prompts).
+- Toggle email / phone number visibility.
+- Account settings.
+
+---
+
+## Landlord Dashboard
+
+The landlord has a separate dashboard experience (not the same tabs as a tenant). It has two main sections:
+
+### Section 1 — My Listings
+
+A grid/list of all properties the landlord has created.
+
+**Each listing card shows:**
+- Main property photo
+- Property name
+- Address
+- **Like count** — total number of tenant likes this listing has received.
+  - Clicking the like count opens a **Likes Dialog** (overlay) that shows a list of the **names** of all tenants who have liked the property. No other info is shown (no contact details).
+
+**Actions on listing card:**
+- Edit listing
+- Delete listing
+- View full listing detail
+
+> [!IMPORTANT]
+> The landlord's **contact information is never displayed to tenants** at any point in the browsing flow. It is only shared after the landlord explicitly **Confirms** a pair application (see below).
+
+---
+
+### Section 2 — Applications (Match Applications)
+
+This is the core workflow for the landlord. It shows all **joint pair applications** that have been submitted to any of their listings.
+
+**How a pair application reaches here:**
+- Two matched tenants both clicked **Apply** on the same shared house.
+- This creates a joint application entity that appears in the landlord's Applications section for that listing.
+
+**Application card shows:**
+- The listing the pair applied for
+- Tenant A's profile snapshot (photo + name)
+- Tenant B's profile snapshot (photo + name)
+
+**Landlord can click into the application** to view both tenants' full profiles (preferences, lifestyle, personality prompts).
+
+**Two actions per application:**
+| Action | Effect |
+|---|---|
+| ✅ **Confirm** | Application accepted. The landlord's contact details are shared with both tenants. The listing may be marked as pending/filled. |
+| ❌ **Ignore** | Application rejected. The pair is removed from the landlord's applications list. |
+
+> [!NOTE]
+> Only after **Confirm** are the landlord's contact details revealed to the applying tenants. At no other point in the app is landlord contact info visible.
+
+---
+
+## Data & Matching Notes
+
+| Entity | Matching Input | Algorithm |
+|---|---|---|
+| Tenant ↔ Listing | Budget, location, room type, move-in date | Cosine Similarity → Two-Tower NN |
+| Tenant ↔ Tenant | Lifestyle prefs, sleep schedule, cleanliness, social habits | Cosine Similarity → Two-Tower NN |
+
+**Like tracking for houses:**
+- The system tracks which users from a tenant's **match list** have liked a given property.
+- This "liked by X of your matches" counter is only surfaced within the match context (not globally).
+
+---
+
+## User Flow Diagram
+
+```mermaid
+flowchart TD
+    A["Sign Up\n(Name, Email, Phone, Type)"] --> B[Log In]
+    B --> C{First Login?}
+    C -- No --> D{User Type}
+    C -- Yes --> E{User Type}
+    E -- Landlord --> F["Landlord Onboarding\n1. Property Details\n2. Amenities\n3. Rules + Photos"]
+    F --> F1[VLM Verification\nruns in background]
+    F1 --> LD[Landlord Dashboard]
+    E -- Tenant --> G["Tenant Onboarding\n1. House Preferences\n2. Lifestyle Preferences\n3. Personality Prompts (3 of 10)"]
+    G --> DASH[Tenant Dashboard]
+    D -- Landlord --> LD
+    D -- Tenant --> DASH
+
+    DASH --> T1[Houses Tab]
+    DASH --> T2[Roommate Tab]
+    DASH --> T3[Matches Tab]
+    DASH --> T4[Profile Tab]
+
+    T1 --> H1[Ranked House Grid]
+    H1 --> H2[House Detail View]
+    H1 -- Share Button --> HS["Share to Match\n(picker: select a match)"]
+    HS --> ME[Match Entity Dialog]
+
+    T2 --> S1[Swipe Card Stack]
+    S1 -- "Swipe Right" --> S2{Did they also\nswipe right?}
+    S2 -- Yes --> M1[Match Created]
+    S2 -- No --> WL["Appears in their\nLikes tab"]
+    S1 -- "Swipe Left" --> S3[Skip]
+
+    T3 --> MA[Matches sub-section]
+    T3 --> LI[Likes sub-section]
+    MA --> ME
+    LI --> S1
+    ME --> AP["Both Apply?\n(mutual Apply click)"]
+    AP -- Yes --> PA[Pair Application\nSent to Landlord]
+    AP -- No --> ME
+
+    LD --> LL[My Listings]
+    LD --> LAP[Applications Section]
+    LL --> LC["Likes Dialog\n(names only)"]
+    LAP --> LV[View Pair Profiles]
+    LV -- Confirm --> LX["Landlord contact\nshared with pair"]
+    LV -- Ignore --> LY[Application removed]
+```
+
+---
+
+## Open Items / TODOs
+
+| # | Item | Priority |
+|---|---|---|
+| 1 | Define the full field list for House Preferences (onboarding flow file) | High |
+| 2 | Write the 10 personality prompts (Prompt 1–Prompt 10) | High |
+| 3 | Implement Personality Prompts section (Section 3 of tenant onboarding) | Medium |
+| 4 | Landlord dashboard UI — listing management, edit/delete, VLM status badge | Medium |
+| 5 | Decide: are house likes globally visible or match-scoped only on the card counter | Medium |
+| 6 | Chat feature (noted in sketch — future scope) | Low |
+| 7 | Identity Verification (selfie vs. ID — experimental stretch goal) | Low |
