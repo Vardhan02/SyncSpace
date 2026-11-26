@@ -21,7 +21,7 @@ public class ListingService {
 			"The Lough", "Victoria Cross", "Wilton");
 	static final List<String> ROOM_TYPES = List.of("single", "double", "ensuite");
 	static final List<Integer> MIN_LEASE_MONTHS = List.of(1, 3, 5, 9, 12);
-	public static final int MAX_PHOTOS = 10;
+	public static final int MAX_PHOTOS = 6;
 
 	private final HouseRepository houses;
 	private final HouseRulesRepository rules;
