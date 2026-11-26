@@ -6,7 +6,7 @@ import { toast } from "sonner"
 import { ApplicantProfile } from "@/components/applications/ApplicantProfile"
 import { Modal } from "@/components/Modal"
 import { Button } from "@/components/ui/button"
-import { useLandlordApplications, useLandlordContact } from "@/hooks/useApplications"
+import { useLandlordApplication, useLandlordContact } from "@/hooks/useApplications"
 import { formatDate } from "@/lib/format"
 import { useApplicationStore } from "@/stores/applicationStore"
 import { useAuthStore } from "@/stores/authStore"
@@ -14,7 +14,7 @@ import { useAuthStore } from "@/stores/authStore"
 export function ApplicationDetailPage() {
   const { applicationId = "" } = useParams()
   const navigate = useNavigate()
-  const item = useLandlordApplications().find((entry) => entry.application.id === applicationId)
+  const item = useLandlordApplication(applicationId)
   const decide = useApplicationStore((state) => state.decide)
   const landlordId = useAuthStore((state) => state.user?.id) ?? ""
   const contact = useLandlordContact(landlordId)

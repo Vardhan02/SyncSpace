@@ -3,7 +3,7 @@ import { cardFromOnboarding } from "@/lib/tenantCard"
 import roommates from "@/mocks/roommates.json"
 import type { Roommate, TenantOnboarding, TenantPreferences } from "@/types"
 
-type ApiTenantCard = Partial<TenantOnboarding> & {
+export type ApiTenantCard = Partial<TenantOnboarding> & {
   id: string
   name: string
   photoUrl: string | null
@@ -20,7 +20,7 @@ export function getRoommate(id: string) {
   return rankedRoommates.find((roommate) => roommate.id === id)
 }
 
-function toRoommate(data: ApiTenantCard): Roommate {
+export function toRoommate(data: ApiTenantCard): Roommate {
   return {
     id: data.id,
     name: data.name,

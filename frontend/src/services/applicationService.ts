@@ -2,7 +2,7 @@ import { api } from "@/lib/api"
 import applications from "@/mocks/applications.json"
 import users from "@/mocks/users.json"
 import { cardFromOnboarding } from "@/lib/tenantCard"
-import { getRoommate } from "@/services/roommateService"
+import { getRoommate, toRoommate, type ApiTenantCard } from "@/services/roommateService"
 import type { Application, ApplicationDetails, Roommate, TenantOnboarding } from "@/types"
 
 // Mock pair applications. Later these are created when both matched tenants click Apply.
@@ -70,4 +70,28 @@ export async function fetchApplications(): Promise<ApplicationDetails[]> {
     house: { id: `h-${house.houseId}`, title: house.title },
     tenants: [toApplicant(tenants[0]), toApplicant(tenants[1])],
   }))
+}
+
+type ApiApplicationDetail = {
+  applicationId: number
+  status: string
+  createdAt: string
+  house: { houseId: number; title: string }
+  tenants: [ApiTenantCard, ApiTenantCard]
+}
+
+export async function fetchApplication(id: string): Promise<ApplicationDetails> {
+  const { data } = await api.get<ApiApplicationDetail>(`/api/applications/${id}`)
+  const { applicationId, status, createdAt, house, tenants } = data
+  return {
+    application: {
+      id: String(applicationId),
+      houseId: `h-${house.houseId}`,
+      tenantIds: [tenants[0].id, tenants[1].id],
+      submittedAt: createdAt,
+    },
+    house: { id: `h-${house.houseId}`, title: house.title },
+    tenants: [toRoommate(tenants[0]), toRoommate(tenants[1])],
+    decision: status === "confirmed" || status === "ignored" ? status : undefined,
+  }
 }

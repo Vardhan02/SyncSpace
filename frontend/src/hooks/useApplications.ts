@@ -3,7 +3,12 @@ import { useQuery } from "@tanstack/react-query"
 import { useMyListings } from "@/hooks/useMyListings"
 import { hasBackend } from "@/lib/api"
 import users from "@/mocks/users.json"
-import { fetchApplications, getApplicant, getApplications } from "@/services/applicationService"
+import {
+  fetchApplication,
+  fetchApplications,
+  getApplicant,
+  getApplications,
+} from "@/services/applicationService"
 import { useApplicationStore } from "@/stores/applicationStore"
 import { useAuthStore } from "@/stores/authStore"
 import { usePreferencesStore } from "@/stores/preferencesStore"
@@ -31,6 +36,17 @@ export function useLandlordApplications(): ApplicationDetails[] {
     const [first, second] = application.tenantIds.map((id) => getApplicant(id, records[id]?.tenant))
     return [{ application, house, tenants: [first, second], decision: decisions[application.id] }]
   })
+}
+
+export function useLandlordApplication(id: string) {
+  const fromList = useLandlordApplications().find((entry) => entry.application.id === id)
+  const { data } = useQuery({
+    queryKey: ["applications", id],
+    queryFn: () => fetchApplication(id),
+    enabled: hasBackend,
+  })
+
+  return data ?? fromList
 }
 
 // The signed-in tenant's application for a house, if they're part of one.
