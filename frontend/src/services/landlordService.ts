@@ -10,7 +10,7 @@ const labelFor = (options: { value: string; label: string }[], value?: string) =
   options.find((option) => option.value === value)?.label ?? value ?? ""
 
 // The listing form's fields turned into the House shape the pages use.
-function houseFromForm(base: House, data: Partial<LandlordOnboarding>): House {
+export function houseFromForm(base: House, data: Partial<LandlordOnboarding>): House {
   const rules = [
     data.petsAllowed ? "Pets allowed" : "No pets",
     data.smokingAllowed ? "Smoking allowed" : "No smoking",

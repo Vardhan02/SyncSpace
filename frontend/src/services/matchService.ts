@@ -1,6 +1,6 @@
 import { api, hasBackend } from "@/lib/api"
 import matches from "@/mocks/matches.json"
-import { getHouse } from "@/services/houseService"
+import { getHouse, toApiHouseId } from "@/services/houseService"
 import { getRoommate } from "@/services/roommateService"
 import type { Match, SharedHouse } from "@/types"
 
@@ -24,8 +24,6 @@ type ApiSharedHouse = {
 }
 
 const newestFirst = (a: Match, b: Match) => b.matchedAt.localeCompare(a.matchedAt)
-
-const toApiHouseId = (houseId: string) => Number(houseId.replace("h-", ""))
 
 export async function getMatches(): Promise<Match[]> {
   if (!hasBackend) {
