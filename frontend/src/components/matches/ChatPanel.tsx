@@ -1,4 +1,5 @@
 import { ArrowLeft, MessageCircle } from "lucide-react"
+import { Link } from "react-router-dom"
 
 import { Avatar } from "@/components/matches/MatchList"
 import { SharedHouseCard } from "@/components/matches/SharedHouseCard"
@@ -42,13 +43,18 @@ export function ChatPanel({ match, onBack, isLiked, onLike, isApplied, onApply }
         >
           <ArrowLeft className="size-5" />
         </button>
-        <Avatar roommate={roommate} size="size-10" />
-        <div className="min-w-0">
-          <p className="truncate text-[15px] font-semibold text-foreground">{roommate.name}</p>
-          <p className="truncate text-[13px] text-muted-foreground">
-            {roommate.course} · {roommate.university}
-          </p>
-        </div>
+        <Link
+          to={`/roommates/${roommate.id}`}
+          className="flex min-w-0 items-center gap-3 rounded-[12px] pr-2 hover:opacity-80"
+        >
+          <Avatar roommate={roommate} size="size-10" />
+          <div className="min-w-0">
+            <p className="truncate text-[15px] font-semibold text-foreground">{roommate.name}</p>
+            <p className="truncate text-[13px] text-muted-foreground">
+              {roommate.course} · {roommate.university}
+            </p>
+          </div>
+        </Link>
       </div>
 
       <div

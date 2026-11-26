@@ -20,6 +20,7 @@ import { OnboardingPage } from "@/pages/OnboardingPage"
 import { MatchesPage } from "@/pages/MatchesPage"
 import { ProfileEditPage } from "@/pages/ProfileEditPage"
 import { RoomateMatchPage } from "@/pages/RoomateMatchPage"
+import { RoommateProfilePage } from "@/pages/RoommateProfilePage"
 import { SignupPage } from "@/pages/SignupPage"
 import { TenantProfilePage } from "@/pages/TenantProfilePage"
 
@@ -42,6 +43,7 @@ function App() {
             <Route path="/houses/:houseId" element={<HouseDetailPage />} />
             <Route path="/roommate" element={<RoomateMatchPage />} />
             <Route path="/matches" element={<MatchesPage />} />
+            <Route path="/roommates/:roommateId" element={<RoommateProfilePage />} />
             <Route path="/profile" element={<TenantProfilePage />} />
             <Route path="/profile/edit/:step" element={<ProfileEditPage />} />
             <Route path="/profile/settings" element={<AccountSettingsPage />} />

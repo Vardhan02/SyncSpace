@@ -1,9 +1,16 @@
+import { api, hasBackend } from "@/lib/api"
+import { cardFromOnboarding } from "@/lib/tenantCard"
 import roommates from "@/mocks/roommates.json"
-import type { Roommate, TenantPreferences } from "@/types"
+import type { Roommate, TenantOnboarding, TenantPreferences } from "@/types"
 
-const rankedRoommates = (roommates as Roommate[]).toSorted(
-  (a, b) => b.matchScore - a.matchScore
-)
+type ApiTenantCard = Partial<TenantOnboarding> & {
+  id: string
+  name: string
+  photoUrl: string | null
+  matchScore: number | null
+}
+
+const rankedRoommates = (roommates as Roommate[]).toSorted((a, b) => b.matchScore - a.matchScore)
 
 export function getRoommates() {
   return rankedRoommates
@@ -11,6 +18,23 @@ export function getRoommates() {
 
 export function getRoommate(id: string) {
   return rankedRoommates.find((roommate) => roommate.id === id)
+}
+
+export async function fetchRoommate(id: string): Promise<Roommate | null> {
+  if (!hasBackend) return getRoommate(id) ?? null
+
+  const { data } = await api.get<ApiTenantCard>(`/api/roommates/${id}`)
+  return {
+    id: data.id,
+    name: data.name,
+    age: data.age ?? 0,
+    photo: data.photoUrl,
+    course: data.course ?? "",
+    university: data.university ?? "",
+    bio: data.bio ?? "",
+    matchScore: data.matchScore ?? 0,
+    ...cardFromOnboarding(data),
+  }
 }
 
 const LIFESTYLE_MATCHES: { field: keyof TenantPreferences; label: (value: string) => string }[] = [
