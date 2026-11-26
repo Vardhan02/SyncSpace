@@ -1,6 +1,6 @@
-import { api, hasBackend } from "@/lib/api"
+import { api, hasBackend, toApiHouseId } from "@/lib/api"
 import matches from "@/mocks/matches.json"
-import { getHouse, toApiHouseId } from "@/services/houseService"
+import { getHouse } from "@/services/houseService"
 import { getRoommate } from "@/services/roommateService"
 import type { Match, SharedHouse } from "@/types"
 

@@ -8,9 +8,9 @@ import { HouseOverview } from "@/components/HouseOverview"
 import { DeleteListingDialog, LikesDialog } from "@/components/ListingDialogs"
 import { PhotoCheckPanel } from "@/components/PhotoCheckPanel"
 import { Button } from "@/components/ui/button"
+import { useListingLikes } from "@/controllers/useListingLikes"
 import { useLandlordApplications } from "@/hooks/useApplications"
 import { useMyListings } from "@/hooks/useMyListings"
-import { getLikes } from "@/services/landlordService"
 import { useLandlordStore } from "@/stores/landlordStore"
 
 // The landlord's view of one of their own listings: no like/share/apply, but edit and delete.
@@ -22,6 +22,7 @@ export function ListingDetailPage() {
   const deleteListing = useLandlordStore((state) => state.deleteListing)
   const [showLikes, setShowLikes] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const likes = useListingLikes([houseId])[houseId]
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -38,7 +39,6 @@ export function ListingDetailPage() {
     )
   }
 
-  const likes = getLikes(house.id)
   const applicationCount = applications.filter(
     (item) => item.house.id === house.id && !item.decision
   ).length

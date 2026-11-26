@@ -1,3 +1,4 @@
+import { api, hasBackend, toApiHouseId } from "@/lib/api"
 import houseLikes from "@/mocks/houseLikes.json"
 import houses from "@/mocks/houses.json"
 import photoChecks from "@/mocks/photoChecks.json"
@@ -141,6 +142,15 @@ export function getAllListings({ onboarding, added, edits, deletedIds }: Listing
 // Names only: landlords never see a tenant's contact details from a like.
 export function getLikes(houseId: string) {
   return likes[houseId] ?? []
+}
+
+export async function fetchLikes(houseId: string): Promise<string[]> {
+  if (!hasBackend) return getLikes(houseId)
+
+  const { data } = await api.get<{ names: string[] }>(
+    `/api/listings/${toApiHouseId(houseId)}/likes`
+  )
+  return data.names
 }
 
 // Stand-in for the VLM check: it looks at the listing's photos to confirm each amenity

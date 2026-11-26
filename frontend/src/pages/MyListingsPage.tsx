@@ -5,8 +5,8 @@ import { toast } from "sonner"
 
 import { DeleteListingDialog, LikesDialog } from "@/components/ListingDialogs"
 import { ListingCard } from "@/components/ListingCard"
+import { useListingLikes } from "@/controllers/useListingLikes"
 import { useMyListings } from "@/hooks/useMyListings"
-import { getLikes } from "@/services/landlordService"
 import { useLandlordStore } from "@/stores/landlordStore"
 import type { House } from "@/types"
 
@@ -15,8 +15,9 @@ export function MyListingsPage() {
   const deleteListing = useLandlordStore((state) => state.deleteListing)
   const [likesFor, setLikesFor] = useState<House | null>(null)
   const [deleting, setDeleting] = useState<House | null>(null)
+  const likes = useListingLikes(listings.map((house) => house.id))
 
-  const totalLikes = listings.reduce((sum, house) => sum + getLikes(house.id).length, 0)
+  const totalLikes = listings.reduce((sum, house) => sum + likes[house.id].length, 0)
 
   function confirmDelete() {
     if (!deleting) return
@@ -52,7 +53,7 @@ export function MyListingsPage() {
             <ListingCard
               key={house.id}
               house={house}
-              likeCount={getLikes(house.id).length}
+              likeCount={likes[house.id].length}
               onShowLikes={() => setLikesFor(house)}
               onDelete={() => setDeleting(house)}
             />
@@ -71,7 +72,7 @@ export function MyListingsPage() {
       <LikesDialog
         open={likesFor !== null}
         title={likesFor?.title ?? ""}
-        names={likesFor ? getLikes(likesFor.id) : []}
+        names={likesFor ? likes[likesFor.id] : []}
         onClose={() => setLikesFor(null)}
       />
       <DeleteListingDialog

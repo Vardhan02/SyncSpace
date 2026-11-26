@@ -1,4 +1,4 @@
-import { api } from "@/lib/api"
+import { api, toApiHouseId } from "@/lib/api"
 import houses from "@/mocks/houses.json"
 import { houseFromForm } from "@/services/landlordService"
 import type { House, LandlordOnboarding } from "@/types"
@@ -13,8 +13,6 @@ type ApiHouse = Omit<
 }
 
 type ApiHouseDetail = ApiHouse & Partial<LandlordOnboarding>
-
-export const toApiHouseId = (houseId: string) => Number(houseId.replace("h-", ""))
 
 const toHouse = ({ id, matchScore, photoCount, ...house }: ApiHouse): House => ({
   ...house,
