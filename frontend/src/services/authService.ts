@@ -14,6 +14,10 @@ export function login(email: string, password: string) {
   return api<AuthSession>("/auth/login", { method: "POST", body: { email, password } })
 }
 
+export function logout() {
+  return api<void>("/auth/logout", { method: "POST" })
+}
+
 // null when Supabase wants the email confirmed before the first login
 export async function signup(details: SignupDetails) {
   const result = await api<AuthSession | { message: string }>("/auth/signup", {

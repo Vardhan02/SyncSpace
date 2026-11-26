@@ -3,17 +3,21 @@ import { useNavigate } from "react-router-dom"
 
 import { Modal } from "@/components/Modal"
 import { Button } from "@/components/ui/button"
+import { logout } from "@/services/authService"
 import { useAuthStore } from "@/stores/authStore"
 
-// Asks before logging out, so a stray tap on the header doesn't sign anyone out.
+// Asks first, so a stray tap on the header doesn't sign anyone out.
 export function LogoutButton() {
   const navigate = useNavigate()
-  const logout = useAuthStore((state) => state.logout)
+  const endSession = useAuthStore((state) => state.logout)
   const [confirming, setConfirming] = useState(false)
+  const [loggingOut, setLoggingOut] = useState(false)
 
-  function handleLogout() {
-    setConfirming(false)
-    logout()
+  async function handleLogout() {
+    setLoggingOut(true)
+    // Even if the server can't be reached, the person still gets logged out here.
+    await logout().catch(() => {})
+    endSession()
     navigate("/login", { replace: true })
   }
 
@@ -43,9 +47,10 @@ export function LogoutButton() {
           </Button>
           <Button
             className="h-11 flex-1 rounded-[12px] text-[15px] font-medium"
+            disabled={loggingOut}
             onClick={handleLogout}
           >
-            Log out
+            {loggingOut ? "Logging out…" : "Log out"}
           </Button>
         </div>
       </Modal>

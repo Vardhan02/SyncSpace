@@ -34,29 +34,11 @@ export function OnboardingPage() {
     navigate(user.role === "tenant" ? "/houses" : "/landlord", { replace: true })
   }
 
-  // Dev only: jump straight to the app without filling anything in.
-  function skip() {
-    complete(user.id)
-    navigate(user.role === "tenant" ? "/houses" : "/landlord", { replace: true })
-  }
-
   const header = (
     <header>
       <div className="mx-auto flex max-w-300 items-center justify-between px-5 py-3 md:px-8">
         <Logo className="text-foreground" />
-        <div className="flex items-center gap-1">
-          {/* Only shows with `npm run dev`, never in a production build. */}
-          {import.meta.env.DEV ? (
-            <Button
-              variant="outline"
-              className="h-9 rounded-[10px] border-dashed px-3 text-[14px] font-medium"
-              onClick={skip}
-            >
-              Skip (dev)
-            </Button>
-          ) : null}
-          <LogoutButton />
-        </div>
+        <LogoutButton />
       </div>
     </header>
   )

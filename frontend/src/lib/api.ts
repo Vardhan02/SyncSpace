@@ -1,4 +1,5 @@
 import { useAuthStore } from "@/stores/authStore"
+import type { AuthSession } from "@/types"
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080"
 
@@ -22,16 +23,13 @@ function readable(message: string) {
   return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
-export async function api<T>(path: string, { method = "GET", body }: RequestOptions = {}): Promise<T> {
+async function send(path: string, { method = "GET", body }: RequestOptions, token: string | null) {
   const headers: Record<string, string> = {}
   if (body !== undefined) headers["Content-Type"] = "application/json"
-
-  const token = useAuthStore.getState().accessToken
   if (token) headers.Authorization = `Bearer ${token}`
 
-  let response: Response
   try {
-    response = await fetch(`${API_URL}/api${path}`, {
+    return await fetch(`${API_URL}/api${path}`, {
       method,
       headers,
       body: body === undefined ? undefined : JSON.stringify(body),
@@ -39,7 +37,9 @@ export async function api<T>(path: string, { method = "GET", body }: RequestOpti
   } catch {
     throw new ApiError(0, "Can't reach the server. Check your connection and try again.")
   }
+}
 
+async function read<T>(response: Response): Promise<T> {
   const text = await response.text()
   const data = text ? JSON.parse(text) : null
 
@@ -47,6 +47,39 @@ export async function api<T>(path: string, { method = "GET", body }: RequestOpti
     throw new ApiError(response.status, readable(data?.message ?? "Something went wrong"))
   }
   return data as T
+}
+
+// Requests that expire at the same time wait for the same refresh.
+let refreshing: Promise<boolean> | null = null
+
+async function renewSession() {
+  const { refreshToken, startSession } = useAuthStore.getState()
+  if (!refreshToken) return false
+
+  try {
+    const response = await send("/auth/refresh", { method: "POST", body: { refreshToken } }, null)
+    startSession(await read<AuthSession>(response))
+    return true
+  } catch {
+    return false
+  }
+}
+
+export async function api<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  const token = useAuthStore.getState().accessToken
+  let response = await send(path, options, token)
+
+  // Access tokens last an hour. Get a new one and try once more.
+  if (response.status === 401 && token) {
+    refreshing ??= renewSession().finally(() => (refreshing = null))
+    if (!(await refreshing)) {
+      useAuthStore.getState().logout()
+      throw new ApiError(401, "Your session has expired. Log in again.")
+    }
+    response = await send(path, options, useAuthStore.getState().accessToken)
+  }
+
+  return read<T>(response)
 }
 
 export function errorMessage(error: unknown) {
