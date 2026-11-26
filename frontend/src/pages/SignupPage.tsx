@@ -9,8 +9,10 @@ import { AuthLayout } from "@/components/AuthLayout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { ApiError, errorMessage } from "@/lib/api"
 import { isValidPhone } from "@/lib/phone"
 import { cn } from "@/lib/utils"
+import { signup } from "@/services/authService"
 import { useAuthStore } from "@/stores/authStore"
 import { useProfileStore } from "@/stores/profileStore"
 
@@ -27,7 +29,7 @@ type SignupValues = z.infer<typeof signupSchema>
 export function SignupPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const signup = useAuthStore((state) => state.signup)
+  const startSession = useAuthStore((state) => state.startSession)
   const updateContact = useProfileStore((state) => state.updateContact)
   const {
     register,
@@ -50,13 +52,27 @@ export function SignupPage() {
   const role = useWatch({ control, name: "role" })
   const isLandlord = role === "landlord"
 
-  function onSubmit(values: SignupValues) {
-    const user = signup(values)
-    if (!user) {
-      setError("email", { message: "There's already an account with this email" })
+  async function onSubmit(values: SignupValues) {
+    let session
+    try {
+      session = await signup({ ...values, phoneVisible: false })
+    } catch (error) {
+      if (error instanceof ApiError && error.message.includes("already exists")) {
+        setError("email", { message: "There's already an account with this email" })
+      } else {
+        toast.error(errorMessage(error))
+      }
       return
     }
 
+    if (!session) {
+      toast.success("Check your email to confirm your account, then log in.")
+      navigate("/login", { replace: true })
+      return
+    }
+
+    const { user } = session
+    startSession(session)
     updateContact(user.id, { phone: values.phone, phoneVisible: false })
     toast.success(`Welcome, ${user.name.split(" ")[0]}! Let's set up your profile.`)
     navigate("/onboarding", { replace: true })
@@ -86,7 +102,6 @@ export function SignupPage() {
               >
                 Tenant
               </button>
-              {/* Works like a light/dark switch: the knob slides to whichever side is picked. */}
               <button
                 type="button"
                 role="switch"
@@ -207,7 +222,11 @@ export function SignupPage() {
             disabled={isSubmitting}
             className="h-12.5 w-full rounded-[12px] text-[15px] font-medium"
           >
-            {isLandlord ? "Create landlord account" : "Create tenant account"}
+            {isSubmitting
+              ? "Creating account…"
+              : isLandlord
+                ? "Create landlord account"
+                : "Create tenant account"}
           </Button>
           <p className="pt-2 text-center text-[13px] text-placeholder">
             Already have an account?{" "}

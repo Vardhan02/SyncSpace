@@ -2,30 +2,20 @@ import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
 import users from "@/mocks/users.json"
-import type { User, UserRole } from "@/types"
+import type { AuthSession, User } from "@/types"
 
-// Accounts made through sign-up, plus edited copies of the mock users. Mock only: they
-// live in this browser's localStorage, password included, until Supabase auth takes over.
-type Account = User & { password: string }
-
-type SignupDetails = {
-  name: string
-  email: string
-  password: string
-  role: UserRole
-}
+// Settings still edits these mock copies until it's moved to the API.
+type Account = Omit<User, "firstLogin"> & { password: string }
 
 type AuthState = {
   user: User | null
+  accessToken: string | null
+  refreshToken: string | null
   accounts: Account[]
-  login: (email: string, password: string) => User | null
-  // Returns null if the email is already taken.
-  signup: (details: SignupDetails) => User | null
-  // Both return an error message, or null when it worked.
+  startSession: (session: AuthSession) => void
+  // Return an error message, or null when it worked
   updateAccount: (details: { name: string; email: string }) => string | null
   changePassword: (current: string, next: string) => string | null
-  // Removes the signed-in account and logs out. A mock user only loses its saved changes,
-  // since the mock file can't be edited.
   deleteAccount: () => void
   logout: () => void
 }
@@ -35,13 +25,14 @@ const mockAccounts = users as Account[]
 const sameEmail = (a: string, b: string) => a.trim().toLowerCase() === b.trim().toLowerCase()
 
 function toUser({ id, name, email, role }: Account): User {
-  return { id, name, email, role }
+  return { id, name, email, role, firstLogin: false }
 }
 
-// A saved copy wins over the mock user with the same id.
 function allAccounts(saved: Account[]) {
   return [...saved, ...mockAccounts.filter((mock) => !saved.some((account) => account.id === mock.id))]
 }
+
+const signedOut = { user: null, accessToken: null, refreshToken: null }
 
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -59,32 +50,9 @@ export const useAuthStore = create<AuthState>()(
       }
 
       return {
-        user: null,
+        ...signedOut,
         accounts: [],
-        login: (email, password) => {
-          const match = allAccounts(get().accounts).find(
-            (account) => sameEmail(account.email, email) && account.password === password
-          )
-          if (!match) return null
-
-          const user = toUser(match)
-          set({ user })
-          return user
-        },
-        signup: ({ name, email, password, role }) => {
-          const taken = allAccounts(get().accounts).some((account) => sameEmail(account.email, email))
-          if (taken) return null
-
-          const account: Account = {
-            id: `u-${crypto.randomUUID().slice(0, 8)}`,
-            name: name.trim(),
-            email: email.trim().toLowerCase(),
-            password,
-            role,
-          }
-          save(account)
-          return toUser(account)
-        },
+        startSession: ({ user, accessToken, refreshToken }) => set({ user, accessToken, refreshToken }),
         updateAccount: ({ name, email }) => {
           const account = currentAccount()
           if (!account) return "You're not logged in"
@@ -107,12 +75,17 @@ export const useAuthStore = create<AuthState>()(
         },
         deleteAccount: () =>
           set((state) => ({
+            ...signedOut,
             accounts: state.accounts.filter((account) => account.id !== state.user?.id),
-            user: null,
           })),
-        logout: () => set({ user: null }),
+        logout: () => set(signedOut),
       }
     },
-    { name: "syncspace-auth" }
+    {
+      name: "syncspace-auth",
+      version: 1,
+      // Version 0 sessions came from the mock users and have no token
+      migrate: (saved) => ({ ...(saved as AuthState), ...signedOut }),
+    }
   )
 )

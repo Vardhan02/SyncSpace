@@ -1,10 +1,20 @@
 export type UserRole = "tenant" | "landlord"
 
+// GET /api/me, and the `user` inside a login or sign-up response
 export type User = {
   id: string
   name: string
   email: string
   role: UserRole
+  firstLogin: boolean
+}
+
+// What POST /api/auth/login, /signup and /refresh send back
+export type AuthSession = {
+  accessToken: string
+  refreshToken: string
+  expiresIn: number
+  user: User
 }
 
 export type House = {

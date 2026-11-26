@@ -23,6 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# The root .gitignore skips every lib/ folder (for Python), but ours is source code
+!src/lib/
+
 # Environment variables
 .env
 .env.*

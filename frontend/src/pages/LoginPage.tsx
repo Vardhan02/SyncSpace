@@ -8,6 +8,8 @@ import { AuthLayout } from "@/components/AuthLayout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { errorMessage } from "@/lib/api"
+import { login } from "@/services/authService"
 import { useAuthStore } from "@/stores/authStore"
 import { usePreferencesStore } from "@/stores/preferencesStore"
 
@@ -23,7 +25,7 @@ type LoginValues = z.infer<typeof loginSchema>
 
 export function LoginPage() {
   const navigate = useNavigate()
-  const login = useAuthStore((state) => state.login)
+  const startSession = useAuthStore((state) => state.startSession)
   const restartOnboarding = usePreferencesStore((state) => state.restart)
   const {
     register,
@@ -37,13 +39,17 @@ export function LoginPage() {
     },
   })
 
-  function onSubmit(values: LoginValues) {
-    const user = login(values.email, values.password)
-    if (!user) {
-      toast.error("That email and password don't match. Try again.")
+  async function onSubmit(values: LoginValues) {
+    let session
+    try {
+      session = await login(values.email, values.password)
+    } catch (error) {
+      toast.error(errorMessage(error))
       return
     }
 
+    const { user } = session
+    startSession(session)
     toast.success(`Welcome back, ${user.name.split(" ")[0]}`)
     if (ALWAYS_SHOW_ONBOARDING) restartOnboarding(user.id)
     navigate(user.role === "tenant" ? "/houses" : "/landlord", { replace: true })
@@ -113,7 +119,7 @@ export function LoginPage() {
             disabled={isSubmitting}
             className="h-12.5 w-full rounded-[12px] text-[15px] font-medium"
           >
-            Log in
+            {isSubmitting ? "Logging in…" : "Log in"}
           </Button>
           <p className="pt-2 text-center text-[13px] text-placeholder">
             New here?{" "}

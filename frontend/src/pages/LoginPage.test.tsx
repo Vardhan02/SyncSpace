@@ -6,6 +6,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { LoginPage } from "@/pages/LoginPage"
 import { useAuthStore } from "@/stores/authStore"
+import { fakeSession, lastRequestBody, respondWith } from "@/test/server"
 
 vi.mock("sonner", () => ({ toast: { success: vi.fn(), error: vi.fn() } }))
 
@@ -30,37 +31,54 @@ async function logIn(email: string, password: string) {
 
 describe("LoginPage", () => {
   beforeEach(() => {
-    useAuthStore.setState({ user: null, accounts: [] })
+    useAuthStore.setState({ user: null, accessToken: null, refreshToken: null })
+    vi.restoreAllMocks()
     vi.clearAllMocks()
   })
 
   it("shows errors when email and password are empty", async () => {
+    const fetchSpy = vi.spyOn(globalThis, "fetch")
     renderLogin()
     await logIn("", "")
 
     expect(await screen.findByText("Email is required")).toBeInTheDocument()
     expect(screen.getByText("Password is required")).toBeInTheDocument()
+    expect(fetchSpy).not.toHaveBeenCalled()
   })
 
-  it("shows an error for a wrong password", async () => {
+  it("shows the server's message for a wrong password", async () => {
+    respondWith(400, { message: "wrong email or password" })
     renderLogin()
-    await logIn("tenant@syncspace.test", "wrong-password")
+    await logIn("someone@example.com", "wrong-password")
 
-    expect(toast.error).toHaveBeenCalledWith("That email and password don't match. Try again.")
+    expect(toast.error).toHaveBeenCalledWith("Wrong email or password")
     expect(useAuthStore.getState().user).toBeNull()
     expect(screen.queryByText("Tenant home")).not.toBeInTheDocument()
   })
 
-  it("sends a tenant to the houses page", async () => {
+  it("says so when the server can't be reached", async () => {
+    vi.spyOn(globalThis, "fetch").mockRejectedValueOnce(new TypeError("Failed to fetch"))
     renderLogin()
-    await logIn("tenant@syncspace.test", "password123")
+    await logIn("someone@example.com", "password123")
 
-    expect(await screen.findByText("Tenant home")).toBeInTheDocument()
+    expect(toast.error).toHaveBeenCalledWith("Can't reach the server. Check your connection and try again.")
+  })
+
+  it("sends the email and password, then keeps the session", async () => {
+    respondWith(200, fakeSession("tenant"))
+    renderLogin()
+    await logIn("someone@example.com", "password123")
+
+    await screen.findByText("Tenant home")
+    expect(lastRequestBody()).toEqual({ email: "someone@example.com", password: "password123" })
+    expect(useAuthStore.getState().accessToken).toBe("access-token")
+    expect(useAuthStore.getState().user?.role).toBe("tenant")
   })
 
   it("sends a landlord to the landlord page", async () => {
+    respondWith(200, fakeSession("landlord"))
     renderLogin()
-    await logIn("landlord@syncspace.test", "password123")
+    await logIn("someone@example.com", "password123")
 
     expect(await screen.findByText("Landlord home")).toBeInTheDocument()
   })
