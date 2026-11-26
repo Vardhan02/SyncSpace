@@ -83,6 +83,8 @@ export function SharedHouseCard({
               <>
                 <Check className="size-4" /> Applied
               </>
+            ) : shared.theyApplied ? (
+              `Apply too, ${name} applied`
             ) : (
               "Apply"
             )}

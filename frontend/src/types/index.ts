@@ -173,6 +173,8 @@ export type SharedHouse = {
     Partial<Pick<House, "roomType" | "verified">>
   fromMe: boolean
   sentAt: string
+  iApplied: boolean
+  theyApplied: boolean
 }
 
 export type Match = {

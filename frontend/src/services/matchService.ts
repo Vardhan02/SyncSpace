@@ -19,6 +19,8 @@ type ApiSharedHouse = {
   rent: number
   sharedByMe: boolean
   sharedAt: string
+  iApplied: boolean
+  theyApplied: boolean
 }
 
 const newestFirst = (a: Match, b: Match) => b.matchedAt.localeCompare(a.matchedAt)
@@ -51,7 +53,7 @@ export async function getSharedHouses(matchId: string): Promise<SharedHouse[]> {
     const match = matches.find((m) => m.id === matchId)
     return (match?.sharedHouses ?? []).flatMap(({ houseId, fromMe, sentAt }) => {
       const house = getHouse(houseId)
-      return house ? [{ house, fromMe, sentAt }] : []
+      return house ? [{ house, fromMe, sentAt, iApplied: false, theyApplied: false }] : []
     })
   }
 
@@ -60,6 +62,8 @@ export async function getSharedHouses(matchId: string): Promise<SharedHouse[]> {
     house: { id: `h-${h.houseId}`, title: h.title, area: h.area, rent: h.rent },
     fromMe: h.sharedByMe,
     sentAt: h.sharedAt,
+    iApplied: h.iApplied,
+    theyApplied: h.theyApplied,
   }))
 }
 
@@ -67,4 +71,13 @@ export async function shareHouse(matchId: string, houseId: string) {
   if (!hasBackend) return
 
   await api.post(`/api/matches/${matchId}/houses`, { houseId: toApiHouseId(houseId) })
+}
+
+export async function applyToHouse(matchId: string, houseId: string): Promise<boolean> {
+  if (!hasBackend) return false
+
+  const { data } = await api.post<{ bothApplied: boolean }>(`/api/matches/${matchId}/apply`, {
+    houseId: toApiHouseId(houseId),
+  })
+  return data.bothApplied
 }
