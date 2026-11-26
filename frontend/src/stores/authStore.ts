@@ -17,6 +17,7 @@ type SignupDetails = {
 
 type AuthState = {
   user: User | null
+  token: string | null
   accounts: Account[]
   login: (email: string, password: string) => User | null
   // Returns null if the email is already taken.
@@ -60,6 +61,7 @@ export const useAuthStore = create<AuthState>()(
 
       return {
         user: null,
+        token: null,
         accounts: [],
         login: (email, password) => {
           const match = allAccounts(get().accounts).find(
@@ -109,8 +111,9 @@ export const useAuthStore = create<AuthState>()(
           set((state) => ({
             accounts: state.accounts.filter((account) => account.id !== state.user?.id),
             user: null,
+            token: null,
           })),
-        logout: () => set({ user: null }),
+        logout: () => set({ user: null, token: null }),
       }
     },
     { name: "syncspace-auth" }
