@@ -20,8 +20,8 @@ export function LogoutButton() {
   return (
     <>
       <Button
-        variant="ghost"
-        className="h-9 rounded-[10px] px-3 text-[14px] font-medium"
+        variant="outline"
+        className="h-9 rounded-full px-4 text-[14px] font-medium"
         onClick={() => setConfirming(true)}
       >
         Log out

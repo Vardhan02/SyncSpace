@@ -1,25 +1,22 @@
 import { Search } from "lucide-react"
 import { useState } from "react"
-import { toast } from "sonner"
 
 import { HouseCard } from "@/components/HouseCard"
+import { ShareHouseDialog } from "@/components/ShareHouseDialog"
 import { Input } from "@/components/ui/input"
+import { useShareHouse } from "@/controllers/useShareHouse"
+import { useHouses } from "@/hooks/useMyListings"
 import { cn } from "@/lib/utils"
-import { getHouses } from "@/services/houseService"
 import { useHouseStore } from "@/stores/houseStore"
-import type { House } from "@/types"
-
-const rankedHouses = getHouses()
 
 export function HousesPage() {
+  const rankedHouses = useHouses()
   const [query, setQuery] = useState("")
   const [showLikedOnly, setShowLikedOnly] = useState(false)
   const likedIds = useHouseStore((state) => state.likedIds)
   const toggleLike = useHouseStore((state) => state.toggleLike)
 
-  function handleShare(house: House) {
-    toast.success(`Shared ${house.title} with your match`)
-  }
+  const { shareHouse, matches, sentTo, openShare, closeShare, send } = useShareHouse()
 
   const filters = [
     { label: "All", likedOnly: false },
@@ -30,10 +27,7 @@ export function HousesPage() {
   const visibleHouses = rankedHouses.filter((house) => {
     if (showLikedOnly && !likedIds.includes(house.id)) return false
     if (!search) return true
-    return (
-      house.title.toLowerCase().includes(search) ||
-      house.area.toLowerCase().includes(search)
-    )
+    return house.title.toLowerCase().includes(search) || house.area.toLowerCase().includes(search)
   })
 
   return (
@@ -51,14 +45,14 @@ export function HousesPage() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <div className="relative sm:w-70">
             <Search
-              className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-placeholder"
+              className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-placeholder"
               aria-hidden="true"
             />
             <Input
               type="search"
               placeholder="Search by area or name"
               aria-label="Search houses"
-              className="h-11 pl-10"
+              className="h-11 rounded-full pr-4 pl-10"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
@@ -85,14 +79,14 @@ export function HousesPage() {
       </div>
 
       {visibleHouses.length > 0 ? (
-        <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
           {visibleHouses.map((house) => (
             <HouseCard
               key={house.id}
               house={house}
               liked={likedIds.includes(house.id)}
               onToggleLike={() => toggleLike(house.id)}
-              onShare={() => handleShare(house)}
+              onShare={() => openShare(house)}
             />
           ))}
         </div>
@@ -108,6 +102,14 @@ export function HousesPage() {
           </p>
         </div>
       )}
+
+      <ShareHouseDialog
+        house={shareHouse}
+        matches={matches}
+        sentTo={sentTo}
+        onSend={send}
+        onClose={closeShare}
+      />
     </div>
   )
 }

@@ -17,6 +17,7 @@ type PreferencesState = {
   updateLandlord: (userId: string, patch: Partial<LandlordOnboarding>) => void
   complete: (userId: string) => void
   restart: (userId: string) => void
+  remove: (userId: string) => void
 }
 
 export const emptyRecord: OnboardingRecord = {
@@ -47,6 +48,10 @@ export const usePreferencesStore = create<PreferencesState>()(
         complete: (userId) => update(userId, () => ({ completed: true })),
         // Keeps the saved answers, so the form opens already filled in.
         restart: (userId) => update(userId, () => ({ completed: false, step: 0 })),
+        remove: (userId) =>
+          set((state) => ({
+            records: Object.fromEntries(Object.entries(state.records).filter(([id]) => id !== userId)),
+          })),
       }
     },
     {

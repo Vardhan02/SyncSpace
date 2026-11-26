@@ -108,7 +108,44 @@ export type LandlordOnboarding = {
   housePhotoCount: number
 }
 
-export type Roommate = {
+// How a tenant shows up on a roommate card. These are display labels, not the
+// database values in TenantOnboarding.
+export type TenantPreferences = {
+  budgetMin: number
+  budgetMax: number
+  areas: string[]
+  moveIn: string
+  leaseLength: string
+  sleepSchedule: string
+  cleanliness: string
+  noiseTolerance: string
+  studyPattern: string
+  socialStyle: string
+  guests: string
+  smoking: string
+  pets: string
+  interests: string[]
+  prompts: { prompt: string; answer: string }[]
+}
+
+export type Roommate = Pick<
+  TenantPreferences,
+  | "budgetMin"
+  | "budgetMax"
+  | "areas"
+  | "moveIn"
+  | "leaseLength"
+  | "sleepSchedule"
+  | "cleanliness"
+  | "noiseTolerance"
+  | "studyPattern"
+  | "socialStyle"
+  | "guests"
+  | "smoking"
+  | "pets"
+  | "interests"
+  | "prompts"
+> & {
   id: string
   name: string
   age: number
@@ -116,12 +153,29 @@ export type Roommate = {
   course: string
   university: string
   bio: string
-  budget: number
-  moveIn: string
-  sleepSchedule: string
-  cleanliness: string
-  smoking: boolean
-  pets: boolean
-  interests: string[]
   matchScore: number
+}
+
+// A pair of matched tenants who both clicked Apply on the same house.
+export type Application = {
+  id: string
+  houseId: string
+  tenantIds: [string, string]
+  submittedAt: string
+}
+
+export type ApplicationDecision = "confirmed" | "ignored"
+
+export type SharedHouse = {
+  house: House
+  fromMe: boolean
+  sentAt: string
+}
+
+export type Match = {
+  id: string
+  roommate: Roommate
+  matchedAt: string
+  unread: boolean
+  sharedHouses: SharedHouse[]
 }

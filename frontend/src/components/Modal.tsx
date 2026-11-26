@@ -1,5 +1,5 @@
 import { X } from "lucide-react"
-import { useEffect, useRef } from "react"
+import { useEffect, useId, useRef } from "react"
 import type { ReactNode } from "react"
 
 type ModalProps = {
@@ -13,6 +13,8 @@ type ModalProps = {
 // Built on the native <dialog>, which handles focus, Esc and the backdrop for us.
 export function Modal({ open, title, description, onClose, children }: ModalProps) {
   const ref = useRef<HTMLDialogElement>(null)
+  // Pages often render more than one modal, so each needs its own title id.
+  const titleId = useId()
 
   useEffect(() => {
     const dialog = ref.current
@@ -24,7 +26,7 @@ export function Modal({ open, title, description, onClose, children }: ModalProp
   return (
     <dialog
       ref={ref}
-      aria-labelledby="modal-title"
+      aria-labelledby={titleId}
       onCancel={(e) => {
         e.preventDefault()
         onClose()
@@ -38,7 +40,7 @@ export function Modal({ open, title, description, onClose, children }: ModalProp
       <div className="flex flex-col gap-4 p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 id="modal-title" className="text-[18px] font-semibold">
+            <h2 id={titleId} className="text-[18px] font-semibold">
               {title}
             </h2>
             {description ? (

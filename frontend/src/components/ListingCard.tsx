@@ -1,6 +1,7 @@
 import { BadgeCheck, Heart, House as HouseIcon, MapPin, Pencil, Trash2 } from "lucide-react"
 import { Link } from "react-router-dom"
 
+import { ExpandingButton } from "@/components/ExpandingButton"
 import { formatDate } from "@/lib/format"
 import type { House } from "@/types"
 
@@ -69,22 +70,9 @@ export function ListingCard({ house, likeCount, onShowLikes, onDelete }: Listing
             {likeCount} {likeCount === 1 ? "like" : "likes"}
           </button>
 
-          <div className="flex items-center">
-            <Link
-              to={`${viewPath}/edit`}
-              className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[14px] font-medium text-foreground hover:bg-secondary"
-            >
-              <Pencil className="size-3.5" aria-hidden="true" />
-              Edit
-            </Link>
-            <button
-              type="button"
-              className="-mr-2 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[14px] font-medium text-destructive hover:bg-destructive/10"
-              onClick={onDelete}
-            >
-              <Trash2 className="size-3.5" aria-hidden="true" />
-              Delete
-            </button>
+          <div className="flex items-center gap-2">
+            <ExpandingButton icon={Pencil} label="Edit" to={`${viewPath}/edit`} />
+            <ExpandingButton icon={Trash2} label="Delete" tone="danger" onClick={onDelete} />
           </div>
         </div>
       </div>

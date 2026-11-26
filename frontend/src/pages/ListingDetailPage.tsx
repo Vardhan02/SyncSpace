@@ -3,9 +3,12 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
 
+import { ExpandingButton } from "@/components/ExpandingButton"
 import { HouseOverview } from "@/components/HouseOverview"
 import { DeleteListingDialog, LikesDialog } from "@/components/ListingDialogs"
+import { PhotoCheckPanel } from "@/components/PhotoCheckPanel"
 import { Button } from "@/components/ui/button"
+import { useLandlordApplications } from "@/hooks/useApplications"
 import { useMyListings } from "@/hooks/useMyListings"
 import { getLikes } from "@/services/landlordService"
 import { useLandlordStore } from "@/stores/landlordStore"
@@ -15,6 +18,7 @@ export function ListingDetailPage() {
   const { houseId = "" } = useParams()
   const navigate = useNavigate()
   const house = useMyListings().find((listing) => listing.id === houseId)
+  const applications = useLandlordApplications()
   const deleteListing = useLandlordStore((state) => state.deleteListing)
   const [showLikes, setShowLikes] = useState(false)
   const [deleting, setDeleting] = useState(false)
@@ -35,6 +39,9 @@ export function ListingDetailPage() {
   }
 
   const likes = getLikes(house.id)
+  const applicationCount = applications.filter(
+    (item) => item.house.id === house.id && !item.decision
+  ).length
 
   function confirmDelete() {
     if (!house) return
@@ -51,22 +58,9 @@ export function ListingDetailPage() {
         backTo="/landlord/listings"
         backLabel="My listings"
         actions={
-          <div className="flex shrink-0 items-center gap-1">
-            <Link
-              to={`/landlord/listings/${house.id}/edit`}
-              className="flex items-center gap-1.5 rounded-full px-3 py-2 text-[14px] font-medium text-foreground hover:bg-secondary"
-            >
-              <Pencil className="size-4" aria-hidden="true" />
-              <span className="hidden sm:inline">Edit</span>
-            </Link>
-            <button
-              type="button"
-              className="flex items-center gap-1.5 rounded-full px-3 py-2 text-[14px] font-medium text-destructive hover:bg-destructive/10"
-              onClick={() => setDeleting(true)}
-            >
-              <Trash2 className="size-4" aria-hidden="true" />
-              <span className="hidden sm:inline">Delete</span>
-            </button>
+          <div className="flex shrink-0 items-center gap-2">
+            <ExpandingButton icon={Pencil} label="Edit" to={`/landlord/listings/${house.id}/edit`} />
+            <ExpandingButton icon={Trash2} label="Delete" tone="danger" onClick={() => setDeleting(true)} />
           </div>
         }
         aside={
@@ -76,11 +70,7 @@ export function ListingDetailPage() {
               <span className="text-[15px] font-normal text-muted-foreground"> / month</span>
             </p>
 
-            <p className="pt-2 text-[13px] text-muted-foreground">
-              {house.verified
-                ? "Verified: your photos back up the amenities you listed."
-                : "We're still checking your photos against the amenities you listed."}
-            </p>
+            <PhotoCheckPanel house={house} />
 
             <Button
               variant="outline"
@@ -98,14 +88,16 @@ export function ListingDetailPage() {
             </Button>
 
             <Link
-              to="/landlord/applications"
+              to={`/landlord/applications?house=${house.id}`}
               className="mt-3 flex h-12 items-center justify-between rounded-[12px] border border-border px-4 text-[15px] font-medium text-foreground hover:bg-secondary"
             >
               <span className="flex items-center gap-2">
                 <Users className="size-4" aria-hidden="true" />
                 Applications
               </span>
-              <span className="text-[13px] font-normal text-muted-foreground">View</span>
+              <span className="text-[13px] font-normal text-muted-foreground">
+                {applicationCount > 0 ? `${applicationCount} new` : "View"}
+              </span>
             </Link>
           </>
         }
