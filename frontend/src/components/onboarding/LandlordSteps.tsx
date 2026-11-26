@@ -27,6 +27,7 @@ import {
   landlordDefaults,
   today,
 } from "@/lib/onboardingOptions"
+import { HOUSE_PHOTO_GROUP, LANDLORD_PHOTO_GROUP } from "@/hooks/useMyLandlordProfile"
 import type { LandlordOnboarding } from "@/types"
 
 type Props = StepProps<LandlordOnboarding>
@@ -37,11 +38,13 @@ export function LandlordProfileStep({ values, onChange }: Props) {
     <>
       <Field label="Profile photo" hint="Optional. Tenants see it once you accept their application.">
         <PhotoPicker
-          group="landlord-profile"
+          group={LANDLORD_PHOTO_GROUP}
           max={1}
           round
           count={values.photoCount}
           onCountChange={(photoCount) => onChange({ photoCount })}
+          saved={values.photoUrl}
+          onRemoveSaved={() => onChange({ photoUrl: undefined })}
         />
       </Field>
       <SingleChoice
@@ -237,7 +240,7 @@ export function PhotosStep({ values, onChange }: Props) {
   return (
     <Field label="Photos" hint={`At least 1, up to ${MAX_PHOTOS}. The first photo is the cover.`}>
       <PhotoPicker
-        group="house"
+        group={HOUSE_PHOTO_GROUP}
         max={MAX_PHOTOS}
         count={values.housePhotoCount}
         onCountChange={(housePhotoCount) => onChange({ housePhotoCount })}

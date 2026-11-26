@@ -3,9 +3,9 @@ import { persist } from "zustand/middleware"
 
 import type { LandlordOnboarding, TenantOnboarding } from "@/types"
 
+// Onboarding answers kept in this browser as a draft until Finish sends them
 export type OnboardingRecord = {
   step: number
-  completed: boolean
   tenant: Partial<TenantOnboarding>
   landlord: Partial<LandlordOnboarding>
 }
@@ -15,13 +15,11 @@ type PreferencesState = {
   setStep: (userId: string, step: number) => void
   updateTenant: (userId: string, patch: Partial<TenantOnboarding>) => void
   updateLandlord: (userId: string, patch: Partial<LandlordOnboarding>) => void
-  complete: (userId: string) => void
   remove: (userId: string) => void
 }
 
 export const emptyRecord: OnboardingRecord = {
   step: 0,
-  completed: false,
   tenant: {},
   landlord: {},
 }
@@ -44,8 +42,6 @@ export const usePreferencesStore = create<PreferencesState>()(
           update(userId, (record) => ({ tenant: { ...record.tenant, ...patch } })),
         updateLandlord: (userId, patch) =>
           update(userId, (record) => ({ landlord: { ...record.landlord, ...patch } })),
-        complete: (userId) => update(userId, () => ({ completed: true })),
-        // Keeps the saved answers, so the form opens already filled in.
         remove: (userId) =>
           set((state) => ({
             records: Object.fromEntries(Object.entries(state.records).filter(([id]) => id !== userId)),
@@ -55,13 +51,14 @@ export const usePreferencesStore = create<PreferencesState>()(
     {
       name: "syncspace-preferences",
       // v1 renamed the fields to match the database, so older drafts can't be reused.
-      version: 1,
-      migrate: (persisted) => {
-        const old = persisted as { records?: Record<string, { completed?: boolean }> }
+      // v2 dropped `completed`: the backend says whether onboarding is done.
+      version: 2,
+      migrate: (persisted, version) => {
+        const old = persisted as { records?: Record<string, OnboardingRecord & { completed?: boolean }> }
         const records = Object.fromEntries(
-          Object.entries(old.records ?? {}).map(([id, record]) => [
+          Object.entries(old.records ?? {}).map(([id, { completed: _completed, ...record }]) => [
             id,
-            { ...emptyRecord, completed: Boolean(record.completed) },
+            version < 1 ? emptyRecord : record,
           ])
         )
         return { records } as PreferencesState

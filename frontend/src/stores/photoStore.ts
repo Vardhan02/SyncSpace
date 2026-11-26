@@ -15,6 +15,12 @@ export const usePhotoStore = create<{
   setGroup: (group, photos) => set((state) => ({ groups: { ...state.groups, [group]: photos } })),
 }))
 
+// Once a group is uploaded the server copy is the real one, so drop the one in memory
+export function forgetPhotos(group: string) {
+  for (const photo of usePhotoStore.getState().groups[group] ?? []) URL.revokeObjectURL(photo.url)
+  usePhotoStore.getState().setGroup(group, [])
+}
+
 // The groups aren't per account, so a new login in the same tab must not see the last
 // person's photos
 useAuthStore.subscribe((state, previous) => {

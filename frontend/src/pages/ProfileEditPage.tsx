@@ -6,14 +6,16 @@ import { toast } from "sonner"
 import { landlordSteps, tenantSteps } from "@/components/onboarding/steps"
 import type { OnboardingStep } from "@/components/onboarding/types"
 import { Button } from "@/components/ui/button"
+import { LANDLORD_PHOTO_GROUP, useMyLandlordProfile, useSaveLandlordProfile } from "@/hooks/useMyLandlordProfile"
 import { TENANT_PHOTO_GROUP, useMyTenantProfile, useSaveTenantProfile } from "@/hooks/useMyTenantProfile"
 import { errorMessage } from "@/lib/api"
 import { landlordDefaults, tenantDefaults } from "@/lib/onboardingOptions"
+import { preferencesFromProfile } from "@/services/landlordProfileService"
 import { answersFromProfile } from "@/services/tenantService"
 import { useAuthStore } from "@/stores/authStore"
 import { usePhotoStore } from "@/stores/photoStore"
 import { usePreferencesStore } from "@/stores/preferencesStore"
-import type { TenantOnboarding, User } from "@/types"
+import type { LandlordOnboarding, TenantOnboarding, User } from "@/types"
 
 // Only the landlord's first onboarding step is about them; the rest is the listing,
 // which gets edited from My listings instead.
@@ -23,8 +25,6 @@ const LANDLORD_PROFILE_STEPS = 1
 export function ProfileEditPage() {
   const { step = "0" } = useParams()
   const user = useAuthStore((state) => state.user) as User
-  const record = usePreferencesStore((state) => state.records[user.id])
-  const updateLandlord = usePreferencesStore((state) => state.updateLandlord)
   const index = Number(step)
 
   if (user.role === "tenant") {
@@ -33,12 +33,23 @@ export function ProfileEditPage() {
   }
 
   if (index < 0 || index >= LANDLORD_PROFILE_STEPS) return <Navigate to="/landlord/profile" replace />
+  return <LandlordEdit />
+}
+
+function LandlordEdit() {
+  const { data: profile, isPending, isError } = useMyLandlordProfile()
+  const { mutateAsync } = useSaveLandlordProfile()
+  const newPhoto = usePhotoStore((state) => state.groups[LANDLORD_PHOTO_GROUP]?.[0]?.file)
+
+  if (isPending) return <p className="py-20 text-center text-[14px] text-muted-foreground">Loading…</p>
+  if (isError) return <Navigate to="/landlord/profile" replace />
+
   return (
     <EditStep
-      step={landlordSteps[index]}
-      initial={{ ...landlordDefaults, ...record?.landlord }}
+      step={landlordSteps[0]}
+      initial={{ ...landlordDefaults, ...preferencesFromProfile(profile) }}
       backTo="/landlord/profile"
-      onSave={(values) => updateLandlord(user.id, values)}
+      onSave={(values) => mutateAsync({ values: values as LandlordOnboarding, photo: newPhoto })}
     />
   )
 }

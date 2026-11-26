@@ -134,7 +134,6 @@ export const AMENITIES = [
   "Lift",
 ]
 
-// Check with backend: guest_policy enum
 export const GUEST_POLICIES: Option[] = [
   { value: "no_overnight", label: "No overnight guests" },
   { value: "weekends", label: "Guests on weekends" },

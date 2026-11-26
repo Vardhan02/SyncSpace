@@ -83,7 +83,8 @@ export type TenantOnboarding = {
 }
 
 export type LandlordOnboarding = {
-  // landlords (photo_url gets filled in once photos can be uploaded)
+  // landlords. photoUrl is the uploaded photo, photoCount counts what's in the picker.
+  photoUrl?: string
   photoCount: number
 
   // landlord_preferences
@@ -156,6 +157,50 @@ export type MyTenantProfile = Partial<TenantCard> & {
   phone: string | null
   phoneVisible: boolean
   onboardingComplete: boolean
+}
+
+// GET /api/landlords/me. The preferences are null until onboarding step 1 is saved.
+export type MyLandlordProfile = {
+  id: string
+  name: string
+  photoUrl: string | null
+  email: string
+  phone: string | null
+  phoneVisible: boolean
+  onboardingComplete: boolean
+  preferredTenants: string | null
+  minLeaseMonths: number | null
+  referencesRequired: boolean | null
+}
+
+export type ListingStatus = "draft" | "active" | "pending" | "filled"
+
+// A landlord's own listing, as GET/POST/PUT /api/listings send it back
+export type ListingDetail = {
+  houseId: number
+  title: string
+  area: string
+  address: string
+  rent: number
+  roomType: string
+  availableFrom: string
+  roomsAvailable: number
+  description: string | null
+  status: ListingStatus
+  verified: boolean
+  createdAt: string
+  petsAllowed: boolean
+  smokingAllowed: boolean
+  guestPolicy: string
+  quietHoursStart: string | null
+  quietHoursEnd: string | null
+  minLeaseMonths: number
+  maxOccupants: number
+  extraRules: string | null
+  // vlmVerified is the photo check's answer: null while it hasn't run
+  amenities: { name: string; vlmVerified: boolean | null }[]
+  photos: { photoId: number; url: string; position: number }[]
+  likeCount: number
 }
 
 // How a tenant shows up on a roommate card. These are display labels, not the
