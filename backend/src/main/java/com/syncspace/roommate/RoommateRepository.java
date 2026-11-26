@@ -17,7 +17,7 @@ interface RoommateRepository extends Repository<Tenant, UUID> {
 		Double getScore();
 	}
 
-	// TODO: only the seed tenant has scores until the ranking job exists, everyone else is sorted newest first
+	// only used when the matching service is down: last saved scores, unscored newest first
 	@Query(value = """
 			select t.id as "id", r.score::float8 as "score"
 			from tenants t

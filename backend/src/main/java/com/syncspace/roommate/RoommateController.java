@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.syncspace.profile.Roles;
+import com.syncspace.ranking.RankingService;
 import com.syncspace.profile.UserRole;
 import com.syncspace.tenant.TenantCard;
 import com.syncspace.tenant.TenantProfiles;
@@ -29,20 +30,28 @@ public class RoommateController {
 	private final RoommateRepository roommates;
 	private final TenantRepository tenants;
 	private final TenantProfiles profiles;
+	private final RankingService ranking;
 
 	public RoommateController(Roles roles, RoommateRepository roommates, TenantRepository tenants,
-			TenantProfiles profiles) {
+			TenantProfiles profiles, RankingService ranking) {
 		this.roles = roles;
 		this.roommates = roommates;
 		this.tenants = tenants;
 		this.profiles = profiles;
+		this.ranking = ranking;
 	}
 
 	@GetMapping
 	public List<TenantCard> deck(@AuthenticationPrincipal Jwt jwt, @RequestParam(defaultValue = "20") int limit) {
 		UUID me = onboardedTenant(jwt);
-		var candidates = roommates.deck(me, Math.clamp(limit, 1, 50));
+		limit = Math.clamp(limit, 1, 50);
 
+		Map<UUID, Integer> ranked = ranking.roommates(me, limit);
+		if (ranked != null) {
+			return profiles.cards(List.copyOf(ranked.keySet()), ranked);
+		}
+
+		var candidates = roommates.deck(me, limit);
 		List<UUID> ids = candidates.stream().map(RoommateRepository.Candidate::getId).toList();
 		Map<UUID, Integer> scores = candidates.stream()
 				.filter(c -> c.getScore() != null)
