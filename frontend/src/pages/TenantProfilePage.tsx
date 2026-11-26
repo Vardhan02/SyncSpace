@@ -153,7 +153,6 @@ export function TenantProfilePage() {
       </ProfileSection>
 
       <ContactSection
-        userId={user.id}
         email={user.email}
         description="Your matches see your email. Your phone is only shown if you turn it on."
         toggleLabel="Show my phone number to matches"

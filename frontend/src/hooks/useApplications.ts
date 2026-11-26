@@ -4,7 +4,6 @@ import { getApplicant, getApplications } from "@/services/applicationService"
 import { useApplicationStore } from "@/stores/applicationStore"
 import { useAuthStore } from "@/stores/authStore"
 import { usePreferencesStore } from "@/stores/preferencesStore"
-import { contactFor, useProfileStore } from "@/stores/profileStore"
 import type { Application, ApplicationDecision, House, Roommate } from "@/types"
 
 export type ApplicationDetails = {
@@ -46,15 +45,9 @@ export function useMyApplication(houseId: string) {
 // What a tenant sees once the landlord confirms. The phone is left out unless the
 // landlord chose to share it.
 export function useLandlordContact(landlordId: string) {
-  const contacts = useProfileStore((state) => state.contacts)
-
   const landlord = users.find((user) => user.id === landlordId)
   if (!landlord) return null
 
-  const contact = contactFor(contacts, landlordId)
-  return {
-    name: landlord.name,
-    email: landlord.email,
-    phone: contact.phoneVisible ? contact.phone : null,
-  }
+  // The mock landlords all share their phone
+  return { name: landlord.name, email: landlord.email, phone: landlord.phone }
 }

@@ -14,7 +14,6 @@ import { isValidPhone } from "@/lib/phone"
 import { cn } from "@/lib/utils"
 import { signup } from "@/services/authService"
 import { useAuthStore } from "@/stores/authStore"
-import { useProfileStore } from "@/stores/profileStore"
 
 const signupSchema = z.object({
   role: z.enum(["tenant", "landlord"]),
@@ -30,7 +29,6 @@ export function SignupPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const startSession = useAuthStore((state) => state.startSession)
-  const updateContact = useProfileStore((state) => state.updateContact)
   const {
     register,
     handleSubmit,
@@ -73,7 +71,6 @@ export function SignupPage() {
 
     const { user } = session
     startSession(session)
-    updateContact(user.id, { phone: values.phone, phoneVisible: false })
     toast.success(`Welcome, ${user.name.split(" ")[0]}! Let's set up your profile.`)
     navigate("/onboarding", { replace: true })
   }

@@ -2,37 +2,23 @@ import { useState } from "react"
 import { toast } from "sonner"
 
 import { ProfileSection } from "@/components/profile/ProfileParts"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { cn } from "@/lib/utils"
+import { useMyContact, useUpdateContact } from "@/hooks/useMyContact"
+import { errorMessage } from "@/lib/api"
 import { isValidPhone } from "@/lib/phone"
-import { contactFor, useProfileStore } from "@/stores/profileStore"
+import { cn } from "@/lib/utils"
+import type { MyContact } from "@/services/profileService"
 
 type ContactSectionProps = {
-  userId: string
   email: string
   description: string
   toggleLabel: string
 }
 
-// Saved to profile_contacts (phone, phone_visible).
-export function ContactSection({ userId, email, description, toggleLabel }: ContactSectionProps) {
-  const contact = useProfileStore((state) => contactFor(state.contacts, userId))
-  const updateContact = useProfileStore((state) => state.updateContact)
-  const [phone, setPhone] = useState(contact.phone)
-
-  function savePhone() {
-    const cleaned = phone.trim()
-    if (cleaned === contact.phone) return
-    // A phone number is required, so a bad or empty one goes back to the saved number.
-    if (!isValidPhone(cleaned)) {
-      setPhone(contact.phone)
-      toast.error("Enter a valid phone number")
-      return
-    }
-    updateContact(userId, { phone: cleaned })
-    toast.success("Phone number saved")
-  }
+export function ContactSection({ email, description, toggleLabel }: ContactSectionProps) {
+  const { data: contact, isPending, isError, refetch } = useMyContact()
 
   return (
     <ProfileSection title="Contact" description={description}>
@@ -42,32 +28,80 @@ export function ContactSection({ userId, email, description, toggleLabel }: Cont
           <p className="text-[15px] text-foreground">{email}</p>
         </div>
 
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="phone">Phone number</Label>
-          <Input
-            id="phone"
-            type="tel"
-            inputMode="tel"
-            autoComplete="tel"
-            placeholder="+353 87 123 4567"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value.replace(/[^\d+\s]/g, "").slice(0, 20))}
-            onBlur={savePhone}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") e.currentTarget.blur()
-            }}
-          />
-        </div>
-
-        <Switch
-          label={toggleLabel}
-          checked={contact.phoneVisible}
-          disabled={!contact.phone}
-          hint={contact.phone ? undefined : "Add a phone number first."}
-          onChange={(phoneVisible) => updateContact(userId, { phoneVisible })}
-        />
+        {isPending ? (
+          <p className="text-[14px] text-muted-foreground">Loading your phone number…</p>
+        ) : isError ? (
+          <div className="flex items-center gap-3">
+            <p className="text-[14px] text-muted-foreground">Couldn't load your phone number.</p>
+            <Button variant="outline" className="h-8 rounded-full px-3 text-[13px]" onClick={() => refetch()}>
+              Try again
+            </Button>
+          </div>
+        ) : (
+          <PhoneFields contact={contact} toggleLabel={toggleLabel} />
+        )}
       </div>
     </ProfileSection>
+  )
+}
+
+function PhoneFields({ contact, toggleLabel }: { contact: MyContact; toggleLabel: string }) {
+  const saved = contact.phone ?? ""
+  const [phone, setPhone] = useState(saved)
+  const { mutate, isPending } = useUpdateContact()
+
+  function savePhone() {
+    const cleaned = phone.trim()
+    if (cleaned === saved) return
+    // A phone number is required, so a bad or empty one goes back to the saved number
+    if (!isValidPhone(cleaned)) {
+      setPhone(saved)
+      toast.error("Enter a valid phone number")
+      return
+    }
+    mutate(
+      { phone: cleaned },
+      {
+        onSuccess: () => toast.success("Phone number saved"),
+        onError: (error) => {
+          setPhone(saved)
+          toast.error(errorMessage(error))
+        },
+      }
+    )
+  }
+
+  function saveVisibility(phoneVisible: boolean) {
+    mutate({ phoneVisible }, { onError: (error) => toast.error(errorMessage(error)) })
+  }
+
+  return (
+    <>
+      <div className="flex flex-col gap-1.5">
+        <Label htmlFor="phone">Phone number</Label>
+        <Input
+          id="phone"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          placeholder="+353 87 123 4567"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value.replace(/[^\d+\s]/g, "").slice(0, 20))}
+          onBlur={savePhone}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") e.currentTarget.blur()
+          }}
+        />
+      </div>
+
+      <Switch
+        label={toggleLabel}
+        checked={contact.phoneVisible}
+        disabled={!saved || isPending}
+        hint={saved ? undefined : "Add a phone number first."}
+        onChange={saveVisibility}
+      />
+    </>
   )
 }
 

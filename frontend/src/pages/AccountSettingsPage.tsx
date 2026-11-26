@@ -17,7 +17,6 @@ import { changePassword, deleteAccount, updateAccount } from "@/services/account
 import { useAuthStore } from "@/stores/authStore"
 import { useLandlordStore } from "@/stores/landlordStore"
 import { usePreferencesStore } from "@/stores/preferencesStore"
-import { useProfileStore } from "@/stores/profileStore"
 import type { User } from "@/types"
 
 const detailsSchema = z.object({
@@ -180,7 +179,6 @@ function DeleteAccount({ user }: { user: User }) {
   const navigate = useNavigate()
   const endSession = useAuthStore((state) => state.logout)
   const removeRecord = usePreferencesStore((state) => state.remove)
-  const removeContact = useProfileStore((state) => state.removeContact)
   const removeLandlord = useLandlordStore((state) => state.removeLandlord)
   const [confirming, setConfirming] = useState(false)
   const [password, setPassword] = useState("")
@@ -195,13 +193,12 @@ function DeleteAccount({ user }: { user: User }) {
     // the login page, so it waits until the landing page has replaced this one.
     return () => {
       removeRecord(user.id)
-      removeContact(user.id)
       removeLandlord(user.id)
       endSession()
       window.scrollTo(0, 0)
       toast.success("Your account has been deleted")
     }
-  }, [deleted, navigate, user.id, removeRecord, removeContact, removeLandlord, endSession])
+  }, [deleted, navigate, user.id, removeRecord, removeLandlord, endSession])
 
   function close() {
     setConfirming(false)

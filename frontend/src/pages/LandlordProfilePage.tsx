@@ -47,7 +47,6 @@ export function LandlordProfilePage() {
       </ProfileSection>
 
       <ContactSection
-        userId={user.id}
         email={user.email}
         description="Shared with tenants only when you confirm their application."
         toggleLabel="Include my phone number when I confirm"
