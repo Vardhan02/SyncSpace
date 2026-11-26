@@ -15,7 +15,6 @@ import { Label } from "@/components/ui/label"
 import { ApiError, errorMessage } from "@/lib/api"
 import { changePassword, deleteAccount, updateAccount } from "@/services/accountService"
 import { useAuthStore } from "@/stores/authStore"
-import { useLandlordStore } from "@/stores/landlordStore"
 import { usePreferencesStore } from "@/stores/preferencesStore"
 import type { User } from "@/types"
 
@@ -179,7 +178,6 @@ function DeleteAccount({ user }: { user: User }) {
   const navigate = useNavigate()
   const endSession = useAuthStore((state) => state.logout)
   const removeRecord = usePreferencesStore((state) => state.remove)
-  const removeLandlord = useLandlordStore((state) => state.removeLandlord)
   const [confirming, setConfirming] = useState(false)
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
@@ -193,12 +191,11 @@ function DeleteAccount({ user }: { user: User }) {
     // the login page, so it waits until the landing page has replaced this one.
     return () => {
       removeRecord(user.id)
-      removeLandlord(user.id)
       endSession()
       window.scrollTo(0, 0)
       toast.success("Your account has been deleted")
     }
-  }, [deleted, navigate, user.id, removeRecord, removeLandlord, endSession])
+  }, [deleted, navigate, user.id, removeRecord, endSession])
 
   function close() {
     setConfirming(false)

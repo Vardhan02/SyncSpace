@@ -41,8 +41,41 @@ function toListing(values: LandlordOnboarding) {
   }
 }
 
+// A saved listing in the shape the listing form edits
+export function formFromListing(listing: ListingDetail): Partial<LandlordOnboarding> {
+  return {
+    title: listing.title,
+    area: listing.area,
+    address: listing.address,
+    rent: listing.rent,
+    roomType: listing.roomType,
+    availableFrom: listing.availableFrom,
+    roomsAvailable: listing.roomsAvailable,
+    description: listing.description ?? "",
+    amenities: listing.amenities.map((amenity) => amenity.name),
+    petsAllowed: listing.petsAllowed,
+    smokingAllowed: listing.smokingAllowed,
+    guestPolicy: listing.guestPolicy,
+    quietHoursStart: listing.quietHoursStart ?? undefined,
+    quietHoursEnd: listing.quietHoursEnd ?? undefined,
+    houseMinLeaseMonths: listing.minLeaseMonths,
+    maxOccupants: listing.maxOccupants,
+    extraRules: listing.extraRules ?? "",
+    housePhotoCount: listing.photos.length,
+  }
+}
+
 export function createListing(values: LandlordOnboarding) {
   return api<ListingDetail>("/listings", { method: "POST", body: toListing(values) })
+}
+
+// Leaves the status as it is
+export function updateListing(houseId: number, values: LandlordOnboarding) {
+  return api<ListingDetail>(`/listings/${houseId}`, { method: "PUT", body: toListing(values) })
+}
+
+export function deleteListingPhoto(houseId: number, photoId: number) {
+  return api<void>(`/listings/${houseId}/photos/${photoId}`, { method: "DELETE" })
 }
 
 // Up to 10 per listing, JPG or PNG, 5 MB each

@@ -17,9 +17,20 @@ type PhotoPickerProps = {
   // A photo that's already uploaded. Shown until a new one is picked or it's removed.
   saved?: string
   onRemoveSaved?: () => void
+  // Off when these photos go after ones the listing already has, so none of them is the cover
+  showCover?: boolean
 }
 
-export function PhotoPicker({ group, max, count, onCountChange, round = false, saved, onRemoveSaved }: PhotoPickerProps) {
+export function PhotoPicker({
+  group,
+  max,
+  count,
+  onCountChange,
+  round = false,
+  saved,
+  onRemoveSaved,
+  showCover = true,
+}: PhotoPickerProps) {
   const picked = usePhotoStore((state) => state.groups[group]) ?? []
   const setGroup = usePhotoStore((state) => state.setGroup)
   const photos = picked.length || !saved ? picked : [{ id: "saved", url: saved, name: "Your photo" }]
@@ -75,7 +86,7 @@ export function PhotoPicker({ group, max, count, onCountChange, round = false, s
         // Only the photo is clipped to the tile, so the remove button can sit over its edge
         <div key={photo.id} className={cn("relative", round ? "size-28" : "aspect-4/3")}>
           <img src={photo.url} alt={photo.name} className={cn("size-full bg-secondary object-cover", tile)} />
-          {max > 1 ? (
+          {max > 1 && showCover ? (
             index === 0 ? (
               <span className="absolute bottom-2 left-2 rounded-full bg-white px-2.5 py-1 text-[12px] font-medium text-foreground">
                 Cover

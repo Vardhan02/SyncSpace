@@ -1,5 +1,5 @@
-import { ArrowLeft } from "lucide-react"
-import { useState } from "react"
+import { ArrowLeft, X } from "lucide-react"
+import { useRef, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
 
@@ -7,27 +7,32 @@ import { PhotoPicker } from "@/components/onboarding/PhotoPicker"
 import { Field } from "@/components/onboarding/fields"
 import { landlordSteps } from "@/components/onboarding/steps"
 import { Button } from "@/components/ui/button"
-import { useMyListings } from "@/hooks/useMyListings"
+import { useListing, useSaveListing } from "@/hooks/useListings"
+import { errorMessage } from "@/lib/api"
 import { MAX_PHOTOS, landlordDefaults } from "@/lib/onboardingOptions"
 import { cn } from "@/lib/utils"
-import { formFromHouse, listingSource } from "@/services/landlordService"
-import { useAuthStore } from "@/stores/authStore"
-import { useLandlordStore } from "@/stores/landlordStore"
-import { usePreferencesStore } from "@/stores/preferencesStore"
-import type { LandlordOnboarding } from "@/types"
+import { formFromListing } from "@/services/listingService"
+import { forgetPhotos, usePhotoStore } from "@/stores/photoStore"
+import type { LandlordOnboarding, ListingDetail } from "@/types"
 
-// Onboarding steps 1–4 are the listing: details, amenities, rules and photos.
+// Onboarding steps 2–5 are the listing: details, amenities, rules and photos.
 const listingSteps = landlordSteps.slice(1)
 const photosStep = landlordSteps[4]
 
 // Handles both /landlord/listings/new and /landlord/listings/:houseId/edit.
 export function EditListingPage() {
   const { houseId } = useParams()
-  const house = useMyListings().find((listing) => listing.id === houseId)
-
   if (!houseId) return <ListingForm key="new" />
+  return <EditExisting houseId={Number(houseId)} />
+}
 
-  if (!house) {
+function EditExisting({ houseId }: { houseId: number }) {
+  const { data: listing, isPending, isError } = useListing(houseId)
+
+  if (isPending && Number.isInteger(houseId)) {
+    return <p className="py-20 text-center text-[14px] text-muted-foreground">Loading…</p>
+  }
+  if (isError || !listing) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center gap-2 text-center">
         <h1 className="text-[22px] font-semibold text-foreground">This listing isn't available</h1>
@@ -37,52 +42,52 @@ export function EditListingPage() {
       </div>
     )
   }
-
   // Keyed so the form starts fresh if the landlord jumps to another listing.
-  return <ListingForm key={house.id} houseId={house.id} />
+  return <ListingForm key={listing.houseId} listing={listing} />
 }
 
-function ListingForm({ houseId }: { houseId?: string }) {
+function ListingForm({ listing }: { listing?: ListingDetail }) {
   const navigate = useNavigate()
-  const userId = useAuthStore((state) => state.user?.id) ?? ""
-  const house = useMyListings().find((listing) => listing.id === houseId)
-  const onboarding = usePreferencesStore((state) => state.records[userId]?.landlord)
-  const updateLandlord = usePreferencesStore((state) => state.updateLandlord)
-  const added = useLandlordStore((state) => state.added.find((listing) => listing.id === houseId))
-  const savedEdit = useLandlordStore((state) => (houseId ? state.edits[houseId] : undefined))
-  const addListing = useLandlordStore((state) => state.addListing)
-  const editListing = useLandlordStore((state) => state.editListing)
+  const save = useSaveListing()
+  const photoGroup = listing ? `listing-${listing.houseId}` : "listing-new"
+  const picked = usePhotoStore((state) => state.groups[photoGroup]) ?? []
+  const [values, setValues] = useState<Partial<LandlordOnboarding>>(() =>
+    listing ? formFromListing(listing) : { ...landlordDefaults }
+  )
+  const [removed, setRemoved] = useState<number[]>([])
+  const createdId = useRef<number | undefined>(undefined)
 
-  const source = houseId ? listingSource(houseId) : "added"
-  // A new listing gets its id up front so its photos are already filed under it.
-  const [listingId] = useState(() => houseId ?? `l-${crypto.randomUUID().slice(0, 8)}`)
-  // Photos are kept in memory per listing. The onboarding listing used the "house" group.
-  const photoGroup = source === "onboarding" ? "house" : `house-${listingId}`
-  const [values, setValues] = useState<Partial<LandlordOnboarding>>(() => {
-    if (!houseId) return { ...landlordDefaults }
-    if (source === "onboarding") return { ...landlordDefaults, ...onboarding }
-    if (source === "added") return added?.form ?? {}
-    return savedEdit ?? (house ? formFromHouse(house) : {})
-  })
+  const kept = (listing?.photos ?? [])
+    .filter((photo) => !removed.includes(photo.photoId))
+    .toSorted((a, b) => a.position - b.position)
+  const form = { ...values, housePhotoCount: kept.length + picked.length }
+  const invalid = listingSteps.filter((step) => !step.schema.safeParse(form).success)
+  const backTo = listing ? `/landlord/listings/${listing.houseId}` : "/landlord/listings"
 
-  const backTo = houseId ? `/landlord/listings/${houseId}` : "/landlord/listings"
-  const invalid = listingSteps.filter((step) => !step.schema.safeParse(values).success)
-
-  function save() {
+  function submit() {
     if (invalid.length > 0) {
       toast.error(`Check ${invalid.map((step) => step.title.toLowerCase()).join(", ")}`)
       return
     }
-    if (!houseId) {
-      addListing({ id: listingId, landlordId: userId, form: values })
-      toast.success("Listing added")
-      navigate(`/landlord/listings/${listingId}`)
-      return
-    }
-    if (source === "onboarding") updateLandlord(userId, values)
-    else editListing(houseId, values)
-    toast.success("Listing updated")
-    navigate(backTo)
+    save.mutate(
+      {
+        houseId: listing?.houseId ?? createdId.current,
+        values: form as LandlordOnboarding,
+        // Only ones that are still there, in case an earlier try removed some already
+        removePhotoIds: removed.filter((id) => listing?.photos.some((photo) => photo.photoId === id)),
+        newPhotos: picked.map((photo) => photo.file),
+        keptPhotos: kept.length,
+        onCreated: (id) => (createdId.current = id),
+      },
+      {
+        onSuccess: (houseId) => {
+          forgetPhotos(photoGroup)
+          toast.success(listing ? "Listing updated" : "Listing added")
+          navigate(`/landlord/listings/${houseId}`)
+        },
+        onError: (error) => toast.error(errorMessage(error)),
+      }
+    )
   }
 
   function update(patch: Partial<LandlordOnboarding>) {
@@ -96,21 +101,21 @@ function ListingForm({ houseId }: { houseId?: string }) {
         className="inline-flex w-fit items-center gap-1.5 text-[14px] font-medium text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft className="size-4" aria-hidden="true" />
-        {house?.title ?? "My listings"}
+        {listing?.title ?? "My listings"}
       </Link>
 
       <h1 className="pt-6 text-[26px] font-semibold tracking-[-0.5px] text-foreground md:text-[30px]">
-        {houseId ? "Edit listing" : "Add a listing"}
+        {listing ? "Edit listing" : "Add a listing"}
       </h1>
       <p className="pt-1 text-[14px] text-muted-foreground">
-        {houseId ? "Update what tenants see on your listing." : "Tenants can find it as soon as you save."}
+        {listing ? "Update what tenants see on your listing." : "Tenants can find it as soon as you save."}
       </p>
 
       <form
         className="flex flex-col gap-6 pt-8"
         onSubmit={(e) => {
           e.preventDefault()
-          save()
+          submit()
         }}
         noValidate
       >
@@ -132,19 +137,23 @@ function ListingForm({ houseId }: { houseId?: string }) {
               </div>
               {step !== photosStep ? (
                 <step.Component values={values} onChange={update} />
-              ) : source === "sample" ? (
-                // Sample listings have placeholder photos, so there's nothing real to swap out.
-                <p className="text-[14px] text-muted-foreground">
-                  {house?.photos} sample photos. Uploading new ones comes with the backend.
-                </p>
               ) : (
                 <Field label="Photos" hint={`At least 1, up to ${MAX_PHOTOS}. The first photo is the cover.`}>
-                  <PhotoPicker
-                    group={photoGroup}
-                    max={MAX_PHOTOS}
-                    count={values.housePhotoCount}
-                    onCountChange={(housePhotoCount) => update({ housePhotoCount })}
-                  />
+                  <div className="flex flex-col gap-3">
+                    {kept.length > 0 ? (
+                      <SavedPhotos
+                        photos={kept}
+                        onRemove={(photoId) => setRemoved((ids) => [...ids, photoId])}
+                      />
+                    ) : null}
+                    <PhotoPicker
+                      group={photoGroup}
+                      max={MAX_PHOTOS - kept.length}
+                      count={picked.length}
+                      onCountChange={() => {}}
+                      showCover={kept.length === 0}
+                    />
+                  </div>
                 </Field>
               )}
             </section>
@@ -162,11 +171,37 @@ function ListingForm({ houseId }: { houseId?: string }) {
           >
             Cancel
           </Button>
-          <Button type="submit" className="h-12 flex-1 rounded-[12px] text-[15px] font-medium">
-            {houseId ? "Save changes" : "Add listing"}
+          <Button type="submit" disabled={save.isPending} className="h-12 flex-1 rounded-[12px] text-[15px] font-medium">
+            {save.isPending ? "Saving…" : listing ? "Save changes" : "Add listing"}
           </Button>
         </div>
       </form>
+    </div>
+  )
+}
+
+// Photos already on the listing. Removing one only takes effect on save.
+function SavedPhotos({ photos, onRemove }: { photos: ListingDetail["photos"]; onRemove: (photoId: number) => void }) {
+  return (
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      {photos.map((photo, index) => (
+        <div key={photo.photoId} className="relative aspect-4/3 overflow-hidden rounded-[12px] bg-secondary">
+          <img src={photo.url} alt={`Photo ${index + 1}`} className="size-full object-cover" />
+          {index === 0 ? (
+            <span className="absolute bottom-2 left-2 rounded-full bg-white px-2.5 py-1 text-[12px] font-medium text-foreground">
+              Cover
+            </span>
+          ) : null}
+          <button
+            type="button"
+            aria-label={`Remove photo ${index + 1}`}
+            className="absolute top-2 right-2 flex size-7 items-center justify-center rounded-full bg-white/90 text-foreground hover:bg-white"
+            onClick={() => onRemove(photo.photoId)}
+          >
+            <X className="size-4" aria-hidden="true" />
+          </button>
+        </div>
+      ))}
     </div>
   )
 }
