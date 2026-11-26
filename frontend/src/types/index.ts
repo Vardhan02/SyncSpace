@@ -175,8 +175,33 @@ export type MyLandlordProfile = {
 
 export type ListingStatus = "draft" | "active" | "pending" | "filled"
 
+// The house rules as separate fields, the same in listings and in what tenants browse
+export type HouseRules = {
+  petsAllowed: boolean
+  smokingAllowed: boolean
+  guestPolicy: string
+  quietHoursStart: string | null
+  quietHoursEnd: string | null
+  minLeaseMonths: number
+  maxOccupants: number
+  extraRules: string | null
+}
+
+// One card on My Listings (GET /api/listings/mine)
+export type ListingSummary = {
+  houseId: number
+  title: string
+  address: string
+  area: string
+  rent: number
+  status: ListingStatus
+  verified: boolean
+  coverPhoto: string | null
+  likeCount: number
+}
+
 // A landlord's own listing, as GET/POST/PUT /api/listings send it back
-export type ListingDetail = {
+export type ListingDetail = HouseRules & {
   houseId: number
   title: string
   area: string
@@ -189,14 +214,6 @@ export type ListingDetail = {
   status: ListingStatus
   verified: boolean
   createdAt: string
-  petsAllowed: boolean
-  smokingAllowed: boolean
-  guestPolicy: string
-  quietHoursStart: string | null
-  quietHoursEnd: string | null
-  minLeaseMonths: number
-  maxOccupants: number
-  extraRules: string | null
   // vlmVerified is the photo check's answer: null while it hasn't run
   amenities: { name: string; vlmVerified: boolean | null }[]
   photos: { photoId: number; url: string; position: number }[]

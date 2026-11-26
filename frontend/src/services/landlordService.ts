@@ -1,10 +1,6 @@
-import houseLikes from "@/mocks/houseLikes.json"
 import houses from "@/mocks/houses.json"
-import photoChecks from "@/mocks/photoChecks.json"
 import { GUEST_POLICIES, QUIET_END, QUIET_START, ROOM_TYPES } from "@/lib/onboardingOptions"
 import type { House, LandlordOnboarding } from "@/types"
-
-const likes = houseLikes as Record<string, string[]>
 
 const labelFor = (options: { value: string; label: string }[], value?: string) =>
   options.find((option) => option.value === value)?.label ?? value ?? ""
@@ -136,31 +132,4 @@ export function getAllListings({ onboarding, added, edits, deletedIds }: Listing
   return [...fromOnboarding, ...fromAdded, ...samples].filter(
     (house): house is House => house !== null && !deletedIds.includes(house.id)
   )
-}
-
-// Names only: landlords never see a tenant's contact details from a like.
-export function getLikes(houseId: string) {
-  return likes[houseId] ?? []
-}
-
-// Stand-in for the VLM check: it looks at the listing's photos to confirm each amenity
-// and that the photos are clear enough. A listing is verified when both pass.
-export type PhotoCheck =
-  | { status: "checking" }
-  | { status: "done"; verified: boolean; notSeen: string[]; goodPhotos: boolean }
-
-const checks = photoChecks as Record<string, { notSeen: string[]; photoQuality: string }>
-
-export function getPhotoCheck(house: House): PhotoCheck {
-  // New listings wait for the real pipeline, which the backend team is building.
-  if (listingSource(house.id) !== "sample") return { status: "checking" }
-
-  const result = checks[house.id] ?? { notSeen: [], photoQuality: "good" }
-  const goodPhotos = result.photoQuality === "good"
-  return {
-    status: "done",
-    verified: goodPhotos && result.notSeen.length === 0,
-    notSeen: result.notSeen,
-    goodPhotos,
-  }
 }

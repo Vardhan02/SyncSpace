@@ -2,28 +2,36 @@ import { Heart } from "lucide-react"
 
 import { Modal } from "@/components/Modal"
 import { Button } from "@/components/ui/button"
+import { useListingLikes } from "@/hooks/useListings"
 
 type LikesDialogProps = {
-  open: boolean
+  // The listing whose likes are shown, or null when the pop-up is closed
+  houseId: number | null
   title: string
-  names: string[]
   onClose: () => void
 }
 
 // Names only, as the spec says: no contact details until an application is confirmed.
-export function LikesDialog({ open, title, names, onClose }: LikesDialogProps) {
+export function LikesDialog({ houseId, title, onClose }: LikesDialogProps) {
+  const { data, isPending, isError } = useListingLikes(houseId)
+  const names = data?.names ?? []
+
   return (
     <Modal
-      open={open}
-      title={`${names.length} ${names.length === 1 ? "like" : "likes"}`}
+      open={houseId !== null}
+      title={isPending ? "Likes" : `${names.length} ${names.length === 1 ? "like" : "likes"}`}
       description={`Tenants who liked ${title}.`}
       onClose={onClose}
     >
-      {names.length > 0 ? (
+      {isPending ? (
+        <p className="py-4 text-[14px] text-muted-foreground">Loading…</p>
+      ) : isError ? (
+        <p className="py-4 text-[14px] text-muted-foreground">Couldn't load the likes. Try again in a moment.</p>
+      ) : names.length > 0 ? (
         <ul className="flex max-h-80 flex-col overflow-y-auto">
-          {names.map((name) => (
+          {names.map((name, index) => (
             <li
-              key={name}
+              key={`${index}-${name}`}
               className="flex items-center gap-3 border-b border-border py-3 text-[15px] last:border-0"
             >
               <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-secondary text-[13px] font-semibold">
@@ -50,11 +58,12 @@ export function LikesDialog({ open, title, names, onClose }: LikesDialogProps) {
 type DeleteDialogProps = {
   open: boolean
   title: string
+  deleting?: boolean
   onClose: () => void
   onConfirm: () => void
 }
 
-export function DeleteListingDialog({ open, title, onClose, onConfirm }: DeleteDialogProps) {
+export function DeleteListingDialog({ open, title, deleting, onClose, onConfirm }: DeleteDialogProps) {
   return (
     <Modal
       open={open}
@@ -72,9 +81,10 @@ export function DeleteListingDialog({ open, title, onClose, onConfirm }: DeleteD
         </Button>
         <Button
           className="h-11 flex-1 rounded-[12px] bg-destructive text-[15px] font-medium text-white hover:bg-destructive/90"
+          disabled={deleting}
           onClick={onConfirm}
         >
-          Delete
+          {deleting ? "Deleting…" : "Delete"}
         </Button>
       </div>
     </Modal>

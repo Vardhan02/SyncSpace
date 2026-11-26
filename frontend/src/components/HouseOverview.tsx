@@ -5,12 +5,26 @@ import { Link } from "react-router-dom"
 
 import { formatDate } from "@/lib/format"
 import { cn } from "@/lib/utils"
-import type { House } from "@/types"
 
 const photoShades = ["#e7e5de", "#efede6", "#dcdad2", "#e4e2da", "#d6d4cc"]
 
+// What a house page shows, whether it comes from a landlord's listing or the houses tenants browse
+export type HouseOverviewDetails = {
+  title: string
+  address: string
+  verified: boolean
+  roomType: string
+  rooms: number
+  availableFrom: string
+  description: string | null
+  amenities: string[]
+  rules: string[]
+  // Photo URLs. An empty string shows a grey placeholder (the mock houses have no photos).
+  photos: string[]
+}
+
 type HouseOverviewProps = {
-  house: House
+  house: HouseOverviewDetails
   backTo: string
   backLabel: string
   // Buttons next to the title, e.g. like/share for tenants or edit/delete for landlords.
@@ -23,7 +37,7 @@ type HouseOverviewProps = {
 export function HouseOverview({ house, backTo, backLabel, actions, aside }: HouseOverviewProps) {
   const [showAllPhotos, setShowAllPhotos] = useState(false)
 
-  const photos = Array.from({ length: house.photos }, (_, index) => index)
+  const photos = house.photos.map((url, index) => ({ url, index }))
   const previewCount = photos.length >= 5 ? 5 : 3
   const visiblePhotos = showAllPhotos ? photos : photos.slice(0, previewCount)
 
@@ -69,31 +83,33 @@ export function HouseOverview({ house, backTo, backLabel, actions, aside }: Hous
               )
         )}
       >
-        {visiblePhotos.map((photo) => (
+        {visiblePhotos.map(({ url, index }) => (
           <div
-            key={photo}
-            style={{ backgroundColor: photoShades[photo % photoShades.length] }}
+            key={index}
+            style={{ backgroundColor: photoShades[index % photoShades.length] }}
             className={cn(
-              "flex items-center justify-center",
+              "flex items-center justify-center overflow-hidden",
               showAllPhotos && "aspect-4/3",
-              !showAllPhotos && photo === 0 && "col-span-2 md:row-span-2",
-              !showAllPhotos && photo > 2 && "hidden md:flex"
+              !showAllPhotos && index === 0 && "col-span-2 md:row-span-2",
+              !showAllPhotos && index > 2 && "hidden md:flex"
             )}
           >
-            {photo === 0 ? (
+            {url ? (
+              <img src={url} alt={`${house.title}, photo ${index + 1}`} className="size-full object-cover" />
+            ) : index === 0 ? (
               <HouseIcon className="size-10 text-[#b4b2a9]" aria-hidden="true" />
             ) : null}
           </div>
         ))}
       </div>
 
-      {house.photos > 3 ? (
+      {photos.length > 3 ? (
         <button
           type="button"
           className="-mt-2 w-fit text-[14px] font-medium text-foreground underline underline-offset-4"
           onClick={() => setShowAllPhotos((value) => !value)}
         >
-          {showAllPhotos ? "Show fewer photos" : `Show all ${house.photos} photos`}
+          {showAllPhotos ? "Show fewer photos" : `Show all ${photos.length} photos`}
         </button>
       ) : null}
 

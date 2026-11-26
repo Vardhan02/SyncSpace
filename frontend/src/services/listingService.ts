@@ -1,5 +1,22 @@
 import { api } from "@/lib/api"
-import type { LandlordOnboarding, ListingDetail } from "@/types"
+import type { LandlordOnboarding, ListingDetail, ListingSummary } from "@/types"
+
+export function getMyListings() {
+  return api<ListingSummary[]>("/listings/mine")
+}
+
+export function getListing(houseId: number) {
+  return api<ListingDetail>(`/listings/${houseId}`)
+}
+
+export function deleteListing(houseId: number) {
+  return api<void>(`/listings/${houseId}`, { method: "DELETE" })
+}
+
+// Names only: tenants' contact details stay hidden until an application is confirmed
+export function getListingLikes(houseId: number) {
+  return api<{ count: number; names: string[] }>(`/listings/${houseId}/likes`)
+}
 
 // What POST and PUT /api/listings take. Empty optional fields go as null.
 function toListing(values: LandlordOnboarding) {

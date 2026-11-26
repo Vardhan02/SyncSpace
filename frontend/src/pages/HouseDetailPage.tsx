@@ -38,7 +38,8 @@ export function HouseDetailPage() {
     <>
       <HouseOverview
         key={house.id}
-        house={house}
+        // The mock houses only have a photo count
+        house={{ ...house, photos: Array.from({ length: house.photos }, () => "") }}
         backTo="/houses"
         backLabel="All houses"
         actions={

@@ -5,25 +5,29 @@ import { toast } from "sonner"
 
 import { DeleteListingDialog, LikesDialog } from "@/components/ListingDialogs"
 import { ListingCard } from "@/components/ListingCard"
-import { useMyListings } from "@/hooks/useMyListings"
-import { getLikes } from "@/services/landlordService"
-import { useLandlordStore } from "@/stores/landlordStore"
-import type { House } from "@/types"
+import { Button } from "@/components/ui/button"
+import { useDeleteListing, useMyListingSummaries } from "@/hooks/useListings"
+import { errorMessage } from "@/lib/api"
+import type { ListingSummary } from "@/types"
 
 export function MyListingsPage() {
-  const listings = useMyListings()
-  const deleteListing = useLandlordStore((state) => state.deleteListing)
-  const [likesFor, setLikesFor] = useState<House | null>(null)
-  const [deleting, setDeleting] = useState<House | null>(null)
-
-  const totalLikes = listings.reduce((sum, house) => sum + getLikes(house.id).length, 0)
+  const { data: listings, isPending, isError, refetch } = useMyListingSummaries()
+  const removeListing = useDeleteListing()
+  const [likesFor, setLikesFor] = useState<ListingSummary | null>(null)
+  const [deleting, setDeleting] = useState<ListingSummary | null>(null)
 
   function confirmDelete() {
     if (!deleting) return
-    deleteListing(deleting.id)
-    toast.success(`Deleted ${deleting.title}`)
-    setDeleting(null)
+    removeListing.mutate(deleting.houseId, {
+      onSuccess: () => {
+        toast.success(`Deleted ${deleting.title}`)
+        setDeleting(null)
+      },
+      onError: (error) => toast.error(errorMessage(error)),
+    })
   }
+
+  const totalLikes = listings?.reduce((sum, listing) => sum + listing.likeCount, 0) ?? 0
 
   return (
     <div className="flex flex-col gap-6">
@@ -32,10 +36,12 @@ export function MyListingsPage() {
           <h1 className="text-[26px] font-semibold tracking-[-0.5px] text-foreground md:text-[30px]">
             My listings
           </h1>
-          <p className="pt-1 text-[14px] text-muted-foreground">
-            {listings.length} {listings.length === 1 ? "listing" : "listings"} · {totalLikes}{" "}
-            {totalLikes === 1 ? "like" : "likes"} from tenants
-          </p>
+          {listings ? (
+            <p className="pt-1 text-[14px] text-muted-foreground">
+              {listings.length} {listings.length === 1 ? "listing" : "listings"} · {totalLikes}{" "}
+              {totalLikes === 1 ? "like" : "likes"} from tenants
+            </p>
+          ) : null}
         </div>
         <Link
           to="/landlord/listings/new"
@@ -46,15 +52,23 @@ export function MyListingsPage() {
         </Link>
       </div>
 
-      {listings.length > 0 ? (
+      {isPending ? (
+        <p className="py-16 text-center text-[14px] text-muted-foreground">Loading your listings…</p>
+      ) : isError ? (
+        <div className="flex flex-col items-center gap-3 py-16 text-center">
+          <p className="text-[15px] text-foreground">Couldn't load your listings.</p>
+          <Button variant="outline" className="h-10 rounded-full px-4" onClick={() => refetch()}>
+            Try again
+          </Button>
+        </div>
+      ) : listings.length > 0 ? (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {listings.map((house) => (
+          {listings.map((listing) => (
             <ListingCard
-              key={house.id}
-              house={house}
-              likeCount={getLikes(house.id).length}
-              onShowLikes={() => setLikesFor(house)}
-              onDelete={() => setDeleting(house)}
+              key={listing.houseId}
+              listing={listing}
+              onShowLikes={() => setLikesFor(listing)}
+              onDelete={() => setDeleting(listing)}
             />
           ))}
         </div>
@@ -68,15 +82,11 @@ export function MyListingsPage() {
         </div>
       )}
 
-      <LikesDialog
-        open={likesFor !== null}
-        title={likesFor?.title ?? ""}
-        names={likesFor ? getLikes(likesFor.id) : []}
-        onClose={() => setLikesFor(null)}
-      />
+      <LikesDialog houseId={likesFor?.houseId ?? null} title={likesFor?.title ?? ""} onClose={() => setLikesFor(null)} />
       <DeleteListingDialog
         open={deleting !== null}
         title={deleting?.title ?? ""}
+        deleting={removeListing.isPending}
         onClose={() => setDeleting(null)}
         onConfirm={confirmDelete}
       />
