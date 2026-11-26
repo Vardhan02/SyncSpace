@@ -16,7 +16,6 @@ type PreferencesState = {
   updateTenant: (userId: string, patch: Partial<TenantOnboarding>) => void
   updateLandlord: (userId: string, patch: Partial<LandlordOnboarding>) => void
   complete: (userId: string) => void
-  restart: (userId: string) => void
   remove: (userId: string) => void
 }
 
@@ -47,7 +46,6 @@ export const usePreferencesStore = create<PreferencesState>()(
           update(userId, (record) => ({ landlord: { ...record.landlord, ...patch } })),
         complete: (userId) => update(userId, () => ({ completed: true })),
         // Keeps the saved answers, so the form opens already filled in.
-        restart: (userId) => update(userId, () => ({ completed: false, step: 0 })),
         remove: (userId) =>
           set((state) => ({
             records: Object.fromEntries(Object.entries(state.records).filter(([id]) => id !== userId)),

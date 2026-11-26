@@ -12,6 +12,8 @@ import { ProfileSection } from "@/components/profile/ProfileParts"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { ApiError, errorMessage } from "@/lib/api"
+import { changePassword, deleteAccount, updateAccount } from "@/services/accountService"
 import { useAuthStore } from "@/stores/authStore"
 import { useLandlordStore } from "@/stores/landlordStore"
 import { usePreferencesStore } from "@/stores/preferencesStore"
@@ -19,8 +21,7 @@ import { useProfileStore } from "@/stores/profileStore"
 import type { User } from "@/types"
 
 const detailsSchema = z.object({
-  name: z.string().trim().min(1, "Name is required"),
-  email: z.string().min(1, "Email is required").email("Enter a valid email"),
+  name: z.string().trim().min(1, "Name is required").max(100, "Keep it under 100 characters"),
 })
 
 const passwordSchema = z
@@ -36,6 +37,9 @@ const passwordSchema = z
 
 type DetailsValues = z.infer<typeof detailsSchema>
 type PasswordValues = z.infer<typeof passwordSchema>
+
+// The backend answers a wrong password with 400, not 401
+const wrongPassword = (error: unknown) => error instanceof ApiError && error.status === 400
 
 export function AccountSettingsPage() {
   const user = useAuthStore((state) => state.user) as User
@@ -63,26 +67,26 @@ export function AccountSettingsPage() {
 }
 
 function DetailsForm({ user }: { user: User }) {
-  const updateAccount = useAuthStore((state) => state.updateAccount)
+  const setUser = useAuthStore((state) => state.setUser)
   const {
     register,
     handleSubmit,
-    setError,
     reset,
-    formState: { errors, isDirty },
+    formState: { errors, isDirty, isSubmitting },
   } = useForm<DetailsValues>({
     resolver: zodResolver(detailsSchema),
-    defaultValues: { name: user.name, email: user.email },
+    defaultValues: { name: user.name },
   })
 
-  function onSubmit(values: DetailsValues) {
-    const error = updateAccount(values)
-    if (error) {
-      setError("email", { message: error })
-      return
+  async function onSubmit(values: DetailsValues) {
+    try {
+      const updated = await updateAccount({ name: values.name })
+      setUser(updated)
+      reset({ name: updated.name })
+      toast.success("Account details saved")
+    } catch (error) {
+      toast.error(errorMessage(error))
     }
-    reset(values)
-    toast.success("Account details saved")
   }
 
   return (
@@ -91,17 +95,15 @@ function DetailsForm({ user }: { user: User }) {
         <FormField id="name" label="Full name" error={errors.name?.message}>
           <Input id="name" autoComplete="name" aria-invalid={Boolean(errors.name)} {...register("name")} />
         </FormField>
-        <FormField id="email" label="Email" error={errors.email?.message}>
-          <Input
-            id="email"
-            type="email"
-            autoComplete="email"
-            aria-invalid={Boolean(errors.email)}
-            {...register("email")}
-          />
+        <FormField id="email" label="Email" hint="Your email can't be changed.">
+          <Input id="email" type="email" value={user.email} readOnly disabled />
         </FormField>
-        <Button type="submit" disabled={!isDirty} className="h-11 rounded-[12px] px-5 text-[15px] font-medium sm:w-fit">
-          Save changes
+        <Button
+          type="submit"
+          disabled={!isDirty || isSubmitting}
+          className="h-11 rounded-[12px] px-5 text-[15px] font-medium sm:w-fit"
+        >
+          {isSubmitting ? "Saving…" : "Save changes"}
         </Button>
       </form>
     </ProfileSection>
@@ -109,26 +111,26 @@ function DetailsForm({ user }: { user: User }) {
 }
 
 function PasswordForm() {
-  const changePassword = useAuthStore((state) => state.changePassword)
   const {
     register,
     handleSubmit,
     setError,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<PasswordValues>({
     resolver: zodResolver(passwordSchema),
     defaultValues: { current: "", next: "", repeat: "" },
   })
 
-  function onSubmit(values: PasswordValues) {
-    const error = changePassword(values.current, values.next)
-    if (error) {
-      setError("current", { message: error })
-      return
+  async function onSubmit(values: PasswordValues) {
+    try {
+      await changePassword(values.current, values.next)
+      reset()
+      toast.success("Password changed")
+    } catch (error) {
+      if (wrongPassword(error)) setError("current", { message: "Your current password is wrong" })
+      else toast.error(errorMessage(error))
     }
-    reset()
-    toast.success("Password changed")
   }
 
   return (
@@ -162,8 +164,12 @@ function PasswordForm() {
             {...register("repeat")}
           />
         </FormField>
-        <Button type="submit" className="h-11 rounded-[12px] px-5 text-[15px] font-medium sm:w-fit">
-          Change password
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="h-11 rounded-[12px] px-5 text-[15px] font-medium sm:w-fit"
+        >
+          {isSubmitting ? "Changing…" : "Change password"}
         </Button>
       </form>
     </ProfileSection>
@@ -172,34 +178,58 @@ function PasswordForm() {
 
 function DeleteAccount({ user }: { user: User }) {
   const navigate = useNavigate()
-  const deleteAccount = useAuthStore((state) => state.deleteAccount)
+  const endSession = useAuthStore((state) => state.logout)
   const removeRecord = usePreferencesStore((state) => state.remove)
   const removeContact = useProfileStore((state) => state.removeContact)
   const removeLandlord = useLandlordStore((state) => state.removeLandlord)
   const [confirming, setConfirming] = useState(false)
-  const [deleting, setDeleting] = useState(false)
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  const [sending, setSending] = useState(false)
+  const [deleted, setDeleted] = useState(false)
 
   useEffect(() => {
-    if (!deleting) return
+    if (!deleted) return
     navigate("/", { replace: true })
-    // The account is only removed once the landing page has replaced this one. Removing it
-    // while this page is still up makes the logged-in check send us to the login page.
+    // Signing out while this page is still up would make the logged-in check send us to
+    // the login page, so it waits until the landing page has replaced this one.
     return () => {
       removeRecord(user.id)
       removeContact(user.id)
       removeLandlord(user.id)
-      deleteAccount()
+      endSession()
       window.scrollTo(0, 0)
       toast.success("Your account has been deleted")
     }
-  }, [deleting, navigate, user.id, removeRecord, removeContact, removeLandlord, deleteAccount])
+  }, [deleted, navigate, user.id, removeRecord, removeContact, removeLandlord, endSession])
+
+  function close() {
+    setConfirming(false)
+    setPassword("")
+    setError("")
+  }
+
+  async function confirmDelete() {
+    if (!password) {
+      setError("Enter your password")
+      return
+    }
+    setSending(true)
+    try {
+      await deleteAccount(password)
+      setDeleted(true)
+    } catch (err) {
+      setError(wrongPassword(err) ? "That password is wrong" : errorMessage(err))
+      setSending(false)
+    }
+  }
 
   return (
     <ProfileSection
       title="Delete account"
       description={
         user.role === "landlord"
-          ? "Removes your profile and the listings you added. Tenants won't see them any more."
+          ? "Removes your profile and your listings. Tenants won't see them any more."
           : "Removes your profile, so other tenants won't see you any more."
       }
     >
@@ -215,34 +245,64 @@ function DeleteAccount({ user }: { user: User }) {
         open={confirming}
         title="Delete your account?"
         description="Everything you've saved goes with it. This can't be undone."
-        onClose={() => setConfirming(false)}
+        onClose={close}
       >
-        <div className="flex gap-3 pt-2">
-          <Button
-            variant="outline"
-            className="h-11 flex-1 rounded-[12px] text-[15px] font-medium"
-            onClick={() => setConfirming(false)}
-          >
-            Cancel
-          </Button>
-          <Button
-            className="h-11 flex-1 rounded-[12px] bg-destructive text-[15px] font-medium text-white hover:bg-destructive/90"
-            onClick={() => setDeleting(true)}
-          >
-            Delete
-          </Button>
-        </div>
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={(e) => {
+            e.preventDefault()
+            confirmDelete()
+          }}
+          noValidate
+        >
+          <FormField id="delete-password" label="Your password" error={error}>
+            <Input
+              id="delete-password"
+              type="password"
+              autoComplete="current-password"
+              aria-invalid={Boolean(error)}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value)
+                setError("")
+              }}
+            />
+          </FormField>
+          <div className="flex gap-3 pt-2">
+            <Button
+              type="button"
+              variant="outline"
+              className="h-11 flex-1 rounded-[12px] text-[15px] font-medium"
+              onClick={close}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={sending}
+              className="h-11 flex-1 rounded-[12px] bg-destructive text-[15px] font-medium text-white hover:bg-destructive/90"
+            >
+              {sending ? "Deleting…" : "Delete"}
+            </Button>
+          </div>
+        </form>
       </Modal>
     </ProfileSection>
   )
 }
 
-function FormField({ id, label, error, children }: { id: string; label: string; error?: string; children: ReactNode }) {
+type FormFieldProps = { id: string; label: string; error?: string; hint?: string; children: ReactNode }
+
+function FormField({ id, label, error, hint, children }: FormFieldProps) {
   return (
     <div className="flex flex-col gap-1.5">
       <Label htmlFor={id}>{label}</Label>
       {children}
-      {error ? <p className="text-[13px] text-destructive">{error}</p> : null}
+      {error ? (
+        <p className="text-[13px] text-destructive">{error}</p>
+      ) : hint ? (
+        <p className="text-[13px] text-muted-foreground">{hint}</p>
+      ) : null}
     </div>
   )
 }

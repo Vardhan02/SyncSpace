@@ -46,12 +46,9 @@ export function useMyApplication(houseId: string) {
 // What a tenant sees once the landlord confirms. The phone is left out unless the
 // landlord chose to share it.
 export function useLandlordContact(landlordId: string) {
-  const accounts = useAuthStore((state) => state.accounts)
   const contacts = useProfileStore((state) => state.contacts)
 
-  const landlord =
-    accounts.find((account) => account.id === landlordId) ??
-    users.find((user) => user.id === landlordId)
+  const landlord = users.find((user) => user.id === landlordId)
   if (!landlord) return null
 
   const contact = contactFor(contacts, landlordId)

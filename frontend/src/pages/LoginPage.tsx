@@ -11,10 +11,6 @@ import { Label } from "@/components/ui/label"
 import { errorMessage } from "@/lib/api"
 import { login } from "@/services/authService"
 import { useAuthStore } from "@/stores/authStore"
-import { usePreferencesStore } from "@/stores/preferencesStore"
-
-// Shows onboarding on every login while we're building it. Set to false to only show it once.
-const ALWAYS_SHOW_ONBOARDING = true
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email("Enter a valid email"),
@@ -26,7 +22,6 @@ type LoginValues = z.infer<typeof loginSchema>
 export function LoginPage() {
   const navigate = useNavigate()
   const startSession = useAuthStore((state) => state.startSession)
-  const restartOnboarding = usePreferencesStore((state) => state.restart)
   const {
     register,
     handleSubmit,
@@ -51,7 +46,6 @@ export function LoginPage() {
     const { user } = session
     startSession(session)
     toast.success(`Welcome back, ${user.name.split(" ")[0]}`)
-    if (ALWAYS_SHOW_ONBOARDING) restartOnboarding(user.id)
     navigate(user.role === "tenant" ? "/houses" : "/landlord", { replace: true })
   }
 
