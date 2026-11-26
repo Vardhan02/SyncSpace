@@ -8,15 +8,15 @@ import { HouseOverview } from "@/components/HouseOverview"
 import { ShareHouseDialog } from "@/components/ShareHouseDialog"
 import { Button } from "@/components/ui/button"
 import { useHouseDetail } from "@/controllers/useHouseDetail"
+import { useHouseLikes } from "@/controllers/useHouseLikes"
 import { useShareHouse } from "@/controllers/useShareHouse"
 import { formatMatchLikes } from "@/lib/format"
-import { useHouseStore } from "@/stores/houseStore"
 
 export function HouseDetailPage() {
   const { houseId = "" } = useParams()
   const house = useHouseDetail(houseId)
-  const liked = useHouseStore((state) => state.likedIds.includes(houseId))
-  const toggleLike = useHouseStore((state) => state.toggleLike)
+  const { likedIds, toggleLike } = useHouseLikes()
+  const liked = likedIds.includes(houseId)
   const { shareHouse, matches, sentTo, openShare, closeShare, send } = useShareHouse()
 
   useEffect(() => {

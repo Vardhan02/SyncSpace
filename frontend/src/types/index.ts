@@ -24,6 +24,7 @@ export type House = {
   description: string
   rules: string[]
   likedByMatches: string[]
+  likedByMe?: boolean
 }
 
 // Onboarding answers. Field names are the Supabase column names in camelCase,

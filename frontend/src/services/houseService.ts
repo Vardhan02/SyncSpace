@@ -47,3 +47,11 @@ export async function fetchHouse(id: string): Promise<House> {
   const { data } = await api.get<ApiHouseDetail>(`/api/houses/${toApiHouseId(id)}`)
   return houseFromForm(toHouse(data), data)
 }
+
+export async function likeHouse(id: string) {
+  await api.post(`/api/houses/${toApiHouseId(id)}/like`)
+}
+
+export async function unlikeHouse(id: string) {
+  await api.delete(`/api/houses/${toApiHouseId(id)}/like`)
+}
