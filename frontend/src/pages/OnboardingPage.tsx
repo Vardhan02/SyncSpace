@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import type { ReactNode } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
@@ -8,27 +8,60 @@ import { LogoutButton } from "@/components/LogoutButton"
 import { landlordSteps, tenantSteps } from "@/components/onboarding/steps"
 import type { OnboardingStep } from "@/components/onboarding/types"
 import { Button } from "@/components/ui/button"
+import { TENANT_PHOTO_GROUP, forgetPickedTenantPhoto } from "@/hooks/useMyTenantProfile"
+import { errorMessage } from "@/lib/api"
 import { landlordDefaults, tenantDefaults } from "@/lib/onboardingOptions"
+import { saveTenantAnswers, uploadTenantPhoto } from "@/services/tenantService"
 import { useAuthStore } from "@/stores/authStore"
+import { usePhotoStore } from "@/stores/photoStore"
 import { emptyRecord, usePreferencesStore } from "@/stores/preferencesStore"
-import type { User } from "@/types"
+import type { TenantOnboarding, User } from "@/types"
 
 export function OnboardingPage() {
   const navigate = useNavigate()
   const user = useAuthStore((state) => state.user) as User
+  const setUser = useAuthStore((state) => state.setUser)
+  const profilePhoto = usePhotoStore((state) => state.groups[TENANT_PHOTO_GROUP]?.[0])
   const record = usePreferencesStore((state) => state.records[user.id]) ?? emptyRecord
   const setStep = usePreferencesStore((state) => state.setStep)
   const updateTenant = usePreferencesStore((state) => state.updateTenant)
   const updateLandlord = usePreferencesStore((state) => state.updateLandlord)
   const complete = usePreferencesStore((state) => state.complete)
+  const [finishing, setFinishing] = useState(false)
 
   const tenantValues = { ...tenantDefaults, ...record.tenant }
   const landlordValues = { ...landlordDefaults, ...record.landlord }
 
-  function finish() {
+  // The backend only counts a tenant as onboarded once the answers and the photo are both in
+  async function saveTenant() {
+    // Photos are kept in memory, so a reload during onboarding loses it
+    if (!profilePhoto) {
+      toast.error("Add your profile photo again")
+      setStep(user.id, 0)
+      return false
+    }
+    setFinishing(true)
+    try {
+      await saveTenantAnswers(tenantValues as TenantOnboarding)
+      await uploadTenantPhoto(profilePhoto.file)
+      forgetPickedTenantPhoto()
+    } catch (error) {
+      toast.error(errorMessage(error))
+      setFinishing(false)
+      return false
+    }
+    setUser({ ...user, firstLogin: false })
+    return true
+  }
+
+  async function finish() {
     // Sliders show defaults before they're touched, so save what was on screen.
-    if (user.role === "tenant") updateTenant(user.id, tenantValues)
-    else updateLandlord(user.id, landlordValues)
+    if (user.role === "tenant") {
+      updateTenant(user.id, tenantValues)
+      if (!(await saveTenant())) return
+    } else {
+      updateLandlord(user.id, landlordValues)
+    }
     complete(user.id)
     toast.success("You're all set")
     navigate(user.role === "tenant" ? "/houses" : "/landlord", { replace: true })
@@ -54,6 +87,7 @@ export function OnboardingPage() {
           onChange={(patch) => updateTenant(user.id, patch)}
           onStep={(step) => setStep(user.id, step)}
           onFinish={finish}
+          finishing={finishing}
         />
       ) : (
         <StepFlow
@@ -78,9 +112,10 @@ type StepFlowProps<T> = {
   onChange: (patch: Partial<T>) => void
   onStep: (step: number) => void
   onFinish: () => void
+  finishing?: boolean
 }
 
-function StepFlow<T>({ header, steps, step, values, onChange, onStep, onFinish }: StepFlowProps<T>) {
+function StepFlow<T>({ header, steps, step, values, onChange, onStep, onFinish, finishing }: StepFlowProps<T>) {
   const index = Math.min(step, steps.length - 1)
   const current = steps[index]
   const isLast = index === steps.length - 1
@@ -151,10 +186,10 @@ function StepFlow<T>({ header, steps, step, values, onChange, onStep, onFinish }
               ) : null}
               <Button
                 type="submit"
-                disabled={!canContinue}
+                disabled={!canContinue || finishing}
                 className="h-12 flex-1 rounded-[12px] text-[15px] font-medium"
               >
-                {isLast ? "Finish" : "Next"}
+                {finishing ? "Saving…" : isLast ? "Finish" : "Next"}
               </Button>
             </div>
           </div>

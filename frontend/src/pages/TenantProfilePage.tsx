@@ -6,15 +6,15 @@ import {
   HOUSEMATES,
   LEASE_MONTHS,
   NOISE_TOLERANCE,
-  PROMPTS,
   ROOM_TYPES,
   SLEEP_SCHEDULES,
   SOCIAL_LEVELS,
   WORK_SCHEDULES,
   labelOf,
 } from "@/lib/onboardingOptions"
+import { Button } from "@/components/ui/button"
+import { useMyTenantProfile } from "@/hooks/useMyTenantProfile"
 import { useAuthStore } from "@/stores/authStore"
-import { usePreferencesStore } from "@/stores/preferencesStore"
 import type { User } from "@/types"
 
 function longDate(value?: string) {
@@ -34,7 +34,21 @@ function yesNo(value: boolean | undefined, yes: string, no: string) {
 
 export function TenantProfilePage() {
   const user = useAuthStore((state) => state.user) as User
-  const tenant = usePreferencesStore((state) => state.records[user.id]?.tenant) ?? {}
+  const { data: tenant, isPending, isError, refetch } = useMyTenantProfile()
+
+  if (isPending) {
+    return <p className="py-20 text-center text-[14px] text-muted-foreground">Loading your profile…</p>
+  }
+  if (isError) {
+    return (
+      <div className="flex flex-col items-center gap-3 py-20 text-center">
+        <p className="text-[15px] text-foreground">Couldn't load your profile.</p>
+        <Button variant="outline" className="h-10 rounded-full px-4" onClick={() => refetch()}>
+          Try again
+        </Button>
+      </div>
+    )
+  }
 
   const tags = [
     labelOf(SLEEP_SCHEDULES, tenant.sleepSchedule),
@@ -63,7 +77,7 @@ export function TenantProfilePage() {
       {/* Preview of the roommate card */}
       <section className="flex flex-col gap-5 rounded-[20px] border border-border p-5 shadow-[0_8px_30px_rgba(44,44,42,0.06)] md:p-6">
         <div className="flex items-start gap-4">
-          <Avatar name={user.name} photoGroup="tenant-profile" className="size-20 text-[24px]" />
+          <Avatar name={user.name} photoUrl={tenant.photoUrl} className="size-20 text-[24px]" />
           <div className="min-w-0 flex-1">
             <h2 className="text-[22px] font-semibold tracking-[-0.3px] text-foreground">
               {user.name}
@@ -96,7 +110,7 @@ export function TenantProfilePage() {
           {tenant.prompts?.length ? (
             tenant.prompts.map((item) => (
               <div key={item.promptId} className="rounded-[14px] bg-secondary px-4 py-3">
-                <p className="text-[13px] text-muted-foreground">{labelOf(PROMPTS, item.promptId)}</p>
+                <p className="text-[13px] text-muted-foreground">{item.text}</p>
                 <p className="pt-0.5 text-[15px] text-foreground">{item.answer}</p>
               </div>
             ))

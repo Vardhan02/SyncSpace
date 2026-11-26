@@ -25,14 +25,16 @@ function readable(message: string) {
 
 async function send(path: string, { method = "GET", body }: RequestOptions, token: string | null) {
   const headers: Record<string, string> = {}
-  if (body !== undefined) headers["Content-Type"] = "application/json"
+  // FormData (photo uploads) sets its own multipart Content-Type
+  const isForm = body instanceof FormData
+  if (body !== undefined && !isForm) headers["Content-Type"] = "application/json"
   if (token) headers.Authorization = `Bearer ${token}`
 
   try {
     return await fetch(`${API_URL}/api${path}`, {
       method,
       headers,
-      body: body === undefined ? undefined : JSON.stringify(body),
+      body: body === undefined ? undefined : isForm ? body : JSON.stringify(body),
     })
   } catch {
     throw new ApiError(0, "Can't reach the server. Check your connection and try again.")

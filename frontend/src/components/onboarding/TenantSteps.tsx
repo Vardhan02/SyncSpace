@@ -8,6 +8,7 @@ import { CharCount, Field, MultiChoice, SingleChoice, Textarea } from "@/compone
 import type { StepProps } from "@/components/onboarding/types"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { TENANT_PHOTO_GROUP } from "@/hooks/useMyTenantProfile"
 import {
   AREAS,
   BIO_MAX,
@@ -41,11 +42,13 @@ export function ProfileStep({ values, onChange }: Props) {
     <>
       <Field label="Profile photo" hint="Shown on your roommate card.">
         <PhotoPicker
-          group="tenant-profile"
+          group={TENANT_PHOTO_GROUP}
           max={1}
           round
           count={values.photoCount}
           onCountChange={(photoCount) => onChange({ photoCount })}
+          saved={values.photoUrl}
+          onRemoveSaved={() => onChange({ photoUrl: undefined })}
         />
       </Field>
 

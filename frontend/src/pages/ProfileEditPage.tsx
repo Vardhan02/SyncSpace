@@ -6,10 +6,14 @@ import { toast } from "sonner"
 import { landlordSteps, tenantSteps } from "@/components/onboarding/steps"
 import type { OnboardingStep } from "@/components/onboarding/types"
 import { Button } from "@/components/ui/button"
+import { TENANT_PHOTO_GROUP, useMyTenantProfile, useSaveTenantProfile } from "@/hooks/useMyTenantProfile"
+import { errorMessage } from "@/lib/api"
 import { landlordDefaults, tenantDefaults } from "@/lib/onboardingOptions"
+import { answersFromProfile } from "@/services/tenantService"
 import { useAuthStore } from "@/stores/authStore"
+import { usePhotoStore } from "@/stores/photoStore"
 import { usePreferencesStore } from "@/stores/preferencesStore"
-import type { User } from "@/types"
+import type { TenantOnboarding, User } from "@/types"
 
 // Only the landlord's first onboarding step is about them; the rest is the listing,
 // which gets edited from My listings instead.
@@ -20,20 +24,12 @@ export function ProfileEditPage() {
   const { step = "0" } = useParams()
   const user = useAuthStore((state) => state.user) as User
   const record = usePreferencesStore((state) => state.records[user.id])
-  const updateTenant = usePreferencesStore((state) => state.updateTenant)
   const updateLandlord = usePreferencesStore((state) => state.updateLandlord)
   const index = Number(step)
 
   if (user.role === "tenant") {
     if (!(index in tenantSteps)) return <Navigate to="/profile" replace />
-    return (
-      <EditStep
-        step={tenantSteps[index]}
-        initial={{ ...tenantDefaults, ...record?.tenant }}
-        backTo="/profile"
-        onSave={(values) => updateTenant(user.id, values)}
-      />
-    )
+    return <TenantEdit userId={user.id} index={index} />
   }
 
   if (index < 0 || index >= LANDLORD_PROFILE_STEPS) return <Navigate to="/landlord/profile" replace />
@@ -47,22 +43,55 @@ export function ProfileEditPage() {
   )
 }
 
+function TenantEdit({ userId, index }: { userId: string; index: number }) {
+  const { data: profile, isPending, isError } = useMyTenantProfile()
+  const { mutateAsync } = useSaveTenantProfile()
+  const newPhoto = usePhotoStore((state) => state.groups[TENANT_PHOTO_GROUP]?.[0]?.file)
+  const updateTenant = usePreferencesStore((state) => state.updateTenant)
+
+  if (isPending) return <p className="py-20 text-center text-[14px] text-muted-foreground">Loading…</p>
+  if (isError) return <Navigate to="/profile" replace />
+
+  async function save(values: Partial<TenantOnboarding>) {
+    await mutateAsync({ values: values as TenantOnboarding, photo: index === 0 ? newPhoto : undefined })
+    // Roommate matching still reads the local copy
+    updateTenant(userId, values)
+  }
+
+  return (
+    <EditStep
+      step={tenantSteps[index]}
+      initial={{ ...tenantDefaults, ...answersFromProfile(profile) }}
+      backTo="/profile"
+      onSave={save}
+    />
+  )
+}
+
 type EditStepProps<T> = {
   step: OnboardingStep<T>
   initial: Partial<T>
   backTo: string
-  onSave: (values: Partial<T>) => void
+  onSave: (values: Partial<T>) => void | Promise<void>
 }
 
 function EditStep<T>({ step, initial, backTo, onSave }: EditStepProps<T>) {
   const navigate = useNavigate()
   // Changes stay local until Save, so Cancel really cancels.
   const [values, setValues] = useState(initial)
+  const [saving, setSaving] = useState(false)
   const canSave = step.schema.safeParse(values).success
 
-  function save() {
+  async function save() {
     if (!canSave) return
-    onSave(values)
+    setSaving(true)
+    try {
+      await onSave(values)
+    } catch (error) {
+      toast.error(errorMessage(error))
+      setSaving(false)
+      return
+    }
     toast.success("Profile updated")
     navigate(backTo)
   }
@@ -106,10 +135,10 @@ function EditStep<T>({ step, initial, backTo, onSave }: EditStepProps<T>) {
           </Button>
           <Button
             type="submit"
-            disabled={!canSave}
+            disabled={!canSave || saving}
             className="h-12 flex-1 rounded-[12px] text-[15px] font-medium"
           >
-            Save
+            {saving ? "Saving…" : "Save"}
           </Button>
         </div>
       </form>

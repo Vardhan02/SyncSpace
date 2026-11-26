@@ -2,7 +2,8 @@ import { create } from "zustand"
 
 import { useAuthStore } from "@/stores/authStore"
 
-export type Photo = { id: string; url: string; name: string }
+// `url` is a local preview, `file` is what gets uploaded
+export type Photo = { id: string; url: string; name: string; file: File }
 
 // Photos only live in memory until they're uploaded to the backend, so they're gone after
 // a refresh. Groups keep e.g. the profile photo apart from house photos.

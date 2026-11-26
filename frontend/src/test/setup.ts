@@ -10,6 +10,13 @@ HTMLDialogElement.prototype.close = function () {
   this.open = false
 }
 
+// Tests answer every request with respondWith(). Anything else fails instead of reaching
+// a real backend that happens to be running on this machine.
+globalThis.fetch = (input) => Promise.reject(new Error(`No test response for ${String(input)}`))
+
+URL.createObjectURL ??= () => "blob:test"
+URL.revokeObjectURL ??= () => {}
+
 afterEach(() => {
   cleanup()
   localStorage.clear()

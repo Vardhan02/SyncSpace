@@ -4,7 +4,7 @@ import { useAuthStore } from "@/stores/authStore"
 import { usePhotoStore } from "@/stores/photoStore"
 import { fakeSession } from "@/test/server"
 
-const photo = { id: "p-1", url: "blob:photo", name: "me.jpg" }
+const photo = { id: "p-1", url: "blob:photo", name: "me.jpg", file: new File([], "me.jpg") }
 
 describe("photoStore", () => {
   beforeEach(() => {

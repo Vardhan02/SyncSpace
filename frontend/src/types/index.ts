@@ -46,7 +46,8 @@ export type PromptAnswer = {
 }
 
 export type TenantOnboarding = {
-  // tenants (photo_url gets filled in once photos can be uploaded)
+  // tenants. photoUrl is the uploaded photo, photoCount counts what's in the picker.
+  photoUrl?: string
   age?: number
   university?: string
   course?: string
@@ -115,6 +116,46 @@ export type LandlordOnboarding = {
 
   // house_photos
   housePhotoCount: number
+}
+
+// A tenant as the API sends them (TenantCard in the backend): raw values like
+// "night_owl", never labels, and no contact details
+export type TenantCard = {
+  id: string
+  name: string
+  age: number
+  photoUrl: string | null
+  university: string
+  course: string
+  bio: string
+  budgetMin: number
+  budgetMax: number
+  preferredAreas: string[]
+  roomType: string
+  moveInDate: string
+  leaseMonths: number
+  maxHousemates: number
+  sleepSchedule: string
+  noiseTolerance: number
+  cleanliness: string
+  workSchedule: string
+  socialLevel: string
+  guestFrequency: string
+  smoker: boolean
+  okWithSmoking: boolean
+  hasPets: boolean
+  okWithPets: boolean
+  interests: string[]
+  prompts: { promptId: number; text: string; answer: string }[]
+  matchScore: number | null
+}
+
+// GET /api/tenants/me. The card fields are missing until onboarding is saved.
+export type MyTenantProfile = Partial<TenantCard> & {
+  email: string
+  phone: string | null
+  phoneVisible: boolean
+  onboardingComplete: boolean
 }
 
 // How a tenant shows up on a roommate card. These are display labels, not the

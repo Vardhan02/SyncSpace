@@ -75,12 +75,15 @@ export function InfoList({ rows }: { rows: [string, ReactNode][] }) {
 
 type AvatarProps = {
   name: string
-  photoGroup: string
+  // An uploaded photo, or else the first photo picked in this group
+  photoUrl?: string | null
+  photoGroup?: string
   className?: string
 }
 
-export function Avatar({ name, photoGroup, className }: AvatarProps) {
-  const photo = usePhotoStore((state) => state.groups[photoGroup]?.[0])
+export function Avatar({ name, photoUrl, photoGroup = "", className }: AvatarProps) {
+  const picked = usePhotoStore((state) => state.groups[photoGroup]?.[0])
+  const photo = photoUrl ? { url: photoUrl } : picked
   const initials = name
     .split(" ")
     .map((part) => part[0])

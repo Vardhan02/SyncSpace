@@ -14,11 +14,15 @@ type PhotoPickerProps = {
   count?: number
   onCountChange: (count: number) => void
   round?: boolean
+  // A photo that's already uploaded. Shown until a new one is picked or it's removed.
+  saved?: string
+  onRemoveSaved?: () => void
 }
 
-export function PhotoPicker({ group, max, count, onCountChange, round = false }: PhotoPickerProps) {
-  const photos = usePhotoStore((state) => state.groups[group]) ?? []
+export function PhotoPicker({ group, max, count, onCountChange, round = false, saved, onRemoveSaved }: PhotoPickerProps) {
+  const picked = usePhotoStore((state) => state.groups[group]) ?? []
   const setGroup = usePhotoStore((state) => state.setGroup)
+  const photos = picked.length || !saved ? picked : [{ id: "saved", url: saved, name: "Your photo" }]
 
   useEffect(() => {
     if (count !== photos.length) onCountChange(photos.length)
@@ -32,11 +36,11 @@ export function PhotoPicker({ group, max, count, onCountChange, round = false }:
     for (const file of files) {
       const valid = ["image/jpeg", "image/png"].includes(file.type)
       const small = file.size <= MAX_PHOTO_MB * 1024 * 1024
-      if (!valid || !small || photos.length + added.length >= max) {
+      if (!valid || !small || picked.length + added.length >= max) {
         skipped++
         continue
       }
-      added.push({ id: crypto.randomUUID(), url: URL.createObjectURL(file), name: file.name })
+      added.push({ id: crypto.randomUUID(), url: URL.createObjectURL(file), name: file.name, file })
     }
 
     if (skipped) {
@@ -45,18 +49,22 @@ export function PhotoPicker({ group, max, count, onCountChange, round = false }:
           (max > 1 ? `, max ${max} photos.` : ".")
       )
     }
-    setGroup(group, [...photos, ...added])
+    setGroup(group, [...picked, ...added])
   }
 
   function remove(id: string) {
-    const photo = photos.find((item) => item.id === id)
+    if (id === "saved") {
+      onRemoveSaved?.()
+      return
+    }
+    const photo = picked.find((item) => item.id === id)
     if (photo) URL.revokeObjectURL(photo.url)
-    setGroup(group, photos.filter((item) => item.id !== id))
+    setGroup(group, picked.filter((item) => item.id !== id))
   }
 
   function makeCover(id: string) {
-    const photo = photos.find((item) => item.id === id)
-    if (photo) setGroup(group, [photo, ...photos.filter((item) => item.id !== id)])
+    const photo = picked.find((item) => item.id === id)
+    if (photo) setGroup(group, [photo, ...picked.filter((item) => item.id !== id)])
   }
 
   const tile = round ? "size-28 rounded-full" : "aspect-4/3 rounded-[12px]"
@@ -64,8 +72,9 @@ export function PhotoPicker({ group, max, count, onCountChange, round = false }:
   return (
     <div className={cn(round ? "flex gap-3" : "grid grid-cols-2 gap-3 sm:grid-cols-3")}>
       {photos.map((photo, index) => (
-        <div key={photo.id} className={cn("relative overflow-hidden bg-secondary", tile)}>
-          <img src={photo.url} alt={photo.name} className="size-full object-cover" />
+        // Only the photo is clipped to the tile, so the remove button can sit over its edge
+        <div key={photo.id} className={cn("relative", round ? "size-28" : "aspect-4/3")}>
+          <img src={photo.url} alt={photo.name} className={cn("size-full bg-secondary object-cover", tile)} />
           {max > 1 ? (
             index === 0 ? (
               <span className="absolute bottom-2 left-2 rounded-full bg-white px-2.5 py-1 text-[12px] font-medium text-foreground">
@@ -85,8 +94,8 @@ export function PhotoPicker({ group, max, count, onCountChange, round = false }:
             type="button"
             aria-label={`Remove ${photo.name}`}
             className={cn(
-              "absolute flex size-7 items-center justify-center rounded-full bg-white/90 text-foreground hover:bg-white",
-              round ? "top-1 right-1" : "top-2 right-2"
+              "absolute flex size-7 items-center justify-center rounded-full bg-white text-foreground hover:bg-secondary",
+              round ? "top-0 right-0 border border-border shadow-sm" : "top-2 right-2"
             )}
             onClick={() => remove(photo.id)}
           >
