@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 import { Toaster } from "sonner"
 
+import { GuestOnly } from "@/components/GuestOnly"
 import { LandlordLayout } from "@/components/LandlordLayout"
 import { RequireAuth } from "@/components/RequireAuth"
 import { isResetLink } from "@/lib/resetLink"
@@ -36,7 +37,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route element={<GuestOnly />}>
+          <Route path="/" element={<LandingPage />} />
+        </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />

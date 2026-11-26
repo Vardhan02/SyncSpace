@@ -12,7 +12,6 @@ import { Link } from "react-router-dom"
 
 import { Logo } from "@/components/Logo"
 import { cn } from "@/lib/utils"
-import { useAuthStore } from "@/stores/authStore"
 
 const steps = [
   {
@@ -42,8 +41,6 @@ const buttonBase =
   "inline-flex h-12 items-center justify-center gap-2 rounded-[12px] px-6 text-[15px] font-medium transition-colors"
 
 export function LandingPage() {
-  const user = useAuthStore((state) => state.user)
-  const appPath = user?.role === "landlord" ? "/landlord" : "/houses"
 
   return (
     <div className="min-h-dvh bg-white text-foreground">
@@ -51,20 +48,12 @@ export function LandingPage() {
         <div className="mx-auto flex max-w-300 items-center justify-between px-5 py-3 md:px-8">
           <Logo className="text-foreground" />
           <nav className="flex items-center gap-2">
-            {user ? (
-              <Link to={appPath} className={cn(buttonBase, "h-10 bg-primary px-4 text-[14px] text-primary-foreground hover:bg-primary/85")}>
-                Open the app
-              </Link>
-            ) : (
-              <>
-                <Link to="/login" className={cn(buttonBase, "h-10 px-4 text-[14px] hover:bg-secondary")}>
-                  Log in
-                </Link>
-                <Link to="/signup" className={cn(buttonBase, "h-10 bg-primary px-4 text-[14px] text-primary-foreground hover:bg-primary/85")}>
-                  Sign up
-                </Link>
-              </>
-            )}
+            <Link to="/login" className={cn(buttonBase, "h-10 px-4 text-[14px] hover:bg-secondary")}>
+              Log in
+            </Link>
+            <Link to="/signup" className={cn(buttonBase, "h-10 bg-primary px-4 text-[14px] text-primary-foreground hover:bg-primary/85")}>
+              Sign up
+            </Link>
           </nav>
         </div>
       </header>
@@ -88,17 +77,15 @@ export function LandingPage() {
             </p>
             <div className="flex w-full flex-col gap-3 pt-9 sm:w-auto sm:flex-row">
               <Link
-                to={user ? appPath : "/signup"}
+                to="/signup"
                 className={cn(buttonBase, "bg-primary text-primary-foreground hover:bg-primary/85")}
               >
-                {user ? "Open the app" : "Get started"}
+                Get started
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
-              {user ? null : (
-                <Link to="/login" className={cn(buttonBase, "border border-border hover:bg-secondary")}>
-                  I already have an account
-                </Link>
-              )}
+              <Link to="/login" className={cn(buttonBase, "border border-border hover:bg-secondary")}>
+                I already have an account
+              </Link>
             </div>
           </div>
 
@@ -139,7 +126,7 @@ export function LandingPage() {
               decide who gets your contact details.
             </p>
             <Link
-              to={user ? appPath : "/signup?role=landlord"}
+              to="/signup?role=landlord"
               className={cn(buttonBase, "mt-8 bg-primary text-primary-foreground hover:bg-primary/85")}
             >
               List your house
@@ -166,10 +153,10 @@ export function LandingPage() {
               Set up your profile and start swiping in a few minutes.
             </p>
             <Link
-              to={user ? appPath : "/signup"}
+              to="/signup"
               className={cn(buttonBase, "mt-8 bg-white text-foreground hover:bg-[#e7e5de]")}
             >
-              {user ? "Open the app" : "Create your account"}
+              Create your account
             </Link>
           </div>
         </section>
