@@ -1,6 +1,6 @@
 # Frontend tests
 
-What the frontend's automated tests check, and what they don't.
+What's been tested on the frontend: the automated tests, the checks done by hand against the real backend, and what isn't covered yet.
 
 ## Running them
 
@@ -111,11 +111,44 @@ There are 64 tests in 13 files. They take a couple of seconds and **don't need t
 - A listing with no photos can't be saved.
 - Trying again after a failed upload doesn't create the new listing twice.
 
+## Checked by hand against the real backend
+
+Each endpoint was also tried for real as it was connected (26 Nov 2026): the backend running locally against the team's Supabase project, and the app open in a browser. Someone used the page while the network requests and the backend log were checked. Status codes below are what the backend actually answered.
+
+Before anything else, the backend itself was checked: a request with no token got 401, a bad sign-up got 400 with a readable `{ message }`, and the browser's CORS check from `localhost:5173` passed.
+
+| Area | What was done | What came back |
+|---|---|---|
+| Sign up | New tenant account | `POST /api/auth/signup` 201. The session was saved with a real Supabase user id, `firstLogin: true` and both tokens, and the app opened onboarding |
+| | Same email again | 422, shown under the email field |
+| Log in | Wrong password, then the right one | 400 with "Wrong email or password", then 200 |
+| Log out and staying logged in | The saved access token was broken on purpose, then Log out was clicked | `logout` 401 → `refresh` 200 → `logout` retried 204. The browser ended up logged out on `/login` |
+| Account settings | Changed the name | `PUT /api/me` 200, still changed after a reload |
+| | Wrong current password, then the right one, then logged in with the new password | `change-password` 400, then 204, then login 200 |
+| | Deleted the account, first with a wrong password | `DELETE /api/me` 400, then 204. Logging in with that account no longer worked |
+| Phone number | Loaded, changed, flipped the visibility switch, reloaded | `GET /api/tenants/me` 200, `PUT /api/me` 200 for each change, all still there after the reload |
+| Tenant onboarding | Went through all steps with a photo and clicked Finish | `PUT /api/tenants/me` 200, then `POST /api/tenants/me/photo` 200. The backend then said `onboardingComplete: true`, and the photo's address loaded from Supabase storage (200). Logging in again skipped onboarding |
+| Tenant profile | Reloaded the profile, edited sections, changed the photo | Everything stayed after reloads, and the new photo replaced the old one |
+| Landlord onboarding | New landlord with a profile photo and house photos | Preferences, photo, `POST /api/listings` (house 112) and `POST /api/listings/112/photos` 201 all went through. The profile, editing the preferences, and logging in again without onboarding all worked |
+| My Listings and detail | Opened both | `GET /api/listings/mine` showed house 112 once, with its cover photo. `GET /api/listings/112` showed all 5 photos, the rules and the photo check |
+| Likes and delete | Opened the likes pop-up, deleted a test listing | Names loaded, the listing was removed |
+| Add and edit listing | Changed a title, removed a photo, added one, added a whole new listing | All saved and still there after reloads |
+| Forgot and reset password | Asked for a reset email and followed the link from a real inbox | The email arrived, the new password was saved, and logging in with it worked |
+| Logged-out-only pages | Opened `/`, `/login` and `/signup` while logged in as a landlord | All three went straight to My Listings |
+
+### Bugs these checks found
+
+- **Onboarding came back after every login.** A setting left over from building onboarding reset it on each login, so changing the password and logging back in showed onboarding again. The setting was removed.
+- **A deleted account's photo stayed on screen.** Photos picked during onboarding were kept in the open tab even after the account was deleted, so the next account in that tab saw them. They're now cleared whenever the logged-in user changes (and there's a test for it).
+- **The profile photo disappeared on reload.** The profile page was still reading the photo from browser memory instead of the server. It now reads from `GET /api/tenants/me`.
+
+Small fixes also came out of looking at the pages, such as the remove button on the round profile photo being cut off by the circle.
+
 ## What isn't covered yet
 
 - **Pages still on mock data:** roommates, swipes and matches (Cherian), tenant house browsing, and landlord and tenant applications. Their tests come once they're connected to the backend.
 - **Some steps of onboarding:** each step's fields aren't tested one by one. The tests start on the last step with the answers already filled in.
-- **The real backend:** these tests use prepared answers. Each part was also checked by hand against the real backend while it was being connected, but nothing runs against it automatically.
+- **The real backend, automatically:** the checks above were done by hand once, when each part was connected. Nothing re-runs them, so a backend change could break something without a test noticing.
 - **How pages look:** layout, phone-width screens and styling are checked by eye in the browser, not by tests.
 
 ## Adding a test
