@@ -88,7 +88,6 @@ export type LandlordOnboarding = {
   roomType: string
   availableFrom: string
   roomsAvailable: number
-  // Not in the schema yet; the house detail page shows it. Ask backend to add houses.description.
   description: string
 
   // house_amenities
