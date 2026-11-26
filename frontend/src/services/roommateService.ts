@@ -20,10 +20,7 @@ export function getRoommate(id: string) {
   return rankedRoommates.find((roommate) => roommate.id === id)
 }
 
-export async function fetchRoommate(id: string): Promise<Roommate | null> {
-  if (!hasBackend) return getRoommate(id) ?? null
-
-  const { data } = await api.get<ApiTenantCard>(`/api/roommates/${id}`)
+function toRoommate(data: ApiTenantCard): Roommate {
   return {
     id: data.id,
     name: data.name,
@@ -35,6 +32,27 @@ export async function fetchRoommate(id: string): Promise<Roommate | null> {
     matchScore: data.matchScore ?? 0,
     ...cardFromOnboarding(data),
   }
+}
+
+export async function fetchRoommate(id: string): Promise<Roommate | null> {
+  if (!hasBackend) return getRoommate(id) ?? null
+
+  const { data } = await api.get<ApiTenantCard>(`/api/roommates/${id}`)
+  return toRoommate(data)
+}
+
+export async function fetchRoommates(): Promise<Roommate[]> {
+  if (!hasBackend) return getRoommates()
+
+  const { data } = await api.get<ApiTenantCard[]>("/api/roommates")
+  return data.map(toRoommate)
+}
+
+export async function sendSwipe(targetId: string, direction: "left" | "right"): Promise<boolean> {
+  if (!hasBackend) return false
+
+  const { data } = await api.post<{ matched: boolean }>("/api/swipes", { targetId, direction })
+  return data.matched
 }
 
 const LIFESTYLE_MATCHES: { field: keyof TenantPreferences; label: (value: string) => string }[] = [
