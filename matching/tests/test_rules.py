@@ -1,4 +1,4 @@
-"""Rule and schema tests. Fast: no models, no text encoder."""
+# rule + schema tests, these don't load any models so they're quick
 from datetime import date
 
 import numpy as np
@@ -15,7 +15,7 @@ from syncspace_ai.synth import generate_houses, generate_tenants
 TODAY = date(2026, 12, 1)
 
 
-def tenant(**kw) -> TenantProfile:
+def tenant(**kw):
     base = dict(
         tenant_id="a", age=22, university="UCC", course="CS", bio="Quiet and tidy.",
         budget_min=500, budget_max=800, preferred_areas=["Douglas"], room_type="single",
@@ -30,7 +30,7 @@ def tenant(**kw) -> TenantProfile:
     return TenantProfile(**base)
 
 
-def house(**kw) -> House:
+def house(**kw):
     base = dict(
         house_id="h", area="Douglas", rent=700, rooms_available=1, room_type="single",
         available_from="2026-12-01", amenities=["WiFi", "Study desk"], pets_allowed=False,
@@ -49,7 +49,7 @@ def house_code(t, h):
     return HOUSE_FILTERS[house_hard_filter(tenant_arrays([t]), house_arrays([h]))[0, 0]]
 
 
-# ---------------------------------------------------------------- schema
+# --- schema ---
 def test_rejects_unknown_enum_value():
     with pytest.raises(ValidationError):
         tenant(sleep_schedule="Night owl")          # old frontend label, not the DB value
@@ -70,7 +70,7 @@ def test_ignores_extra_db_columns():
     assert t.tenant_id == "a"
 
 
-# ---------------------------------------------------------------- roommate rules
+# --- roommate rules ---
 def test_roommate_dealbreakers():
     a = tenant()
     assert rm_code(a, tenant(tenant_id="b")) == "ok"
@@ -97,7 +97,7 @@ def test_similar_people_score_higher():
     assert s[0] > s[1]
 
 
-# ---------------------------------------------------------------- house rules
+# --- house rules ---
 @pytest.mark.parametrize("t_kw,h_kw,expected", [
     ({}, {}, "ok"),
     ({}, {"rent": 900}, "Over budget"),
@@ -119,7 +119,7 @@ def test_house_in_preferred_area_scores_higher():
     assert s[0] > s[1]
 
 
-# ---------------------------------------------------------------- rules-only fallback
+# --- rules-only fallback ---
 def test_rules_mode_when_models_missing(tmp_path):
     rec = Recommender(artifact_dir=tmp_path)            # empty dir -> nothing to load
     assert rec.mode == "rules"

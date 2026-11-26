@@ -1,16 +1,7 @@
-"""
-Personality prompt bank. Same 10 prompts and ids as Dhruvil's spec (seed the `prompts`
-table with these ids). Tenants pick 3 and answer each in <= 150 characters.
+# The 10 personality prompts (same ids as the prompts table).
+# Tenants answer 3 of them, max 150 chars each.
 
-`profile_text()` turns a tenant's answers + bio into the one string the text encoder
-embeds. The question is kept next to the answer so the encoder has context
-("quiet" means something different under "Friday night" than under "studying").
-"""
-from __future__ import annotations
-
-from .schema import TenantProfile
-
-PROMPT_BANK: dict[int, str] = {
+PROMPT_BANK = {
     1: "My ideal Friday night is…",
     2: "The one house rule I'd never break…",
     3: "You'll find me in the kitchen making…",
@@ -24,7 +15,9 @@ PROMPT_BANK: dict[int, str] = {
 }
 
 
-def profile_text(tenant: TenantProfile) -> str:
+def profile_text(tenant):
+    # Join answers + bio into one string for the text model.
+    # Keeping the question in helps, "quiet" means different things for different prompts.
     parts = []
     for pa in sorted(tenant.prompt_answers, key=lambda p: (p.slot or 99, p.prompt_id)):
         question = PROMPT_BANK.get(pa.prompt_id, "").rstrip("…")
@@ -32,7 +25,3 @@ def profile_text(tenant: TenantProfile) -> str:
     if tenant.bio.strip():
         parts.append(tenant.bio.strip())
     return " ".join(parts)
-
-
-def has_text(tenant: TenantProfile) -> bool:
-    return bool(profile_text(tenant))

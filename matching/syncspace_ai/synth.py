@@ -1,32 +1,22 @@
-"""
-Synthetic Cork tenants and listings in the exact Supabase schema, for cold-start training.
-
-Why this isn't just "copy the rules":
-Every synthetic tenant has a hidden persona (quiet studier, social, outdoorsy...). It
-nudges their form answers and writes their prompt answers + bio, but the persona itself
-is never given to the models. The simulated "would they actually get on?" outcome
-(`roommate_truth`, `house_truth`) depends on the rules AND on the hidden persona fit.
-So a rules-only ranker can't fully recover it; a model has to read the text to do better.
-
-It is still synthetic. It shows the pipeline works and what each part adds; real accuracy
-can only be measured once we have real swipes and likes.
-"""
-from __future__ import annotations
+# fake Cork tenants and houses for training, since we have no real swipes yet
+# every tenant gets a hidden persona (quiet, social, sporty...) that changes their answers
+# and text. the label uses rules + persona, and the model never sees the persona, so it
+# has to pick it up from the text
+# TODO: retrain on real swipes once we have them
 
 import random
-from datetime import date, timedelta
+from datetime import timedelta
 
 import numpy as np
 
 from .arrays import house_arrays, tenant_arrays
-from .rules import (house_components, house_hard_filter, house_rule_score,
-                    roommate_components, roommate_hard_filter, roommate_rule_score)
+from .rules import house_hard_filter, house_rule_score, roommate_hard_filter, roommate_rule_score
 from .schema import AMENITIES, AREAS, House, PromptAnswer, TenantProfile
 
 PERSONAS = ["quiet_studious", "balanced", "social", "active", "night_creative"]
 QS, BAL, SOC, ACT, NC = range(5)
 
-# How well two personas get on as housemates (symmetric, 0-1). Hidden from the models.
+# how well two personas get on (0-1), models don't see this
 AFFINITY = np.array([
     #  QS   BAL  SOC  ACT  NC
     [1.0, 0.6, 0.1, 0.6, 0.3],   # quiet_studious
@@ -36,7 +26,7 @@ AFFINITY = np.array([
     [0.3, 0.5, 0.4, 0.2, 0.9],   # night_creative
 ])
 
-# Amenities each persona quietly cares about (hidden; hinted at in their text).
+# amenities each persona secretly cares about
 PERSONA_AMENITIES = {
     QS: ["Study desk", "WiFi", "Central heating"],
     BAL: ["Bills included", "Washing machine", "Kitchen access"],
@@ -121,7 +111,7 @@ INTERESTS = {
     ACT: ["Hiking", "Gym", "Sports", "Cooking"],
     NC: ["Gaming", "Music", "Movies", "Coffee"],
 }
-# (sleep early_bird prob, cleanliness weights, noise range, work weights, social weights, guest weights)
+# early bird prob, cleanliness weights, noise range, work weights, social weights, guest weights
 HABITS = {
     QS: (0.8, [0.6, 0.35, 0.05], (1, 2), [0.5, 0.35, 0.15, 0.0], [0.75, 0.25, 0.0], [0.75, 0.25, 0.0]),
     BAL: (0.55, [0.25, 0.55, 0.2], (2, 4), [0.35, 0.2, 0.4, 0.05], [0.2, 0.65, 0.15], [0.3, 0.55, 0.15]),
@@ -136,11 +126,11 @@ AREA_PREMIUM = {"Victoria Cross": 60, "College Road": 90, "Bishopstown": 30, "Wi
 ROOM_BASE = {"single": 600, "double": 700, "ensuite": 850}
 
 
-def _choice(rng, values, weights):
+def pick(rng, values, weights):
     return values[rng.choices(range(len(values)), weights=weights)[0]]
 
 
-def generate_tenants(n: int, today: date, seed: int = 0, id_prefix: str = "t") -> tuple[list[TenantProfile], np.ndarray]:
+def generate_tenants(n, today, seed=0, id_prefix="t"):
     rng = random.Random(seed)
     tenants, personas = [], []
     for i in range(n):
@@ -152,7 +142,8 @@ def generate_tenants(n: int, today: date, seed: int = 0, id_prefix: str = "t") -
         prompt_ids = rng.sample(range(1, 11), 3)
         answers = []
         for slot, pid in enumerate(prompt_ids, start=1):
-            src = p if rng.random() < 0.8 else rng.randrange(len(PERSONAS))   # some noise
+            # 20% of answers come from a random persona so it's not too easy
+            src = p if rng.random() < 0.8 else rng.randrange(len(PERSONAS))
             answers.append(PromptAnswer(prompt_id=pid, slot=slot, answer=rng.choice(ANSWERS[src][pid])))
         student = rng.random() < 0.9
         interests = rng.sample(INTERESTS[p], rng.randint(1, 3)) + \
@@ -166,16 +157,16 @@ def generate_tenants(n: int, today: date, seed: int = 0, id_prefix: str = "t") -
             budget_min=bmin,
             budget_max=min(1500, bmin + rng.randint(10, 40) * 10),
             preferred_areas=rng.sample(AREAS, rng.choice([1, 2, 2, 3])),
-            room_type=_choice(rng, ["single", "double", "ensuite"], [0.45, 0.35, 0.2]),
+            room_type=pick(rng, ["single", "double", "ensuite"], [0.45, 0.35, 0.2]),
             move_in_date=today + timedelta(days=rng.randint(0, 120)),
-            lease_months=_choice(rng, [3, 5, 9, 12], [0.1, 0.15, 0.45, 0.3]),
+            lease_months=pick(rng, [3, 5, 9, 12], [0.1, 0.15, 0.45, 0.3]),
             max_housemates=rng.randint(1, 5),
             sleep_schedule="early_bird" if rng.random() < early else "night_owl",
             noise_tolerance=rng.randint(*noise_rng),
-            cleanliness=_choice(rng, ["very_tidy", "tidy", "relaxed"], clean_w),
-            work_schedule=_choice(rng, ["on_campus", "from_home", "mixed", "night_shifts"], work_w),
-            social_level=_choice(rng, ["homebody", "balanced", "social"], social_w),
-            guest_frequency=_choice(rng, ["rarely", "weekends", "often"], guest_w),
+            cleanliness=pick(rng, ["very_tidy", "tidy", "relaxed"], clean_w),
+            work_schedule=pick(rng, ["on_campus", "from_home", "mixed", "night_shifts"], work_w),
+            social_level=pick(rng, ["homebody", "balanced", "social"], social_w),
+            guest_frequency=pick(rng, ["rarely", "weekends", "often"], guest_w),
             smoker=smoker,
             ok_with_smoking=smoker or rng.random() < 0.25,
             has_pets=pets,
@@ -187,16 +178,16 @@ def generate_tenants(n: int, today: date, seed: int = 0, id_prefix: str = "t") -
     return tenants, np.array(personas)
 
 
-def generate_houses(n: int, today: date, seed: int = 0, id_prefix: str = "h") -> list[House]:
+def generate_houses(n, today, seed=0, id_prefix="h"):
     rng = random.Random(seed)
     houses = []
     for i in range(n):
         area = rng.choice(AREAS)
-        room = _choice(rng, ["single", "double", "ensuite"], [0.4, 0.4, 0.2])
+        room = pick(rng, ["single", "double", "ensuite"], [0.4, 0.4, 0.2])
         amen = [a for a in AMENITIES if rng.random() < 0.4 and a != "En-suite"]
         if room == "ensuite":
             amen.append("En-suite")
-        quiet = _choice(rng, [None, "21:00", "22:00", "23:00", "00:00"], [0.45, 0.1, 0.2, 0.15, 0.1])
+        quiet = pick(rng, [None, "21:00", "22:00", "23:00", "00:00"], [0.45, 0.1, 0.2, 0.15, 0.1])
         houses.append(House(
             house_id=f"{id_prefix}{i}",
             area=area,
@@ -207,32 +198,34 @@ def generate_houses(n: int, today: date, seed: int = 0, id_prefix: str = "h") ->
             amenities=amen,
             pets_allowed=rng.random() < 0.3,
             smoking_allowed=rng.random() < 0.15,
-            guest_policy=_choice(rng, ["no_overnight", "weekends", "welcome"], [0.25, 0.45, 0.3]),
+            guest_policy=pick(rng, ["no_overnight", "weekends", "welcome"], [0.25, 0.45, 0.3]),
             quiet_hours_start=quiet,
-            min_lease_months=_choice(rng, [1, 3, 5, 9, 12], [0.15, 0.1, 0.15, 0.35, 0.25]),
+            min_lease_months=pick(rng, [1, 3, 5, 9, 12], [0.15, 0.1, 0.15, 0.35, 0.25]),
             max_occupants=rng.randint(2, 7),
-            preferred_tenants=_choice(rng, ["any", "student", "professional"], [0.6, 0.3, 0.1]),
+            preferred_tenants=pick(rng, ["any", "student", "professional"], [0.6, 0.3, 0.1]),
         ))
     return houses
 
 
-# ---------------------------------------------------------------- simulated outcomes
+# ---- fake "ground truth" labels ----
 ROOMMATE_TRUTH_THRESHOLD = 0.70
 HOUSE_TRUTH_THRESHOLD = 0.68
 
 
-def _pair_noise(n: int, m: int, seed: int, symmetric: bool) -> np.ndarray:
+def pair_noise(n, m, seed, symmetric):
     z = np.random.default_rng(seed).normal(0, 0.06, size=(n, m))
-    return (z + z.T) / 2 if symmetric and n == m else z
+    if symmetric and n == m:
+        return (z + z.T) / 2
+    return z
 
 
-def roommate_truth_score(A, pa, B, pb, seed: int = 1) -> np.ndarray:
-    """Simulated 'they'd actually get on' score: 50% rules, 50% hidden persona fit."""
+def roommate_truth_score(A, pa, B, pb, seed=1):
+    # half rules, half hidden persona fit, plus a bit of noise
     rule = roommate_rule_score(tenant_arrays(A), tenant_arrays(B))
-    return 0.5 * rule + 0.5 * AFFINITY[pa][:, pb] + _pair_noise(len(A), len(B), seed, A is B)
+    return 0.5 * rule + 0.5 * AFFINITY[pa][:, pb] + pair_noise(len(A), len(B), seed, A is B)
 
 
-def roommate_truth(A, pa, B, pb, seed: int = 1) -> np.ndarray:
+def roommate_truth(A, pa, B, pb, seed=1):
     TA, TB = tenant_arrays(A), tenant_arrays(B)
     ok = roommate_hard_filter(TA, TB) == 0
     good = roommate_truth_score(A, pa, B, pb, seed) >= ROOMMATE_TRUTH_THRESHOLD
@@ -242,7 +235,7 @@ def roommate_truth(A, pa, B, pb, seed: int = 1) -> np.ndarray:
     return out
 
 
-def amenity_fit(pa: np.ndarray, houses: list[House]) -> np.ndarray:
+def amenity_fit(pa, houses):
     H = house_arrays(houses)
     want = np.zeros((len(PERSONAS), len(AMENITIES)), dtype=np.float32)
     for p, names in PERSONA_AMENITIES.items():
@@ -251,11 +244,10 @@ def amenity_fit(pa: np.ndarray, houses: list[House]) -> np.ndarray:
     return fit[pa]
 
 
-def house_truth(tenants, pa, houses, seed: int = 2) -> np.ndarray:
-    """Simulated 'they'd like this listing': passes dealbreakers and
-    65% rules + 35% hidden amenity taste is high enough."""
+def house_truth(tenants, pa, houses, seed=2):
+    # likes the house = passes filters and 65% rules + 35% hidden amenity taste is high enough
     T, H = tenant_arrays(tenants), house_arrays(houses)
     ok = house_hard_filter(T, H) == 0
-    score = 0.65 * house_rule_score(T, H) + 0.35 * amenity_fit(pa, houses) + \
-        _pair_noise(len(tenants), len(houses), seed, False)
+    noise = pair_noise(len(tenants), len(houses), seed, False)
+    score = 0.65 * house_rule_score(T, H) + 0.35 * amenity_fit(pa, houses) + noise
     return ok & (score >= HOUSE_TRUTH_THRESHOLD)

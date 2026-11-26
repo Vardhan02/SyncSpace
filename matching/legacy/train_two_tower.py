@@ -1,9 +1,7 @@
-"""
-SyncScape - Two-Tower roommate matcher (cold-start demo)
-Run:  pip install torch pandas numpy matplotlib sentence-transformers
-      python train_two_tower.py
-Outputs: loss_curve.png, tower.pt, embeddings.npy, console metrics + demo recommendations.
-"""
+# Two-Tower roommate matcher (cold-start demo)
+# Run:  pip install torch pandas numpy matplotlib sentence-transformers
+#       python train_two_tower.py
+# Outputs: loss_curve.png, tower.pt, embeddings.npy, console metrics + demo recommendations.
 import random
 import numpy as np
 import pandas as pd
@@ -54,7 +52,7 @@ def generate_students(n=1000):
 
 
 def compat_matrix(df):
-    """Teacher rule (pseudo-labels): budget overlap, cleanliness +/-1, same social habit, sleep within 1."""
+    # Teacher rule (pseudo-labels): budget overlap, cleanliness +/-1, same social habit, sleep within 1.
     bmin, bmax = df.budget_min.values, df.budget_max.values
     clean, soc, slp = df.cleanliness.values, df.social_habit.values, df.sleep_schedule.values
     ok = (bmin[:, None] <= bmax[None, :]) & (bmax[:, None] >= bmin[None, :])
@@ -121,7 +119,7 @@ class RoommateTower(nn.Module):
 
 
 class TwoTower(nn.Module):
-    """Siamese: both users are tenants, so one shared tower."""
+    # Siamese: both users are tenants, so one shared tower.
     def __init__(self):
         super().__init__()
         self.tower = RoommateTower()
@@ -133,7 +131,7 @@ class TwoTower(nn.Module):
 
 
 def info_nce(sim, ia, ib):
-    """Symmetric InfoNCE; masks duplicate users in a batch so they are not treated as negatives."""
+    # Symmetric InfoNCE; masks duplicate users in a batch so they are not treated as negatives.
     n = sim.size(0)
     labels = torch.arange(n)
     eye = torch.eye(n, dtype=torch.bool)

@@ -1,14 +1,6 @@
-"""
-Single source of truth for every field and allowed value the matching service accepts.
-
-Field names are the Supabase column names from Dhruvil's spec
-(`frontend/docs/onboarding-preferences.md` on the `Dhruvil-FrontDev` branch), so the
-backend can pass database rows straight through.
-
-The enum values are still the frontend team's best guess at the real Postgres enums.
-If one turns out to be different, change it here and nowhere else, then retrain.
-"""
-from __future__ import annotations
+# All fields and allowed values the matching service accepts.
+# Names match the Supabase columns (from Dhruvil's onboarding spec) so the backend
+# can pass rows straight in. If an enum changes in the DB, change it here and retrain.
 
 from datetime import date
 from typing import Literal, Optional, get_args
@@ -17,7 +9,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 SCHEMA_VERSION = "2026-11-22"
 
-# ---------------------------------------------------------------- allowed values
+# allowed values
 Area = Literal[
     "Bishopstown", "Blackrock", "College Road", "Douglas",
     "Shandon", "The Lough", "Victoria Cross", "Wilton",
@@ -37,33 +29,33 @@ Amenity = Literal[
 ]
 QuietHoursStart = Literal["21:00", "22:00", "23:00", "00:00"]
 
-AREAS: list[str] = list(get_args(Area))
-ROOM_TYPES: list[str] = list(get_args(RoomType))
-SLEEP_SCHEDULES: list[str] = list(get_args(SleepSchedule))
-CLEANLINESS: list[str] = list(get_args(Cleanliness))
-WORK_SCHEDULES: list[str] = list(get_args(WorkSchedule))
-SOCIAL_LEVELS: list[str] = list(get_args(SocialLevel))
-GUEST_FREQUENCIES: list[str] = list(get_args(GuestFrequency))
-GUEST_POLICIES: list[str] = list(get_args(GuestPolicy))
-PREFERRED_TENANTS: list[str] = list(get_args(PreferredTenants))
-AMENITIES: list[str] = list(get_args(Amenity))
-QUIET_HOURS_STARTS: list[Optional[str]] = [None, *get_args(QuietHoursStart)]
+AREAS = list(get_args(Area))
+ROOM_TYPES = list(get_args(RoomType))
+SLEEP_SCHEDULES = list(get_args(SleepSchedule))
+CLEANLINESS = list(get_args(Cleanliness))
+WORK_SCHEDULES = list(get_args(WorkSchedule))
+SOCIAL_LEVELS = list(get_args(SocialLevel))
+GUEST_FREQUENCIES = list(get_args(GuestFrequency))
+GUEST_POLICIES = list(get_args(GuestPolicy))
+PREFERRED_TENANTS = list(get_args(PreferredTenants))
+AMENITIES = list(get_args(Amenity))
+QUIET_HOURS_STARTS = [None, *get_args(QuietHoursStart)]   # None = no quiet hours
 
-TENANT_LEASE_MONTHS = [3, 5, 9, 12]          # tenant_house_preferences.lease_months
-LANDLORD_MIN_LEASE_MONTHS = [1, 3, 5, 9, 12]  # house_preferences.min_lease_months
+TENANT_LEASE_MONTHS = [3, 5, 9, 12]
+LANDLORD_MIN_LEASE_MONTHS = [1, 3, 5, 9, 12]
 BUDGET_FLOOR, BUDGET_CEILING = 300, 1500
 RENT_MIN, RENT_MAX = 300, 3000
 MAX_HOUSEMATES = 5
 MAX_OCCUPANTS = 12
-NOISE_MIN, NOISE_MAX = 1, 5                   # 1 = needs quiet, 5 = noise doesn't bother them
+NOISE_MIN, NOISE_MAX = 1, 5   # 1 = needs quiet, 5 = doesn't care
 MAX_INTERESTS = 6
 PROMPTS_REQUIRED = 3
 PROMPT_MAX_LENGTH = 150
 
 
-# ---------------------------------------------------------------- request models
+# request / response models
+
 class PromptAnswer(BaseModel):
-    """One row of `tenant_prompt_answers`."""
     model_config = ConfigDict(extra="ignore")
 
     prompt_id: int = Field(ge=1, le=10)
@@ -72,8 +64,7 @@ class PromptAnswer(BaseModel):
 
 
 class TenantProfile(BaseModel):
-    """A tenant's full onboarding answers: `tenants` + `tenant_house_preferences` +
-    `tenant_lifestyle_preferences` + `tenant_interests` + `tenant_prompt_answers`."""
+    # everything from tenant onboarding, joined from the tenant tables
     model_config = ConfigDict(extra="ignore")
 
     tenant_id: str
@@ -107,19 +98,18 @@ class TenantProfile(BaseModel):
 
     @field_validator("interests")
     @classmethod
-    def _clean_interests(cls, v: list[str]) -> list[str]:
+    def clean_interests(cls, v):
         return [i.strip() for i in v if i and i.strip()]
 
     @model_validator(mode="after")
-    def _check_budget(self) -> "TenantProfile":
+    def check_budget(self):
         if self.budget_min > self.budget_max:
             raise ValueError("budget_min must be <= budget_max")
         return self
 
 
 class House(BaseModel):
-    """A listing: `houses` + `house_amenities` + `house_preferences`
-    (+ `landlord_preferences.preferred_tenants` if available)."""
+    # a listing: houses + house_amenities + house_preferences
     model_config = ConfigDict(extra="ignore")
 
     house_id: str
@@ -143,7 +133,7 @@ class House(BaseModel):
 
     @field_validator("quiet_hours_start", mode="before")
     @classmethod
-    def _blank_is_none(cls, v):
+    def blank_is_none(cls, v):
         return None if v in ("", "none", "None") else v
 
 
@@ -151,7 +141,7 @@ class RankRoommatesRequest(BaseModel):
     tenant: TenantProfile
     candidates: list[TenantProfile] = Field(max_length=2000)
     limit: Optional[int] = Field(default=None, ge=1)
-    today: Optional[date] = None   # override for tests; defaults to the server's date
+    today: Optional[date] = None   # only for tests, normally uses today's date
 
 
 class RankHousesRequest(BaseModel):
@@ -163,7 +153,7 @@ class RankHousesRequest(BaseModel):
 
 class RankedItem(BaseModel):
     id: str
-    score: int = Field(description="0-100 match score; show this as the % on the card")
+    score: int = Field(description="0-100 match score, shown as % on the card")
     reasons: list[str]
     cautions: list[str]
 
@@ -180,8 +170,8 @@ class RankResponse(BaseModel):
     filtered_out: list[FilteredItem]
 
 
-def schema_summary() -> dict:
-    """Everything the frontend/backend need to stay in sync, served at GET /schema."""
+def schema_summary():
+    # returned by GET /schema
     return {
         "schema_version": SCHEMA_VERSION,
         "areas": AREAS,

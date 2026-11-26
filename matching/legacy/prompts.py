@@ -1,16 +1,14 @@
-"""
-SyncScape - Personality prompt bank (DRAFT for team approval).
-
-Tenants pick 3 of these 10 prompts and answer them. The answers are shown on the
-swipe card AND turned into one text string that the roommate two-tower model
-embeds (all-MiniLM-L6-v2 -> 384-d).
-
-Usage:
-    from prompts import PROMPT_BANK, build_prompt_text
-    text = build_prompt_text({2: "Out for a few pints, then home by 1am.",
-                              5: "Whatever's in the fridge, usually pasta.",
-                              9: "Cleaning up your own dishes."})
-"""
+# Personality prompt bank (DRAFT for team approval).
+#
+# Tenants pick 3 of these 10 prompts and answer them. The answers are shown on the
+# swipe card AND turned into one text string that the roommate two-tower model
+# embeds (all-MiniLM-L6-v2 -> 384-d).
+#
+# Usage:
+#     from prompts import PROMPT_BANK, build_prompt_text
+#     text = build_prompt_text({2: "Out for a few pints, then home by 1am.",
+#                               5: "Whatever's in the fridge, usually pasta.",
+#                               9: "Cleaning up your own dishes."})
 
 PROMPT_BANK = {
     1: "A perfect weeknight at home looks like...",
@@ -30,11 +28,10 @@ MAX_ANSWER_CHARS = 200
 
 
 def build_prompt_text(answers: dict) -> str:
-    """answers: {prompt_id: answer_text}. Returns one string for the text encoder.
-
-    Question + answer are both included so the encoder sees the context
-    ("quiet" means something different under 'Saturday night' vs 'study').
-    """
+    # answers: {prompt_id: answer_text}. Returns one string for the text encoder.
+    #
+    # Question + answer are both included so the encoder sees the context
+    # ("quiet" means something different under 'Saturday night' vs 'study').
     if len(answers) != NUM_REQUIRED:
         raise ValueError(f"Exactly {NUM_REQUIRED} prompts must be answered, got {len(answers)}")
     parts = []

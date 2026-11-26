@@ -1,34 +1,26 @@
-"""
-Compare ranking methods on the held-out test split (unseen tenants and houses).
-
-    python train.py && python evaluate.py
-
-"Correct" = the simulated outcome from syncspace_ai/synth.py (passes dealbreakers AND
-the hidden persona fit is good). Writes artifacts/metrics.json and artifacts/comparison.png.
-"""
-from __future__ import annotations
+# Compares the ranking methods on the test split (tenants/houses not used in training).
+# Run after train.py. "Correct" = the fake ground truth from synth.py.
+# Saves artifacts/metrics.json and comparison.png
 
 import json
 import time
-from pathlib import Path
 
 import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import numpy as np
 
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
-
-from syncspace_ai.recommender import Recommender  # noqa: E402
-from syncspace_ai.schema import House, TenantProfile  # noqa: E402
-from syncspace_ai.synth import house_truth, roommate_truth  # noqa: E402
-from syncspace_ai.text import load_precomputed  # noqa: E402
-from train import ART, DATA, SPLITS_H, SPLITS_T, TODAY, split  # noqa: E402
+from syncspace_ai.recommender import Recommender
+from syncspace_ai.schema import House, TenantProfile
+from syncspace_ai.synth import house_truth, roommate_truth
+from syncspace_ai.text import load_precomputed
+from train import ART, DATA, SPLITS_H, SPLITS_T, TODAY, split
 
 K = 10
 
 
-def metrics(score: np.ndarray, truth: np.ndarray, valid: np.ndarray | None = None) -> dict:
-    """Precision@5, Precision@K and NDCG@K over queries with at least one good match."""
+def metrics(score, truth, valid=None):
+    # P@5, P@10 and NDCG@10, only for tenants that have at least one good match
     s = score.astype(float).copy()
     if valid is not None:
         s[~valid] = -np.inf
@@ -56,7 +48,7 @@ def main():
     rng = np.random.default_rng(0)
     results = {}
 
-    # ---------------- roommates
+    # roommates
     truth = roommate_truth(tt, pt, tt, pt)
     t0 = time.time()
     s = rec.roommate_matrix(tt, tt, TODAY)
@@ -74,7 +66,7 @@ def main():
     results["roommates_info"] = {"test_tenants": len(tt), "good_matches_per_tenant": float(truth.sum(1).mean()),
                                  "ms_per_query_precomputed_text": round(per_query_ms, 1)}
 
-    # ---------------- houses
+    # houses
     truth = house_truth(tt, pt, ht)
     s = rec.house_matrix(tt, ht, TODAY)
     ok = s.hard == 0

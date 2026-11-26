@@ -1,14 +1,6 @@
-"""
-Train both two-tower models and the score calibration on synthetic Cork data.
-
-    python train.py            # ~1-2 min on a laptop CPU
-
-Writes:
-    data/       tenants.jsonl, houses.jsonl, personas.npy, text_emb.npz  (synthetic, regenerated each run)
-    artifacts/  roommate_model.pt, house_model.pt, calibration.json, training_curves.png
-Then run `python evaluate.py` for the comparison table.
-"""
-from __future__ import annotations
+# Trains the roommate + house two-tower models and the calibration on synthetic data.
+# python train.py   (takes 1-2 min on my laptop)
+# Saves data to data/ and models to artifacts/. Run evaluate.py after.
 
 import json
 import random
@@ -19,24 +11,24 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 
 import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
 from sklearn.linear_model import LogisticRegression
 
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
-
-from syncspace_ai import models as M  # noqa: E402
-from syncspace_ai.arrays import house_arrays, tenant_arrays  # noqa: E402
-from syncspace_ai.features import HOUSE_DIM, TENANT_DIM, house_features, tenant_features  # noqa: E402
-from syncspace_ai.recommender import HOUSE_SIGNALS, ROOMMATE_SIGNALS, Recommender  # noqa: E402
-from syncspace_ai.synth import generate_houses, generate_tenants, house_truth, roommate_truth  # noqa: E402
-from syncspace_ai.text import load_precomputed  # noqa: E402
+from syncspace_ai import models as M
+from syncspace_ai.arrays import house_arrays, tenant_arrays
+from syncspace_ai.features import HOUSE_DIM, TENANT_DIM, house_features, tenant_features
+from syncspace_ai.recommender import HOUSE_SIGNALS, ROOMMATE_SIGNALS, Recommender
+from syncspace_ai.synth import generate_houses, generate_tenants, house_truth, roommate_truth
+from syncspace_ai.text import load_precomputed
 
 ROOT = Path(__file__).resolve().parent
-DATA, ART = ROOT / "data", ROOT / "artifacts"
+DATA = ROOT / "data"
+ART = ROOT / "artifacts"
 SEED = 42
-TODAY = date(2026, 12, 1)                  # fixed reference date so runs are reproducible
+TODAY = date(2026, 12, 1)   # fixed date so every run gives the same data
 SPLITS_T = {"train": 1500, "val": 300, "test": 300}
 SPLITS_H = {"train": 1200, "val": 300, "test": 300}
 
@@ -137,9 +129,9 @@ def train_house(XT, XH, truth, XTv, XHv, truth_v, epochs=60, batch=256, lr=1e-3)
     return model.eval(), hist
 
 
-def fit_calibration(signals: dict, valid: np.ndarray, truth: np.ndarray, names: list[str]) -> dict:
-    """Logistic regression on validation pairs that pass the hard filters, plus the
-    percentiles used to turn a blended score (or a rule score) into a 0-100 display score."""
+def fit_calibration(signals, valid, truth, names):
+    # logistic regression on val pairs that pass the filters,
+    # plus percentiles to turn the score into 0-100 for the UI
     X = np.stack([signals[n][valid] for n in names], axis=1)
     y = truth[valid]
     lr = LogisticRegression(C=1.0, max_iter=1000).fit(X, y)
@@ -162,8 +154,7 @@ def main():
     H = {k: houses[v] for k, v in sh.items()}
     print(f"data: {len(tenants)} tenants, {len(houses)} houses  ({time.time() - t0:.0f}s)")
 
-    # Embed prompt text in a separate process so this one never holds the language model.
-    # Reuses data/text_emb.npz when it already covers every tenant (the data is seeded).
+    # embed the text in a separate process (saves memory), reuse the file if it's already there
     emb = DATA / "text_emb.npz"
     try:
         rec = Recommender(use_models=False, encoder=load_precomputed(emb))
@@ -189,7 +180,7 @@ def main():
     hm, hm_hist = train_house(feats["train"], hfeats["train"], ht["train"],
                               feats["val"], hfeats["val"], ht["val"])
 
-    # --- calibration on the validation split
+    # calibration on the val split
     rec.roommate_model, rec.house_model = rm, hm
     identity = {"features": ["rule"], "coef": [1.0], "intercept": 0.0}
     rec.calibration = {"roommate": identity, "house": identity}

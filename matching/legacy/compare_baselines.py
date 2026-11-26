@@ -1,19 +1,17 @@
-"""
-SyncScape - Compare the roommate Two-Tower against other model families.
-
-Models compared (same held-out students, same teacher labels):
-  1. LightGBM                    - gradient-boosted trees on pair features
-  2. Pair MLP                    - neural network that sees BOTH students together
-  3. Two-Tower (ours)            - neural network, one vector per student
-
-Metrics: Precision@5 (top-5 recommendations that satisfy the teacher rule) and
-ms to rank ONE user against 20,000 candidates (speed at scale).
-
-Run (from the matching/ folder):
-    pip install lightgbm scikit-learn
-    python compare_baselines.py
-Outputs: comparison.csv, comparison.png
-"""
+# Compare the roommate Two-Tower against other model families.
+#
+# Models compared (same held-out students, same teacher labels):
+#   1. LightGBM                    - gradient-boosted trees on pair features
+#   2. Pair MLP                    - neural network that sees BOTH students together
+#   3. Two-Tower (ours)            - neural network, one vector per student
+#
+# Metrics: Precision@5 (top-5 recommendations that satisfy the teacher rule) and
+# ms to rank ONE user against 20,000 candidates (speed at scale).
+#
+# Run (from the matching/ folder):
+#     pip install lightgbm scikit-learn
+#     python compare_baselines.py
+# Outputs: comparison.csv, comparison.png
 import time
 import numpy as np
 import pandas as pd
@@ -47,7 +45,7 @@ def arrays(df):
 
 
 def pair_features(A, txt, ia, ib):
-    """Features describing a PAIR of students (what LightGBM sees)."""
+    # Features describing a PAIR of students (what LightGBM sees).
     overlap = np.maximum(0, np.minimum(A["budget_max"][ia], A["budget_max"][ib]) -
                             np.maximum(A["budget_min"][ia], A["budget_min"][ib]))
     return np.stack([
@@ -85,7 +83,7 @@ def time_ms(fn, reps=15):
 
 
 def student_matrix(df, txt):
-    """One row per student: one-hot categories + scaled numbers + 384-d text vector."""
+    # One row per student: one-hot categories + scaled numbers + 384-d text vector.
     oh = [np.eye(3)[df[c].values] for c in ["sleep_schedule", "social_habit", "noise_tolerance"]]
     num = np.stack([(df.cleanliness.values - 1) / 4, (df.budget_min.values - 450) / 550,
                     (df.budget_max.values - 450) / 550], axis=1)
@@ -93,7 +91,7 @@ def student_matrix(df, txt):
 
 
 class PairMLP(nn.Module):
-    """Cross-style model: sees both students together. Symmetric by construction (|a-b| and a*b)."""
+    # Cross-style model: sees both students together. Symmetric by construction (|a-b| and a*b).
     def __init__(self, d):
         super().__init__()
         self.net = nn.Sequential(nn.Linear(2 * d, 256), nn.ReLU(), nn.Dropout(0.1),

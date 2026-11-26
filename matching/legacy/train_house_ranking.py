@@ -1,15 +1,13 @@
-"""
-SyncScape - House ranking (Tenant <-> Listing) two-tower, cold-start demo.
-
-Unlike the roommate model, the two sides are DIFFERENT kinds of objects (a person vs a
-listing), so this is an ASYMMETRIC two-tower: separate towers, separate weights.
-
-NOTE: the house-preference field list is still TBD in the project doc, so the fields
-below are ASSUMED. Change them once the team confirms.
-
-Run:  python train_house_ranking.py
-Out:  house_loss_curve.png, house_tower.pt, console metrics + demo recommendations
-"""
+# House ranking (Tenant <-> Listing) two-tower, cold-start demo.
+#
+# Unlike the roommate model, the two sides are DIFFERENT kinds of objects (a person vs a
+# listing), so this is an ASYMMETRIC two-tower: separate towers, separate weights.
+#
+# NOTE: the house-preference field list is still TBD in the project doc, so the fields
+# below are ASSUMED. Change them once the team confirms.
+#
+# Run:  python train_house_ranking.py
+# Out:  house_loss_curve.png, house_tower.pt, console metrics + demo recommendations
 import random
 import numpy as np
 import torch
@@ -60,8 +58,8 @@ def generate_tenants(n):
 
 
 def compat_matrix(tenants, listings):
-    """Teacher rule: area & room type acceptable, rent in budget, available in time,
-    lease and housemate count acceptable."""
+    # Teacher rule: area & room type acceptable, rent in budget, available in time,
+    # lease and housemate count acceptable.
     bmin = np.array([t["budget_min"] for t in tenants]); bmax = np.array([t["budget_max"] for t in tenants])
     t_areas = np.zeros((len(tenants), N_AREAS), bool); t_rooms = np.zeros((len(tenants), N_ROOMS), bool)
     for i, t in enumerate(tenants):
