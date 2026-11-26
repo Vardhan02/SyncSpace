@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 
 import { getMatches } from "@/services/matchService"
@@ -9,7 +10,14 @@ export function useMatches() {
   const [liked, setLiked] = useState<string[]>([])
   const [applied, setApplied] = useState<string[]>([])
 
-  const matches = getMatches()
+  const {
+    data: matches = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["matches"],
+    queryFn: getMatches,
+  })
   const filtered = matches.filter((m) => {
     if (unreadOnly && !m.unread) return false
     return m.roommate.name.toLowerCase().includes(search.trim().toLowerCase())
@@ -24,6 +32,8 @@ export function useMatches() {
 
   return {
     matches: filtered,
+    isLoading,
+    isError,
     unreadCount: matches.filter((m) => m.unread).length,
     selected: matches.find((m) => m.id === selectedId) ?? null,
     search,

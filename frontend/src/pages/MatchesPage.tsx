@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils"
 export function MatchesPage() {
   const {
     matches,
+    isLoading,
+    isError,
     unreadCount,
     selected,
     search,
@@ -81,7 +83,18 @@ export function MatchesPage() {
             selected && "hidden"
           )}
         >
-          <MatchList matches={matches} selectedId={selected?.id} onOpen={openChat} />
+          <MatchList
+            matches={matches}
+            selectedId={selected?.id}
+            onOpen={openChat}
+            emptyText={
+              isLoading
+                ? "Loading matches..."
+                : isError
+                  ? "Couldn't load your matches"
+                  : "No matches found"
+            }
+          />
         </div>
         <div className={cn("min-w-0 flex-1 md:block", !selected && "hidden")}>
           <ChatPanel

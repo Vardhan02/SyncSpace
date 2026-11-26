@@ -165,6 +165,9 @@ export type Application = {
 
 export type ApplicationDecision = "confirmed" | "ignored"
 
+export type MatchPerson = Pick<Roommate, "id" | "name" | "photo"> &
+  Partial<Pick<Roommate, "course" | "university">>
+
 export type SharedHouse = {
   house: House
   fromMe: boolean
@@ -173,7 +176,7 @@ export type SharedHouse = {
 
 export type Match = {
   id: string
-  roommate: Roommate
+  roommate: MatchPerson
   matchedAt: string
   unread: boolean
   sharedHouses: SharedHouse[]

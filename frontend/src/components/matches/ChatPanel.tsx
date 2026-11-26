@@ -50,9 +50,11 @@ export function ChatPanel({ match, onBack, isLiked, onLike, isApplied, onApply }
           <Avatar roommate={roommate} size="size-10" />
           <div className="min-w-0">
             <p className="truncate text-[15px] font-semibold text-foreground">{roommate.name}</p>
-            <p className="truncate text-[13px] text-muted-foreground">
-              {roommate.course} · {roommate.university}
-            </p>
+            {roommate.course && (
+              <p className="truncate text-[13px] text-muted-foreground">
+                {roommate.course} · {roommate.university}
+              </p>
+            )}
           </div>
         </Link>
       </div>

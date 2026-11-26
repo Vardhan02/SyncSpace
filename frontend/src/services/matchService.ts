@@ -1,17 +1,44 @@
+import { api, hasBackend } from "@/lib/api"
 import matches from "@/mocks/matches.json"
 import { getHouse } from "@/services/houseService"
 import { getRoommate } from "@/services/roommateService"
-import type { Match, SharedHouse } from "@/types"
+import type { Match } from "@/types"
 
-export function getMatches(): Match[] {
+type ApiMatch = {
+  matchId: number
+  id: string
+  name: string
+  photoUrl: string | null
+  matchedAt: string
+}
+
+const newestFirst = (a: Match, b: Match) => b.matchedAt.localeCompare(a.matchedAt)
+
+function getMockMatches(): Match[] {
   return matches
-    .map(({ roommateId, sharedHouses, ...match }) => ({
-      ...match,
-      roommate: getRoommate(roommateId),
-      sharedHouses: sharedHouses
-        .map(({ houseId, ...shared }) => ({ ...shared, house: getHouse(houseId) }))
-        .filter((shared): shared is SharedHouse => shared.house !== undefined),
+    .flatMap(({ roommateId, sharedHouses, ...match }) => {
+      const roommate = getRoommate(roommateId)
+      if (!roommate) return []
+      const houses = sharedHouses.flatMap(({ houseId, ...shared }) => {
+        const house = getHouse(houseId)
+        return house ? [{ ...shared, house }] : []
+      })
+      return [{ ...match, roommate, sharedHouses: houses }]
+    })
+    .toSorted(newestFirst)
+}
+
+export async function getMatches(): Promise<Match[]> {
+  if (!hasBackend) return getMockMatches()
+
+  const { data } = await api.get<ApiMatch[]>("/api/matches")
+  return data
+    .map((m) => ({
+      id: String(m.matchId),
+      roommate: { id: m.id, name: m.name, photo: m.photoUrl },
+      matchedAt: m.matchedAt,
+      unread: false,
+      sharedHouses: [],
     }))
-    .filter((match): match is Match => match.roommate !== undefined)
-    .toSorted((a, b) => b.matchedAt.localeCompare(a.matchedAt))
+    .toSorted(newestFirst)
 }
