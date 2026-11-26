@@ -25,6 +25,7 @@ import com.syncspace.profile.ProfileContact;
 import com.syncspace.profile.ProfileContactRepository;
 import com.syncspace.profile.Roles;
 import com.syncspace.profile.UserRole;
+import com.syncspace.ranking.RankingService;
 
 import jakarta.validation.Valid;
 
@@ -46,15 +47,17 @@ public class TenantController {
 	private final TenantRepository tenants;
 	private final ProfileContactRepository contacts;
 	private final PhotoStorage photos;
+	private final RankingService ranking;
 
 	public TenantController(Roles roles, TenantService service, TenantProfiles profiles, TenantRepository tenants,
-			ProfileContactRepository contacts, PhotoStorage photos) {
+			ProfileContactRepository contacts, PhotoStorage photos, RankingService ranking) {
 		this.roles = roles;
 		this.service = service;
 		this.profiles = profiles;
 		this.tenants = tenants;
 		this.contacts = contacts;
 		this.photos = photos;
+		this.ranking = ranking;
 	}
 
 	@GetMapping
@@ -67,6 +70,7 @@ public class TenantController {
 	public MyProfile save(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody OnboardingAnswers req) {
 		UUID me = roles.require(jwt, UserRole.tenant);
 		service.save(me, req);
+		ranking.refreshLater(me);
 		return myProfile(me, jwt);
 	}
 
@@ -98,6 +102,8 @@ public class TenantController {
 				log.warn("couldn't delete old photo {}: {}", old, e.getMessage());
 			}
 		}
+		// the photo can be what finishes onboarding
+		ranking.refreshLater(me);
 		return Map.of("photoUrl", photos.url(BUCKET, path));
 	}
 
