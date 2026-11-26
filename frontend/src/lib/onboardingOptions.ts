@@ -195,7 +195,7 @@ export const RULES_MAX = 300
 export const MAX_INTERESTS = 6
 export const PROMPTS_REQUIRED = 3
 export const PROMPT_MAX_LENGTH = 150
-export const MAX_PHOTOS = 10
+export const MAX_PHOTOS = 6
 export const MAX_PHOTO_MB = 5
 
 // Turns a stored value back into what the user saw, e.g. "night_owl" → "Night owl".

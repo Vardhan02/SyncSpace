@@ -106,7 +106,7 @@ There are 64 tests in 13 files. They take a couple of seconds and **don't need t
 
 **Add and edit listing** (`pages/EditListingPage.test.tsx`)
 - Editing starts from the saved listing and saves the changes.
-- Removed photos are deleted before new ones are uploaded, to stay under the 10-photo limit.
+- Removed photos are deleted before new ones are uploaded, to stay under the 6-photo limit.
 - If every old photo is removed, the new ones are uploaded first, since the backend won't delete a listing's last photo.
 - A listing with no photos can't be saved.
 - Trying again after a failed upload doesn't create the new listing twice.

@@ -129,7 +129,7 @@ Study desk, Double bed, En-suite, Garden, Balcony, Parking, Bike storage, Lift
 
 ### Step 5 — Photos → `house_photos`
 
-- At least 1, up to 10 (JPG or PNG, max 5 MB each). `position` is the order shown; the first is the cover.
+- At least 1, up to 6 (JPG or PNG, max 5 MB each). `position` is the order shown; the first is the cover.
 - For now photos are only previewed in the browser. Upload and VLM checks happen once the backend is ready.
 
 ---

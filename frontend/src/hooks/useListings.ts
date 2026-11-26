@@ -42,7 +42,7 @@ export function useSaveListing() {
       const removePhotos = () => Promise.all(removePhotoIds.map((photoId) => deleteListingPhoto(id, photoId)))
       const addPhotos = () => (newPhotos.length > 0 ? uploadListingPhotos(id, newPhotos) : null)
       // The backend won't delete a listing's last photo, so when every old photo goes the new
-      // ones have to be in first. Otherwise removing first leaves room under the 10-photo limit.
+      // ones have to be in first. Otherwise removing first leaves room under the 6-photo limit.
       if (keptPhotos === 0) {
         await addPhotos()
         await removePhotos()

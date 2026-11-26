@@ -78,7 +78,7 @@ export function deleteListingPhoto(houseId: number, photoId: number) {
   return api<void>(`/listings/${houseId}/photos/${photoId}`, { method: "DELETE" })
 }
 
-// Up to 10 per listing, JPG or PNG, 5 MB each
+// Up to 6 per listing, JPG or PNG, 5 MB each
 export function uploadListingPhotos(houseId: number, files: File[]) {
   const form = new FormData()
   for (const file of files) form.append("files", file)
