@@ -1,8 +1,8 @@
 # Matching service API
 
-For the backend. This service ranks the **Houses** grid and the **Roommate** swipe deck
-for a tenant. It doesn't connect to the database: the backend sends it rows, and it returns
-them in order with a score.
+For the backend. This ranks the Houses grid and the Roommate swipe deck for a tenant.
+It doesn't connect to the database, the backend sends it the rows and gets them back
+sorted with a score.
 
 ```
 Frontend ──> Backend (Spring Boot) ──> Supabase
@@ -16,16 +16,14 @@ Frontend ──> Backend (Spring Boot) ──> Supabase
 ```bash
 cd matching
 pip install -r requirements.txt
-python train.py                                   # once, ~1 min; creates artifacts/
+python train.py                                   # only once, ~1 min, creates artifacts/
 uvicorn syncspace_ai.api:app --port 8001
 ```
 
-- Interactive docs: <http://localhost:8001/docs>
-- `GET /health` returns `"mode": "hybrid"` when the models are loaded. It returns `"rules"` if
-  `artifacts/` is missing; ranking still works then, just without the neural models.
-- Environment variables:
-  - `SYNCSPACE_ARTIFACTS`: path to the model folder.
-  - `SYNCSPACE_CORS_ORIGINS`: comma-separated origins (default `*`).
+- docs page: http://localhost:8001/docs
+- `GET /health` gives `"mode": "hybrid"` if the models loaded, or `"rules"` if artifacts/
+  is missing (ranking still works, just without the models)
+- env vars: `SYNCSPACE_ARTIFACTS` (model folder), `SYNCSPACE_CORS_ORIGINS` (comma separated, default `*`)
 
 ## When to call it
 
@@ -34,15 +32,15 @@ uvicorn syncspace_ai.api:app --port 8001
 | Houses tab | `POST /rank/houses` | the tenant + all active listings |
 | Roommate tab (swipe deck) | `POST /rank/roommates` | the tenant + other tenants who finished onboarding and haven't been swiped on yet |
 
-Call again after the tenant edits their preferences in Profile. Results can be cached until
-something changes. Up to ~2,000 candidates per call is fine; the first call for a new
-tenant is slower because their prompt answers are embedded once and then cached.
+Call it again when the tenant changes their preferences. You can cache the results until
+then. Around 2000 candidates per call is fine. The first call for a new tenant is a bit
+slower because their text gets embedded (it's cached after that).
 
 ## Building the request from Supabase
 
-Field names are the column names from Dhruvil's onboarding spec. Join and flatten:
+Field names are the same as the Supabase columns. Join the tables and flatten:
 
-**Tenant**: one object per tenant, built from:
+Tenant (one object per tenant):
 - `tenants`: `tenant_id`, `age`, `university`, `course`, `bio`
 - `tenant_house_preferences`: `budget_min`, `budget_max`, `preferred_areas`, `room_type`,
   `move_in_date`, `lease_months`, `max_housemates`
@@ -52,14 +50,14 @@ Field names are the column names from Dhruvil's onboarding spec. Join and flatte
 - `tenant_interests`: `interests` as a list of strings
 - `tenant_prompt_answers`: `prompt_answers` as a list of `{prompt_id, answer, slot}`
 
-**House**: one object per listing, built from:
+House (one object per listing):
 - `houses`: `house_id`, `area`, `rent`, `rooms_available`, `room_type`, `available_from`
 - `house_amenities`: `amenities` as a list of amenity names
 - `house_preferences`: `pets_allowed`, `smoking_allowed`, `guest_policy`, `quiet_hours_start`,
   `min_lease_months`, `max_occupants`
 - `landlord_preferences`: `preferred_tenants` (optional, default `any`)
 
-Extra columns are ignored, so whole rows can be sent. `GET /schema` lists every allowed value.
+Extra columns are ignored so you can send whole rows. `GET /schema` lists all allowed values.
 
 ### Allowed values
 
@@ -80,9 +78,9 @@ Extra columns are ignored, so whole rows can be sent. `GET /schema` lists every 
 | `preferred_tenants` | `any`, `student`, `professional` |
 | `amenities` | WiFi, Bills included, Central heating, Kitchen access, Washing machine, Dryer, Dishwasher, Study desk, Double bed, En-suite, Garden, Balcony, Parking, Bike storage, Lift |
 
-> These are the values in Dhruvil's spec, which are still a guess at the real Postgres enums.
-> If the database uses different ones, tell the AI side: the fix is one edit in
-> `syncspace_ai/schema.py` and a retrain. A wrong value returns **422** with the field name.
+These match the enums in the onboarding_values migration. If the DB changes, let me know,
+it's one edit in `syncspace_ai/schema.py` and a retrain. A wrong value gives a 422 with the
+field name.
 
 ## `POST /rank/roommates`
 
@@ -96,7 +94,7 @@ Full example: [`examples/rank_roommates.json`](examples/rank_roommates.json).
 }
 ```
 
-The tenant is automatically left out if it also appears in `candidates`.
+If the tenant is also in `candidates` it gets skipped.
 
 ## `POST /rank/houses`
 
@@ -131,17 +129,21 @@ Full example: [`examples/rank_houses.json`](examples/rank_houses.json).
 }
 ```
 
-- `results` is already sorted best first. Show it in this order; on the Houses grid the
-  first item is the top-left card.
-- `score` (0–100) is the number to show as "% match". It's a percentile: 94 means a better
-  match than 94% of pairs that pass the dealbreakers.
-- `reasons` and `cautions` are short strings the cards can show (optional).
-- `filtered_out` lists dealbreakers (budget, smoking, pets, lease, room type, move-in date,
-  housemates). Don't show these on the Houses grid or in the swipe deck.
+- `results` is sorted best first, just show it in that order (first = top-left card)
+- `score` (0-100) is the "% match". It's a percentile, so 94 = better than 94% of the pairs
+  that pass the filters
+- `reasons` / `cautions` are optional text for the cards
+- `filtered_out` = dealbreakers (budget, smoking, pets, lease, room type, move-in,
+  housemates), don't show these
+- a candidate or house with missing/invalid fields doesn't fail the request, it just shows
+  up in `filtered_out` as "Incomplete or invalid profile (field)". Best to only send tenants
+  with `onboarding_complete = true`
+- `house_id` can be a number, `quiet_hours_start` can be "23:00" or "23:00:00", odd times
+  get rounded to the nearest option, unknown areas in `preferred_areas` are ignored
 
 ## Errors
 
 | Code | Meaning |
 |---|---|
-| 422 | A field is missing or has a value outside the allowed list; the body names the field |
-| 500 | Bug on our side; please send us the request body |
+| 422 | the main `tenant` has a missing field or a value that's not allowed (the response says which field) |
+| 500 | bug on my side, send me the request body |
