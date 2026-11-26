@@ -26,3 +26,13 @@ export async function signup(details: SignupDetails) {
   })
   return "accessToken" in result ? result : null
 }
+
+// Always 204, so it can't be used to find out which emails have accounts
+export function requestPasswordReset(email: string) {
+  return api<void>("/auth/forgot-password", { method: "POST", body: { email } })
+}
+
+// `token` comes from the link in the reset email
+export function resetPassword(token: string, password: string) {
+  return api<void>("/auth/reset-password", { method: "POST", body: { password }, token })
+}

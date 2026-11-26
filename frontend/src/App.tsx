@@ -1,8 +1,9 @@
-import { Navigate, Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 import { Toaster } from "sonner"
 
 import { LandlordLayout } from "@/components/LandlordLayout"
 import { RequireAuth } from "@/components/RequireAuth"
+import { isResetLink } from "@/lib/resetLink"
 import { TenantLayout } from "@/components/TenantLayout"
 import { AccountSettingsPage } from "@/pages/AccountSettingsPage"
 import { ApplicationDetailPage } from "@/pages/ApplicationDetailPage"
@@ -19,11 +20,19 @@ import { MyListingsPage } from "@/pages/MyListingsPage"
 import { OnboardingPage } from "@/pages/OnboardingPage"
 import { MatchesPage } from "@/pages/MatchesPage"
 import { ProfileEditPage } from "@/pages/ProfileEditPage"
+import { ResetPasswordPage } from "@/pages/ResetPasswordPage"
 import { RoomateMatchPage } from "@/pages/RoomateMatchPage"
 import { SignupPage } from "@/pages/SignupPage"
 import { TenantProfilePage } from "@/pages/TenantProfilePage"
 
 function App() {
+  const location = useLocation()
+
+  // The reset email can bring people back to any page, depending on Supabase's settings
+  if (location.pathname !== "/reset-password" && isResetLink(location.hash)) {
+    return <Navigate to={{ pathname: "/reset-password", hash: location.hash }} replace />
+  }
+
   return (
     <>
       <Routes>
@@ -31,6 +40,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
 
         <Route element={<RequireAuth />}>
           <Route path="/onboarding" element={<OnboardingPage />} />

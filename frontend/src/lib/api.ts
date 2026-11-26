@@ -15,6 +15,8 @@ export class ApiError extends Error {
 type RequestOptions = {
   method?: "GET" | "POST" | "PUT" | "DELETE"
   body?: unknown
+  // Sent instead of the logged-in session, e.g. the one-time token from a password reset email
+  token?: string
 }
 
 // "phone: invalid phone number" -> "Invalid phone number"
@@ -68,6 +70,8 @@ async function renewSession() {
 }
 
 export async function api<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  if (options.token) return read<T>(await send(path, options, options.token))
+
   const token = useAuthStore.getState().accessToken
   let response = await send(path, options, token)
 
