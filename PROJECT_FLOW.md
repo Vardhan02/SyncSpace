@@ -1,6 +1,6 @@
 # SyncSpace: project flow
 
-The single reference for the whole team: what the app does, how each part works, which area owns what, and what is still undecided. It replaces `README.md`, `frontend/README.md`, `frontend/docs/onboarding-preferences.md`, `part-b-houses_updated.md` and `api-endpoints.md`. Corrections are made here, so this file stays the source of truth.
+The single reference for the whole team: what the app does, how each part works, which area owns what, and what is still undecided. It replaces `README.md`, `frontend/README.md`, `frontend/docs/onboarding-preferences.md`, `part-b-houses_updated.md` and `api-endpoints.md`. Corrections are made here, so this file stays the source of truth. The ranking service keeps its own detailed docs in `matching/README.md` and `matching/API.md`.
 
 **Contents**
 1. What SyncSpace is
@@ -23,7 +23,7 @@ The single reference for the whole team: what the app does, how each part works,
 
 A roommate matcher for Cork. Tenants swipe on other tenants based on lifestyle and personality. When two tenants both swipe right they become a match. A match can share house listings with each other, and when both tenants click Apply on the same house, a joint application goes to the landlord. The landlord sees both tenants' profiles and confirms or ignores the application. Only after a confirm do the tenants get the landlord's contact details.
 
-Landlords list houses with photos, amenities and house rules. A VLM pipeline checks the photos against the claimed amenities and marks listings as verified. A ranking job scores houses and roommates for each tenant, so the best matches show first.
+Landlords list houses with photos, amenities and house rules. A VLM pipeline checks the photos against the claimed amenities and marks listings as verified. A ranking service scores houses and roommates for each tenant, so the best matches show first.
 
 ---
 
@@ -31,7 +31,7 @@ Landlords list houses with photos, amenities and house rules. A VLM pipeline che
 
 ### 2.1 Sign up and log in
 1. The user signs up with name, email, phone, password, role (`tenant` or `landlord`) and whether their phone is visible to matches.
-2. A database trigger (`on_auth_user_created`) creates their `profiles` row (name, role, `first_login = true`) and their `profile_contacts` row (phone, `phone_visible`).
+2. A database trigger (`on_auth_user_created`) creates their `profiles` row (name, role, `first_login = true`) and their `profile_contacts` row (phone, `phone_visible = false`). If the user chose a visible phone, the backend switches `phone_visible` on right after.
 3. The user logs in and gets an access token (valid one hour) and a refresh token.
 
 ### 2.2 Onboarding (first login)
@@ -67,7 +67,7 @@ Dashboard routes stay locked until every required step is done. Answers can be e
 
 ### 2.7 Behind the scenes
 - **VLM pipeline:** downloads each listing's photos, sets `house_amenities.vlm_verified` per amenity (`null` = not checked yet) and `houses.verified`.
-- **Ranking job (not owned by anyone yet):** fills `house_recommendations` and `profile_recommendations` with scores from 0 to 1 (`source` is `cold_start` or `model`). Until it exists, only the demo tenant has scores, from the seed.
+- **Ranking service** (`matching/`, Python): `POST /rank/houses` and `POST /rank/roommates` take a tenant plus the candidate rows and return them sorted with a 0-100 score, reasons, and the ones filtered out as dealbreakers. It doesn't touch the database. The backend doesn't call it yet: the house grid and swipe deck still sort by `house_recommendations` / `profile_recommendations`, which only the demo tenant has rows in (from the seed). How the two get connected is open (13.1).
 
 ### 2.8 Privacy rules (from the spec)
 - Landlords never see tenant contact details from a like or before a confirm.
@@ -81,13 +81,13 @@ Dashboard routes stay locked until every required step is done. Answers can be e
 ### 3.1 Areas
 | Area | Covers |
 |---|---|
-| Backend A | auth (done), tenant onboarding, roommates, swipes, likes, matches, sharing and applying to houses, landlord contacts |
+| Backend A | auth, account (change password, delete), tenant onboarding, roommates, swipes, likes, matches, sharing and applying to houses, landlord contacts |
 | Backend B | houses, listings, listing photos, landlord onboarding, applications (landlord side), `PUT /api/me` |
 | Frontend | the React app |
-| VLM | photo and amenity verification |
-| AI / ranking | house and roommate recommendations |
+| VLM | photo and amenity verification (work in progress) |
+| AI / ranking | house and roommate ranking service in `matching/` |
 
-Backend B is built, tested and maintained end to end by a single developer, independently of Backend A. It doesn't wait on or reuse Backend A code; the only shared pieces are the files listed in 8.4.
+Backend B is built, tested and maintained end to end by a single developer, independently of Backend A. It doesn't wait on Backend A. The shared pieces are photo storage (`PhotoStorage`, section 7), the `Roles` helper (8.2), `TenantProfiles` (the tenant profile builder Backend B reuses for applications, 10.5) and the files listed in 8.4.
 
 ### 3.2 Branches
 - Each area works on its own branch. Nothing is pushed straight to `main`.
@@ -98,9 +98,11 @@ Backend B is built, tested and maintained end to end by a single developer, inde
 SyncSpace/
 ├── frontend/     React + TypeScript + Vite web app
 ├── backend/      Spring Boot API
-└── supabase/
-    ├── migrations/   schema, one file per change
-    └── seed.sql      demo data
+├── matching/     ranking service (Python, FastAPI): models, training, API docs
+├── supabase/
+│   ├── migrations/   schema, one file per change
+│   └── seed.sql      demo data
+└── agents/, prompts/, tools/, main.py, requirements.txt, DOCUMENTS/   VLM setup (empty skeleton so far)
 ```
 
 ### 3.4 Stack
@@ -111,6 +113,7 @@ SyncSpace/
 | Photo storage | Supabase Storage buckets, through the S3-compatible API |
 | Backend | Spring Boot 4.2, Java 21, Gradle, Spring Data JPA, package `com.syncspace`, runs on http://localhost:8080 |
 | Frontend | React 19 + TypeScript, Vite, Tailwind CSS v4 + shadcn/ui, React Router, TanStack Query, Zustand, Zod, React Hook Form, Axios, Sonner, Vitest, oxlint. Runs on http://localhost:5173 |
+| Ranking service | Python, FastAPI, PyTorch (two-tower models plus rules). Runs on http://localhost:8001 |
 
 Frontend library versions are in `frontend/package.json`.
 
@@ -134,9 +137,8 @@ npm run dev        # http://localhost:5173
 Other scripts: `npm run build` (type-check and build into `dist/`), `npm run preview` (serve the build), `npm run lint` (oxlint).
 
 ### 4.2 Backend
-1. The `backend/` folder comes from the Backend A branch; merge it into the working branch first.
-2. Install Java 21: `winget install EclipseAdoptium.Temurin.21.JDK`, then reopen the terminal. Gradle isn't needed, the project includes `gradlew`.
-3. Copy `backend/.env.example` to `backend/.env` and fill in the values. Secret values are shared privately within the team, never in git or group chats. `.env` is gitignored and must never be committed.
+1. Install Java 21: `winget install EclipseAdoptium.Temurin.21.JDK`, then reopen the terminal. Gradle isn't needed, the project includes `gradlew`.
+2. Copy `backend/.env.example` to `backend/.env` and fill in the values. Secret values are shared privately within the team, never in git or group chats. `.env` is gitignored and must never be committed.
    ```
    SUPABASE_URL=https://ktjzqtswslcqnzpgxzfw.supabase.co
    SUPABASE_KEY=
@@ -150,12 +152,15 @@ Other scripts: `npm run build` (type-check and build into `dist/`), `npm run pre
    S3_ACCESS_KEY=
    S3_SECRET_KEY=
    ```
-4. Start it:
+   - `SUPABASE_KEY`: the publishable key (`sb_publishable_…`) from **Project Settings → API Keys**. The secret key is never needed.
+   - `DB_URL`: in the dashboard, **Connect → Direct → Session pooler**; the host is the part between `@` and `:5432` (for example `aws-0-eu-west-1.pooler.supabase.com`). Use the session pooler, not the direct connection: the direct host `db.<ref>.supabase.co` is IPv6-only and fails on most home networks. `DB_USER` stays `postgres.<ref>`.
+   - `DB_PASSWORD`: the database password (it can be reset under **Project Settings → Database**).
+3. Start it:
    ```bash
    cd backend
    ./gradlew bootRun        # Windows: .\gradlew.bat bootRun
    ```
-5. Get a token for testing:
+4. Get a token for testing:
    ```bash
    curl -X POST localhost:8080/api/auth/login -H "Content-Type: application/json" \
      -d '{"email":"landlord@syncspace.test","password":"password123"}'
@@ -180,11 +185,30 @@ From `supabase/seed.sql`, all with password `password123`:
 
 Until it's connected to the backend, the frontend also has its own mock login in `frontend/src/mocks/users.json` (one tenant, one landlord).
 
+### 4.5 Ranking service
+```bash
+cd matching
+pip install -r requirements.txt
+uvicorn syncspace_ai.api:app --port 8001     # docs page: http://localhost:8001/docs
+```
+The trained models are already in `matching/artifacts/`; `python train.py` rebuilds them. Details in `matching/API.md`.
+
 ---
 
 ## 5. Database
 
-The schema is `supabase/migrations/20261113000000_initial_schema.sql`, plus the alignment migration that matches it to the onboarding forms (enum values, `houses.description`, the 10 prompts and 15 amenities). **Schema changes always go in a new file in `supabase/migrations/`.** An applied migration is never edited.
+The schema is built by the files in `supabase/migrations/`, in order:
+
+| File | Does |
+|---|---|
+| `20261113000000_initial_schema.sql` | tables, enums, triggers, RPCs, views, RLS |
+| `20261125000000_onboarding_values.sql` | enum values matching the onboarding forms, lease-length checks, `houses.description` |
+| `20261125000100_prompts.sql` | the 10 personality prompts |
+| `20261125000200_tenant_photos_bucket.sql` | `tenant-photos` storage bucket |
+| `20261125000300_house_photos_bucket.sql` | `house-photos` storage bucket |
+| `20261125000400_amenities.sql` | the 15 amenities |
+
+**Schema changes always go in a new file in `supabase/migrations/`.** An applied migration is never edited.
 
 ### 5.1 Tables
 | Table | What it holds |
@@ -255,7 +279,7 @@ RLS policies protect every table for browser users. The backend connects as `pos
 
 ### 5.6 Seed data notes
 - 8 demo houses (101-108) with photo rows (paths like `101/0.jpg`). No files exist at those paths yet, so the images show as broken until JPEGs are uploaded (section 7.5).
-- The 10 prompts and 15 amenities come from the alignment migration.
+- The 10 prompts and 15 amenities come from the prompts and amenities migrations.
 
 ---
 
@@ -388,9 +412,9 @@ Photos live in **Supabase Storage**, in the same Supabase project as the databas
 
 Full URL = `<S3_PUBLIC_URL>/<bucket>/<path>`, for example `https://ktjzqtswslcqnzpgxzfw.supabase.co/storage/v1/object/public/house-photos/101/0.jpg`. Anything that reads the columns directly (the VLM pipeline, `get_my_matches()`) builds the URL the same way.
 
-### 7.2 Setup, done once for the team (Supabase dashboard)
-1. **Storage → New bucket:** create `house-photos`, turn on **Public bucket** so the frontend can show images without a token, turn on the upload size limit and set it to 5 MB, set allowed MIME types to `image/jpeg, image/png`, and save. Repeat for `tenant-photos`. The limits are a second check behind the backend's.
-2. **Project Settings → Storage → S3 Connection:** make sure the S3 connection is enabled and note the endpoint and region. Under **S3 Access Keys**, click **New access key** and copy the access key ID and secret. The secret is only shown once.
+### 7.2 Setup, done once for the team
+1. **Buckets** come from the two bucket migrations (section 5): `house-photos` and `tenant-photos`, both public (so the frontend can show images without a token), 5 MB limit, `image/jpeg` and `image/png` only. The limits are a second check behind the backend's. Both buckets exist in the Supabase project.
+2. **Project Settings → Storage → S3 Connection** (dashboard): make sure the S3 connection is enabled and note the endpoint and region. Under **S3 Access Keys**, click **New access key** and copy the access key ID and secret. The secret is only shown once.
 3. Put the keys in `backend/.env` (`S3_ACCESS_KEY`, `S3_SECRET_KEY`) and share them privately with the other backend developers.
 4. Test: upload any JPEG as `house-photos/101/0.jpg` and open its public URL in a browser.
 
@@ -413,7 +437,7 @@ spring.servlet.multipart.max-request-size=50MB
 
 `build.gradle` (shared file, same rule):
 ```gradle
-implementation platform('software.amazon.awssdk:bom:2.31.0')   // or the latest 2.x
+implementation platform('software.amazon.awssdk:bom:2.59.9')
 implementation 'software.amazon.awssdk:s3'
 ```
 
@@ -456,7 +480,7 @@ public String url(String bucket, String path) {
 	return path == null ? null : publicUrl + "/" + bucket + "/" + path;
 }
 ```
-Every response field with a photo (`coverPhoto`, `photos[].url`, `photoUrl`) goes through `url(...)`.
+It also has `imageType(bytes)` (jpeg/png from the first bytes, null otherwise) and `extension(type)`. Every response field with a photo (`coverPhoto`, `photos[].url`, `photoUrl`) goes through `url(...)`.
 
 ### 7.4 Rules for every upload
 - **Paths are built from ids plus a random UUID.** The uploaded file's name is never used.
@@ -488,9 +512,9 @@ public List<ListingSummary> mine(@AuthenticationPrincipal Jwt jwt) {
 	...
 }
 ```
-Every route except `/api/auth/*` already requires a valid token (`config/SecurityConfig.java`), so `jwt` is never null.
+Only `POST /api/auth/signup`, `/login`, `/refresh` and `/forgot-password` are public (`config/SecurityConfig.java`). Every other route, including logout, reset-password and change-password, requires a valid token, so `jwt` is never null.
 
-The token doesn't say whether the caller is a tenant or a landlord; that's `profiles.role`. A `Roles` helper in the `profile` package handles it. Backend B adds it, and Backend A can use it too:
+The token doesn't say whether the caller is a tenant or a landlord; that's `profiles.role`. The `Roles` helper in the `profile` package handles it, and both backend areas use it:
 ```java
 @Component
 public class Roles {
@@ -504,7 +528,7 @@ public class Roles {
 	public UUID require(Jwt jwt, UserRole role) {
 		UUID id = UUID.fromString(jwt.getSubject());
 		var p = profiles.findById(id)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "no profile"));
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "no profile for this account"));
 		if (p.getRole() != role) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "only for " + role + "s");
 		}
@@ -522,12 +546,13 @@ throw new ResponseStatusException(HttpStatus.NOT_FOUND, "listing not found");
 - Validation annotations (`@NotBlank`, `@Size`, `@Min`…) on request records plus `@Valid` give a 400 with the field name automatically.
 - When something exists but belongs to someone else, the response is **404, not 403**, so ids can't be probed.
 - `ErrorHandler` also maps Supabase Auth errors to friendly messages (wrong email or password, account exists, rate limits, session expired).
+- A wrong type or unknown enum value in the body gives 400 naming the field and the allowed values, an upload over 5 MB gives 413, and a database constraint violation gives 409.
 
 ### 8.4 Code style
 Same as `auth/` and `profile/`:
 - tabs, constructor injection (no `@Autowired` on fields)
 - request and response bodies are Java records, JSON is camelCase
-- one package per area, so the two backend areas don't edit the same files. Backend A: `tenant`, `roommate`, `swipe`, `match`. Backend B: `landlord`, `listing`, `house`, `application`, `photo`
+- one package per area, so the two backend areas don't edit the same files. Backend A: `auth`, `profile`, `tenant`, `roommate`, `swipe`, `match`. Backend B: `landlord`, `listing`, `house`, `application`, `settings`. Shared: `photo`, `config`
 - comments explain the "why", not the "what"
 - `@Transactional` on any service method that writes to more than one table
 
@@ -558,7 +583,7 @@ static final Set<String> ROOM_TYPES = Set.of("single", "double", "ensuite");
 ```
 Without the cast, Postgres refuses a plain string in an enum column.
 
-**Other types:** `text[]` = `@JdbcTypeCode(SqlTypes.ARRAY) List<String>`, `DATE` = `LocalDate`, `TIME` = `LocalTime`, `TIMESTAMPTZ` = `OffsetDateTime`, `SMALLINT` = `Short` (or `Integer` with `@Column(columnDefinition = "smallint")`), `BIGINT` = `Long`.
+**Other types:** `text[]` = `@JdbcTypeCode(SqlTypes.ARRAY) List<String>`, `DATE` = `LocalDate`, `TIME` = `LocalTime`, `TIMESTAMPTZ` = `OffsetDateTime` in entities and `Instant` in projections and responses, `SMALLINT` = `Short` (or `Integer` with `@Column(columnDefinition = "smallint")`), `BIGINT` = `Long`.
 
 **Generated ids** (`houses.house_id`, `house_photos.photo_id`, `matches.match_id`, `applications.application_id`): `@Id @GeneratedValue(strategy = GenerationType.IDENTITY)`.
 
@@ -586,7 +611,7 @@ Read-only screens that join many tables (house grid, applications list) can use 
 
 ## 9. API endpoints: the split
 
-All paths start with `/api`. JSON in and out. Every route except `/api/auth/*` needs `Authorization: Bearer <accessToken>`. Houses, photos, matches and applications have number ids (`bigint`); people have UUID strings.
+All paths start with `/api`. JSON in and out. Every route except signup, login, refresh and forgot-password needs `Authorization: Bearer <accessToken>`. Houses, photos, matches and applications have number ids (`bigint`); people have UUID strings.
 
 ### 9.1 Done
 | Endpoint | What |
@@ -596,16 +621,18 @@ All paths start with `/api`. JSON in and out. Every route except `/api/auth/*` n
 | `POST /api/auth/refresh` | refresh token |
 | `POST /api/auth/logout` | log out |
 | `POST /api/auth/forgot-password` | send reset email |
-| `POST /api/auth/reset-password` | set new password |
+| `POST /api/auth/reset-password` | set new password (with the token from the reset email) |
+| `POST /api/auth/change-password` | change password (`currentPassword`, `newPassword`) |
 | `GET /api/me` | current user: id, name, email, role, firstLogin |
+| `DELETE /api/me` | delete the account and everything it owns (`password` required) |
 
-### 9.2 Backend A: tenants, roommates, matches
+### 9.2 Backend A: tenants, roommates, matches (done)
 | Endpoint | What |
 |---|---|
 | `PUT /api/tenants/me` | tenant onboarding: about, preferences, lifestyle, interests, prompts |
 | `GET /api/tenants/me` | own tenant profile |
 | `POST /api/tenants/me/photo` | tenant photo |
-| `GET /api/roommates` | swipe deck |
+| `GET /api/roommates` | swipe deck (`?limit=`, default 20, max 50) |
 | `GET /api/roommates/{id}` | one tenant's profile |
 | `POST /api/swipes` | swipe left or right (`targetId`, `direction`) |
 | `GET /api/likes` | Likes tab: tenants who swiped right on the caller |
@@ -616,10 +643,11 @@ All paths start with `/api`. JSON in and out. Every route except `/api/auth/*` n
 | `GET /api/applications/mine` | the tenant's application statuses |
 | `GET /api/landlord-contacts` | landlord contact details after a confirm |
 
-### 9.3 Backend B: houses, listings, landlords
+### 9.3 Backend B: houses, listings, landlords (done)
 | Endpoint | What |
 |---|---|
 | `PUT /api/me` | edit name, phone and phone visibility |
+| `GET /api/landlords/me` | landlord's own profile: photo, email, phone, phoneVisible, onboardingComplete, preferences |
 | `PUT /api/landlords/me/preferences` | landlord onboarding preferences |
 | `POST /api/landlords/me/photo` | landlord photo |
 | `POST /api/listings` | create listing |
@@ -643,19 +671,29 @@ All paths start with `/api`. JSON in and out. Every route except `/api/auth/*` n
 ## 10. API endpoint details
 
 ### 10.1 Tenants, roommates and matches (Backend A)
-The Backend A area writes the full request and response shapes. What each endpoint has to respect from the schema:
-- **`PUT /api/tenants/me`:** creates the `tenants` row if missing, then upserts `tenant_house_preferences` and `tenant_lifestyle_preferences`, and replaces `tenant_interests` (1-6) and `tenant_prompt_answers` (exactly 3, slots 1-3, distinct prompts), all in one transaction. Enum values from 5.2. Finishing sets `onboarding_complete` / `first_login` (13.1).
-- **`POST /api/tenants/me/photo`:** same rules as the landlord photo, path `tenants/{id}/{uuid}.jpg` in `tenant-photos`, through `PhotoStorage`.
-- **`GET /api/roommates`:** other tenants who finished onboarding and haven't been swiped on yet, ranked by `profile_recommendations.score`. The card has no email or phone.
-- **`GET /api/roommates/{id}`:** one tenant's full profile (about, preferences, lifestyle, interests, prompt answers), no email or phone.
-- **`POST /api/swipes`:** upserts the `swipes` row. The trigger creates the match. The response says whether a match was created, so the frontend can show "It's a match".
-- **`GET /api/likes`:** from the `pending_likes` view, `where tenant_id = :me`.
-- **`GET /api/matches`:** same logic as `get_my_matches()`: the other tenant's name, photo, email, and phone only if `phone_visible`.
-- **`POST /api/matches/{id}/houses`:** the caller must be in the match. Inserts `match_houses` with `shared_by = :me`.
-- **`GET /api/matches/{id}/houses`:** the caller must be in the match. Shared houses with `a_applied_at` / `b_applied_at`, so the frontend can show who has applied.
-- **`POST /api/matches/{id}/apply`:** same logic as `apply_to_shared_house()`: the caller must be in the match and the house shared in it. Sets only the caller's side (`a_applied_at` if they're `tenant_a_id`, else `b_applied_at`), keeping the existing value if already set. The trigger creates the application.
-- **`GET /api/applications/mine`:** applications for any match the caller is in, with house title and status.
-- **`GET /api/landlord-contacts`:** same logic as `get_my_landlord_contacts()`: only `confirmed` applications where the caller is in the match. Phone only if `phone_visible`.
+**Auth.** Login, refresh and signup return `{ accessToken, refreshToken, expiresIn, user }`, where `user` is the `GET /api/me` shape. Signup returns 201, or 202 with a message if Supabase wants the email confirmed first; a duplicate email gives 422 "an account with this email already exists", a wrong password 400 "wrong email or password", a used refresh token 401. Logout, forgot-password, reset-password and change-password return 204. `DELETE /api/me` checks the password (400 if wrong), deletes the auth user (everything else cascades), then the photo files.
+
+**Tenant profile.**
+- **`PUT /api/tenants/me`:** the onboarding answers (fields in 6.1, enum values in 5.2). Creates the `tenants` row if missing, upserts both preference tables, replaces interests (1-6, duplicates ignoring case dropped) and prompt answers (exactly 3 different prompts), in one transaction. Returns the same body as `GET`.
+- **`GET /api/tenants/me`:** the tenant's card (below) plus `email`, `phone`, `phoneVisible`, `onboardingComplete`.
+- **`POST /api/tenants/me/photo`:** multipart `file`, saved at `tenants/{id}/{uuid}.jpg` in `tenant-photos`. Returns `{ photoUrl }`.
+- Onboarding finishes (`onboarding_complete = true`, `first_login = false`) once both the answers and the photo are saved, whichever comes last.
+
+**Tenant card** (deck, roommate detail, application detail): `id`, `name`, `age`, `photoUrl`, `university`, `course`, `bio`, the house preferences, the lifestyle fields, `interests`, `prompts` (`promptId`, `text`, `answer`) and `matchScore` (0-100 or null). Never email or phone.
+
+**Roommates, swipes, likes.** These need a finished onboarding, otherwise 409 "finish onboarding first".
+- **`GET /api/roommates`:** tenants who finished onboarding, not the caller, not swiped on yet, ordered by `profile_recommendations.score` then newest.
+- **`GET /api/roommates/{id}`:** one card; 404 for the caller or anyone not onboarded.
+- **`POST /api/swipes`:** `{ targetId, direction: "left" | "right" }`. Returns `{ matched, matchId }` so the frontend can show "It's a match". 400 for swiping on yourself, 404 for an unknown or non-onboarded target.
+- **`GET /api/likes`:** from `pending_likes`: `[{ id, name, photoUrl, likedAt }]`.
+
+**Matches and applying** (tenant; someone else's match gives 404).
+- **`GET /api/matches`:** `[{ matchId, id, name, photoUrl, email, phone, matchedAt }]`, phone only if `phone_visible`.
+- **`POST /api/matches/{id}/houses`:** `{ houseId }`. 404 unless the house is `active`, 409 if already shared. Returns 201.
+- **`GET /api/matches/{id}/houses`:** `[{ houseId, title, area, rent, status, coverPhoto, sharedByMe, sharedAt, iApplied, theyApplied, likedByMe, likedByThem, applicationStatus }]`.
+- **`POST /api/matches/{id}/apply`:** `{ houseId }`. Sets only the caller's side. 404 if the house isn't shared in this match, 409 if it isn't `active`. Returns `{ bothApplied, applicationStatus }`; the trigger creates the application when both have applied.
+- **`GET /api/applications/mine`:** `[{ applicationId, matchId, partnerName, houseId, houseTitle, status, createdAt, decidedAt }]`.
+- **`GET /api/landlord-contacts`:** confirmed applications only: `[{ applicationId, houseId, houseTitle, landlordName, email, phone }]`, phone only if `phone_visible`.
 
 ### 10.2 Profile (Backend B)
 
@@ -664,13 +702,29 @@ Request (all fields optional, only the ones sent are changed):
 ```json
 { "name": "Aanya Kapoor", "phone": "+353 87 123 4567", "phoneVisible": true }
 ```
-- `name`: not blank if sent.
-- One `@Transactional` method updates `profiles.name` and `profile_contacts.phone` / `phone_visible`. Both rows already exist from signup.
-- Lives in the existing `profile` package (`ProfileRepository`, `ProfileContactRepository`).
+- `name`: not blank if sent, max 100. `phone`: same format as signup (`+` optional, 7-20 digits and spaces).
+- One transaction updates `profiles.name` and `profile_contacts.phone` / `phone_visible`. Both rows already exist from signup.
+- Lives in its own `settings` package (`SettingsController`). `GET /api/me` (`MeController`) and `DELETE /api/me` (`AccountController`) are unchanged.
 
-Response: `204`. `GET /api/me` doesn't return phone or `phoneVisible` yet. The Profile page needs them, so they get added to `MeResponse`.
+Response: `200` with the updated user, the same `MeResponse` shape as `GET /api/me`:
+```json
+{ "id": "00000000-...-0201", "name": "Aanya Kapoor", "email": "aanya@syncspace.test", "role": "tenant", "firstLogin": false }
+```
+`GET /api/me` has no phone fields. The settings form reads the current phone and visibility from `GET /api/tenants/me` (tenant) or `GET /api/landlords/me` (landlord).
 
 ### 10.3 Landlord onboarding (Backend B)
+
+Landlord onboarding is finished (`profiles.first_login = false`) once the preferences and at least one listing with a photo exist, whichever is saved last. The preferences endpoint and the listing photo upload both check this.
+
+#### `GET /api/landlords/me`  (landlord)
+The landlord's own profile, to fill the Profile and Settings forms. It follows `GET /api/tenants/me` where they overlap (`email`, `phone`, `phoneVisible`, `onboardingComplete`). The preference fields are null until step 1 is saved.
+```json
+{
+  "id": "00000000-...-0301", "name": "Mary Walsh", "photoUrl": "https://.../tenant-photos/landlords/{id}/{uuid}.jpg",
+  "email": "landlord@syncspace.test", "phone": "+353 87 200 0301", "phoneVisible": true, "onboardingComplete": true,
+  "preferredTenants": "student", "minLeaseMonths": 9, "referencesRequired": false
+}
+```
 
 #### `PUT /api/landlords/me/preferences`  (landlord)
 Onboarding step 1, and editing it later from the profile.
@@ -684,7 +738,7 @@ Onboarding step 1, and editing it later from the profile.
 2. **New landlords have no `landlords` row yet** (signup only creates `profiles` and `profile_contacts`), so `landlords (id)` is inserted if missing (`insert ... on conflict do nothing`).
 3. Upsert `landlord_preferences`.
 
-Response: `204`.
+Response: `200` with the same body as `GET /api/landlords/me` (like `PUT /api/tenants/me` returns the tenant's profile).
 
 #### `POST /api/landlords/me/photo`  (landlord)
 Multipart, field `file`. Optional during onboarding.
@@ -727,7 +781,7 @@ Validation:
 - `rent` 300-3000
 - `roomType` one of `single`, `double`, `ensuite`
 - `availableFrom` a date, today or later
-- `roomsAvailable` 1-10
+- `roomsAvailable` 1-10 (0 is only accepted when editing a `filled` listing, see PUT)
 - `description` optional, max 500
 - `amenities` at least 1, every name must exist in `amenities` (400 naming the bad one)
 - `guestPolicy` one of `no_overnight`, `weekends`, `welcome`
@@ -738,11 +792,13 @@ Validation:
 
 In one `@Transactional` method:
 1. Role landlord. Create the `landlords` row if missing.
-2. Insert `houses`. `verified` (VLM only) and `status` (defaults to `active`) aren't set.
+2. Insert `houses`. `verified` is never set here (VLM only). `status` is optional in the body: `draft` or `active` (the default); `pending` / `filled` give 400.
 3. Insert `house_preferences` with the same `house_id`.
-4. Look up amenity ids by name and insert one `house_amenities` row each, with `vlm_verified` left null.
+4. Look up amenity ids by name and insert one `house_amenities` row each, with `vlm_verified` left null. Duplicate names are dropped.
 
-Response: `201` with `{ "houseId": 109 }`. Photos are uploaded afterwards, because they need the house id.
+Also accepted: `houseMinLeaseMonths` as another name for `minLeaseMonths` (that's the field name in the frontend's `LandlordOnboarding`). A `quietHoursEnd` without a `quietHoursStart` is ignored. A blank `description` or `extraRules` is saved as null.
+
+Response: `201` with the new listing, the same body as `GET /api/listings/{id}` (`houseId` is in it, `photos` is empty). Photos are uploaded afterwards, because they need the house id.
 
 #### `GET /api/listings/mine`  (landlord)
 Every house where `landlord_id = :me`, newest first, including drafts.
@@ -766,7 +822,19 @@ Every house where `landlord_id = :me`, newest first, including drafts.
 
 #### `GET /api/listings/{id}`  (landlord, owner only)
 1. 404 if it doesn't exist **or** `landlord_id` isn't the caller.
-2. Returns everything from `houses` and `house_preferences`, the amenities with `vlmVerified` (true / false / null = not checked), the photos in `position` order (`photoId`, `url`, `position`), and `likeCount`.
+2. Returns everything from `houses` and `house_preferences`, the amenities with `vlmVerified` (true / false / null = not checked), the photos in `position` order (`photoId`, `url`, `position`), and `likeCount`:
+```json
+{
+  "houseId": 109, "title": "Bright 3-bed near UCC", "area": "College Road", "address": "14 College Road, Cork",
+  "rent": 750, "roomType": "double", "availableFrom": "2027-01-04", "roomsAvailable": 2,
+  "description": "Three-bed semi-d...", "status": "active", "verified": false, "createdAt": "2026-11-26T11:21:10.707Z",
+  "petsAllowed": false, "smokingAllowed": false, "guestPolicy": "weekends",
+  "quietHoursStart": "23:00", "quietHoursEnd": "07:00", "minLeaseMonths": 9, "maxOccupants": 3, "extraRules": null,
+  "amenities": [{ "name": "WiFi", "vlmVerified": true }, { "name": "Dryer", "vlmVerified": null }],
+  "photos": [{ "photoId": 41, "url": "https://.../house-photos/109/{uuid}.jpg", "position": 0 }],
+  "likeCount": 0
+}
+```
 
 #### `PUT /api/listings/{id}`  (landlord, owner only)
 Same body and validation as POST. In one transaction:
@@ -775,9 +843,11 @@ Same body and validation as POST. In one transaction:
 3. Update `house_preferences`.
 4. Amenities: **not deleted and re-inserted wholesale**, which would throw away the VLM results. Only the removed ones are deleted and only the new ones inserted.
 
-Optional `status` field: the landlord can set `draft` or `active`. `pending` and `filled` wait on 13.1.
+Optional `status` field: the landlord can set `draft` or `active`, not `pending` / `filled` (those come from confirms, see 10.5).
 
-Response: `204`.
+A `filled` listing has `roomsAvailable: 0`. It can still be edited with 0 rooms and stays `filled`. To reopen it, send `status: "active"` with `roomsAvailable` of at least 1; `active` with 0 rooms gives 400.
+
+Response: `200` with the saved listing, the same body as `GET /api/listings/{id}`.
 
 #### `DELETE /api/listings/{id}`  (landlord, owner only)
 1. 404 unless the caller owns it.
@@ -789,11 +859,12 @@ Response: `204`.
 #### `POST /api/listings/{id}/photos`  (landlord, owner only)
 Multipart, one or more `files`.
 1. 404 unless the caller owns it.
-2. Max 10 photos per house in total (existing + new), jpeg/png by first bytes, 5 MB each. All are checked before any is uploaded.
+2. Max 10 photos per house in total (existing + new), otherwise 409. jpeg/png by first bytes (400 naming the bad file), 5 MB each. All are checked before any is uploaded.
 3. Upload each to `house-photos` at `{houseId}/{random uuid}.jpg` (or `.png`).
-4. Insert `house_photos` rows with those paths in `url`. `position` continues after the current highest. `(house_id, position)` is unique, so this runs in a transaction. If the insert fails, the just-uploaded objects are deleted.
+4. Insert `house_photos` rows with those paths in `url`. `position` continues after the current highest. The house row is locked for this, so two uploads at once can't take the same positions. If the insert fails, the just-uploaded objects are deleted.
+5. Finishes landlord onboarding if the preferences are already saved (10.3).
 
-Response: `201` with the photo list (`photoId`, `url` as a full URL, `position`).
+Response: `201` with all of the listing's photos (`photoId`, `url` as a full URL, `position`), not just the new ones.
 
 #### `DELETE /api/listings/{id}/photos/{photoId}`  (landlord, owner only)
 1. 404 unless the caller owns the house and the photo belongs to it.
@@ -844,22 +915,43 @@ Ignoring removes an application from this list just by its status changing; noth
 
 #### `GET /api/applications/{id}`  (landlord, owner of the house)
 Both tenants in full: about (age, university, course, bio, photo), house preferences, lifestyle, interests, prompt answers. **No email or phone.**
-1. 404 unless the application's house belongs to the caller.
-2. Load both tenants from `tenants`, `tenant_house_preferences`, `tenant_lifestyle_preferences`, `tenant_interests` and `tenant_prompt_answers` (joined to `prompts` for the prompt text), plus `profiles.name`. The photo goes through `PhotoStorage.url`. Backend B builds this response itself in the `application` package.
+1. 404 unless the application's house belongs to the caller. Works for any status, not only pending.
+2. Both tenants come from `TenantProfiles.cards(...)` (tenant package), the same card the roommate deck shows. It has no email or phone.
+```json
+{
+  "applicationId": 1, "status": "pending", "createdAt": "2026-11-11T09:30:00Z", "decidedAt": null,
+  "house": { "houseId": 103, "title": "Quiet house with garden" },
+  "tenants": [
+    { "id": "00000000-...-0201", "name": "Aanya Kapoor", "age": 22, "photoUrl": null, "university": "...", "course": "...",
+      "bio": "...", "budgetMin": 600, "budgetMax": 750, "preferredAreas": ["College Road"], "roomType": "double",
+      "moveInDate": "2027-01-04", "leaseMonths": 9, "maxHousemates": 3, "sleepSchedule": "early_bird", "noiseTolerance": 3,
+      "cleanliness": "very_tidy", "workSchedule": "on_campus", "socialLevel": "social", "guestFrequency": "weekends",
+      "smoker": false, "okWithSmoking": false, "hasPets": false, "okWithPets": true,
+      "interests": ["Cooking"], "prompts": [{ "promptId": 1, "text": "My ideal Friday night is…", "answer": "..." }],
+      "matchScore": null }
+  ]
+}
+```
 
 #### `POST /api/applications/{id}/confirm` and `/ignore`  (landlord, owner of the house)
 Replaces the `decide_application` RPC:
 1. Load the application with its house. 404 unless the house belongs to the caller.
-2. 409 if `status` isn't `pending`.
-3. Set `status = 'confirmed'` or `'ignored'`, and `decided_at = now()`.
-4. Confirm only: possibly change the house to `pending` / `filled` (waiting on 13.1).
+2. 409 if `status` isn't `pending` ("this application was already confirmed").
+3. Set `status = 'confirmed'` or `'ignored'`, and `decided_at = now()`. The update only matches a pending row, so two decisions at the same moment can't both win.
+4. **Confirm takes a room.** A pair applies together for one room, so each confirm takes one room off the listing:
+   - The house row is locked (`for update`) before anything changes, so two confirms on the last room can't both go through. 409 "no rooms left on this listing" if it's already at 0.
+   - `rooms_available` goes down by 1. While rooms are left, the listing stays `active` and other pairs can keep applying.
+   - When the last room goes, the listing becomes `filled`: it drops out of `GET /api/houses`, and share/apply refuse it (they only accept `active` houses). The other `pending` applications on that house are set to `ignored`, so those tenants get an answer.
+   - Ignore doesn't touch the listing.
 
 Response: `204`. After a confirm, the tenants see the landlord's contact through `GET /api/landlord-contacts`.
 
 ### 10.6 Houses: tenants browsing (Backend B)
 
+Every endpoint here needs a finished onboarding, the same rule as the roommate deck: 409 "finish onboarding first" otherwise.
+
 #### `GET /api/houses`  (tenant)
-1. Role tenant.
+1. Role tenant, onboarding finished.
 2. Houses with `status = 'active'`. Never drafts, never the landlord's contact.
 3. Ordered by `house_recommendations.score` for this tenant, descending. Houses with no score go last, newest first.
 4. For each house also:
@@ -891,37 +983,39 @@ The response is close to the frontend's `House` type:
   }
 ]
 ```
-`matchScore` = score × 100, rounded; null if there's no score. Optional filters if time allows: `?area=Douglas&maxRent=800`.
+`matchScore` = score × 100, rounded; null if there's no score. Optional filters: `?area=Douglas` (one of the 8 areas, else 400) and `?maxRent=800`.
 
 #### `GET /api/houses/{id}`  (tenant)
-Same fields as the grid plus `description`, all `photos` (URLs in position order), `amenities` (names) and the rules from `house_preferences` (petsAllowed, smokingAllowed, guestPolicy, quietHoursStart, quietHoursEnd, minLeaseMonths, maxOccupants, extraRules).
-- 404 if it doesn't exist or is a draft.
+Same fields as the grid plus `description`, all `photos` (URLs in position order), `amenities` (names) and the rules from `house_preferences` (petsAllowed, smokingAllowed, guestPolicy, quietHoursStart, quietHoursEnd as `"HH:MM"`, minLeaseMonths, maxOccupants, extraRules), all at the top level.
+- 404 if it doesn't exist or is a draft. `pending` and `filled` houses still open, so shared links keep working.
 - **Never landlord contact details.**
 
 #### `POST` / `DELETE /api/houses/{id}/like`  (tenant)
-1. Role tenant.
-2. The `tenants` row must exist (`house_likes.tenant_id` points at it). If it's missing, 409 "finish onboarding first".
-3. The house must exist and not be a draft (404).
-4. Like: `insert ... on conflict do nothing`. Unlike: delete. Both return `204` and are safe to call twice.
+1. Role tenant, onboarding finished (409 otherwise).
+2. Like: the house must exist and not be a draft (404). Unlike: the house only has to exist, so a like can be taken back after the listing is hidden.
+3. Like: `insert ... on conflict do nothing`. Unlike: delete. Both return `204` and are safe to call twice.
 
 ---
 
 ## 11. Frontend details
 
 ### 11.1 Routes
-| Route | Page | Status |
-|---|---|---|
-| `/`, `/login` | log in | built |
-| `/signup` | create an account | built |
-| `/forgot-password` | request a reset link | built |
-| `/onboarding` | tenant or landlord onboarding (any logged-in user) | built |
-| `/houses` | tenant: ranked house grid, like houses | built |
-| `/houses/:houseId` | tenant: house detail | built |
-| `/roommate` | tenant: swipe deck | built |
-| `/matches`, `/profile` | tenant | placeholders |
-| `/landlord` | landlord dashboard | placeholder (`MyListingsPage` and `ListingDetailPage` exist but aren't routed yet) |
+Every page is built, all on mock data until the backend is connected (11.4).
 
-Tenant and landlord routes need login and the right role. Any other URL redirects to `/login`. Auth pages are responsive: full-screen form on phones, a centered card on tablets, a split screen with a brand panel on desktop.
+| Route | Page |
+|---|---|
+| `/` | landing page |
+| `/login`, `/signup`, `/forgot-password` | log in, create an account (tenant or landlord), request a reset link |
+| `/onboarding` | tenant or landlord onboarding (any logged-in user) |
+| `/houses`, `/houses/:houseId` | tenant: house grid and detail, like and share houses |
+| `/roommate` | tenant: swipe deck |
+| `/matches` | tenant: matches, chat panel, shared houses and applying |
+| `/profile`, `/profile/edit/:step`, `/profile/settings` | tenant: profile, edit an onboarding step, account settings |
+| `/landlord/listings`, `/landlord/listings/new`, `/landlord/listings/:houseId`, `/landlord/listings/:houseId/edit` | landlord: My Listings, add, detail (with likes and photo check), edit |
+| `/landlord/applications`, `/landlord/applications/:applicationId` | landlord: pending applications, both tenants' profiles, confirm or ignore |
+| `/landlord/profile`, `/landlord/profile/edit/:step`, `/landlord/profile/settings` | landlord: profile, edit, account settings |
+
+`/landlord` redirects to `/landlord/listings`. Tenant and landlord routes need login and the right role. Any other URL redirects to `/`. Auth pages are responsive: full-screen form on phones, a centered card on tablets, a split screen with a brand panel on desktop.
 
 ### 11.2 Structure
 ```
@@ -935,14 +1029,17 @@ frontend/
     ├── index.css           # Tailwind, theme colours, font
     ├── pages/              # one component per route
     ├── components/
-    │   ├── AuthLayout.tsx  # shared layout for login / sign up / reset
+    │   ├── AuthLayout.tsx, TenantLayout.tsx, LandlordLayout.tsx, RequireAuth.tsx
     │   ├── onboarding/     # one component + Zod schema per step (steps.ts)
+    │   ├── roommate/, matches/, applications/, profile/   # parts of those pages
     │   └── ui/             # shadcn components
-    ├── services/           # API calls: houseService, landlordService, roommateService
-    ├── stores/             # Zustand: auth, house, landlord, photo, preferences, roommate
-    ├── mocks/              # users.json, houses.json until the backend is connected
+    ├── services/           # data calls: application, house, landlord, match, roommate
+    ├── controllers/, hooks/  # page logic: useSwipe, useMatches, useShareHouse, useApplications, useMyListings…
+    ├── stores/             # Zustand: application, auth, house, landlord, photo, preferences, profile, roommate
+    ├── mocks/              # stand-in data until the backend is connected (11.4)
     ├── types/index.ts      # TenantOnboarding, LandlordOnboarding, House…
-    └── lib/                # utils.ts (cn helper), onboardingOptions.ts (all enum values and option lists)
+    ├── lib/                # utils.ts (cn helper), onboardingOptions.ts (all enum values), format.ts, phone.ts, tenantCard.ts
+    └── test/setup.ts       # Vitest setup; tests sit next to pages (LoginPage.test.tsx)
 ```
 - Imports can use `@/`, for example `import { Button } from "@/components/ui/button"`.
 - There's no `tailwind.config.js` or `postcss.config.js`: Tailwind v4 is set up through the Vite plugin and `src/index.css`.
@@ -955,14 +1052,15 @@ frontend/
 - Each step is a component plus a Zod schema in `components/onboarding/steps.ts`. **Next** only enables when the schema passes.
 
 ### 11.4 Mock data until the backend is connected
-- `src/mocks/users.json`: one demo tenant and one demo landlord for the mock login.
-- `src/mocks/houses.json`: the listings on `/houses` (same photo counts as the seed).
-- Login state and liked houses are kept in local storage, so they survive a refresh. Logging out from the header switches accounts.
-- Connecting means swapping the mock imports in `src/services/` for Axios calls to the Spring backend (`http://localhost:8080/api/...`). The frontend talks only to the backend, never to Supabase directly. Photos go to the backend upload endpoints. The backend's allowed origins are in `app.cors.origins`.
+- `src/mocks/`: `users.json` (one demo tenant, one demo landlord for the mock login), `houses.json` (same photo counts as the seed), `houseLikes.json`, `roommates.json`, `matches.json`, `applications.json`, `photoChecks.json` (VLM results shown on a listing).
+- Login state, liked houses and profile edits are kept in local storage, so they survive a refresh. Logging out from the header switches accounts.
+- Connecting means swapping the mock imports in `src/services/` and `src/stores/` for Axios calls to the Spring backend (`http://localhost:8080/api/...`). The frontend talks only to the backend, never to Supabase directly. Photos go to the backend upload endpoints. The backend's allowed origins are in `app.cors.origins`.
+- Two places where the pages ask for more than the backend has (13.1): Account settings lets the user change their **email**, which no endpoint supports, and **Delete account** doesn't ask for the password that `DELETE /api/me` requires.
 
 ### 11.5 Troubleshooting
 - **Windows: "running scripts is disabled on this system":** run once in PowerShell: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`
 - **Strange install errors:** delete `node_modules` and run `npm install` again.
+- **`Cannot find module '@rolldown/binding-…'` or `'@oxlint/binding-…'`:** Node is older than 20.19. npm skips those packages on older Node without saying so. Update Node, delete `node_modules`, run `npm ci`.
 - **Port 5173 is busy:** `npm run dev -- --port 3000`
 
 ---
@@ -976,7 +1074,7 @@ frontend/
 - bad input (missing field, out of range, unknown amenity): 400 with a readable message
 - then a look at the rows in the Supabase Table Editor, and for photo endpoints the bucket under Storage (and a returned URL opened in the browser)
 
-`./gradlew build` must pass before pushing. For the frontend, `npm run build` and `npm run lint`.
+`./gradlew build` must pass before pushing. For the frontend, `npm run build`, `npm run lint` and `npm test`. For the ranking service, `pytest` in `matching/`.
 
 ### 12.2 Pushing
 - Small commits, one thing each (`add listing create endpoint`, `add house likes`).
@@ -993,16 +1091,16 @@ frontend/
 ## 13. Open questions and to-dos
 
 ### 13.1 Decisions still open
-- **Two onboarding flags:** `profiles.first_login` and `tenants.onboarding_complete` seem to mean the same thing, and landlords only have `first_login`. Which one decides whether onboarding shows? Suggestion: `first_login` for everyone, and the other is ignored or dropped.
-- **What a confirmed application does to the listing:** set it to `pending` or `filled`, reduce `rooms_available`, or nothing?
-- **Phone number:** asked at signup, not during onboarding. Editable later with `PUT /api/me`.
-- **Ranking job:** no one owns `house_recommendations` / `profile_recommendations` yet.
+- **Two onboarding flags:** `profiles.first_login` and `tenants.onboarding_complete` mean the same thing. Today tenant onboarding sets both together, landlords only have `first_login`, and the swipe deck checks both. Suggestion: `first_login` for everyone, and the other is dropped later.
+- **Connecting the ranking service:** the backend still sorts by the two recommendation tables, which nothing fills. Either the backend calls `POST /rank/houses` / `/rank/roommates` when the grid or deck loads (and drops the `filtered_out` dealbreakers), or a job calls it and writes the scores into the tables, so the existing endpoints keep working unchanged.
+- **Changing email:** the Account settings page has an email field, but no endpoint changes it (it would go through Supabase Auth and send a confirmation email). Build it, or make the field read-only.
+- **Delete account:** `DELETE /api/me` requires the password; the Delete account dialog has to ask for it.
+- **Room size on confirm:** each confirmed pair takes one room (10.5). If a single room can't hold two people, that rule needs another look.
 
 ### 13.2 To-dos
-- [ ] Push the alignment migration and apply it to the Supabase project (`npx supabase db push`).
-- [ ] Create the two storage buckets and the S3 access key (7.2); share the keys privately.
-- [ ] Upload demo house photos (7.5).
-- [ ] Add the `Roles` helper (8.2).
-- [ ] Add `phone` and `phoneVisible` to `GET /api/me` (10.2).
-- [ ] Frontend: route the landlord pages and connect the services to the backend.
+- [ ] Make sure every migration in section 5 has been applied to the Supabase project (`npx supabase db push`).
+- [x] Storage buckets (they exist in the project). [ ] S3 access key created and shared privately (7.2).
+- [ ] Upload demo house and tenant photos (7.5); the seed paths still return "Object not found".
+- [ ] Frontend: connect the services to the backend (all pages are built on mocks).
+- [ ] Backend: connect the ranking service (13.1).
 - [ ] VLM pipeline: read photo columns as bucket paths and build URLs as in 7.1.
