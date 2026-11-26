@@ -3,7 +3,13 @@ import applications from "@/mocks/applications.json"
 import users from "@/mocks/users.json"
 import { cardFromOnboarding } from "@/lib/tenantCard"
 import { getRoommate, toRoommate, type ApiTenantCard } from "@/services/roommateService"
-import type { Application, ApplicationDetails, Roommate, TenantOnboarding } from "@/types"
+import type {
+  Application,
+  ApplicationDecision,
+  ApplicationDetails,
+  Roommate,
+  TenantOnboarding,
+} from "@/types"
 
 // Mock pair applications. Later these are created when both matched tenants click Apply.
 const allApplications = applications as Application[]
@@ -94,4 +100,8 @@ export async function fetchApplication(id: string): Promise<ApplicationDetails> 
     tenants: [toRoommate(tenants[0]), toRoommate(tenants[1])],
     decision: status === "confirmed" || status === "ignored" ? status : undefined,
   }
+}
+
+export async function decideApplication(id: string, decision: ApplicationDecision) {
+  await api.post(`/api/applications/${id}/${decision === "confirmed" ? "confirm" : "ignore"}`)
 }

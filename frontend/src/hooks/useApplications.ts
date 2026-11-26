@@ -1,9 +1,10 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { useMyListings } from "@/hooks/useMyListings"
 import { hasBackend } from "@/lib/api"
 import users from "@/mocks/users.json"
 import {
+  decideApplication,
   fetchApplication,
   fetchApplications,
   getApplicant,
@@ -13,7 +14,7 @@ import { useApplicationStore } from "@/stores/applicationStore"
 import { useAuthStore } from "@/stores/authStore"
 import { usePreferencesStore } from "@/stores/preferencesStore"
 import { contactFor, useProfileStore } from "@/stores/profileStore"
-import type { ApplicationDetails } from "@/types"
+import type { ApplicationDecision, ApplicationDetails } from "@/types"
 
 export type { ApplicationDetails }
 
@@ -47,6 +48,19 @@ export function useLandlordApplication(id: string) {
   })
 
   return data ?? fromList
+}
+
+export function useDecideApplication() {
+  const queryClient = useQueryClient()
+  const decideLocal = useApplicationStore((state) => state.decide)
+
+  return async (id: string, decision: ApplicationDecision) => {
+    if (hasBackend) {
+      await decideApplication(id, decision)
+      await queryClient.invalidateQueries({ queryKey: ["applications"] })
+    }
+    decideLocal(id, decision)
+  }
 }
 
 // The signed-in tenant's application for a house, if they're part of one.
