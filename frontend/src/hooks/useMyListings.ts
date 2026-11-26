@@ -1,3 +1,7 @@
+import { useQuery } from "@tanstack/react-query"
+
+import { hasBackend } from "@/lib/api"
+import { fetchHouses } from "@/services/houseService"
 import { getAllListings } from "@/services/landlordService"
 import { useAuthStore } from "@/stores/authStore"
 import { useLandlordStore } from "@/stores/landlordStore"
@@ -25,5 +29,11 @@ export function useMyListings() {
 
 // What tenants browse: everything, best match first.
 export function useHouses() {
-  return useAllListings().toSorted((a, b) => b.matchScore - a.matchScore)
+  const listings = useAllListings()
+  const { data = [] } = useQuery({
+    queryKey: ["houses"],
+    queryFn: fetchHouses,
+    enabled: hasBackend,
+  })
+  return (hasBackend ? data : listings).toSorted((a, b) => b.matchScore - a.matchScore)
 }
