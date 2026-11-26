@@ -1,13 +1,13 @@
 import { Search } from "lucide-react"
 import { useState } from "react"
-import { toast } from "sonner"
 
 import { HouseCard } from "@/components/HouseCard"
+import { ShareHouseDialog } from "@/components/ShareHouseDialog"
 import { Input } from "@/components/ui/input"
+import { useShareHouse } from "@/controllers/useShareHouse"
 import { useHouses } from "@/hooks/useMyListings"
 import { cn } from "@/lib/utils"
 import { useHouseStore } from "@/stores/houseStore"
-import type { House } from "@/types"
 
 export function HousesPage() {
   const rankedHouses = useHouses()
@@ -16,9 +16,7 @@ export function HousesPage() {
   const likedIds = useHouseStore((state) => state.likedIds)
   const toggleLike = useHouseStore((state) => state.toggleLike)
 
-  function handleShare(house: House) {
-    toast.success(`Shared ${house.title} with your match`)
-  }
+  const { shareHouse, matches, sentTo, openShare, closeShare, send } = useShareHouse()
 
   const filters = [
     { label: "All", likedOnly: false },
@@ -29,10 +27,7 @@ export function HousesPage() {
   const visibleHouses = rankedHouses.filter((house) => {
     if (showLikedOnly && !likedIds.includes(house.id)) return false
     if (!search) return true
-    return (
-      house.title.toLowerCase().includes(search) ||
-      house.area.toLowerCase().includes(search)
-    )
+    return house.title.toLowerCase().includes(search) || house.area.toLowerCase().includes(search)
   })
 
   return (
@@ -91,7 +86,7 @@ export function HousesPage() {
               house={house}
               liked={likedIds.includes(house.id)}
               onToggleLike={() => toggleLike(house.id)}
-              onShare={() => handleShare(house)}
+              onShare={() => openShare(house)}
             />
           ))}
         </div>
@@ -107,6 +102,14 @@ export function HousesPage() {
           </p>
         </div>
       )}
+
+      <ShareHouseDialog
+        house={shareHouse}
+        matches={matches}
+        sentTo={sentTo}
+        onSend={send}
+        onClose={closeShare}
+      />
     </div>
   )
 }
