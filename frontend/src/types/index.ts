@@ -166,6 +166,13 @@ export type Application = {
 
 export type ApplicationDecision = "confirmed" | "ignored"
 
+export type ApplicationDetails = {
+  application: Application
+  house: Pick<House, "id" | "title">
+  tenants: [Roommate, Roommate]
+  decision?: ApplicationDecision
+}
+
 export type MatchPerson = Pick<Roommate, "id" | "name" | "photo"> &
   Partial<Pick<Roommate, "course" | "university">>
 

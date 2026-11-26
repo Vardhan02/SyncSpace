@@ -1,24 +1,28 @@
+import { useQuery } from "@tanstack/react-query"
+
 import { useMyListings } from "@/hooks/useMyListings"
+import { hasBackend } from "@/lib/api"
 import users from "@/mocks/users.json"
-import { getApplicant, getApplications } from "@/services/applicationService"
+import { fetchApplications, getApplicant, getApplications } from "@/services/applicationService"
 import { useApplicationStore } from "@/stores/applicationStore"
 import { useAuthStore } from "@/stores/authStore"
 import { usePreferencesStore } from "@/stores/preferencesStore"
 import { contactFor, useProfileStore } from "@/stores/profileStore"
-import type { Application, ApplicationDecision, House, Roommate } from "@/types"
+import type { ApplicationDetails } from "@/types"
 
-export type ApplicationDetails = {
-  application: Application
-  house: House
-  tenants: [Roommate, Roommate]
-  decision?: ApplicationDecision
-}
+export type { ApplicationDetails }
 
 // Applications for the signed-in landlord's listings. Ignored ones are dropped, as the spec says.
 export function useLandlordApplications(): ApplicationDetails[] {
   const listings = useMyListings()
   const decisions = useApplicationStore((state) => state.decisions)
   const records = usePreferencesStore((state) => state.records)
+  const { data = [] } = useQuery({
+    queryKey: ["applications"],
+    queryFn: fetchApplications,
+    enabled: hasBackend,
+  })
+  if (hasBackend) return data
 
   return getApplications().flatMap((application) => {
     const house = listings.find((listing) => listing.id === application.houseId)
