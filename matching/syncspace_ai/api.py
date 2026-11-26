@@ -9,9 +9,11 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import ValidationError
 
 from .recommender import ARTIFACT_DIR, Recommender
-from .schema import SCHEMA_VERSION, RankHousesRequest, RankResponse, RankRoommatesRequest, schema_summary
+from .schema import (SCHEMA_VERSION, FilteredItem, House, RankHousesRequest, RankResponse,
+                     RankRoommatesRequest, TenantProfile, schema_summary)
 
 logging.basicConfig(level=logging.INFO)
 state = {}
@@ -48,11 +50,31 @@ def schema():
     return schema_summary()
 
 
+def check_each(rows, model, id_key):
+    # validate rows one at a time, bad ones go to filtered_out instead of failing everything
+    good, bad = [], []
+    for row in rows:
+        try:
+            good.append(model.model_validate(row))
+        except ValidationError as e:
+            loc = e.errors()[0]["loc"]
+            field = loc[0] if loc else "budget"   # the budget check has no field name
+            bad.append(FilteredItem(id=str(row.get(id_key, "unknown")),
+                                    reason=f"Incomplete or invalid profile ({field})"))
+    return good, bad
+
+
 @app.post("/rank/roommates", response_model=RankResponse)
 def rank_roommates(req: RankRoommatesRequest):
-    return state["rec"].rank_roommates(req.tenant, req.candidates, req.limit, req.today)
+    candidates, bad = check_each(req.candidates, TenantProfile, "tenant_id")
+    res = state["rec"].rank_roommates(req.tenant, candidates, req.limit, req.today)
+    res.filtered_out += bad
+    return res
 
 
 @app.post("/rank/houses", response_model=RankResponse)
 def rank_houses(req: RankHousesRequest):
-    return state["rec"].rank_houses(req.tenant, req.houses, req.limit, req.today)
+    houses, bad = check_each(req.houses, House, "house_id")
+    res = state["rec"].rank_houses(req.tenant, houses, req.limit, req.today)
+    res.filtered_out += bad
+    return res

@@ -65,7 +65,7 @@ class PromptAnswer(BaseModel):
 
 class TenantProfile(BaseModel):
     # everything from tenant onboarding, joined from the tenant tables
-    model_config = ConfigDict(extra="ignore")
+    model_config = ConfigDict(extra="ignore", coerce_numbers_to_str=True)   # DB ids can be numbers
 
     tenant_id: str
     # tenants
@@ -96,6 +96,14 @@ class TenantProfile(BaseModel):
     interests: list[str] = Field(default_factory=list, max_length=MAX_INTERESTS)
     prompt_answers: list[PromptAnswer] = Field(default_factory=list, max_length=PROMPTS_REQUIRED)
 
+    @field_validator("preferred_areas", mode="before")
+    @classmethod
+    def drop_unknown_areas(cls, v):
+        # seed data has areas like "City Centre" that aren't in the form, just skip them
+        if isinstance(v, list):
+            return [a for a in v if a in AREAS]
+        return v
+
     @field_validator("interests")
     @classmethod
     def clean_interests(cls, v):
@@ -110,7 +118,7 @@ class TenantProfile(BaseModel):
 
 class House(BaseModel):
     # a listing: houses + house_amenities + house_preferences
-    model_config = ConfigDict(extra="ignore")
+    model_config = ConfigDict(extra="ignore", coerce_numbers_to_str=True)  # house_id is a bigint in the DB
 
     house_id: str
     # houses
@@ -133,20 +141,41 @@ class House(BaseModel):
 
     @field_validator("quiet_hours_start", mode="before")
     @classmethod
-    def blank_is_none(cls, v):
-        return None if v in ("", "none", "None") else v
+    def fix_quiet_hours(cls, v):
+        if v in (None, "", "none", "None"):
+            return None
+        return nearest_quiet_start(v)
 
 
+def nearest_quiet_start(v):
+    # DB stores TIME so it can come as "23:00:00", and old data has things like "22:30".
+    # Round to the closest option from the form (ties go to the earlier time).
+    try:
+        hh, mm = str(v).split(":")[:2]
+        minutes = int(hh) * 60 + int(mm)
+    except ValueError:
+        return v   # let pydantic reject it
+    if minutes < 12 * 60:
+        minutes += 24 * 60   # 00:30 is after midnight, not morning
+    options = [o for o in QUIET_HOURS_STARTS if o]
+    def to_min(o):
+        h, m = map(int, o.split(":"))
+        return (h if h >= 12 else h + 24) * 60 + m
+    return min(options, key=lambda o: (abs(to_min(o) - minutes), to_min(o)))
+
+
+# candidates/houses are checked one by one in api.py, so one bad row
+# doesn't make the whole request fail
 class RankRoommatesRequest(BaseModel):
     tenant: TenantProfile
-    candidates: list[TenantProfile] = Field(max_length=2000)
+    candidates: list[dict] = Field(max_length=2000)
     limit: Optional[int] = Field(default=None, ge=1)
     today: Optional[date] = None   # only for tests, normally uses today's date
 
 
 class RankHousesRequest(BaseModel):
     tenant: TenantProfile
-    houses: list[House] = Field(max_length=5000)
+    houses: list[dict] = Field(max_length=5000)
     limit: Optional[int] = Field(default=None, ge=1)
     today: Optional[date] = None
 
