@@ -67,8 +67,8 @@ export function SharedHouseCard({
                 {house.area}, Cork
               </p>
               <p className="pt-1 text-[12px] text-muted-foreground">
-                <span className="font-semibold text-foreground">€{house.rent}</span> per month ·{" "}
-                {house.roomType}
+                <span className="font-semibold text-foreground">€{house.rent}</span> per month
+                {house.roomType && ` · ${house.roomType}`}
               </p>
             </div>
           </Link>

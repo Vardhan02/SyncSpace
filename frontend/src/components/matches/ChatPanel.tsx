@@ -5,10 +5,11 @@ import { Avatar } from "@/components/matches/MatchList"
 import { SharedHouseCard } from "@/components/matches/SharedHouseCard"
 import { formatFullDate } from "@/lib/format"
 import { cn } from "@/lib/utils"
-import type { Match } from "@/types"
+import type { Match, SharedHouse } from "@/types"
 
 type ChatPanelProps = {
   match: Match | null
+  houses: SharedHouse[]
   onBack: () => void
   isLiked: (houseId: string) => boolean
   onLike: (houseId: string) => void
@@ -16,7 +17,15 @@ type ChatPanelProps = {
   onApply: (houseId: string) => void
 }
 
-export function ChatPanel({ match, onBack, isLiked, onLike, isApplied, onApply }: ChatPanelProps) {
+export function ChatPanel({
+  match,
+  houses,
+  onBack,
+  isLiked,
+  onLike,
+  isApplied,
+  onApply,
+}: ChatPanelProps) {
   if (!match) {
     return (
       <div className="flex h-full flex-col items-center justify-center px-6 text-center">
@@ -62,7 +71,7 @@ export function ChatPanel({ match, onBack, isLiked, onLike, isApplied, onApply }
       <div
         className={cn(
           "flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-4 pt-8 pb-28 md:px-6 md:pb-8",
-          match.sharedHouses.length === 0 && "justify-center"
+          houses.length === 0 && "justify-center"
         )}
       >
         <div className="flex flex-col items-center text-center">
@@ -75,7 +84,7 @@ export function ChatPanel({ match, onBack, isLiked, onLike, isApplied, onApply }
           </p>
         </div>
 
-        {match.sharedHouses.map((shared) => (
+        {houses.map((shared) => (
           <SharedHouseCard
             key={shared.house.id}
             shared={shared}

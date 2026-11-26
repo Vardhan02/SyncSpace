@@ -11,6 +11,7 @@ export function MatchesPage() {
     matches,
     isLoading,
     isError,
+    sharedHouses,
     unreadCount,
     selected,
     search,
@@ -99,6 +100,7 @@ export function MatchesPage() {
         <div className={cn("min-w-0 flex-1 md:block", !selected && "hidden")}>
           <ChatPanel
             match={selected}
+            houses={sharedHouses}
             onBack={closeChat}
             isLiked={isLiked}
             onLike={toggleLike}

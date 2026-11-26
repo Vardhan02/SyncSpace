@@ -169,7 +169,8 @@ export type MatchPerson = Pick<Roommate, "id" | "name" | "photo"> &
   Partial<Pick<Roommate, "course" | "university">>
 
 export type SharedHouse = {
-  house: House
+  house: Pick<House, "id" | "title" | "area" | "rent"> &
+    Partial<Pick<House, "roomType" | "verified">>
   fromMe: boolean
   sentAt: string
 }
@@ -179,5 +180,4 @@ export type Match = {
   roommate: MatchPerson
   matchedAt: string
   unread: boolean
-  sharedHouses: SharedHouse[]
 }

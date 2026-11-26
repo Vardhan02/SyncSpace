@@ -2,7 +2,7 @@ import { api, hasBackend } from "@/lib/api"
 import matches from "@/mocks/matches.json"
 import { getHouse } from "@/services/houseService"
 import { getRoommate } from "@/services/roommateService"
-import type { Match } from "@/types"
+import type { Match, SharedHouse } from "@/types"
 
 type ApiMatch = {
   matchId: number
@@ -12,24 +12,28 @@ type ApiMatch = {
   matchedAt: string
 }
 
-const newestFirst = (a: Match, b: Match) => b.matchedAt.localeCompare(a.matchedAt)
-
-function getMockMatches(): Match[] {
-  return matches
-    .flatMap(({ roommateId, sharedHouses, ...match }) => {
-      const roommate = getRoommate(roommateId)
-      if (!roommate) return []
-      const houses = sharedHouses.flatMap(({ houseId, ...shared }) => {
-        const house = getHouse(houseId)
-        return house ? [{ ...shared, house }] : []
-      })
-      return [{ ...match, roommate, sharedHouses: houses }]
-    })
-    .toSorted(newestFirst)
+type ApiSharedHouse = {
+  houseId: number
+  title: string
+  area: string
+  rent: number
+  sharedByMe: boolean
+  sharedAt: string
 }
 
+const newestFirst = (a: Match, b: Match) => b.matchedAt.localeCompare(a.matchedAt)
+
+const toApiHouseId = (houseId: string) => Number(houseId.replace("h-", ""))
+
 export async function getMatches(): Promise<Match[]> {
-  if (!hasBackend) return getMockMatches()
+  if (!hasBackend) {
+    return matches
+      .flatMap(({ id, roommateId, matchedAt, unread }) => {
+        const roommate = getRoommate(roommateId)
+        return roommate ? [{ id, roommate, matchedAt, unread }] : []
+      })
+      .toSorted(newestFirst)
+  }
 
   const { data } = await api.get<ApiMatch[]>("/api/matches")
   return data
@@ -38,7 +42,29 @@ export async function getMatches(): Promise<Match[]> {
       roommate: { id: m.id, name: m.name, photo: m.photoUrl },
       matchedAt: m.matchedAt,
       unread: false,
-      sharedHouses: [],
     }))
     .toSorted(newestFirst)
+}
+
+export async function getSharedHouses(matchId: string): Promise<SharedHouse[]> {
+  if (!hasBackend) {
+    const match = matches.find((m) => m.id === matchId)
+    return (match?.sharedHouses ?? []).flatMap(({ houseId, fromMe, sentAt }) => {
+      const house = getHouse(houseId)
+      return house ? [{ house, fromMe, sentAt }] : []
+    })
+  }
+
+  const { data } = await api.get<ApiSharedHouse[]>(`/api/matches/${matchId}/houses`)
+  return data.map((h) => ({
+    house: { id: `h-${h.houseId}`, title: h.title, area: h.area, rent: h.rent },
+    fromMe: h.sharedByMe,
+    sentAt: h.sharedAt,
+  }))
+}
+
+export async function shareHouse(matchId: string, houseId: string) {
+  if (!hasBackend) return
+
+  await api.post(`/api/matches/${matchId}/houses`, { houseId: toApiHouseId(houseId) })
 }
