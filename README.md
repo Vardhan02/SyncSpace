@@ -142,31 +142,3 @@ lms unload --all && lms server stop        # shut down
 | Jobs fail with `VLM_UNAVAILABLE` | Server off (`lms server start`), or the identifier ≠ `LM_STUDIO_MODEL` (`lms ps`) |
 | Image calls fail | `mmproj-model-f16.gguf` must sit next to the main GGUF |
 | Port in use | `lsof -nP -iTCP:8000 -sTCP:LISTEN`, or change `API_PORT` |
-
-## 4. Using the app
-
-```bash
-# send a listing (starts both jobs); request.json is a body like the one in section 1
-curl -X POST localhost:8000/listings/verify -H 'Content-Type: application/json' -d @request.json
-# -> 202 {"house_id": 101,
-#         "jobs": {"amenities_verify": {"job_id": "3f2a…", "status": "PENDING"},
-#                  "desc_audit": {"job_id": "9c1b…", "status": "PENDING"}},
-#         "status_code": 202, "meaning": "Accepted: the job is queued. Poll for progress.",
-#         "poll": "/listings/101/verification"}
-
-# poll the overall result until status is COMPLETED or FAILED
-curl localhost:8000/listings/101/verification
-# -> {"house_id": 101, "status": "COMPLETED", "status_code": 200, "meaning": "OK: …",
-#     "verification_status": "approved", "log": {"amenities_verify": {…}, "desc_audit": {…}}}
-
-# or one job at a time
-curl localhost:8000/jobs/<job_id>
-
-curl localhost:8000/health
-```
-
-Notes
-- Photos and the description are checked when the jobs run, not at submit: a bad photo set gives `202`, then the jobs fail with `422`.
-- A 3B model is slow; poll every few seconds.
-- If the server stops mid-job, that job stays `RUNNING` in its log. Submit it again.
-- `logs/` and `data/` are git-ignored.
