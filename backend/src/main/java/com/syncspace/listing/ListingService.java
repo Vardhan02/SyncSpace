@@ -1,7 +1,9 @@
 package com.syncspace.listing;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -57,10 +59,14 @@ public class ListingService {
 		return h.getId();
 	}
 
+	// true when the description or amenities changed, those are what the VLM checks the photos against
 	@Transactional
-	public void update(UUID me, long houseId, ListingRequest req) {
+	public boolean update(UUID me, long houseId, ListingRequest req) {
 		Set<String> amenities = check(req);
 		House h = owned(me, houseId);
+		String oldDescription = h.getDescription();
+		Set<String> oldAmenities = new HashSet<>();
+		houses.amenities(houseId).forEach(a -> oldAmenities.add(a.getName()));
 		apply(h, req);
 
 		// landlords can only set draft or active
@@ -81,6 +87,7 @@ public class ListingService {
 
 		houses.removeAmenitiesExcept(houseId, amenities);
 		houses.addAmenities(houseId, amenities);
+		return !Objects.equals(oldDescription, h.getDescription()) || !oldAmenities.equals(amenities);
 	}
 
 	// returns the photo paths to delete
