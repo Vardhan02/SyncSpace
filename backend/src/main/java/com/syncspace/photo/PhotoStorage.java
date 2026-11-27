@@ -27,6 +27,10 @@ public class PhotoStorage {
 		s3.deleteObject(b -> b.bucket(bucket).key(path));
 	}
 
+	public byte[] read(String bucket, String path) {
+		return s3.getObjectAsBytes(b -> b.bucket(bucket).key(path)).asByteArray();
+	}
+
 	// the DB only keeps the path, responses need the full url
 	public String url(String bucket, String path) {
 		return path == null ? null : publicUrl + "/" + bucket + "/" + path;

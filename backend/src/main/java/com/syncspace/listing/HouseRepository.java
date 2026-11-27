@@ -26,6 +26,10 @@ public interface HouseRepository extends JpaRepository<House, Long> {
 
 		Boolean getVerified();
 
+		String getVerificationStatus();
+
+		String getVerificationNote();
+
 		String getCoverPath();
 
 		Long getLikeCount();
@@ -50,6 +54,7 @@ public interface HouseRepository extends JpaRepository<House, Long> {
 	@Query(value = """
 			select h.house_id as "houseId", h.title as "title", h.address as "address", h.area as "area",
 			       h.rent as "rent", h.status::text as "status", h.verified as "verified",
+			       h.verification_status::text as "verificationStatus", h.verification_note as "verificationNote",
 			       (select ph.url from house_photos ph where ph.house_id = h.house_id
 			        order by ph.position limit 1) as "coverPath",
 			       (select count(*) from house_likes l where l.house_id = h.house_id) as "likeCount"

@@ -171,13 +171,16 @@ SELECT house_id, pg_temp.uid(ll), title, area, address, rent, rt::public.room_ty
 FROM (VALUES
     (101, 301, 'Bright 3-bed near UCC',                'College Road',   '14 College Road, Cork',       750, 'double',   '2027-01-04', 2, TRUE),
     (102, 301, 'Modern apartment by the river',        'Victoria Cross', '3 Carrigrohane Road, Cork',   820, 'ensuite',  '2026-12-15', 1, TRUE),
-    (103, 301, 'Quiet house with garden',              'Bishopstown',    '27 Bishopstown Avenue, Cork', 650, 'single',   '2027-01-11', 3, FALSE),
+    (103, 301, 'Quiet house with garden',              'Bishopstown',    '27 Bishopstown Avenue, Cork', 650, 'single',   '2027-01-11', 3, TRUE),
     (104, 302, 'City centre room above café',          'Shandon',        '8 John Redmond Street, Cork', 700, 'double',   '2026-12-01', 1, TRUE),
     (105, 302, 'Spacious duplex near Douglas village', 'Douglas',        '41 Maryborough Hill, Cork',   690, 'double',   '2027-02-01', 2, TRUE),
-    (106, 302, 'Cosy terrace by the Lough',            'The Lough',      '5 Lough Road, Cork',          620, 'single',   '2027-01-18', 1, FALSE),
+    (106, 302, 'Cosy terrace by the Lough',            'The Lough',      '5 Lough Road, Cork',          620, 'single',   '2027-01-18', 1, TRUE),
     (107, 303, 'Seaside flat in Blackrock',            'Blackrock',      '12 Blackrock Road, Cork',     780, 'ensuite',  '2027-03-01', 2, TRUE),
-    (108, 303, 'Student house in Wilton',              'Wilton',         '9 Wilton Gardens, Cork',      600, 'single',   '2027-01-04', 4, FALSE)
+    (108, 303, 'Student house in Wilton',              'Wilton',         '9 Wilton Gardens, Cork',      600, 'single',   '2027-01-04', 4, TRUE)
 ) AS v(house_id, ll, title, area, address, rent, rt, af, rooms, verified);
+
+-- the demo houses count as already checked by the VLM
+UPDATE public.houses SET verification_status = 'verified' WHERE verified;
 
 INSERT INTO public.house_preferences
     (house_id, pets_allowed, smoking_allowed, guest_policy, quiet_hours_start, quiet_hours_end,
