@@ -73,19 +73,6 @@ logs/                       JSON run logs (git-ignored)
 data/                       git-ignored
 ```
 
-**Flow of one request**
-
-1. `POST /listings/verify` → for each agent `JobTracker` creates a `job_id`, `JobLogger` writes it as `PENDING`, and the job goes to FastAPI background tasks → `202` with both ids.
-2. `VlmConfig.run(job, request)` takes a lock, so jobs run one at a time (amenities first), and marks the job `RUNNING`.
-3. LangGraph runs the steps. Each step's start and end time goes to the log, which is what polling reads:
-   ```
-   START → check_vlm → load_listing ─┬─ amenities_verify ───────────────────────→ END
-                                     └─ desc_extract ─(any claims?)─ desc_verify → END
-   ```
-   - `load_listing` takes the photos from the request in `position` order: at most 8 used; each base64-decoded, resized to ≤1024 px and JPEG-encoded.
-   - Each agent asks `PromptStitcher` for messages: the YAML `system` prompt plus the agent prompt with its `{placeholders}` filled; images are labelled `Photo <photo_id>:`.
-   - `VlmCaller` sends the call with the Pydantic schema and validates the reply. Both agents send one photo per call and combine the answers in code.
-4. The result or error is stored in the log, and the job becomes `COMPLETED` or `FAILED`. The two jobs don't depend on each other: a bad description fails only desc_audit.
 
 Order matters. `check_vlm` fails fast before any photo work. `load_listing` must succeed before an agent runs. `desc_verify` only runs if extraction found claims.
 
@@ -114,7 +101,6 @@ Order matters. `check_vlm` fails fast before any photo work. `load_listing` must
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env                       # defaults work as-is
 ```
 
 LM Studio (CLI `lms`, ships with LM Studio):
@@ -134,7 +120,6 @@ Useful checks:
 ```bash
 lms ps                                     # model loaded, with its identifier
 curl localhost:1234/v1/models              # identifier must equal LM_STUDIO_MODEL in .env
-lms unload --all && lms server stop        # shut down
 ```
 
 | Problem | Fix |
