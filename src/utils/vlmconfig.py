@@ -15,6 +15,7 @@ from PIL import Image, ImageOps
 from pydantic import BaseModel, ValidationError
 
 from src.agent.amenities_verify import AmenitiesVerifyAgent
+from src.agent.desc_audit import DescAuditAgent
 from src.models.errors import InvalidListingError, PipelineError, VlmOutputError, VlmUnavailableError
 from src.models.schemas import AgentName, Job, Listing, PhotoIn, PreparedImage, SkippedPhoto, VerifyRequest
 from src.utils.job_tracker import JobTracker
@@ -28,6 +29,7 @@ class VlmState(TypedDict, total=False):
     job: Job
     request: VerifyRequest
     listing: Listing
+    claims: list[str]
     result: dict
 
 
@@ -191,11 +193,17 @@ class TrackedStep:
 
 
 class VlmConfig:
-    def __init__(self, client: VlmClient, loader: ListingLoader, amenities_agent: Any,
+    """
+    START -> check_vlm -> load_listing -> amenities_verify -> END
+                                      \\-> desc_extract -> (any claims?) desc_verify -> END
+    """
+
+    def __init__(self, client: VlmClient, loader: ListingLoader, amenities_agent: Any, desc_agent: Any,
                  tracker: JobTracker, logger: JobLogger) -> None:
         self._client = client
         self._loader = loader
         self._amenities = amenities_agent
+        self._desc = desc_agent
         self._tracker = tracker
         self._logger = logger
         # jobs run one at a time
@@ -207,8 +215,10 @@ class VlmConfig:
         openai_client = OpenAI(base_url=settings.lm_studio_base_url, api_key="lm-studio", max_retries=0)
         client = VlmClient(openai_client, settings)
         caller = VlmCaller(client, settings)
-        amenities = AmenitiesVerifyAgent(PromptStitcher(prompts_dir), caller)
-        return cls(client, ListingLoader(settings), amenities, tracker, logger)
+        stitcher = PromptStitcher(prompts_dir)
+        amenities = AmenitiesVerifyAgent(stitcher, caller)
+        desc = DescAuditAgent(stitcher, caller, settings)
+        return cls(client, ListingLoader(settings), amenities, desc, tracker, logger)
 
     @property
     def client(self) -> VlmClient:
@@ -224,11 +234,7 @@ class VlmConfig:
     def _invoke(self, job: Job, req: VerifyRequest) -> None:
         try:
             final = self._graph.invoke({"job": job, "request": req})
-            # TODO: desc_audit jobs just report the loaded photos until that agent is in
-            listing = final["listing"]
-            result = final.get("result") or {"photos_used": [i.photo_id for i in listing.images],
-                                             "photos_skipped": [s.model_dump() for s in listing.skipped]}
-            self._tracker.complete(job, result)
+            self._tracker.complete(job, final["result"])
         except PipelineError as err:
             self._tracker.fail(job, err.code, str(err), err.status_code)
         except Exception:
@@ -241,13 +247,17 @@ class VlmConfig:
             "check_vlm": self._check_vlm,
             "load_listing": self._load_listing,
             "amenities_verify": self._amenities.run,
+            "desc_extract": self._desc.extract,
+            "desc_verify": self._desc.verify,
         }
         for name, node in nodes.items():
             graph.add_node(name, TrackedStep(name, node, self._tracker, self._logger))
         graph.add_edge(START, "check_vlm")
         graph.add_edge("check_vlm", "load_listing")
-        graph.add_conditional_edges("load_listing", self._pick_agent, ["amenities_verify", END])
+        graph.add_conditional_edges("load_listing", self._pick_agent, ["amenities_verify", "desc_extract"])
         graph.add_edge("amenities_verify", END)
+        graph.add_conditional_edges("desc_extract", self._has_claims, ["desc_verify", END])
+        graph.add_edge("desc_verify", END)
         return graph.compile()
 
     def _check_vlm(self, state: VlmState) -> dict:
@@ -261,4 +271,7 @@ class VlmConfig:
         return {"listing": self._loader.load(state["request"])}
 
     def _pick_agent(self, state: VlmState) -> str:
-        return "amenities_verify" if state["job"].agent == AgentName.AMENITIES_VERIFY else END
+        return "amenities_verify" if state["job"].agent == AgentName.AMENITIES_VERIFY else "desc_extract"
+
+    def _has_claims(self, state: VlmState) -> str:
+        return "desc_verify" if state.get("claims") else END

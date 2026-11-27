@@ -34,7 +34,7 @@ class AmenityDetection(BaseModel):
 
 
 class PhotoDetections(BaseModel):
-    # describe the photo first, then a yes/no per amenity
+    # same idea as PhotoClaimChecks: describe the photo first, then a yes/no per amenity
     model_config = ConfigDict(extra="forbid")
 
     photo_shows: str
@@ -65,6 +65,62 @@ class AmenitiesResult(BaseModel):
     photos_skipped: list[SkippedPhoto]
     amenities: list[AmenityCheck]
     summary: AmenitiesSummary
+
+
+class ClaimStatus(str, Enum):
+    VERIFIED = "VERIFIED"
+    NOT_OBSERVABLE = "NOT_OBSERVABLE"
+    CONTRADICTED = "CONTRADICTED"
+
+
+class ExtractedClaims(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    claims: list[str]
+
+
+class PhotoClaimCheck(BaseModel):
+    # claim gets narrowed to the real claims at call time; writing it out first keeps the model from
+    # losing track of which one it's on. two yes/no answers instead of one 3-way status, the small
+    # model kept saying "contradicted" for photos of a different room
+    model_config = ConfigDict(extra="forbid")
+
+    claim: str
+    reasoning: str
+    shows_subject: bool
+    matches_claim: bool
+
+
+class PhotoClaimChecks(BaseModel):
+    # vlm reply for one photo against all claims. photo_shows comes first so the model describes
+    # the photo before it looks at the claims (asked one claim at a time it just agreed with them)
+    model_config = ConfigDict(extra="forbid")
+
+    photo_shows: str
+    checks: list[PhotoClaimCheck]
+
+
+class AuditedClaim(BaseModel):
+    claim: str
+    status: ClaimStatus
+    evidence_photos: list[int] = Field(default_factory=list)
+    reasoning: str = ""
+
+
+class AuditSummary(BaseModel):
+    total_claims: int
+    verified: int
+    not_observable: int
+    contradicted: int
+    has_discrepancies: bool
+
+
+class DescAuditResult(BaseModel):
+    house_id: int
+    photos_used: list[int]
+    photos_skipped: list[SkippedPhoto]
+    claims: list[AuditedClaim]
+    summary: AuditSummary
 
 
 class PreparedImage(BaseModel):
