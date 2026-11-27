@@ -20,10 +20,12 @@ import org.springframework.transaction.support.TransactionTemplate;
 import com.syncspace.photo.PhotoStorage;
 import com.syncspace.verification.VerificationRepository.Listing;
 import com.syncspace.verification.VerificationRepository.Photo;
+import com.syncspace.verification.VerificationRepository.Waiting;
+import com.syncspace.verification.VlmClient.Verification;
 
 import jakarta.annotation.PreDestroy;
 
-// runs the VLM check in the background, the landlord sees "pending" until it's done
+// sends a listing to the VLM service in the background and polls for the verdict, the landlord sees "pending" until then
 @Service
 public class VerificationService {
 
@@ -33,18 +35,17 @@ public class VerificationService {
 	private final VerificationRepository rows;
 	private final PhotoStorage photos;
 	private final TransactionTemplate tx;
-	private final Duration retryAfter;
+	private final Duration giveUpAfter;
 	// own pool, not a bean: a TaskExecutor bean would take over every @Async in the app
 	private final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 
 	public VerificationService(VlmClient vlm, VerificationRepository rows, PhotoStorage photos, TransactionTemplate tx,
-			@Value("${vlm.timeout:10m}") Duration timeout) {
+			@Value("${vlm.timeout:30m}") Duration timeout) {
 		this.vlm = vlm;
 		this.rows = rows;
 		this.photos = photos;
 		this.tx = tx;
-		// a check is only "stuck" once it's had the full timeout plus a bit
-		this.retryAfter = timeout.plusMinutes(5);
+		this.giveUpAfter = timeout;
 
 		executor.setCorePoolSize(2);
 		executor.setMaxPoolSize(2);
@@ -63,36 +64,100 @@ public class VerificationService {
 		if (rows.photos(houseId).isEmpty()) {
 			return;
 		}
-		// postgres keeps microseconds, so trim here or the saveResult match never hits
+		// postgres keeps microseconds, so trim here or the matches on requested_at never hit
 		Instant at = Instant.now().truncatedTo(ChronoUnit.MICROS);
 		Integer updated = tx.execute(s -> rows.markPending(houseId, at));
 		if (updated == null || updated == 0) {
 			return;
 		}
-		executor.execute(() -> run(houseId, at));
+		// downloading the photos and uploading them takes a few seconds, keep it off the request
+		executor.execute(() -> send(houseId, at));
 	}
 
-	private void run(long houseId, Instant at) {
+	private void send(long houseId, Instant at) {
 		Listing listing = rows.listing(houseId).orElse(null);
 		if (listing == null) {
 			return;
 		}
-		VlmClient.Result result;
 		try {
-			result = vlm.verify(body(houseId, listing));
+			List<String> jobs = vlm.submit(body(houseId, listing));
+			tx.execute(s -> rows.saveJobs(houseId, at, String.join(",", jobs)));
+		} catch (VlmClient.Refused e) {
+			save(houseId, at, false, e.getMessage());
 		} catch (RuntimeException e) {
-			// stays pending, retryStuck picks it up again later
-			log.warn("vlm check for house {} didn't finish: {}", houseId, e.getMessage());
+			// stays pending without job ids, resend() tries again later
+			log.warn("couldn't send house {} to the vlm service: {}", houseId, e.getMessage());
+		}
+	}
+
+	@Scheduled(initialDelayString = "${vlm.poll-every:15000}", fixedDelayString = "${vlm.poll-every:15000}")
+	public void poll() {
+		for (Waiting w : rows.sent()) {
+			try {
+				check(w);
+			} catch (RuntimeException e) {
+				log.warn("couldn't poll the vlm service for house {}: {}", w.getHouseId(), e.getMessage());
+			}
+		}
+	}
+
+	private void check(Waiting w) {
+		long houseId = w.getHouseId();
+		Verification v = vlm.poll(houseId);
+		if (v == null) {
+			tx.execute(s -> rows.clearJobs(houseId, w.getRequestedAt()));
+			return;
+		}
+		// the service only keeps the latest run, make sure it's the one we sent
+		List<String> ours = List.of(w.getJobIds().split(","));
+		if (v.log() == null || v.log().amenities() == null || v.log().audit() == null
+				|| !ours.contains(v.log().amenities().jobId()) || !ours.contains(v.log().audit().jobId())) {
 			return;
 		}
 
-		boolean passed = result != null && result.passed();
-		String note = result == null ? null : result.reason();
-		if (!passed && note == null) {
-			note = "the photos don't match the description or amenities";
+		if (v.status().equals("COMPLETED")) {
+			boolean passed = "approved".equals(v.verificationStatus());
+			tx.executeWithoutResult(s -> {
+				if (rows.saveResult(houseId, w.getRequestedAt(), passed, passed ? "verified" : "failed",
+						passed ? null : reason(v)) > 0 && v.log().amenities().result() != null) {
+					v.log().amenities().result().amenities()
+							.forEach(a -> rows.saveAmenity(houseId, a.name(), a.verified()));
+				}
+			});
+		} else if (v.status().equals("FAILED")) {
+			if (v.statusCode() == 422) {
+				// something about the listing itself, e.g. no usable photos or the description is too short
+				save(houseId, w.getRequestedAt(), false,
+						v.error() == null ? "the photos couldn't be checked" : v.error().message());
+			} else {
+				// the model was down or answered nonsense, that's not the landlord's fault: send it again later
+				log.warn("vlm service failed on house {}: {}", houseId, v.error() == null ? v.statusCode() : v.error().code());
+				tx.execute(s -> rows.clearJobs(houseId, w.getRequestedAt()));
+			}
 		}
-		String finalNote = note;
-		Integer saved = tx.execute(s -> rows.saveResult(houseId, at, passed, passed ? "verified" : "failed", finalNote));
+	}
+
+	// not_sufficient_data counts as failed too, the note says what was missing
+	private static String reason(Verification v) {
+		if ("rejected".equals(v.verificationStatus())) {
+			return "none of the amenities or the description could be seen in the photos";
+		}
+		List<String> parts = new ArrayList<>();
+		var amenities = v.log().amenities().result() == null ? null : v.log().amenities().result().summary();
+		if (amenities != null && amenities.selected() > 0) {
+			parts.add(amenities.verified() + " of " + amenities.selected() + " amenities");
+		}
+		var claims = v.log().audit().result() == null ? null : v.log().audit().result().summary();
+		if (claims != null && claims.totalClaims() > 0) {
+			parts.add(claims.verified() + " of " + claims.totalClaims() + " things in the description");
+		}
+		return parts.isEmpty()
+				? "not enough could be checked in the photos"
+				: "only " + String.join(" and ", parts) + " could be seen in the photos";
+	}
+
+	private void save(long houseId, Instant at, boolean passed, String note) {
+		Integer saved = tx.execute(s -> rows.saveResult(houseId, at, passed, passed ? "verified" : "failed", note));
 		if (saved == null || saved == 0) {
 			log.info("house {} changed while it was being checked, a newer check will save instead", houseId);
 		}
@@ -112,16 +177,18 @@ public class VerificationService {
 		Map<String, Object> body = new LinkedHashMap<>();
 		body.put("house_id", houseId);
 		body.put("landlord_id", listing.getLandlordId());
-		body.put("description", listing.getDescription());
+		// the service needs a string; an empty one fails its description check, which counts as failed
+		body.put("description", listing.getDescription() == null ? "" : listing.getDescription());
 		body.put("amenities", rows.amenities(houseId));
 		body.put("photos", list);
 		return body;
 	}
 
-	// after a restart, or while the VLM service was down
-	@Scheduled(initialDelayString = "${vlm.retry-delay:120000}", fixedDelayString = "${vlm.retry-every:300000}")
-	public void retryStuck() {
-		for (Long id : rows.stuckSince(Instant.now().minus(retryAfter))) {
+	// never sent (service was down when it was asked for), or sent but nothing came back in time
+	@Scheduled(initialDelayString = "${vlm.resend-delay:120000}", fixedDelayString = "${vlm.resend-every:300000}")
+	public void resend() {
+		Instant now = Instant.now();
+		for (Long id : rows.toResend(now.minus(Duration.ofMinutes(2)), now.minus(giveUpAfter))) {
 			request(id);
 		}
 	}
