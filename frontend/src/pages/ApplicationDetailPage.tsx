@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button"
 import {
   useDecideApplication,
   useLandlordApplication,
-  useLandlordContact,
 } from "@/hooks/useApplications"
+import { useMyContact } from "@/hooks/useMyContact"
 import { formatDate } from "@/lib/format"
 import { useAuthStore } from "@/stores/authStore"
 
@@ -19,8 +19,10 @@ export function ApplicationDetailPage() {
   const navigate = useNavigate()
   const item = useLandlordApplication(applicationId)
   const decide = useDecideApplication()
-  const landlordId = useAuthStore((state) => state.user?.id) ?? ""
-  const contact = useLandlordContact(landlordId)
+  const name = useAuthStore((state) => state.user?.name) ?? ""
+  // What the tenants will see once it's confirmed
+  const { data: me } = useMyContact()
+  const contact = me && { name, email: me.email, phone: me.phoneVisible ? me.phone : null }
   const [dialog, setDialog] = useState<"confirm" | "ignore" | null>(null)
 
   useEffect(() => {

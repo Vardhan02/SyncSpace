@@ -1,15 +1,13 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 
-import users from "@/mocks/users.json"
 import {
   decideApplication,
   fetchApplication,
   fetchApplications,
-  getApplicant,
-  getApplications,
+  getLandlordContacts,
+  getMyApplications,
 } from "@/services/applicationService"
-import { useApplicationStore } from "@/stores/applicationStore"
-import { useAuthStore } from "@/stores/authStore"
+import { toApiHouseId } from "@/services/houseService"
 import type { ApplicationDecision, ApplicationDetails } from "@/types"
 
 export type { ApplicationDetails }
@@ -35,27 +33,18 @@ export function useDecideApplication() {
   }
 }
 
-// Still mock data until /api/applications/mine and /api/landlord-contacts are connected.
-// The signed-in tenant's application for a house, if they're part of one.
+// The signed-in tenant's application for a house, if they made one with a match
 export function useMyApplication(houseId: string) {
-  const userId = useAuthStore((state) => state.user?.id) ?? ""
-  const decisions = useApplicationStore((state) => state.decisions)
-
-  const application = getApplications().find(
-    (item) => item.houseId === houseId && item.tenantIds.includes(userId)
-  )
-  if (!application) return null
-
-  const partnerId = application.tenantIds.find((id) => id !== userId) ?? ""
-  return { application, partner: getApplicant(partnerId), decision: decisions[application.id] }
+  const { data = [] } = useQuery({ queryKey: ["applications", "mine"], queryFn: getMyApplications })
+  return data.find((application) => application.houseId === toApiHouseId(houseId)) ?? null
 }
 
-// What a tenant sees once the landlord confirms. The phone is left out unless the
-// landlord chose to share it.
-export function useLandlordContact(landlordId: string) {
-  const landlord = users.find((user) => user.id === landlordId)
-  if (!landlord) return null
-
-  // The mock landlords all share their phone
-  return { name: landlord.name, email: landlord.email, phone: landlord.phone }
+// The landlord's details for a confirmed application. The phone is null unless they share it.
+export function useLandlordContact(houseId: string, confirmed: boolean) {
+  const { data = [] } = useQuery({
+    queryKey: ["landlord-contacts"],
+    queryFn: getLandlordContacts,
+    enabled: confirmed,
+  })
+  return data.find((contact) => contact.houseId === toApiHouseId(houseId)) ?? null
 }
