@@ -1,0 +1,22 @@
+services:
+  vlm-api:
+    build: .
+    image: syncspace-vlm
+    container_name: syncspace-vlm
+    ports:
+      - "8000:8000"
+    env_file: .env
+    environment:
+      # LM Studio runs on the Mac (it needs the GPU); reach it from inside the container
+      LM_STUDIO_BASE_URL: "http://host.docker.internal:1234/v1"
+      API_HOST: "0.0.0.0"
+      API_PORT: "8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      # reuse the downloaded gguf files so the container doesn't fetch 3 GB again
+      - ./VLMmodels:/app/VLMmodels
+      # job state + results, kept across restarts
+      - ./logs:/app/logs
+      - ./data:/app/data
+    restart: unless-stopped

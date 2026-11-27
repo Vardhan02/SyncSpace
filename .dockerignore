@@ -1,0 +1,22 @@
+.venv/
+venv/
+env/
+.env
+.git/
+.gitignore
+.vscode/
+.claude/
+.DS_Store
+__pycache__/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+
+# mounted at runtime instead of baked in (VLMmodels is ~3 GB)
+VLMmodels/
+logs/
+data/
+
+vlm-sample/
+DOCUMENTS/
+README.md
