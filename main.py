@@ -41,7 +41,8 @@ class SyncSpaceApp:
         settings = Settings.from_env()
         tracker = JobTracker()
         logger = JobLogger(Path(settings.logs_dir))
-        config = VlmConfig.create(settings, tracker, logger)
+        prompts = Path(__file__).parent / "src" / "prompts"
+        config = VlmConfig.create(settings, tracker, logger, prompts)
         loader = ModelLoader(settings, config.client, hf_hub_download)
         return cls(settings, config, tracker, logger, loader)
 

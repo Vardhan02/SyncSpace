@@ -14,8 +14,9 @@ from openai import OpenAI
 from PIL import Image, ImageOps
 from pydantic import BaseModel, ValidationError
 
+from src.agent.amenities_verify import AmenitiesVerifyAgent
 from src.models.errors import InvalidListingError, PipelineError, VlmOutputError, VlmUnavailableError
-from src.models.schemas import Job, Listing, PhotoIn, PreparedImage, SkippedPhoto, VerifyRequest
+from src.models.schemas import AgentName, Job, Listing, PhotoIn, PreparedImage, SkippedPhoto, VerifyRequest
 from src.utils.job_tracker import JobTracker
 from src.utils.logger import JobLogger
 from src.utils.settings import Settings
@@ -190,9 +191,11 @@ class TrackedStep:
 
 
 class VlmConfig:
-    def __init__(self, client: VlmClient, loader: ListingLoader, tracker: JobTracker, logger: JobLogger) -> None:
+    def __init__(self, client: VlmClient, loader: ListingLoader, amenities_agent: Any,
+                 tracker: JobTracker, logger: JobLogger) -> None:
         self._client = client
         self._loader = loader
+        self._amenities = amenities_agent
         self._tracker = tracker
         self._logger = logger
         # jobs run one at a time
@@ -200,10 +203,12 @@ class VlmConfig:
         self._graph = self._build_graph()
 
     @classmethod
-    def create(cls, settings: Settings, tracker: JobTracker, logger: JobLogger) -> "VlmConfig":
+    def create(cls, settings: Settings, tracker: JobTracker, logger: JobLogger, prompts_dir: Path) -> "VlmConfig":
         openai_client = OpenAI(base_url=settings.lm_studio_base_url, api_key="lm-studio", max_retries=0)
         client = VlmClient(openai_client, settings)
-        return cls(client, ListingLoader(settings), tracker, logger)
+        caller = VlmCaller(client, settings)
+        amenities = AmenitiesVerifyAgent(PromptStitcher(prompts_dir), caller)
+        return cls(client, ListingLoader(settings), amenities, tracker, logger)
 
     @property
     def client(self) -> VlmClient:
@@ -219,10 +224,11 @@ class VlmConfig:
     def _invoke(self, job: Job, req: VerifyRequest) -> None:
         try:
             final = self._graph.invoke({"job": job, "request": req})
-            # TODO: agents go here, for now just report which photos loaded
+            # TODO: desc_audit jobs just report the loaded photos until that agent is in
             listing = final["listing"]
-            self._tracker.complete(job, {"photos_used": [i.photo_id for i in listing.images],
-                                         "photos_skipped": [s.model_dump() for s in listing.skipped]})
+            result = final.get("result") or {"photos_used": [i.photo_id for i in listing.images],
+                                             "photos_skipped": [s.model_dump() for s in listing.skipped]}
+            self._tracker.complete(job, result)
         except PipelineError as err:
             self._tracker.fail(job, err.code, str(err), err.status_code)
         except Exception:
@@ -231,11 +237,17 @@ class VlmConfig:
 
     def _build_graph(self) -> Any:
         graph = StateGraph(VlmState)
-        for name, node in {"check_vlm": self._check_vlm, "load_listing": self._load_listing}.items():
+        nodes = {
+            "check_vlm": self._check_vlm,
+            "load_listing": self._load_listing,
+            "amenities_verify": self._amenities.run,
+        }
+        for name, node in nodes.items():
             graph.add_node(name, TrackedStep(name, node, self._tracker, self._logger))
         graph.add_edge(START, "check_vlm")
         graph.add_edge("check_vlm", "load_listing")
-        graph.add_edge("load_listing", END)
+        graph.add_conditional_edges("load_listing", self._pick_agent, ["amenities_verify", END])
+        graph.add_edge("amenities_verify", END)
         return graph.compile()
 
     def _check_vlm(self, state: VlmState) -> dict:
@@ -247,3 +259,6 @@ class VlmConfig:
 
     def _load_listing(self, state: VlmState) -> dict:
         return {"listing": self._loader.load(state["request"])}
+
+    def _pick_agent(self, state: VlmState) -> str:
+        return "amenities_verify" if state["job"].agent == AgentName.AMENITIES_VERIFY else END

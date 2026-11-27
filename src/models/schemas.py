@@ -1,6 +1,6 @@
 from enum import Enum
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class PhotoIn(BaseModel):
@@ -22,6 +22,49 @@ class VerifyRequest(BaseModel):
 class SkippedPhoto(BaseModel):
     photo_id: int
     reason: str
+
+
+class AmenityDetection(BaseModel):
+    # amenity gets narrowed to the selected names at call time
+    model_config = ConfigDict(extra="forbid")
+
+    amenity: str
+    evidence: str
+    visible: bool
+
+
+class PhotoDetections(BaseModel):
+    # describe the photo first, then a yes/no per amenity
+    model_config = ConfigDict(extra="forbid")
+
+    photo_shows: str
+    detections: list[AmenityDetection]
+
+
+class Evidence(BaseModel):
+    photo_id: int
+    note: str
+
+
+class AmenityCheck(BaseModel):
+    # evidence only set when verified
+    name: str
+    verified: bool
+    evidence: list[Evidence] | None = None
+
+
+class AmenitiesSummary(BaseModel):
+    selected: int
+    verified: int
+    not_verified: int
+
+
+class AmenitiesResult(BaseModel):
+    house_id: int
+    photos_used: list[int]
+    photos_skipped: list[SkippedPhoto]
+    amenities: list[AmenityCheck]
+    summary: AmenitiesSummary
 
 
 class PreparedImage(BaseModel):
