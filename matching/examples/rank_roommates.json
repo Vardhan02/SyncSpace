@@ -1,0 +1,538 @@
+{
+  "tenant": {
+    "tenant_id": "tenant-36",
+    "age": 29,
+    "university": "MTU",
+    "course": "Sports Science",
+    "bio": "Quiet, organised and usually in the library.",
+    "budget_min": 580,
+    "budget_max": 820,
+    "preferred_areas": [
+      "Douglas",
+      "College Road"
+    ],
+    "room_type": "single",
+    "move_in_date": "2027-03-01",
+    "lease_months": 12,
+    "max_housemates": 5,
+    "sleep_schedule": "early_bird",
+    "noise_tolerance": 1,
+    "cleanliness": "relaxed",
+    "work_schedule": "from_home",
+    "social_level": "homebody",
+    "guest_frequency": "rarely",
+    "smoker": false,
+    "ok_with_smoking": true,
+    "has_pets": false,
+    "ok_with_pets": false,
+    "interests": [
+      "Board games",
+      "Reading",
+      "Music"
+    ],
+    "prompt_answers": [
+      {
+        "prompt_id": 9,
+        "answer": "Talk it through calmly over a cup of tea.",
+        "slot": 1
+      },
+      {
+        "prompt_id": 10,
+        "answer": "Budgeting for the whole house.",
+        "slot": 2
+      },
+      {
+        "prompt_id": 3,
+        "answer": "Porridge and meal prep for exam season.",
+        "slot": 3
+      }
+    ]
+  },
+  "candidates": [
+    {
+      "tenant_id": "tenant-1",
+      "age": 27,
+      "university": "UCC",
+      "course": "Computer Science",
+      "bio": "Night owl and creative, I do most of my work late.",
+      "budget_min": 380,
+      "budget_max": 720,
+      "preferred_areas": [
+        "College Road",
+        "Douglas"
+      ],
+      "room_type": "single",
+      "move_in_date": "2027-02-24",
+      "lease_months": 3,
+      "max_housemates": 5,
+      "sleep_schedule": "night_owl",
+      "noise_tolerance": 4,
+      "cleanliness": "tidy",
+      "work_schedule": "from_home",
+      "social_level": "balanced",
+      "guest_frequency": "weekends",
+      "smoker": false,
+      "ok_with_smoking": true,
+      "has_pets": false,
+      "ok_with_pets": true,
+      "interests": [
+        "Coffee",
+        "Music",
+        "Gym"
+      ],
+      "prompt_answers": [
+        {
+          "prompt_id": 9,
+          "answer": "Give it a day and come back to it.",
+          "slot": 1
+        },
+        {
+          "prompt_id": 7,
+          "answer": "Game design, and I work night shifts at a hotel.",
+          "slot": 2
+        },
+        {
+          "prompt_id": 6,
+          "answer": "Send me a good album or a weird film.",
+          "slot": 3
+        }
+      ]
+    },
+    {
+      "tenant_id": "tenant-3",
+      "age": 24,
+      "university": null,
+      "course": null,
+      "bio": "Quiet, organised and usually in the library.",
+      "budget_min": 460,
+      "budget_max": 570,
+      "preferred_areas": [
+        "Blackrock",
+        "Wilton"
+      ],
+      "room_type": "single",
+      "move_in_date": "2026-12-15",
+      "lease_months": 9,
+      "max_housemates": 1,
+      "sleep_schedule": "early_bird",
+      "noise_tolerance": 1,
+      "cleanliness": "very_tidy",
+      "work_schedule": "mixed",
+      "social_level": "homebody",
+      "guest_frequency": "rarely",
+      "smoker": false,
+      "ok_with_smoking": true,
+      "has_pets": false,
+      "ok_with_pets": true,
+      "interests": [
+        "Reading",
+        "Coffee",
+        "Board games",
+        "Movies"
+      ],
+      "prompt_answers": [
+        {
+          "prompt_id": 1,
+          "answer": "Tea, a good book and in bed by eleven.",
+          "slot": 1
+        },
+        {
+          "prompt_id": 8,
+          "answer": "A warm house on a rainy Cork evening.",
+          "slot": 2
+        },
+        {
+          "prompt_id": 3,
+          "answer": "Porridge and meal prep for exam season.",
+          "slot": 3
+        }
+      ]
+    },
+    {
+      "tenant_id": "tenant-4",
+      "age": 26,
+      "university": "MTU",
+      "course": "Business",
+      "bio": "Love having people over and always up for a night out.",
+      "budget_min": 570,
+      "budget_max": 910,
+      "preferred_areas": [
+        "Blackrock",
+        "The Lough"
+      ],
+      "room_type": "ensuite",
+      "move_in_date": "2027-02-05",
+      "lease_months": 9,
+      "max_housemates": 2,
+      "sleep_schedule": "night_owl",
+      "noise_tolerance": 4,
+      "cleanliness": "tidy",
+      "work_schedule": "mixed",
+      "social_level": "social",
+      "guest_frequency": "weekends",
+      "smoker": false,
+      "ok_with_smoking": false,
+      "has_pets": false,
+      "ok_with_pets": false,
+      "interests": [
+        "Sports",
+        "Movies",
+        "Music"
+      ],
+      "prompt_answers": [
+        {
+          "prompt_id": 2,
+          "answer": "Clean up after the party the next morning.",
+          "slot": 1
+        },
+        {
+          "prompt_id": 8,
+          "answer": "A spontaneous trip to the pub with housemates.",
+          "slot": 2
+        },
+        {
+          "prompt_id": 9,
+          "answer": "Have it out and then hug it out.",
+          "slot": 3
+        }
+      ]
+    },
+    {
+      "tenant_id": "tenant-5",
+      "age": 19,
+      "university": "UCC",
+      "course": "Nursing",
+      "bio": "Easygoing student, social sometimes but I need my sleep.",
+      "budget_min": 860,
+      "budget_max": 1110,
+      "preferred_areas": [
+        "Wilton"
+      ],
+      "room_type": "ensuite",
+      "move_in_date": "2027-01-14",
+      "lease_months": 12,
+      "max_housemates": 1,
+      "sleep_schedule": "night_owl",
+      "noise_tolerance": 2,
+      "cleanliness": "relaxed",
+      "work_schedule": "mixed",
+      "social_level": "balanced",
+      "guest_frequency": "weekends",
+      "smoker": false,
+      "ok_with_smoking": true,
+      "has_pets": false,
+      "ok_with_pets": false,
+      "interests": [
+        "Music",
+        "Cooking",
+        "Movies"
+      ],
+      "prompt_answers": [
+        {
+          "prompt_id": 4,
+          "answer": "People who never chip in for shared stuff.",
+          "slot": 1
+        },
+        {
+          "prompt_id": 10,
+          "answer": "Remembering everyone's name.",
+          "slot": 2
+        },
+        {
+          "prompt_id": 8,
+          "answer": "A good chat in the kitchen.",
+          "slot": 3
+        }
+      ]
+    },
+    {
+      "tenant_id": "tenant-6",
+      "age": 20,
+      "university": "UCC",
+      "course": "Medicine",
+      "bio": "Love having people over and always up for a night out.",
+      "budget_min": 400,
+      "budget_max": 660,
+      "preferred_areas": [
+        "Victoria Cross",
+        "Wilton"
+      ],
+      "room_type": "single",
+      "move_in_date": "2027-03-22",
+      "lease_months": 5,
+      "max_housemates": 3,
+      "sleep_schedule": "early_bird",
+      "noise_tolerance": 4,
+      "cleanliness": "relaxed",
+      "work_schedule": "on_campus",
+      "social_level": "social",
+      "guest_frequency": "often",
+      "smoker": false,
+      "ok_with_smoking": true,
+      "has_pets": false,
+      "ok_with_pets": false,
+      "interests": [
+        "Sports",
+        "Movies",
+        "Music",
+        "Hiking"
+      ],
+      "prompt_answers": [
+        {
+          "prompt_id": 7,
+          "answer": "Arts and drama, and I run a student society.",
+          "slot": 1
+        },
+        {
+          "prompt_id": 8,
+          "answer": "A spontaneous trip to the pub with housemates.",
+          "slot": 2
+        },
+        {
+          "prompt_id": 10,
+          "answer": "Colour-coding my notes.",
+          "slot": 3
+        }
+      ]
+    },
+    {
+      "tenant_id": "tenant-7",
+      "age": 23,
+      "university": "MTU",
+      "course": "Computer Science",
+      "bio": "",
+      "budget_min": 770,
+      "budget_max": 880,
+      "preferred_areas": [
+        "Douglas",
+        "College Road"
+      ],
+      "room_type": "single",
+      "move_in_date": "2026-12-13",
+      "lease_months": 9,
+      "max_housemates": 5,
+      "sleep_schedule": "early_bird",
+      "noise_tolerance": 2,
+      "cleanliness": "tidy",
+      "work_schedule": "from_home",
+      "social_level": "balanced",
+      "guest_frequency": "weekends",
+      "smoker": false,
+      "ok_with_smoking": false,
+      "has_pets": false,
+      "ok_with_pets": true,
+      "interests": [
+        "Hiking",
+        "Sports"
+      ],
+      "prompt_answers": [
+        {
+          "prompt_id": 7,
+          "answer": "Sports science, with lots of training.",
+          "slot": 1
+        },
+        {
+          "prompt_id": 9,
+          "answer": "Sort it out straight away, no passive-aggressive notes.",
+          "slot": 2
+        },
+        {
+          "prompt_id": 3,
+          "answer": "High-protein meal prep after the gym.",
+          "slot": 3
+        }
+      ]
+    },
+    {
+      "tenant_id": "tenant-8",
+      "age": 30,
+      "university": "UCC",
+      "course": "Film and Screen Media",
+      "bio": "Night owl and creative, I do most of my work late.",
+      "budget_min": 860,
+      "budget_max": 1040,
+      "preferred_areas": [
+        "Wilton",
+        "Blackrock"
+      ],
+      "room_type": "double",
+      "move_in_date": "2026-12-13",
+      "lease_months": 9,
+      "max_housemates": 4,
+      "sleep_schedule": "night_owl",
+      "noise_tolerance": 3,
+      "cleanliness": "tidy",
+      "work_schedule": "from_home",
+      "social_level": "balanced",
+      "guest_frequency": "rarely",
+      "smoker": false,
+      "ok_with_smoking": true,
+      "has_pets": false,
+      "ok_with_pets": true,
+      "interests": [
+        "Movies"
+      ],
+      "prompt_answers": [
+        {
+          "prompt_id": 9,
+          "answer": "Meet in the middle and move on.",
+          "slot": 1
+        },
+        {
+          "prompt_id": 5,
+          "answer": "Playing guitar and writing songs.",
+          "slot": 2
+        },
+        {
+          "prompt_id": 4,
+          "answer": "Housemates who need everything silent at 9pm.",
+          "slot": 3
+        }
+      ]
+    },
+    {
+      "tenant_id": "tenant-0",
+      "age": 21,
+      "university": "UCC",
+      "course": "Sports Science",
+      "bio": "Love having people over and always up for a night out.",
+      "budget_min": 440,
+      "budget_max": 610,
+      "preferred_areas": [
+        "College Road"
+      ],
+      "room_type": "single",
+      "move_in_date": "2026-12-19",
+      "lease_months": 9,
+      "max_housemates": 5,
+      "sleep_schedule": "night_owl",
+      "noise_tolerance": 4,
+      "cleanliness": "tidy",
+      "work_schedule": "mixed",
+      "social_level": "balanced",
+      "guest_frequency": "weekends",
+      "smoker": false,
+      "ok_with_smoking": false,
+      "has_pets": true,
+      "ok_with_pets": true,
+      "interests": [
+        "Music",
+        "Movies"
+      ],
+      "prompt_answers": [
+        {
+          "prompt_id": 9,
+          "answer": "Sort it over a pint.",
+          "slot": 1
+        },
+        {
+          "prompt_id": 2,
+          "answer": "Clean up after the party the next morning.",
+          "slot": 2
+        },
+        {
+          "prompt_id": 6,
+          "answer": "Be up for a night out or a house party.",
+          "slot": 3
+        }
+      ]
+    },
+    {
+      "tenant_id": "tenant-2",
+      "age": 29,
+      "university": "UCC",
+      "course": "Data Science",
+      "bio": "Very social, big into societies, gigs and parties.",
+      "budget_min": 650,
+      "budget_max": 770,
+      "preferred_areas": [
+        "Wilton",
+        "Douglas"
+      ],
+      "room_type": "double",
+      "move_in_date": "2027-03-24",
+      "lease_months": 5,
+      "max_housemates": 4,
+      "sleep_schedule": "night_owl",
+      "noise_tolerance": 5,
+      "cleanliness": "relaxed",
+      "work_schedule": "night_shifts",
+      "social_level": "social",
+      "guest_frequency": "weekends",
+      "smoker": false,
+      "ok_with_smoking": true,
+      "has_pets": true,
+      "ok_with_pets": true,
+      "interests": [
+        "Movies"
+      ],
+      "prompt_answers": [
+        {
+          "prompt_id": 5,
+          "answer": "Out in the garden with friends and music.",
+          "slot": 1
+        },
+        {
+          "prompt_id": 8,
+          "answer": "A full kitchen table on a Sunday.",
+          "slot": 2
+        },
+        {
+          "prompt_id": 10,
+          "answer": "Getting a party going in five minutes.",
+          "slot": 3
+        }
+      ]
+    },
+    {
+      "tenant_id": "tenant-9",
+      "age": 18,
+      "university": null,
+      "course": null,
+      "bio": "",
+      "budget_min": 360,
+      "budget_max": 510,
+      "preferred_areas": [
+        "College Road",
+        "Victoria Cross"
+      ],
+      "room_type": "single",
+      "move_in_date": "2027-03-27",
+      "lease_months": 9,
+      "max_housemates": 3,
+      "sleep_schedule": "night_owl",
+      "noise_tolerance": 5,
+      "cleanliness": "relaxed",
+      "work_schedule": "on_campus",
+      "social_level": "balanced",
+      "guest_frequency": "often",
+      "smoker": false,
+      "ok_with_smoking": false,
+      "has_pets": false,
+      "ok_with_pets": true,
+      "interests": [
+        "Music",
+        "Gym"
+      ],
+      "prompt_answers": [
+        {
+          "prompt_id": 1,
+          "answer": "Gig in Cyprus Avenue then late-night chips.",
+          "slot": 1
+        },
+        {
+          "prompt_id": 7,
+          "answer": "Arts and drama, and I run a student society.",
+          "slot": 2
+        },
+        {
+          "prompt_id": 6,
+          "answer": "Be up for a night out or a house party.",
+          "slot": 3
+        }
+      ]
+    }
+  ],
+  "limit": 20,
+  "today": "2026-12-01"
+}

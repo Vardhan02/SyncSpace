@@ -1,0 +1,322 @@
+{
+  "tenant": {
+    "tenant_id": "tenant-36",
+    "age": 29,
+    "university": "MTU",
+    "course": "Sports Science",
+    "bio": "Quiet, organised and usually in the library.",
+    "budget_min": 580,
+    "budget_max": 820,
+    "preferred_areas": [
+      "Douglas",
+      "College Road"
+    ],
+    "room_type": "single",
+    "move_in_date": "2027-03-01",
+    "lease_months": 12,
+    "max_housemates": 5,
+    "sleep_schedule": "early_bird",
+    "noise_tolerance": 1,
+    "cleanliness": "relaxed",
+    "work_schedule": "from_home",
+    "social_level": "homebody",
+    "guest_frequency": "rarely",
+    "smoker": false,
+    "ok_with_smoking": true,
+    "has_pets": false,
+    "ok_with_pets": false,
+    "interests": [
+      "Board games",
+      "Reading",
+      "Music"
+    ],
+    "prompt_answers": [
+      {
+        "prompt_id": 9,
+        "answer": "Talk it through calmly over a cup of tea.",
+        "slot": 1
+      },
+      {
+        "prompt_id": 10,
+        "answer": "Budgeting for the whole house.",
+        "slot": 2
+      },
+      {
+        "prompt_id": 3,
+        "answer": "Porridge and meal prep for exam season.",
+        "slot": 3
+      }
+    ]
+  },
+  "houses": [
+    {
+      "house_id": "house-0",
+      "area": "Douglas",
+      "rent": 475,
+      "rooms_available": 1,
+      "room_type": "single",
+      "available_from": "2027-02-23",
+      "amenities": [
+        "WiFi",
+        "Bills included",
+        "Central heating",
+        "Kitchen access",
+        "Study desk"
+      ],
+      "pets_allowed": true,
+      "smoking_allowed": false,
+      "guest_policy": "no_overnight",
+      "quiet_hours_start": "22:00",
+      "min_lease_months": 9,
+      "max_occupants": 5,
+      "preferred_tenants": "any"
+    },
+    {
+      "house_id": "house-2",
+      "area": "Douglas",
+      "rent": 577,
+      "rooms_available": 1,
+      "room_type": "single",
+      "available_from": "2026-12-26",
+      "amenities": [
+        "WiFi",
+        "Bills included",
+        "Study desk",
+        "Garden",
+        "Balcony",
+        "Parking",
+        "Bike storage"
+      ],
+      "pets_allowed": false,
+      "smoking_allowed": false,
+      "guest_policy": "no_overnight",
+      "quiet_hours_start": null,
+      "min_lease_months": 12,
+      "max_occupants": 5,
+      "preferred_tenants": "any"
+    },
+    {
+      "house_id": "house-3",
+      "area": "College Road",
+      "rent": 740,
+      "rooms_available": 2,
+      "room_type": "double",
+      "available_from": "2027-01-13",
+      "amenities": [
+        "Bills included",
+        "Washing machine",
+        "Dryer",
+        "Study desk",
+        "Balcony",
+        "Lift"
+      ],
+      "pets_allowed": false,
+      "smoking_allowed": false,
+      "guest_policy": "welcome",
+      "quiet_hours_start": "22:00",
+      "min_lease_months": 5,
+      "max_occupants": 4,
+      "preferred_tenants": "any"
+    },
+    {
+      "house_id": "house-4",
+      "area": "Wilton",
+      "rent": 560,
+      "rooms_available": 1,
+      "room_type": "single",
+      "available_from": "2027-03-02",
+      "amenities": [
+        "Bills included",
+        "Dishwasher",
+        "Bike storage",
+        "Lift"
+      ],
+      "pets_allowed": false,
+      "smoking_allowed": false,
+      "guest_policy": "welcome",
+      "quiet_hours_start": "22:00",
+      "min_lease_months": 9,
+      "max_occupants": 2,
+      "preferred_tenants": "any"
+    },
+    {
+      "house_id": "house-5",
+      "area": "Wilton",
+      "rent": 638,
+      "rooms_available": 3,
+      "room_type": "single",
+      "available_from": "2027-02-17",
+      "amenities": [
+        "WiFi",
+        "Bills included",
+        "Bike storage",
+        "Lift"
+      ],
+      "pets_allowed": true,
+      "smoking_allowed": true,
+      "guest_policy": "weekends",
+      "quiet_hours_start": "21:00",
+      "min_lease_months": 12,
+      "max_occupants": 5,
+      "preferred_tenants": "any"
+    },
+    {
+      "house_id": "house-6",
+      "area": "Shandon",
+      "rent": 505,
+      "rooms_available": 3,
+      "room_type": "single",
+      "available_from": "2027-03-16",
+      "amenities": [
+        "Washing machine",
+        "Dryer",
+        "Study desk",
+        "Garden",
+        "Parking"
+      ],
+      "pets_allowed": false,
+      "smoking_allowed": false,
+      "guest_policy": "weekends",
+      "quiet_hours_start": null,
+      "min_lease_months": 3,
+      "max_occupants": 6,
+      "preferred_tenants": "any"
+    },
+    {
+      "house_id": "house-7",
+      "area": "Blackrock",
+      "rent": 711,
+      "rooms_available": 2,
+      "room_type": "single",
+      "available_from": "2026-12-30",
+      "amenities": [
+        "WiFi",
+        "Central heating",
+        "Washing machine",
+        "Dishwasher",
+        "Study desk",
+        "Garden",
+        "Bike storage"
+      ],
+      "pets_allowed": false,
+      "smoking_allowed": false,
+      "guest_policy": "welcome",
+      "quiet_hours_start": "23:00",
+      "min_lease_months": 5,
+      "max_occupants": 2,
+      "preferred_tenants": "student"
+    },
+    {
+      "house_id": "house-9",
+      "area": "The Lough",
+      "rent": 715,
+      "rooms_available": 1,
+      "room_type": "single",
+      "available_from": "2026-12-08",
+      "amenities": [
+        "Central heating",
+        "Study desk",
+        "Balcony",
+        "Bike storage"
+      ],
+      "pets_allowed": false,
+      "smoking_allowed": false,
+      "guest_policy": "welcome",
+      "quiet_hours_start": null,
+      "min_lease_months": 9,
+      "max_occupants": 4,
+      "preferred_tenants": "any"
+    },
+    {
+      "house_id": "house-1",
+      "area": "Bishopstown",
+      "rent": 612,
+      "rooms_available": 2,
+      "room_type": "single",
+      "available_from": "2026-12-21",
+      "amenities": [
+        "Dryer",
+        "Dishwasher",
+        "Lift"
+      ],
+      "pets_allowed": false,
+      "smoking_allowed": true,
+      "guest_policy": "weekends",
+      "quiet_hours_start": null,
+      "min_lease_months": 9,
+      "max_occupants": 7,
+      "preferred_tenants": "student"
+    },
+    {
+      "house_id": "house-8",
+      "area": "Victoria Cross",
+      "rent": 854,
+      "rooms_available": 1,
+      "room_type": "single",
+      "available_from": "2027-03-20",
+      "amenities": [
+        "WiFi",
+        "Kitchen access",
+        "Dryer",
+        "Dishwasher",
+        "Study desk",
+        "Double bed",
+        "Balcony",
+        "Bike storage",
+        "Lift"
+      ],
+      "pets_allowed": true,
+      "smoking_allowed": false,
+      "guest_policy": "welcome",
+      "quiet_hours_start": "00:00",
+      "min_lease_months": 1,
+      "max_occupants": 3,
+      "preferred_tenants": "student"
+    },
+    {
+      "house_id": "house-10",
+      "area": "Douglas",
+      "rent": 484,
+      "rooms_available": 4,
+      "room_type": "double",
+      "available_from": "2027-03-22",
+      "amenities": [
+        "Dryer",
+        "Dishwasher",
+        "Double bed",
+        "Garden"
+      ],
+      "pets_allowed": false,
+      "smoking_allowed": false,
+      "guest_policy": "weekends",
+      "quiet_hours_start": "00:00",
+      "min_lease_months": 5,
+      "max_occupants": 7,
+      "preferred_tenants": "professional"
+    },
+    {
+      "house_id": "house-12",
+      "area": "College Road",
+      "rent": 542,
+      "rooms_available": 4,
+      "room_type": "double",
+      "available_from": "2027-01-17",
+      "amenities": [
+        "Washing machine",
+        "Double bed",
+        "Garden",
+        "Balcony",
+        "Parking"
+      ],
+      "pets_allowed": false,
+      "smoking_allowed": false,
+      "guest_policy": "welcome",
+      "quiet_hours_start": "21:00",
+      "min_lease_months": 12,
+      "max_occupants": 7,
+      "preferred_tenants": "student"
+    }
+  ],
+  "limit": 20,
+  "today": "2026-12-01"
+}

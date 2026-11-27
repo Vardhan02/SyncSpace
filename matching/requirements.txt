@@ -1,0 +1,15 @@
+# matching service + training (Python 3.12)
+torch==2.15.0
+numpy==1.26.4
+sentence-transformers==6.2.0
+scikit-learn==1.5.2
+matplotlib==3.10.7
+fastapi==0.115.6
+uvicorn==0.32.1
+pydantic==2.10.4
+# tests
+pytest==8.3.4
+httpx==0.28.1
+# legacy/compare_baselines.py only
+lightgbm==4.7.0
+pandas==2.2.3

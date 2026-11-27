@@ -1,0 +1,61 @@
+{
+  "roommates": {
+    "Random": {
+      "P@5": 0.11066666666666666,
+      "P@10": 0.10733333333333334,
+      "NDCG@10": 0.10560155725505112
+    },
+    "Rules only (filters + rule score)": {
+      "P@5": 0.742,
+      "P@10": 0.6766666666666666,
+      "NDCG@10": 0.7149871533335554
+    },
+    "Prompt text only (filters + MiniLM)": {
+      "P@5": 0.6413333333333333,
+      "P@10": 0.549,
+      "NDCG@10": 0.590608731343216
+    },
+    "Two-tower only (no filters)": {
+      "P@5": 0.8886666666666667,
+      "P@10": 0.86,
+      "NDCG@10": 0.8744217443363499
+    },
+    "Final hybrid (filters + calibrated blend)": {
+      "P@5": 0.9486666666666667,
+      "P@10": 0.919,
+      "NDCG@10": 0.9339843898882038
+    }
+  },
+  "roommates_info": {
+    "test_tenants": 300,
+    "good_matches_per_tenant": 34.61333333333334,
+    "ms_per_query_precomputed_text": 0.2
+  },
+  "houses": {
+    "Random": {
+      "P@5": 0.023529411764705882,
+      "P@10": 0.023529411764705882,
+      "NDCG@10": 0.0337199778947419
+    },
+    "Rules only (filters + rule score)": {
+      "P@5": 0.4832579185520362,
+      "P@10": 0.36334841628959275,
+      "NDCG@10": 0.7017303496304538
+    },
+    "Two-tower only (no filters)": {
+      "P@5": 0.2343891402714932,
+      "P@10": 0.18914027149321266,
+      "NDCG@10": 0.3490157808093691
+    },
+    "Final hybrid (filters + calibrated blend)": {
+      "P@5": 0.5203619909502263,
+      "P@10": 0.38506787330316744,
+      "NDCG@10": 0.7301538043020098
+    }
+  },
+  "houses_info": {
+    "test_tenants": 300,
+    "test_houses": 300,
+    "good_houses_per_tenant": 5.373333333333333
+  }
+}

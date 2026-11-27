@@ -1,0 +1,35 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# The root .gitignore skips every lib/ folder (for Python), but ours is source code
+!src/lib/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Demo account details (names, emails, passwords) stay on this machine
+scripts/demo-data/accounts.json
