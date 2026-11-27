@@ -32,6 +32,7 @@ import com.syncspace.listing.HouseRepository.PhotoRow;
 import com.syncspace.photo.PhotoStorage;
 import com.syncspace.profile.Roles;
 import com.syncspace.profile.UserRole;
+import com.syncspace.verification.VerificationService;
 
 import jakarta.validation.Valid;
 
@@ -43,8 +44,9 @@ public class ListingController {
 	private static final String BUCKET = "house-photos";
 	private static final long MAX_PHOTO_BYTES = 5L * 1024 * 1024;
 
+	// verificationStatus: null (no photos yet), pending, verified or failed. The frontend polls this
 	record Summary(long houseId, String title, String address, String area, int rent, String status,
-			boolean verified, String coverPhoto, long likeCount) {
+			boolean verified, String verificationStatus, String verificationNote, String coverPhoto, long likeCount) {
 	}
 
 	record Amenity(String name, Boolean vlmVerified) {
@@ -55,7 +57,7 @@ public class ListingController {
 
 	record Detail(long houseId, String title, String area, String address, int rent, String roomType,
 			LocalDate availableFrom, int roomsAvailable, String description, ListingStatus status, boolean verified,
-			Instant createdAt,
+			String verificationStatus, String verificationNote, Instant createdAt,
 			Boolean petsAllowed, Boolean smokingAllowed, GuestPolicy guestPolicy,
 			// "23:00", not "23:00:00"
 			@JsonFormat(pattern = "HH:mm") LocalTime quietHoursStart,
@@ -72,14 +74,16 @@ public class ListingController {
 	private final HouseRepository houses;
 	private final HouseRulesRepository rules;
 	private final PhotoStorage photos;
+	private final VerificationService verification;
 
 	public ListingController(Roles roles, ListingService service, HouseRepository houses, HouseRulesRepository rules,
-			PhotoStorage photos) {
+			PhotoStorage photos, VerificationService verification) {
 		this.roles = roles;
 		this.service = service;
 		this.houses = houses;
 		this.rules = rules;
 		this.photos = photos;
+		this.verification = verification;
 	}
 
 	@PostMapping
@@ -94,7 +98,8 @@ public class ListingController {
 		UUID me = roles.require(jwt, UserRole.landlord);
 		return houses.summaries(me).stream()
 				.map(s -> new Summary(s.getHouseId(), s.getTitle(), s.getAddress(), s.getArea(), s.getRent(),
-						s.getStatus(), s.getVerified(), photos.url(BUCKET, s.getCoverPath()), s.getLikeCount()))
+						s.getStatus(), s.getVerified(), s.getVerificationStatus(), s.getVerificationNote(),
+						photos.url(BUCKET, s.getCoverPath()), s.getLikeCount()))
 				.toList();
 	}
 
@@ -110,7 +115,9 @@ public class ListingController {
 	public Detail update(@AuthenticationPrincipal Jwt jwt, @PathVariable long houseId,
 			@Valid @RequestBody ListingRequest req) {
 		UUID me = roles.require(jwt, UserRole.landlord);
-		service.update(me, houseId, req);
+		if (service.update(me, houseId, req)) {
+			verification.request(houseId);
+		}
 		return detail(service.owned(me, houseId));
 	}
 
@@ -160,6 +167,7 @@ public class ListingController {
 			deleteFiles(uploaded);
 			throw e;
 		}
+		verification.request(houseId);
 		return ResponseEntity.status(HttpStatus.CREATED).body(photoList(houseId));
 	}
 
@@ -168,6 +176,7 @@ public class ListingController {
 			@PathVariable long photoId) {
 		UUID me = roles.require(jwt, UserRole.landlord);
 		deleteFiles(List.of(service.deletePhoto(me, houseId, photoId)));
+		verification.request(houseId);
 		return ResponseEntity.noContent().build();
 	}
 
@@ -188,6 +197,7 @@ public class ListingController {
 				.toList();
 		return new Detail(h.getId(), h.getTitle(), h.getArea(), h.getAddress(), h.getRent(), h.getRoomType(),
 				h.getAvailableFrom(), h.getRoomsAvailable(), h.getDescription(), h.getStatus(), h.isVerified(),
+				h.getVerificationStatus(), h.getVerificationNote(),
 				h.getCreatedAt() == null ? null : h.getCreatedAt().toInstant(),
 				r == null ? null : r.isPetsAllowed(),
 				r == null ? null : r.isSmokingAllowed(),

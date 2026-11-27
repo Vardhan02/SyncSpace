@@ -54,7 +54,7 @@ interface RankingRepository extends Repository<Tenant, UUID> {
 			from houses h
 			join house_preferences r on r.house_id = h.house_id
 			left join landlord_preferences lp on lp.landlord_id = h.landlord_id
-			where h.status = 'active'""", nativeQuery = true)
+			where h.status = 'active' and h.verified""", nativeQuery = true)
 	String activeHouses();
 
 	@Query(value = "select t.id from tenants t join profiles p on p.id = t.id where t.onboarding_complete and not p.first_login",

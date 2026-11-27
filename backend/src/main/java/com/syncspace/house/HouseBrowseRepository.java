@@ -81,16 +81,18 @@ interface HouseBrowseRepository extends Repository<House, Long> {
 	@Query(value = HOUSE + """
 
 			where h.status = 'active'
+			  and h.verified
 			  and (:area = '' or h.area = :area)
 			  and (:maxRent = 0 or h.rent <= :maxRent)
 			order by r.score desc nulls last, h.created_at desc, h.house_id desc""", nativeQuery = true)
 	List<HouseRow> active(UUID me, String area, int maxRent);
 
-	// everything except drafts
-	@Query(value = HOUSE + " where h.house_id = :houseId and h.status <> 'draft'", nativeQuery = true)
+	// everything except drafts, and only once the VLM has verified it
+	@Query(value = HOUSE + " where h.house_id = :houseId and h.status <> 'draft' and h.verified", nativeQuery = true)
 	Optional<HouseRow> visible(UUID me, long houseId);
 
-	@Query(value = "select exists (select 1 from houses where house_id = :houseId and status <> 'draft')", nativeQuery = true)
+	@Query(value = "select exists (select 1 from houses where house_id = :houseId and status <> 'draft' and verified)",
+			nativeQuery = true)
 	boolean isVisible(long houseId);
 
 	@Query(value = "select exists (select 1 from houses where house_id = :houseId)", nativeQuery = true)

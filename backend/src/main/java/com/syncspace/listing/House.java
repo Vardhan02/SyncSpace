@@ -51,6 +51,13 @@ public class House {
 	@Column(insertable = false, updatable = false)
 	private boolean verified;
 
+	// written by the verification package with plain updates, read-only here
+	@Column(name = "verification_status", insertable = false, updatable = false)
+	private String verificationStatus;
+
+	@Column(name = "verification_note", insertable = false, updatable = false)
+	private String verificationNote;
+
 	@Enumerated(EnumType.STRING)
 	@JdbcTypeCode(SqlTypes.NAMED_ENUM)
 	private ListingStatus status = ListingStatus.active;
@@ -139,6 +146,14 @@ public class House {
 
 	public boolean isVerified() {
 		return verified;
+	}
+
+	public String getVerificationStatus() {
+		return verificationStatus;
+	}
+
+	public String getVerificationNote() {
+		return verificationNote;
 	}
 
 	public ListingStatus getStatus() {
