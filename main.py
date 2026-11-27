@@ -2,17 +2,16 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 import uvicorn
-from fastapi import FastAPI
+from fastapi import BackgroundTasks, FastAPI
 from fastapi.responses import JSONResponse
 from huggingface_hub import hf_hub_download
-from openai import OpenAI
 
 from src.models.schemas import AgentName, Job, VerifyRequest
 from src.utils.job_tracker import JobTracker
 from src.utils.logger import JobLogger
 from src.utils.model_loader import ModelLoader
 from src.utils.settings import Settings
-from src.utils.vlmconfig import VlmClient
+from src.utils.vlmconfig import VlmConfig
 
 # fields returned by GET /jobs/{id} depending on where the job is
 POLL_FIELDS = {
@@ -24,10 +23,10 @@ POLL_FIELDS = {
 
 
 class SyncSpaceApp:
-    def __init__(self, settings: Settings, client: VlmClient, tracker: JobTracker,
+    def __init__(self, settings: Settings, config: VlmConfig, tracker: JobTracker,
                  logger: JobLogger, loader: ModelLoader) -> None:
         self._settings = settings
-        self._client = client
+        self._config = config
         self._tracker = tracker
         self._logger = logger
         self._loader = loader
@@ -40,27 +39,30 @@ class SyncSpaceApp:
     @classmethod
     def create(cls) -> "SyncSpaceApp":
         settings = Settings.from_env()
-        openai_client = OpenAI(base_url=settings.lm_studio_base_url, api_key="lm-studio", max_retries=0)
-        client = VlmClient(openai_client, settings)
-        loader = ModelLoader(settings, client, hf_hub_download)
-        return cls(settings, client, JobTracker(), JobLogger(Path(settings.logs_dir)), loader)
+        tracker = JobTracker()
+        logger = JobLogger(Path(settings.logs_dir))
+        config = VlmConfig.create(settings, tracker, logger)
+        loader = ModelLoader(settings, config.client, hf_hub_download)
+        return cls(settings, config, tracker, logger, loader)
 
     def run(self) -> None:
         uvicorn.run(self.api, host=self._settings.api_host, port=self._settings.api_port)
 
     def health(self) -> dict:
+        client = self._config.client
         checks = {
-            "lmstudio_reachable": self._client.is_reachable(),
-            "model_loaded": self._client.is_model_loaded(),
+            "lmstudio_reachable": client.is_reachable(),
+            "model_loaded": client.is_model_loaded(),
             "model_files_present": self._loader.files_present(),
         }
         status = "ok" if all(checks.values()) else "degraded"
         return {"status": status, "model_id": self._settings.lm_studio_model, **checks}
 
-    def verify(self, body: VerifyRequest) -> JSONResponse:
+    def verify(self, body: VerifyRequest, background: BackgroundTasks) -> JSONResponse:
+        # one job per agent, both queued behind the same lock
         jobs = {}
         for agent in [AgentName.AMENITIES_VERIFY, AgentName.DESC_AUDIT]:
-            job = self._submit(agent, body)
+            job = self._submit(agent, body, background)
             jobs[agent.value] = {"job_id": job.job_id, "status": job.status}
         return JSONResponse({
             "house_id": body.house_id,
@@ -76,9 +78,10 @@ class SyncSpaceApp:
             return JSONResponse({"error": err}, 404)
         return JSONResponse(self._poll_body(run), status_code=run["status_code"])
 
-    def _submit(self, agent: AgentName, body: VerifyRequest) -> Job:
+    def _submit(self, agent: AgentName, body: VerifyRequest, background: BackgroundTasks) -> Job:
         job = self._tracker.create(agent, body.house_id, body.landlord_id)
-        self._logger.save(job)  # TODO: actually run the job
+        self._logger.save(job)
+        background.add_task(self._config.run, job, body)
         return job
 
     def _poll_body(self, run: dict) -> dict:

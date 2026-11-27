@@ -1,9 +1,28 @@
+import base64
+import io
+import threading
+import traceback
+from pathlib import Path
+from typing import Any, TypedDict
+
 import httpx
 import openai
+from langgraph.graph import END, START, StateGraph
 from openai import OpenAI
+from PIL import Image, ImageOps
 
-from src.models.errors import VlmUnavailableError
+from src.models.errors import InvalidListingError, PipelineError, VlmUnavailableError
+from src.models.schemas import Job, Listing, PhotoIn, PreparedImage, SkippedPhoto, VerifyRequest
+from src.utils.job_tracker import JobTracker
+from src.utils.logger import JobLogger
 from src.utils.settings import Settings
+
+
+class VlmState(TypedDict, total=False):
+    job: Job
+    request: VerifyRequest
+    listing: Listing
+    result: dict
 
 
 class VlmClient:
@@ -45,3 +64,127 @@ class VlmClient:
             return [m.id for m in self._client.models.list().data]
         except openai.APIError:
             return None
+
+
+class ListingLoader:
+    _SUPPORTED = {"image/jpeg", "image/png", "image/webp"}
+
+    def __init__(self, settings: Settings) -> None:
+        self._max_images = settings.max_images
+        self._max_side = settings.max_image_side
+
+    def load(self, req: VerifyRequest) -> Listing:
+        images, skipped = self._prepare(sorted(req.photos, key=lambda p: p.position))
+        if not images:
+            raise InvalidListingError(f"no usable photos for house {req.house_id}")
+        return Listing(images=images, skipped=skipped, description=req.description, amenities=req.amenities)
+
+    def _prepare(self, photos: list[PhotoIn]) -> tuple[list[PreparedImage], list[SkippedPhoto]]:
+        images, skipped = [], []
+        for photo in photos:
+            reason = self._skip_reason(photo, len(images))
+            img = None if reason else self._encode(photo)
+            if img:
+                images.append(img)
+            else:
+                skipped.append(SkippedPhoto(photo_id=photo.photo_id, reason=reason or "UNREADABLE"))
+        return images, skipped
+
+    def _skip_reason(self, photo: PhotoIn, used: int) -> str | None:
+        if photo.content_type.lower() not in self._SUPPORTED:
+            return "UNSUPPORTED_TYPE"
+        return "OVER_LIMIT" if used >= self._max_images else None
+
+    def _encode(self, photo: PhotoIn) -> PreparedImage | None:
+        try:
+            raw = base64.b64decode(photo.data, validate=True)
+            with Image.open(io.BytesIO(raw)) as src:
+                img = ImageOps.exif_transpose(src).convert("RGBA")
+        except Exception:
+            return None
+        # flatten transparency onto white, otherwise it turns black in the jpeg
+        canvas = Image.new("RGB", img.size, (255, 255, 255))
+        canvas.paste(img, mask=img.getchannel("A"))
+        canvas.thumbnail((self._max_side, self._max_side), Image.Resampling.LANCZOS)
+        buf = io.BytesIO()
+        canvas.save(buf, format="JPEG", quality=90)
+        url = "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
+        return PreparedImage(photo_id=photo.photo_id, data_url=url)
+
+
+class TrackedStep:
+    # wraps a graph node so each step's start/end shows up in the job log
+    def __init__(self, name: str, node: Any, tracker: JobTracker, logger: JobLogger) -> None:
+        self._name = name
+        self._node = node
+        self._tracker = tracker
+        self._logger = logger
+
+    def __call__(self, state: VlmState) -> dict:
+        job = state["job"]
+        self._tracker.step_started(job, self._name)
+        self._logger.save(job)
+        update = self._node(state)
+        self._tracker.step_finished(job, self._name)
+        self._logger.save(job)
+        return update
+
+
+class VlmConfig:
+    def __init__(self, client: VlmClient, loader: ListingLoader, tracker: JobTracker, logger: JobLogger) -> None:
+        self._client = client
+        self._loader = loader
+        self._tracker = tracker
+        self._logger = logger
+        # jobs run one at a time
+        self._lock = threading.Lock()
+        self._graph = self._build_graph()
+
+    @classmethod
+    def create(cls, settings: Settings, tracker: JobTracker, logger: JobLogger) -> "VlmConfig":
+        openai_client = OpenAI(base_url=settings.lm_studio_base_url, api_key="lm-studio", max_retries=0)
+        client = VlmClient(openai_client, settings)
+        return cls(client, ListingLoader(settings), tracker, logger)
+
+    @property
+    def client(self) -> VlmClient:
+        return self._client
+
+    def run(self, job: Job, req: VerifyRequest) -> None:
+        with self._lock:
+            self._tracker.start(job)
+            self._logger.save(job)
+            self._invoke(job, req)
+            self._logger.save(job)
+
+    def _invoke(self, job: Job, req: VerifyRequest) -> None:
+        try:
+            final = self._graph.invoke({"job": job, "request": req})
+            # TODO: agents go here, for now just report which photos loaded
+            listing = final["listing"]
+            self._tracker.complete(job, {"photos_used": [i.photo_id for i in listing.images],
+                                         "photos_skipped": [s.model_dump() for s in listing.skipped]})
+        except PipelineError as err:
+            self._tracker.fail(job, err.code, str(err), err.status_code)
+        except Exception:
+            traceback.print_exc()
+            self._tracker.fail(job, "WORKFLOW_ERROR", "unexpected workflow error", 500)
+
+    def _build_graph(self) -> Any:
+        graph = StateGraph(VlmState)
+        for name, node in {"check_vlm": self._check_vlm, "load_listing": self._load_listing}.items():
+            graph.add_node(name, TrackedStep(name, node, self._tracker, self._logger))
+        graph.add_edge(START, "check_vlm")
+        graph.add_edge("check_vlm", "load_listing")
+        graph.add_edge("load_listing", END)
+        return graph.compile()
+
+    def _check_vlm(self, state: VlmState) -> dict:
+        if not self._client.is_reachable():
+            raise VlmUnavailableError("lm studio isn't reachable")
+        if not self._client.is_model_loaded():
+            raise VlmUnavailableError("model isn't loaded in lm studio")
+        return {}
+
+    def _load_listing(self, state: VlmState) -> dict:
+        return {"listing": self._loader.load(state["request"])}

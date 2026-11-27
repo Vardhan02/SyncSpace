@@ -7,3 +7,8 @@ class PipelineError(Exception):
 class VlmUnavailableError(PipelineError):
     code = "VLM_UNAVAILABLE"
     status_code = 503
+
+
+class InvalidListingError(PipelineError):
+    code = "INVALID_LISTING"
+    status_code = 422

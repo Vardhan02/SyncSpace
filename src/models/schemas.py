@@ -19,6 +19,23 @@ class VerifyRequest(BaseModel):
     photos: list[PhotoIn]
 
 
+class SkippedPhoto(BaseModel):
+    photo_id: int
+    reason: str
+
+
+class PreparedImage(BaseModel):
+    photo_id: int
+    data_url: str
+
+
+class Listing(BaseModel):
+    images: list[PreparedImage]
+    skipped: list[SkippedPhoto]
+    description: str
+    amenities: list[str]
+
+
 class AgentName(str, Enum):
     # values double as the section names in the log files
     AMENITIES_VERIFY = "amenities_verify"
