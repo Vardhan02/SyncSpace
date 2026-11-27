@@ -15,10 +15,12 @@ type ApiSharedHouse = {
   title: string
   area: string
   rent: number
+  coverPhoto: string | null
   sharedByMe: boolean
   sharedAt: string
   iApplied: boolean
   theyApplied: boolean
+  applicationStatus: SharedHouse["applicationStatus"]
 }
 
 const newestFirst = (a: Match, b: Match) => b.matchedAt.localeCompare(a.matchedAt)
@@ -38,11 +40,12 @@ export async function getMatches(): Promise<Match[]> {
 export async function getSharedHouses(matchId: string): Promise<SharedHouse[]> {
   const data = await api<ApiSharedHouse[]>(`/matches/${matchId}/houses`)
   return data.map((h) => ({
-    house: { id: `h-${h.houseId}`, title: h.title, area: h.area, rent: h.rent },
+    house: { id: `h-${h.houseId}`, title: h.title, area: h.area, rent: h.rent, coverPhoto: h.coverPhoto },
     fromMe: h.sharedByMe,
     sentAt: h.sharedAt,
     iApplied: h.iApplied,
     theyApplied: h.theyApplied,
+    applicationStatus: h.applicationStatus,
   }))
 }
 

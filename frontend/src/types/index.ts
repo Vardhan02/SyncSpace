@@ -282,6 +282,29 @@ export type Application = {
 
 export type ApplicationDecision = "confirmed" | "ignored"
 
+// GET /api/applications/mine: a tenant's applications, made together with a match
+export type MyApplication = {
+  applicationId: number
+  matchId: number
+  partnerName: string
+  houseId: number
+  houseTitle: string
+  status: "pending" | ApplicationDecision
+  createdAt: string
+  decidedAt: string | null
+}
+
+// GET /api/landlord-contacts: only for applications the landlord confirmed
+export type LandlordContact = {
+  applicationId: number
+  houseId: number
+  houseTitle: string
+  landlordName: string
+  email: string
+  // null unless the landlord chose to share it
+  phone: string | null
+}
+
 export type ApplicationDetails = {
   application: Application
   house: Pick<House, "id" | "title">
@@ -294,11 +317,13 @@ export type MatchPerson = Pick<Roommate, "id" | "name" | "photo"> &
 
 export type SharedHouse = {
   house: Pick<House, "id" | "title" | "area" | "rent"> &
-    Partial<Pick<House, "roomType" | "verified">>
+    Partial<Pick<House, "roomType" | "verified" | "coverPhoto">>
   fromMe: boolean
   sentAt: string
   iApplied: boolean
   theyApplied: boolean
+  // Only there once you've both applied
+  applicationStatus: "pending" | "confirmed" | "ignored" | null
 }
 
 export type Match = {
