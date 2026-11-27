@@ -4,6 +4,7 @@ import { Link, useSearchParams } from "react-router-dom"
 
 import { ApplicationCard } from "@/components/applications/ApplicationCard"
 import { useLandlordApplications } from "@/hooks/useApplications"
+import type { ApplicationDetails } from "@/hooks/useApplications"
 import { cn } from "@/lib/utils"
 
 type Tab = "new" | "confirmed"
@@ -14,13 +15,12 @@ export function ApplicationsPage() {
   const houseId = searchParams.get("house")
   const [tab, setTab] = useState<Tab>("new")
 
-  const all = useLandlordApplications()
-    .filter((item) => !houseId || item.house.id === houseId)
-    .toSorted((a, b) => b.application.submittedAt.localeCompare(a.application.submittedAt))
-  const waiting = all.filter((item) => item.decision !== "confirmed")
-  const confirmed = all.filter((item) => item.decision === "confirmed")
+  // The backend already sorts them, newest first
+  const forHouse = (items: ApplicationDetails[]) => items.filter((item) => !houseId || item.house.id === houseId)
+  const waiting = forHouse(useLandlordApplications("pending"))
+  const confirmed = forHouse(useLandlordApplications("confirmed"))
   const shown = tab === "new" ? waiting : confirmed
-  const houseTitle = all[0]?.house.title
+  const houseTitle = [...waiting, ...confirmed][0]?.house.title
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-6">

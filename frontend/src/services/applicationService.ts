@@ -15,6 +15,7 @@ type ApiTenantRef = { id: string; name: string; photoUrl: string | null }
 
 type ApiApplicationItem = {
   applicationId: number
+  status: "pending" | ApplicationDecision
   createdAt: string
   house: { houseId: number; title: string }
   tenants: [ApiTenantRef, ApiTenantRef]
@@ -32,9 +33,10 @@ const toApplicant = ({ id, name, photoUrl }: ApiTenantRef): Roommate => ({
   ...cardFromOnboarding({}),
 })
 
-export async function fetchApplications(): Promise<ApplicationDetails[]> {
-  const data = await api<ApiApplicationItem[]>("/applications")
-  return data.map(({ applicationId, createdAt, house, tenants }) => ({
+// The list only has pending ones unless asked for others
+export async function fetchApplications(status: "pending" | ApplicationDecision = "pending"): Promise<ApplicationDetails[]> {
+  const data = await api<ApiApplicationItem[]>(`/applications?status=${status}`)
+  return data.map(({ applicationId, status, createdAt, house, tenants }) => ({
     application: {
       id: String(applicationId),
       houseId: `h-${house.houseId}`,
@@ -43,6 +45,7 @@ export async function fetchApplications(): Promise<ApplicationDetails[]> {
     },
     house: { id: `h-${house.houseId}`, title: house.title },
     tenants: [toApplicant(tenants[0]), toApplicant(tenants[1])],
+    decision: status === "pending" ? undefined : status,
   }))
 }
 

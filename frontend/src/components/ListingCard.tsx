@@ -38,6 +38,8 @@ export function ListingCard({ listing, onShowLikes, onDelete }: ListingCardProps
               <BadgeCheck className="size-3.5" aria-hidden="true" />
               Verified
             </>
+          ) : listing.verificationStatus === "failed" ? (
+            <span className="text-destructive">Photo check failed</span>
           ) : (
             "Checking photos"
           )}
