@@ -1,21 +1,26 @@
 import base64
 import io
+import re
 import threading
 import traceback
 from pathlib import Path
-from typing import Any, TypedDict
+from typing import Any, TypedDict, TypeVar
 
 import httpx
 import openai
+import yaml
 from langgraph.graph import END, START, StateGraph
 from openai import OpenAI
 from PIL import Image, ImageOps
+from pydantic import BaseModel, ValidationError
 
-from src.models.errors import InvalidListingError, PipelineError, VlmUnavailableError
+from src.models.errors import InvalidListingError, PipelineError, VlmOutputError, VlmUnavailableError
 from src.models.schemas import Job, Listing, PhotoIn, PreparedImage, SkippedPhoto, VerifyRequest
 from src.utils.job_tracker import JobTracker
 from src.utils.logger import JobLogger
 from src.utils.settings import Settings
+
+ModelT = TypeVar("ModelT", bound=BaseModel)
 
 
 class VlmState(TypedDict, total=False):
@@ -64,6 +69,60 @@ class VlmClient:
             return [m.id for m in self._client.models.list().data]
         except openai.APIError:
             return None
+
+
+class VlmCaller:
+    _CORRECTION = "Your previous reply was not valid JSON for the required schema. Reply again with only the JSON object."
+    # some models still wrap the json in ```json fences even with a schema set
+    _FENCE = re.compile(r"^\s*```(?:json)?\s*\n?(.*?)\n?\s*```\s*$", re.DOTALL | re.IGNORECASE)
+
+    def __init__(self, client: VlmClient, settings: Settings) -> None:
+        self._client = client
+        self._max_retries = settings.vlm_max_retries
+
+    def call(self, messages: list[dict], schema_name: str, response_model: type[ModelT]) -> ModelT:
+        schema = response_model.model_json_schema()
+        attempt = messages
+        for _ in range(self._max_retries + 1):
+            raw = self._client.complete_json(attempt, schema_name, schema)
+            try:
+                return response_model.model_validate_json(self._unfence(raw))
+            except ValidationError:
+                attempt = [*messages,
+                           {"role": "assistant", "content": raw},
+                           {"role": "user", "content": self._CORRECTION}]
+        raise VlmOutputError(f"vlm reply doesn't match {response_model.__name__}")
+
+    def _unfence(self, raw: str) -> str:
+        m = self._FENCE.match(raw)
+        return m.group(1) if m else raw.strip()
+
+
+class PromptStitcher:
+    def __init__(self, prompts_dir: Path) -> None:
+        self._dir = Path(prompts_dir)
+        self._cache: dict[str, dict] = {}
+
+    def stitch(self, agent: str, key: str, values: dict[str, Any],
+               images: list[PreparedImage] | None = None) -> list[dict]:
+        text = self._template(agent, key).format(**values)
+        user: Any = text
+        if images:
+            user = [*self._image_parts(images), {"type": "text", "text": text}]
+        system = self._template(agent, "system").strip()
+        return [{"role": "system", "content": system}, {"role": "user", "content": user}]
+
+    def _image_parts(self, images: list[PreparedImage]) -> list[dict]:
+        parts = []
+        for img in images:
+            parts.append({"type": "text", "text": f"Photo {img.photo_id}:"})
+            parts.append({"type": "image_url", "image_url": {"url": img.data_url}})
+        return parts
+
+    def _template(self, agent: str, key: str) -> str:
+        if agent not in self._cache:
+            self._cache[agent] = yaml.safe_load((self._dir / f"{agent}.yaml").read_text())
+        return self._cache[agent][key]
 
 
 class ListingLoader:

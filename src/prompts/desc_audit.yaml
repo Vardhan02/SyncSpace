@@ -1,0 +1,35 @@
+# Prompts for the desc_audit agent. Placeholders are filled by PromptStitcher in src/utils/vlmconfig.py.
+system: |
+  You inspect rental property photos. Report only what is clearly visible.
+  Never guess hidden items.
+
+# first call, text only: split the description into claims. {max_claims}, {description}
+extract: |
+  Split the landlord's description below into short, atomic claims about physical features that could
+  be checked by looking at photos of the property (furniture, appliances, rooms, fixtures, outdoor
+  areas). Skip anything about location, price, people, noise, or opinions.
+  Return at most {max_claims} claims. Return an empty list if there are none.
+
+  Description:
+  {description}
+
+# then one call per photo with all the claims. {claims} -> one claim per line
+agent: |
+  First, in `photo_shows`, say what this photo shows: which room or area it is, and the main items
+  you can see. Describe only the photo, ignore the claims for now.
+
+  Then check each of the landlord's claims below against this photo. Give one entry per claim:
+  1. `claim`: copy the claim exactly as written.
+  2. `reasoning`: one short sentence comparing the claim with what you wrote in photo_shows.
+  3. `shows_subject`: is the room, area or item the claim is about visible in this photo? If it is a
+     different room or area, or you can't see the item, it is false.
+  4. `matches_claim`: if shows_subject is true, is it the way the claim says? Check numbers, sizes and
+     types: "one double bed" when you see two single beds is false. If shows_subject is false, put true.
+
+  Don't judge where on the property something is ("at the back", "upstairs"), a photo can't tell
+  you that. Judge only what the item or area is.
+
+  Most claims will have shows_subject false for any single photo, that is normal.
+
+  Claims:
+  {claims}

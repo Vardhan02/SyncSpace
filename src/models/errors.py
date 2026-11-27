@@ -12,3 +12,8 @@ class VlmUnavailableError(PipelineError):
 class InvalidListingError(PipelineError):
     code = "INVALID_LISTING"
     status_code = 422
+
+
+class VlmOutputError(PipelineError):
+    code = "VLM_BAD_OUTPUT"
+    status_code = 502
