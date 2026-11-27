@@ -11,6 +11,7 @@ from src.utils.job_tracker import JobTracker
 from src.utils.logger import JobLogger
 from src.utils.model_loader import ModelLoader
 from src.utils.settings import Settings
+from src.utils.verdict import VerificationReport
 from src.utils.vlmconfig import VlmConfig
 
 # fields returned by GET /jobs/{id} depending on where the job is
@@ -24,17 +25,19 @@ POLL_FIELDS = {
 
 class SyncSpaceApp:
     def __init__(self, settings: Settings, config: VlmConfig, tracker: JobTracker,
-                 logger: JobLogger, loader: ModelLoader) -> None:
+                 logger: JobLogger, loader: ModelLoader, report: VerificationReport) -> None:
         self._settings = settings
         self._config = config
         self._tracker = tracker
         self._logger = logger
         self._loader = loader
+        self._report = report
 
         self.api = FastAPI(title="SyncSpace VLM", lifespan=self._lifespan)
         self.api.add_api_route("/health", self.health, methods=["GET"])
         self.api.add_api_route("/listings/verify", self.verify, methods=["POST"], status_code=202)
         self.api.add_api_route("/jobs/{job_id}", self.get_job, methods=["GET"])
+        self.api.add_api_route("/listings/{house_id}/verification", self.get_verification, methods=["GET"])
 
     @classmethod
     def create(cls) -> "SyncSpaceApp":
@@ -44,7 +47,7 @@ class SyncSpaceApp:
         prompts = Path(__file__).parent / "src" / "prompts"
         config = VlmConfig.create(settings, tracker, logger, prompts)
         loader = ModelLoader(settings, config.client, hf_hub_download)
-        return cls(settings, config, tracker, logger, loader)
+        return cls(settings, config, tracker, logger, loader, VerificationReport(tracker))
 
     def run(self) -> None:
         uvicorn.run(self.api, host=self._settings.api_host, port=self._settings.api_port)
@@ -70,6 +73,7 @@ class SyncSpaceApp:
             "jobs": jobs,
             "status_code": 202,
             "meaning": self._tracker.meaning("PENDING", 202),
+            "poll": f"/listings/{body.house_id}/verification",
         }, status_code=202)
 
     def get_job(self, job_id: str) -> JSONResponse:
@@ -78,6 +82,15 @@ class SyncSpaceApp:
             err = {"code": "JOB_NOT_FOUND", "message": f"no job with id '{job_id}'"}
             return JSONResponse({"error": err}, 404)
         return JSONResponse(self._poll_body(run), status_code=run["status_code"])
+
+    def get_verification(self, house_id: int) -> JSONResponse:
+        # what the backend polls: both jobs rolled into one verification_status
+        runs = self._logger.latest(house_id)
+        if runs is None:
+            err = {"code": "HOUSE_NOT_FOUND", "message": f"no verification for house {house_id}"}
+            return JSONResponse({"error": err}, 404)
+        body = self._report.build(house_id, runs)
+        return JSONResponse(body, status_code=body["status_code"])
 
     def _submit(self, agent: AgentName, body: VerifyRequest, background: BackgroundTasks) -> Job:
         job = self._tracker.create(agent, body.house_id, body.landlord_id)

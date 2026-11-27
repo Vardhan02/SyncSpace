@@ -27,6 +27,15 @@ class JobLogger:
                     return run
         return None
 
+    def latest(self, house_id: int) -> dict[str, dict] | None:
+        # newest run of each agent for this house; runs are appended so the last one is the newest
+        with self._lock:
+            doc = self._load(self._path(house_id))
+        runs = {a.value: doc.get(a.value, {}).get("runs", []) for a in AgentName}
+        if not all(runs.values()):
+            return None
+        return {agent: r[-1] for agent, r in runs.items()}
+
     def _find_in(self, document: dict, job_id: str) -> dict | None:
         for agent in AgentName:
             for run in document.get(agent.value, {}).get("runs", []):

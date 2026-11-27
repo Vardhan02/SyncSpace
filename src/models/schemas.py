@@ -135,6 +135,12 @@ class Listing(BaseModel):
     amenities: list[str]
 
 
+class VerificationStatus(str, Enum):
+    APPROVED = "approved"
+    REJECTED = "rejected"
+    NOT_SUFFICIENT_DATA = "not_sufficient_data"
+
+
 class AgentName(str, Enum):
     # values double as the section names in the log files
     AMENITIES_VERIFY = "amenities_verify"
