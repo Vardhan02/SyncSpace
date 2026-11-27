@@ -1,6 +1,5 @@
 import { api } from "@/lib/api"
 import { cardFromOnboarding } from "@/lib/tenantCard"
-import roommates from "@/mocks/roommates.json"
 import type { Roommate, TenantOnboarding, TenantPreferences } from "@/types"
 
 export type ApiTenantCard = Partial<TenantOnboarding> & {
@@ -8,12 +7,6 @@ export type ApiTenantCard = Partial<TenantOnboarding> & {
   name: string
   photoUrl: string | null
   matchScore: number | null
-}
-
-const rankedRoommates = (roommates as Roommate[]).toSorted((a, b) => b.matchScore - a.matchScore)
-
-export function getRoommate(id: string) {
-  return rankedRoommates.find((roommate) => roommate.id === id)
 }
 
 export function toRoommate(data: ApiTenantCard): Roommate {

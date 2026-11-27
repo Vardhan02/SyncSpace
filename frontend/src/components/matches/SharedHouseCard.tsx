@@ -1,6 +1,7 @@
-import { BadgeCheck, Check, Heart, House as HouseIcon, MapPin } from "lucide-react"
+import { BadgeCheck, Check, Heart, MapPin } from "lucide-react"
 import { Link } from "react-router-dom"
 
+import { HousePhotoGrid } from "@/components/HousePhotoGrid"
 import { Button } from "@/components/ui/button"
 import { formatDate } from "@/lib/format"
 import { cn } from "@/lib/utils"
@@ -24,6 +25,8 @@ export function SharedHouseCard({
   onApply,
 }: SharedHouseCardProps) {
   const { house, fromMe, sentAt } = shared
+  // The landlord only gets the application once you've both applied
+  const status = applied && shared.theyApplied ? (shared.applicationStatus ?? "pending") : null
 
   return (
     <div
@@ -47,13 +50,7 @@ export function SharedHouseCard({
             to={`/houses/${house.id}`}
             className="flex flex-col gap-2 rounded-[12px] transition-opacity hover:opacity-80"
           >
-            <div className="grid h-28 grid-cols-3 grid-rows-2 gap-1 overflow-hidden rounded-[12px]">
-              <div className="col-span-2 row-span-2 flex items-center justify-center bg-[#e7e5de]">
-                <HouseIcon className="size-6 text-[#b4b2a9]" aria-hidden="true" />
-              </div>
-              <div className="bg-[#efede6]" />
-              <div className="bg-[#dcdad2]" />
-            </div>
+            <HousePhotoGrid houseId={house.id} coverPhoto={house.coverPhoto} className="h-28 gap-1 rounded-[12px]" />
 
             <div className="px-1 pb-1">
               <p className="flex items-center gap-1 text-[14px] font-semibold text-foreground">
@@ -81,7 +78,7 @@ export function SharedHouseCard({
           >
             {applied ? (
               <>
-                <Check className="size-4" /> Applied
+                {status !== "ignored" ? <Check className="size-4" /> : null} {applyLabel(status)}
               </>
             ) : shared.theyApplied ? (
               `Apply too, ${name} applied`
@@ -89,6 +86,7 @@ export function SharedHouseCard({
               "Apply"
             )}
           </Button>
+          {applied ? <p className="px-1 text-[12px] leading-4 text-muted-foreground">{applyNote(status, name)}</p> : null}
         </div>
 
         {!fromMe && (
@@ -105,4 +103,20 @@ export function SharedHouseCard({
       </div>
     </div>
   )
+}
+
+type ApplicationStatus = SharedHouse["applicationStatus"]
+
+function applyLabel(status: ApplicationStatus) {
+  if (status === "pending") return "Sent to the landlord"
+  if (status === "confirmed") return "Confirmed"
+  if (status === "ignored") return "Not this time"
+  return "Applied"
+}
+
+function applyNote(status: ApplicationStatus, name: string) {
+  if (status === "pending") return "Waiting for the landlord to decide."
+  if (status === "confirmed") return "The landlord said yes! Their contact details are on the house page."
+  if (status === "ignored") return "The landlord went with someone else."
+  return `Waiting for ${name} to apply. The landlord sees it once you both have.`
 }
