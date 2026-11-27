@@ -1,9 +1,8 @@
-import { Search } from "lucide-react"
 import { useState } from "react"
 
 import { HouseCard } from "@/components/HouseCard"
 import { ShareHouseDialog } from "@/components/ShareHouseDialog"
-import { Input } from "@/components/ui/input"
+import { SearchBar } from "@/components/SearchBar"
 import { useHouseLikes } from "@/controllers/useHouseLikes"
 import { useShareHouse } from "@/controllers/useShareHouse"
 import { useHouses } from "@/hooks/useMyListings"
@@ -42,20 +41,13 @@ export function HousesPage() {
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <div className="relative sm:w-70">
-            <Search
-              className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-placeholder"
-              aria-hidden="true"
-            />
-            <Input
-              type="search"
-              placeholder="Search by area or name"
-              aria-label="Search houses"
-              className="h-11 rounded-full pr-4 pl-10"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-            />
-          </div>
+          <SearchBar
+            className="sm:w-70"
+            placeholder="Search by area or name"
+            label="Search houses"
+            value={query}
+            onChange={setQuery}
+          />
           <div className="flex gap-2">
             {filters.map((filter) => (
               <button

@@ -1,8 +1,6 @@
-import { Search } from "lucide-react"
-
 import { ChatPanel } from "@/components/matches/ChatPanel"
 import { MatchList } from "@/components/matches/MatchList"
-import { Input } from "@/components/ui/input"
+import { SearchBar } from "@/components/SearchBar"
 import { useMatches } from "@/controllers/useMatches"
 import { cn } from "@/lib/utils"
 
@@ -35,7 +33,8 @@ export function MatchesPage() {
     <div className="-mt-2 -mb-32 flex h-[calc(100dvh-77px)] min-h-0 w-full flex-col items-center gap-4 md:-mt-5 md:-mb-10 md:h-[calc(100dvh-82px)]">
       <div
         className={cn(
-          "w-full shrink-0 flex-wrap items-center gap-3 md:flex md:flex-nowrap md:gap-4",
+          // Full width like the list and chat below, lined up with the list's left edge
+          "w-screen shrink-0 flex-wrap items-center gap-3 px-5 md:flex md:flex-nowrap md:gap-4 md:px-6",
           selected ? "hidden" : "flex"
         )}
       >
@@ -43,20 +42,13 @@ export function MatchesPage() {
           Your matches
         </h1>
 
-        <div className="relative order-last w-full md:order-none md:w-70">
-          <Search
-            className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-placeholder"
-            aria-hidden="true"
-          />
-          <Input
-            type="search"
-            placeholder="Search by name"
-            aria-label="Search matches"
-            className="h-11 pl-10"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
+        <SearchBar
+          className="order-last w-full md:order-none md:w-70"
+          placeholder="Search by name"
+          label="Search matches"
+          value={search}
+          onChange={setSearch}
+        />
         <div className="flex gap-2 md:order-last">
           {filters.map((filter) => (
             <button
