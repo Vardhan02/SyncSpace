@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -30,11 +31,14 @@ public class ApplicationController {
 	record HouseRef(long houseId, String title) {
 	}
 
-	record TenantRef(UUID id, String name, String photoUrl) {
+	record TenantRef(UUID id, String name, String photoUrl, String email, String phone) {
 	}
 
-	record ApplicationItem(long applicationId, Instant createdAt, HouseRef house, List<TenantRef> tenants) {
+	record ApplicationItem(long applicationId, String status, Instant createdAt, Instant decidedAt, HouseRef house,
+			List<TenantRef> tenants) {
 	}
+
+	static final List<String> STATUSES = List.of("pending", "confirmed", "ignored");
 
 	// full tenant profiles, no contact details
 	record ApplicationDetail(long applicationId, String status, Instant createdAt, Instant decidedAt, HouseRef house,
@@ -51,15 +55,18 @@ public class ApplicationController {
 		this.profiles = profiles;
 	}
 
+	// ?status=confirmed,ignored for the profile's history, no parameter keeps the pending list for the Applications tab
 	@GetMapping
-	public List<ApplicationItem> pending(@AuthenticationPrincipal Jwt jwt) {
+	public List<ApplicationItem> list(@AuthenticationPrincipal Jwt jwt,
+			@RequestParam(defaultValue = "pending") List<String> status) {
 		UUID me = roles.require(jwt, UserRole.landlord);
-		return applications.pending(me).stream()
-				.map(a -> new ApplicationItem(a.getApplicationId(), a.getCreatedAt(),
-						new HouseRef(a.getHouseId(), a.getHouseTitle()),
-						List.of(new TenantRef(a.getTenantAId(), a.getTenantAName(), profiles.photoUrl(a.getTenantAPhoto())),
-								new TenantRef(a.getTenantBId(), a.getTenantBName(), profiles.photoUrl(a.getTenantBPhoto())))))
-				.toList();
+		List<String> wanted = status.stream().map(String::trim).distinct().toList();
+		for (String s : wanted) {
+			if (!STATUSES.contains(s)) {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "status: must be one of " + STATUSES);
+			}
+		}
+		return applications.withStatus(me, wanted).stream().map(this::item).toList();
 	}
 
 	@GetMapping("/{applicationId}")
@@ -113,6 +120,17 @@ public class ApplicationController {
 		if (applications.decide(a.getApplicationId(), status) == 0) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "this application was already decided");
 		}
+	}
+
+	// the landlord only gets the pair's contact details once they've confirmed them
+	private ApplicationItem item(ApplicationRow a) {
+		boolean confirmed = a.getStatus().equals("confirmed");
+		return new ApplicationItem(a.getApplicationId(), a.getStatus(), a.getCreatedAt(), a.getDecidedAt(),
+				new HouseRef(a.getHouseId(), a.getHouseTitle()),
+				List.of(new TenantRef(a.getTenantAId(), a.getTenantAName(), profiles.photoUrl(a.getTenantAPhoto()),
+								confirmed ? a.getTenantAEmail() : null, confirmed ? a.getTenantAPhone() : null),
+						new TenantRef(a.getTenantBId(), a.getTenantBName(), profiles.photoUrl(a.getTenantBPhoto()),
+								confirmed ? a.getTenantBEmail() : null, confirmed ? a.getTenantBPhone() : null)));
 	}
 
 	// 404 for someone else's application
