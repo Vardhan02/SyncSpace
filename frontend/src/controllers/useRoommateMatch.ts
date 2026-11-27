@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { useEffect } from "react"
 import { toast } from "sonner"
 
@@ -11,6 +11,7 @@ import { useRoommateStore } from "@/stores/roommateStore"
 import type { Roommate } from "@/types"
 
 export function useRoommateMatch() {
+  const queryClient = useQueryClient()
   const saveSwipe = useRoommateStore((s) => s.swipe)
   const likedIds = useRoommateStore((s) => s.likedIds)
   const dislikedIds = useRoommateStore((s) => s.dislikedIds)
@@ -29,8 +30,13 @@ export function useRoommateMatch() {
     saveSwipe(id, dir === "right" ? "like" : "dislike")
     sendSwipe(id, dir)
       .then((matched) => {
-        if (matched) toast.success(`It's a match with ${name}!`)
-        else if (dir === "right") toast.success(`You liked ${name}!`)
+        if (matched) {
+          toast.success(`It's a match with ${name}!`)
+          // So Matches and the share dialog show them straight away
+          queryClient.invalidateQueries({ queryKey: ["matches"] })
+        } else if (dir === "right") {
+          toast.success(`You liked ${name}!`)
+        }
       })
       .catch(() => toast.error("Couldn't save your swipe"))
   })

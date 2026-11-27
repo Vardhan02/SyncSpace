@@ -127,7 +127,6 @@ describe("Listing detail", () => {
   })
 
   it("shows the photos in order, the rules and the photo check", async () => {
-    // The page also loads the landlord's applications for its count, at the same time
     vi.spyOn(globalThis, "fetch").mockImplementation(async (url) =>
       new Response(JSON.stringify(String(url).includes("/applications") ? [] : detail))
     )
@@ -144,7 +143,7 @@ describe("Listing detail", () => {
     expect(screen.getByText("Photo check failed")).toBeInTheDocument()
     expect(screen.getByText("The photos don't show a dryer.")).toBeInTheDocument()
     expect(screen.getByText(/not seen in your photos/)).toBeInTheDocument()
-    expect(routes().toSorted()).toEqual(["GET /api/applications", "GET /api/listings/112"])
+    expect(routes()).toEqual(["GET /api/listings/112"])
   })
 
   it("says the photos are being checked until the check has run", async () => {

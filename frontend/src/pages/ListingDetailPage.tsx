@@ -1,4 +1,4 @@
-import { Heart, Pencil, Trash2, Users } from "lucide-react"
+import { Heart, Pencil, Trash2 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
@@ -8,7 +8,6 @@ import { HouseOverview } from "@/components/HouseOverview"
 import { DeleteListingDialog, LikesDialog } from "@/components/ListingDialogs"
 import { PhotoCheckPanel } from "@/components/PhotoCheckPanel"
 import { Button } from "@/components/ui/button"
-import { useLandlordApplications } from "@/hooks/useApplications"
 import { useDeleteListing, useListing } from "@/hooks/useListings"
 import { errorMessage } from "@/lib/api"
 import { describeRules } from "@/lib/houseRules"
@@ -19,7 +18,6 @@ export function ListingDetailPage() {
   const houseId = Number(useParams().houseId)
   const navigate = useNavigate()
   const { data: listing, isPending, isError } = useListing(houseId)
-  const applications = useLandlordApplications()
   const removeListing = useDeleteListing()
   const [showLikes, setShowLikes] = useState(false)
   const [deleting, setDeleting] = useState(false)
@@ -42,11 +40,6 @@ export function ListingDetailPage() {
       </div>
     )
   }
-
-  // Applications are still mock data with string ids
-  const applicationCount = applications.filter(
-    (item) => item.house.id === String(listing.houseId) && !item.decision
-  ).length
 
   function confirmDelete() {
     if (!listing) return
@@ -102,19 +95,6 @@ export function ListingDetailPage() {
               </span>
               <span className="text-[13px] font-normal text-muted-foreground">See who</span>
             </Button>
-
-            <Link
-              to={`/landlord/applications?house=${listing.houseId}`}
-              className="mt-3 flex h-12 items-center justify-between rounded-[12px] border border-border px-4 text-[15px] font-medium text-foreground hover:bg-secondary"
-            >
-              <span className="flex items-center gap-2">
-                <Users className="size-4" aria-hidden="true" />
-                Applications
-              </span>
-              <span className="text-[13px] font-normal text-muted-foreground">
-                {applicationCount > 0 ? `${applicationCount} new` : "View"}
-              </span>
-            </Link>
           </>
         }
       />
