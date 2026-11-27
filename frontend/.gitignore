@@ -30,3 +30,6 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# Demo account details (names, emails, passwords) stay on this machine
+scripts/demo-data/accounts.json
