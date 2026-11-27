@@ -13,8 +13,8 @@ import type { ApplicationDecision, ApplicationDetails } from "@/types"
 export type { ApplicationDetails }
 
 // Applications for the signed-in landlord's listings. Ignored ones are dropped, as the spec says.
-export function useLandlordApplications(): ApplicationDetails[] {
-  const { data = [] } = useQuery({ queryKey: ["applications"], queryFn: fetchApplications })
+export function useLandlordApplications(status: "pending" | "confirmed" = "pending"): ApplicationDetails[] {
+  const { data = [] } = useQuery({ queryKey: ["applications", status], queryFn: () => fetchApplications(status) })
   return data
 }
 

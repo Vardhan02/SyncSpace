@@ -27,6 +27,8 @@ const listing: ListingDetail = {
   description: "Five minutes from campus.",
   status: "active",
   verified: false,
+  verificationStatus: "pending",
+  verificationNote: null,
   createdAt: "2026-11-26T20:00:00Z",
   petsAllowed: false,
   smokingAllowed: false,

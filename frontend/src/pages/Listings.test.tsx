@@ -20,6 +20,8 @@ const summary: ListingSummary = {
   rent: 750,
   status: "draft",
   verified: false,
+  verificationStatus: "pending",
+  verificationNote: null,
   coverPhoto: "https://example.com/cover.jpg",
   likeCount: 2,
 }
@@ -36,6 +38,8 @@ const detail: ListingDetail = {
   description: "Five minutes from campus.",
   status: "active",
   verified: false,
+  verificationStatus: "failed",
+  verificationNote: "The photos don't show a dryer.",
   createdAt: "2026-11-26T20:00:00Z",
   petsAllowed: false,
   smokingAllowed: false,
@@ -125,7 +129,7 @@ describe("Listing detail", () => {
   it("shows the photos in order, the rules and the photo check", async () => {
     // The page also loads the landlord's applications for its count, at the same time
     vi.spyOn(globalThis, "fetch").mockImplementation(async (url) =>
-      new Response(JSON.stringify(String(url).endsWith("/applications") ? [] : detail))
+      new Response(JSON.stringify(String(url).includes("/applications") ? [] : detail))
     )
     renderAt("/landlord/listings/112")
 
@@ -137,12 +141,22 @@ describe("Listing detail", () => {
     expect(screen.getByText("Double room")).toBeInTheDocument()
     expect(screen.getByText("Quiet from 11pm to 7am")).toBeInTheDocument()
     expect(screen.getByText("Up to 4 people in the house")).toBeInTheDocument()
+    expect(screen.getByText("Photo check failed")).toBeInTheDocument()
+    expect(screen.getByText("The photos don't show a dryer.")).toBeInTheDocument()
     expect(screen.getByText(/not seen in your photos/)).toBeInTheDocument()
     expect(routes().toSorted()).toEqual(["GET /api/applications", "GET /api/listings/112"])
   })
 
   it("says the photos are being checked until the check has run", async () => {
-    respondWith(200, { ...detail, amenities: detail.amenities.map((a) => ({ ...a, vlmVerified: null })) })
+    const pending = {
+      ...detail,
+      verificationStatus: "pending",
+      verificationNote: null,
+      amenities: detail.amenities.map((a) => ({ ...a, vlmVerified: null })),
+    }
+    vi.spyOn(globalThis, "fetch").mockImplementation(async (url) =>
+      new Response(JSON.stringify(String(url).includes("/applications") ? [] : pending))
+    )
     renderAt("/landlord/listings/112")
 
     expect(await screen.findByText(/We're checking your photos/)).toBeInTheDocument()

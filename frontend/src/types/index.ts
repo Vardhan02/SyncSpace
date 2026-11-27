@@ -179,6 +179,9 @@ export type MyLandlordProfile = {
 
 export type ListingStatus = "draft" | "active" | "pending" | "filled"
 
+// The photo check. null until the listing has photos. Tenants only see verified listings.
+export type VerificationStatus = "pending" | "verified" | "failed" | null
+
 // The house rules as separate fields, the same in listings and in what tenants browse
 export type HouseRules = {
   petsAllowed: boolean
@@ -200,6 +203,8 @@ export type ListingSummary = {
   rent: number
   status: ListingStatus
   verified: boolean
+  verificationStatus: VerificationStatus
+  verificationNote: string | null
   coverPhoto: string | null
   likeCount: number
 }
@@ -217,6 +222,9 @@ export type ListingDetail = HouseRules & {
   description: string | null
   status: ListingStatus
   verified: boolean
+  verificationStatus: VerificationStatus
+  // Why the check failed
+  verificationNote: string | null
   createdAt: string
   // vlmVerified is the photo check's answer: null while it hasn't run
   amenities: { name: string; vlmVerified: boolean | null }[]
