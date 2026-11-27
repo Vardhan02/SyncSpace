@@ -4,17 +4,16 @@ import { useState } from "react"
 import { HouseCard } from "@/components/HouseCard"
 import { ShareHouseDialog } from "@/components/ShareHouseDialog"
 import { Input } from "@/components/ui/input"
+import { useHouseLikes } from "@/controllers/useHouseLikes"
 import { useShareHouse } from "@/controllers/useShareHouse"
 import { useHouses } from "@/hooks/useMyListings"
 import { cn } from "@/lib/utils"
-import { useHouseStore } from "@/stores/houseStore"
 
 export function HousesPage() {
   const rankedHouses = useHouses()
   const [query, setQuery] = useState("")
   const [showLikedOnly, setShowLikedOnly] = useState(false)
-  const likedIds = useHouseStore((state) => state.likedIds)
-  const toggleLike = useHouseStore((state) => state.toggleLike)
+  const { likedIds, toggleLike } = useHouseLikes()
 
   const { shareHouse, matches, sentTo, openShare, closeShare, send } = useShareHouse()
 

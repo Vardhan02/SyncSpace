@@ -1,9 +1,10 @@
+import { useQuery } from "@tanstack/react-query"
 import { useEffect } from "react"
 import { toast } from "sonner"
 
 import { clamp, SWIPE_THRESHOLD, useSwipe } from "@/controllers/useSwipe"
 import { cardFromOnboarding } from "@/lib/tenantCard"
-import { getRoommates, getSharedTraits } from "@/services/roommateService"
+import { fetchRoommates, getSharedTraits, sendSwipe } from "@/services/roommateService"
 import { useAuthStore } from "@/stores/authStore"
 import { usePreferencesStore } from "@/stores/preferencesStore"
 import { useRoommateStore } from "@/stores/roommateStore"
@@ -18,15 +19,20 @@ export function useRoommateMatch() {
   const userId = useAuthStore((s) => s.user?.id)
   const myAnswers = usePreferencesStore((s) => (userId ? s.records[userId]?.tenant : undefined))
 
-  const remaining = getRoommates().filter(
-    (r) => !likedIds.includes(r.id) && !dislikedIds.includes(r.id)
-  )
+  const { data: roommates = [] } = useQuery({ queryKey: ["roommates"], queryFn: fetchRoommates })
+  const remaining = roommates.filter((r) => !likedIds.includes(r.id) && !dislikedIds.includes(r.id))
   const [topCard, nextCard] = remaining
 
   const swipe = useSwipe((dir) => {
     if (!topCard) return
-    saveSwipe(topCard.id, dir === "right" ? "like" : "dislike")
-    if (dir === "right") toast.success(`You liked ${topCard.name}!`)
+    const { id, name } = topCard
+    saveSwipe(id, dir === "right" ? "like" : "dislike")
+    sendSwipe(id, dir)
+      .then((matched) => {
+        if (matched) toast.success(`It's a match with ${name}!`)
+        else if (dir === "right") toast.success(`You liked ${name}!`)
+      })
+      .catch(() => toast.error("Couldn't save your swipe"))
   })
 
   const { dismiss } = swipe
@@ -46,7 +52,8 @@ export function useRoommateMatch() {
     remainingCount: remaining.length,
     swipe,
     progress: clamp(Math.abs(swipe.offset.x) / SWIPE_THRESHOLD),
-    sharedWith: (roommate: Roommate) => getSharedTraits(cardFromOnboarding(myAnswers ?? {}), roommate),
+    sharedWith: (roommate: Roommate) =>
+      getSharedTraits(cardFromOnboarding(myAnswers ?? {}), roommate),
     like: () => dismiss("right"),
     dislike: () => dismiss("left"),
     startOver: reset,

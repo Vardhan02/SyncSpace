@@ -67,8 +67,8 @@ export function SharedHouseCard({
                 {house.area}, Cork
               </p>
               <p className="pt-1 text-[12px] text-muted-foreground">
-                <span className="font-semibold text-foreground">€{house.rent}</span> per month ·{" "}
-                {house.roomType}
+                <span className="font-semibold text-foreground">€{house.rent}</span> per month
+                {house.roomType && ` · ${house.roomType}`}
               </p>
             </div>
           </Link>
@@ -83,6 +83,8 @@ export function SharedHouseCard({
               <>
                 <Check className="size-4" /> Applied
               </>
+            ) : shared.theyApplied ? (
+              `Apply too, ${name} applied`
             ) : (
               "Apply"
             )}

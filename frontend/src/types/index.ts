@@ -34,6 +34,10 @@ export type House = {
   description: string
   rules: string[]
   likedByMatches: string[]
+  likedByMe?: boolean
+  // Only houses from the backend have real photos. The mock ones just have a count.
+  coverPhoto?: string | null
+  photoUrls?: string[]
 }
 
 // Onboarding answers. Field names are the Supabase column names in camelCase,
@@ -278,16 +282,28 @@ export type Application = {
 
 export type ApplicationDecision = "confirmed" | "ignored"
 
+export type ApplicationDetails = {
+  application: Application
+  house: Pick<House, "id" | "title">
+  tenants: [Roommate, Roommate]
+  decision?: ApplicationDecision
+}
+
+export type MatchPerson = Pick<Roommate, "id" | "name" | "photo"> &
+  Partial<Pick<Roommate, "course" | "university">>
+
 export type SharedHouse = {
-  house: House
+  house: Pick<House, "id" | "title" | "area" | "rent"> &
+    Partial<Pick<House, "roomType" | "verified">>
   fromMe: boolean
   sentAt: string
+  iApplied: boolean
+  theyApplied: boolean
 }
 
 export type Match = {
   id: string
-  roommate: Roommate
+  roommate: MatchPerson
   matchedAt: string
   unread: boolean
-  sharedHouses: SharedHouse[]
 }

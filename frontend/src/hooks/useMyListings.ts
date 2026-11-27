@@ -1,15 +1,9 @@
-import { getHouses } from "@/services/houseService"
-import { useAuthStore } from "@/stores/authStore"
+import { useQuery } from "@tanstack/react-query"
 
-// Mock houses for the pages not on the backend yet: tenants browsing (/api/houses) and
-// landlord applications (/api/applications). The landlord's own listings use useListings.
+import { fetchHouses } from "@/services/houseService"
 
-export function useMyListings() {
-  const userId = useAuthStore((state) => state.user?.id) ?? ""
-  return getHouses().filter((house) => house.landlordId === userId)
-}
-
-// Best match first
+// What tenants browse (GET /api/houses), best match first
 export function useHouses() {
-  return getHouses()
+  const { data = [] } = useQuery({ queryKey: ["houses"], queryFn: fetchHouses })
+  return data.toSorted((a, b) => b.matchScore - a.matchScore)
 }

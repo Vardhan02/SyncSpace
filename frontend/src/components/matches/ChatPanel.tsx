@@ -1,13 +1,15 @@
 import { ArrowLeft, MessageCircle } from "lucide-react"
+import { Link } from "react-router-dom"
 
 import { Avatar } from "@/components/matches/MatchList"
 import { SharedHouseCard } from "@/components/matches/SharedHouseCard"
 import { formatFullDate } from "@/lib/format"
 import { cn } from "@/lib/utils"
-import type { Match } from "@/types"
+import type { Match, SharedHouse } from "@/types"
 
 type ChatPanelProps = {
   match: Match | null
+  houses: SharedHouse[]
   onBack: () => void
   isLiked: (houseId: string) => boolean
   onLike: (houseId: string) => void
@@ -15,7 +17,15 @@ type ChatPanelProps = {
   onApply: (houseId: string) => void
 }
 
-export function ChatPanel({ match, onBack, isLiked, onLike, isApplied, onApply }: ChatPanelProps) {
+export function ChatPanel({
+  match,
+  houses,
+  onBack,
+  isLiked,
+  onLike,
+  isApplied,
+  onApply,
+}: ChatPanelProps) {
   if (!match) {
     return (
       <div className="flex h-full flex-col items-center justify-center px-6 text-center">
@@ -42,19 +52,26 @@ export function ChatPanel({ match, onBack, isLiked, onLike, isApplied, onApply }
         >
           <ArrowLeft className="size-5" />
         </button>
-        <Avatar roommate={roommate} size="size-10" />
-        <div className="min-w-0">
-          <p className="truncate text-[15px] font-semibold text-foreground">{roommate.name}</p>
-          <p className="truncate text-[13px] text-muted-foreground">
-            {roommate.course} · {roommate.university}
-          </p>
-        </div>
+        <Link
+          to={`/roommates/${roommate.id}`}
+          className="flex min-w-0 items-center gap-3 rounded-[12px] pr-2 hover:opacity-80"
+        >
+          <Avatar roommate={roommate} size="size-10" />
+          <div className="min-w-0">
+            <p className="truncate text-[15px] font-semibold text-foreground">{roommate.name}</p>
+            {roommate.course && (
+              <p className="truncate text-[13px] text-muted-foreground">
+                {roommate.course} · {roommate.university}
+              </p>
+            )}
+          </div>
+        </Link>
       </div>
 
       <div
         className={cn(
           "flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-4 pt-8 pb-28 md:px-6 md:pb-8",
-          match.sharedHouses.length === 0 && "justify-center"
+          houses.length === 0 && "justify-center"
         )}
       >
         <div className="flex flex-col items-center text-center">
@@ -67,7 +84,7 @@ export function ChatPanel({ match, onBack, isLiked, onLike, isApplied, onApply }
           </p>
         </div>
 
-        {match.sharedHouses.map((shared) => (
+        {houses.map((shared) => (
           <SharedHouseCard
             key={shared.house.id}
             shared={shared}

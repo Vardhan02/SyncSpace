@@ -7,16 +7,16 @@ import { HouseActions } from "@/components/HouseActions"
 import { HouseOverview } from "@/components/HouseOverview"
 import { ShareHouseDialog } from "@/components/ShareHouseDialog"
 import { Button } from "@/components/ui/button"
+import { useHouseDetail } from "@/controllers/useHouseDetail"
+import { useHouseLikes } from "@/controllers/useHouseLikes"
 import { useShareHouse } from "@/controllers/useShareHouse"
-import { useHouses } from "@/hooks/useMyListings"
 import { formatMatchLikes } from "@/lib/format"
-import { useHouseStore } from "@/stores/houseStore"
 
 export function HouseDetailPage() {
   const { houseId = "" } = useParams()
-  const house = useHouses().find((item) => item.id === houseId)
-  const liked = useHouseStore((state) => state.likedIds.includes(houseId))
-  const toggleLike = useHouseStore((state) => state.toggleLike)
+  const house = useHouseDetail(houseId)
+  const { likedIds, toggleLike } = useHouseLikes()
+  const liked = likedIds.includes(houseId)
   const { shareHouse, matches, sentTo, openShare, closeShare, send } = useShareHouse()
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export function HouseDetailPage() {
       <HouseOverview
         key={house.id}
         // The mock houses only have a photo count
-        house={{ ...house, photos: Array.from({ length: house.photos }, () => "") }}
+        house={{ ...house, photos: house.photoUrls ?? Array.from({ length: house.photos }, () => "") }}
         backTo="/houses"
         backLabel="All houses"
         actions={
