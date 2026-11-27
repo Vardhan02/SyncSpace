@@ -128,7 +128,7 @@ interface MatchRepository extends Repository<Tenant, UUID> {
 			order by mh.shared_at desc""", nativeQuery = true)
 	List<SharedRow> sharedHouses(long matchId, UUID me, UUID other);
 
-	@Query(value = "select exists (select 1 from houses where house_id = :houseId and status = 'active')", nativeQuery = true)
+	@Query(value = "select exists (select 1 from houses where house_id = :houseId and status = 'active' and verified)", nativeQuery = true)
 	boolean isListed(long houseId);
 
 	@Query(value = "select exists (select 1 from match_houses where match_id = :matchId and house_id = :houseId)", nativeQuery = true)
