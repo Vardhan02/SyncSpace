@@ -6,16 +6,19 @@ import { toast } from "sonner"
 import { ApplicantProfile } from "@/components/applications/ApplicantProfile"
 import { Modal } from "@/components/Modal"
 import { Button } from "@/components/ui/button"
-import { useLandlordApplications, useLandlordContact } from "@/hooks/useApplications"
+import {
+  useDecideApplication,
+  useLandlordApplication,
+  useLandlordContact,
+} from "@/hooks/useApplications"
 import { formatDate } from "@/lib/format"
-import { useApplicationStore } from "@/stores/applicationStore"
 import { useAuthStore } from "@/stores/authStore"
 
 export function ApplicationDetailPage() {
   const { applicationId = "" } = useParams()
   const navigate = useNavigate()
-  const item = useLandlordApplications().find((entry) => entry.application.id === applicationId)
-  const decide = useApplicationStore((state) => state.decide)
+  const item = useLandlordApplication(applicationId)
+  const decide = useDecideApplication()
   const landlordId = useAuthStore((state) => state.user?.id) ?? ""
   const contact = useLandlordContact(landlordId)
   const [dialog, setDialog] = useState<"confirm" | "ignore" | null>(null)
@@ -38,14 +41,24 @@ export function ApplicationDetailPage() {
   const { application, house, tenants, decision } = item
   const names = `${tenants[0].name.split(" ")[0]} and ${tenants[1].name.split(" ")[0]}`
 
-  function confirm() {
-    decide(application.id, "confirmed")
+  async function confirm() {
+    try {
+      await decide(application.id, "confirmed")
+    } catch {
+      toast.error("Couldn't confirm this application")
+      return
+    }
     setDialog(null)
     toast.success(`Confirmed. ${names} can now see your contact details.`)
   }
 
-  function ignore() {
-    decide(application.id, "ignored")
+  async function ignore() {
+    try {
+      await decide(application.id, "ignored")
+    } catch {
+      toast.error("Couldn't ignore this application")
+      return
+    }
     toast.success("Application removed")
     navigate("/landlord/applications", { replace: true })
   }

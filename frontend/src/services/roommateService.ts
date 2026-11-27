@@ -1,16 +1,46 @@
+import { api } from "@/lib/api"
+import { cardFromOnboarding } from "@/lib/tenantCard"
 import roommates from "@/mocks/roommates.json"
-import type { Roommate, TenantPreferences } from "@/types"
+import type { Roommate, TenantOnboarding, TenantPreferences } from "@/types"
 
-const rankedRoommates = (roommates as Roommate[]).toSorted(
-  (a, b) => b.matchScore - a.matchScore
-)
-
-export function getRoommates() {
-  return rankedRoommates
+export type ApiTenantCard = Partial<TenantOnboarding> & {
+  id: string
+  name: string
+  photoUrl: string | null
+  matchScore: number | null
 }
+
+const rankedRoommates = (roommates as Roommate[]).toSorted((a, b) => b.matchScore - a.matchScore)
 
 export function getRoommate(id: string) {
   return rankedRoommates.find((roommate) => roommate.id === id)
+}
+
+export function toRoommate(data: ApiTenantCard): Roommate {
+  return {
+    id: data.id,
+    name: data.name,
+    age: data.age ?? 0,
+    photo: data.photoUrl,
+    course: data.course ?? "",
+    university: data.university ?? "",
+    bio: data.bio ?? "",
+    matchScore: data.matchScore ?? 0,
+    ...cardFromOnboarding(data),
+  }
+}
+
+export async function fetchRoommate(id: string): Promise<Roommate> {
+  return toRoommate(await api<ApiTenantCard>(`/roommates/${id}`))
+}
+
+export async function fetchRoommates(): Promise<Roommate[]> {
+  return (await api<ApiTenantCard[]>("/roommates")).map(toRoommate)
+}
+
+export async function sendSwipe(targetId: string, direction: "left" | "right"): Promise<boolean> {
+  const { matched } = await api<{ matched: boolean }>("/swipes", { method: "POST", body: { targetId, direction } })
+  return matched
 }
 
 const LIFESTYLE_MATCHES: { field: keyof TenantPreferences; label: (value: string) => string }[] = [

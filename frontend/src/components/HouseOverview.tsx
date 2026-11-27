@@ -36,6 +36,8 @@ type HouseOverviewProps = {
 // The parts of a house page that tenants and landlords both see.
 export function HouseOverview({ house, backTo, backLabel, actions, aside }: HouseOverviewProps) {
   const [showAllPhotos, setShowAllPhotos] = useState(false)
+  // Photos that didn't load (the seed houses' were never uploaded) show the placeholder instead
+  const [failed, setFailed] = useState<number[]>([])
 
   const photos = house.photos.map((url, index) => ({ url, index }))
   const previewCount = photos.length >= 5 ? 5 : 3
@@ -94,8 +96,13 @@ export function HouseOverview({ house, backTo, backLabel, actions, aside }: Hous
               !showAllPhotos && index > 2 && "hidden md:flex"
             )}
           >
-            {url ? (
-              <img src={url} alt={`${house.title}, photo ${index + 1}`} className="size-full object-cover" />
+            {url && !failed.includes(index) ? (
+              <img
+                src={url}
+                alt={`${house.title}, photo ${index + 1}`}
+                className="size-full object-cover"
+                onError={() => setFailed((indexes) => [...indexes, index])}
+              />
             ) : index === 0 ? (
               <HouseIcon className="size-10 text-[#b4b2a9]" aria-hidden="true" />
             ) : null}

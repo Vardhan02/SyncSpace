@@ -123,7 +123,10 @@ describe("Listing detail", () => {
   })
 
   it("shows the photos in order, the rules and the photo check", async () => {
-    respondWith(200, detail)
+    // The page also loads the landlord's applications for its count, at the same time
+    vi.spyOn(globalThis, "fetch").mockImplementation(async (url) =>
+      new Response(JSON.stringify(String(url).endsWith("/applications") ? [] : detail))
+    )
     renderAt("/landlord/listings/112")
 
     const photos = await screen.findAllByRole("img", { name: /Bright room near UCC, photo/ })
@@ -135,7 +138,7 @@ describe("Listing detail", () => {
     expect(screen.getByText("Quiet from 11pm to 7am")).toBeInTheDocument()
     expect(screen.getByText("Up to 4 people in the house")).toBeInTheDocument()
     expect(screen.getByText(/not seen in your photos/)).toBeInTheDocument()
-    expect(routes()).toEqual(["GET /api/listings/112"])
+    expect(routes().toSorted()).toEqual(["GET /api/applications", "GET /api/listings/112"])
   })
 
   it("says the photos are being checked until the check has run", async () => {

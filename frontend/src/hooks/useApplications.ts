@@ -1,33 +1,41 @@
-import { useMyListings } from "@/hooks/useMyListings"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+
 import users from "@/mocks/users.json"
-import { getApplicant, getApplications } from "@/services/applicationService"
+import {
+  decideApplication,
+  fetchApplication,
+  fetchApplications,
+  getApplicant,
+  getApplications,
+} from "@/services/applicationService"
 import { useApplicationStore } from "@/stores/applicationStore"
 import { useAuthStore } from "@/stores/authStore"
-import { usePreferencesStore } from "@/stores/preferencesStore"
-import type { Application, ApplicationDecision, House, Roommate } from "@/types"
+import type { ApplicationDecision, ApplicationDetails } from "@/types"
 
-export type ApplicationDetails = {
-  application: Application
-  house: House
-  tenants: [Roommate, Roommate]
-  decision?: ApplicationDecision
-}
+export type { ApplicationDetails }
 
 // Applications for the signed-in landlord's listings. Ignored ones are dropped, as the spec says.
 export function useLandlordApplications(): ApplicationDetails[] {
-  const listings = useMyListings()
-  const decisions = useApplicationStore((state) => state.decisions)
-  const records = usePreferencesStore((state) => state.records)
-
-  return getApplications().flatMap((application) => {
-    const house = listings.find((listing) => listing.id === application.houseId)
-    if (!house || decisions[application.id] === "ignored") return []
-
-    const [first, second] = application.tenantIds.map((id) => getApplicant(id, records[id]?.tenant))
-    return [{ application, house, tenants: [first, second], decision: decisions[application.id] }]
-  })
+  const { data = [] } = useQuery({ queryKey: ["applications"], queryFn: fetchApplications })
+  return data
 }
 
+export function useLandlordApplication(id: string) {
+  const fromList = useLandlordApplications().find((entry) => entry.application.id === id)
+  const { data } = useQuery({ queryKey: ["applications", id], queryFn: () => fetchApplication(id) })
+  return data ?? fromList
+}
+
+export function useDecideApplication() {
+  const queryClient = useQueryClient()
+
+  return async (id: string, decision: ApplicationDecision) => {
+    await decideApplication(id, decision)
+    await queryClient.invalidateQueries({ queryKey: ["applications"] })
+  }
+}
+
+// Still mock data until /api/applications/mine and /api/landlord-contacts are connected.
 // The signed-in tenant's application for a house, if they're part of one.
 export function useMyApplication(houseId: string) {
   const userId = useAuthStore((state) => state.user?.id) ?? ""

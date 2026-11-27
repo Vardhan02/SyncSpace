@@ -1,17 +1,59 @@
-import matches from "@/mocks/matches.json"
-import { getHouse } from "@/services/houseService"
-import { getRoommate } from "@/services/roommateService"
+import { api } from "@/lib/api"
+import { toApiHouseId } from "@/services/houseService"
 import type { Match, SharedHouse } from "@/types"
 
-export function getMatches(): Match[] {
-  return matches
-    .map(({ roommateId, sharedHouses, ...match }) => ({
-      ...match,
-      roommate: getRoommate(roommateId),
-      sharedHouses: sharedHouses
-        .map(({ houseId, ...shared }) => ({ ...shared, house: getHouse(houseId) }))
-        .filter((shared): shared is SharedHouse => shared.house !== undefined),
+type ApiMatch = {
+  matchId: number
+  id: string
+  name: string
+  photoUrl: string | null
+  matchedAt: string
+}
+
+type ApiSharedHouse = {
+  houseId: number
+  title: string
+  area: string
+  rent: number
+  sharedByMe: boolean
+  sharedAt: string
+  iApplied: boolean
+  theyApplied: boolean
+}
+
+const newestFirst = (a: Match, b: Match) => b.matchedAt.localeCompare(a.matchedAt)
+
+export async function getMatches(): Promise<Match[]> {
+  const data = await api<ApiMatch[]>("/matches")
+  return data
+    .map((m) => ({
+      id: String(m.matchId),
+      roommate: { id: m.id, name: m.name, photo: m.photoUrl },
+      matchedAt: m.matchedAt,
+      unread: false,
     }))
-    .filter((match): match is Match => match.roommate !== undefined)
-    .toSorted((a, b) => b.matchedAt.localeCompare(a.matchedAt))
+    .toSorted(newestFirst)
+}
+
+export async function getSharedHouses(matchId: string): Promise<SharedHouse[]> {
+  const data = await api<ApiSharedHouse[]>(`/matches/${matchId}/houses`)
+  return data.map((h) => ({
+    house: { id: `h-${h.houseId}`, title: h.title, area: h.area, rent: h.rent },
+    fromMe: h.sharedByMe,
+    sentAt: h.sharedAt,
+    iApplied: h.iApplied,
+    theyApplied: h.theyApplied,
+  }))
+}
+
+export async function shareHouse(matchId: string, houseId: string) {
+  await api<void>(`/matches/${matchId}/houses`, { method: "POST", body: { houseId: toApiHouseId(houseId) } })
+}
+
+export async function applyToHouse(matchId: string, houseId: string): Promise<boolean> {
+  const { bothApplied } = await api<{ bothApplied: boolean }>(`/matches/${matchId}/apply`, {
+    method: "POST",
+    body: { houseId: toApiHouseId(houseId) },
+  })
+  return bothApplied
 }

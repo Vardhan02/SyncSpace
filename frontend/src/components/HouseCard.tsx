@@ -1,4 +1,5 @@
 import { BadgeCheck, Heart, House as HouseIcon, MapPin } from "lucide-react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
 
 import { HouseActions } from "@/components/HouseActions"
@@ -13,6 +14,8 @@ type HouseCardProps = {
 }
 
 export function HouseCard({ house, liked, onToggleLike, onShare }: HouseCardProps) {
+  // The seed houses point at photos that were never uploaded, so fall back to the placeholder
+  const [photoFailed, setPhotoFailed] = useState(false)
   const extraPhotos = house.photos - 3
   const detailPath = `/houses/${house.id}`
 
@@ -23,8 +26,12 @@ export function HouseCard({ house, liked, onToggleLike, onShare }: HouseCardProp
         aria-label={`View ${house.title}`}
         className="relative grid h-55 grid-cols-3 grid-rows-2 gap-1.5 overflow-hidden rounded-[16px] transition-opacity hover:opacity-90 lg:h-75"
       >
-        <div className="col-span-2 row-span-2 flex items-center justify-center bg-[#e7e5de]">
-          <HouseIcon className="size-8 text-[#b4b2a9]" aria-hidden="true" />
+        <div className="col-span-2 row-span-2 flex items-center justify-center overflow-hidden bg-[#e7e5de]">
+          {house.coverPhoto && !photoFailed ? (
+            <img src={house.coverPhoto} alt="" className="size-full object-cover" onError={() => setPhotoFailed(true)} />
+          ) : (
+            <HouseIcon className="size-8 text-[#b4b2a9]" aria-hidden="true" />
+          )}
         </div>
         <div className="bg-[#efede6]" />
         <div className="relative bg-[#dcdad2]">

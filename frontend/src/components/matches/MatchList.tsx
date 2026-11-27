@@ -1,8 +1,8 @@
 import { formatDate } from "@/lib/format"
 import { cn } from "@/lib/utils"
-import type { Match, Roommate } from "@/types"
+import type { Match, MatchPerson } from "@/types"
 
-export function Avatar({ roommate, size }: { roommate: Roommate; size: string }) {
+export function Avatar({ roommate, size }: { roommate: MatchPerson; size: string }) {
   if (roommate.photo) {
     return (
       <img
@@ -35,9 +35,10 @@ type Props = {
   matches: Match[]
   selectedId?: string
   onOpen: (id: string) => void
+  emptyText: string
 }
 
-export function MatchList({ matches, selectedId, onOpen }: Props) {
+export function MatchList({ matches, selectedId, onOpen, emptyText }: Props) {
   return (
     <div className="flex h-full min-h-0 flex-col">
       <div className="min-h-0 flex-1 overflow-y-auto p-2 pb-28 md:pb-2">
@@ -67,9 +68,7 @@ export function MatchList({ matches, selectedId, onOpen }: Props) {
         ))}
 
         {matches.length === 0 && (
-          <p className="px-4 py-8 text-center text-[14px] text-muted-foreground">
-            No matches found
-          </p>
+          <p className="px-4 py-8 text-center text-[14px] text-muted-foreground">{emptyText}</p>
         )}
       </div>
     </div>
